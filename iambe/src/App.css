@@ -28,6 +28,21 @@
   color: #61dafb;
 }
 
+.blue {
+  font-weight: bold;
+  color: #3887D6;
+}
+
+.red {
+  font-weight: bold;
+  color: #FE5F55;
+}
+
+.yellow {
+  font-weight: bold;
+  color: #E8C547;
+}
+
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);

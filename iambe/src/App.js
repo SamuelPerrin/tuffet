@@ -1,23 +1,27 @@
-import logo from './logo.svg';
 import './App.css';
+import {BrowserRouter as Router, Route, Link} from 'react-router-dom';
+import Home from './components/Home';
+import Rhymes from './components/Rhymes';
+import Meter from './components/Meter';
+import RhymeScheme from './components/RhymeScheme';
+import Scansion from './components/Scansion';
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Router>
+        <header>
+          <Link to='/'>Home</Link>
+          <Link to='/rhyme'>Rhymes</Link>
+          <Link to='/meter'>Meter</Link>
+        </header>
+        
+        <Route exact path ='/' component={Home} />
+        <Route exact path='/rhyme' component={Rhymes} />
+        <Route exact path="/meter" component={Meter} />
+        <Route exact path="/rhyme/scheme" component={RhymeScheme}/>
+        <Route exact path="/meter/scansion" component={Scansion} />
+      </Router>
     </div>
   );
 }
