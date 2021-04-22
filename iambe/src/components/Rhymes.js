@@ -7,7 +7,7 @@ const Rhymes = () => {
       <section>
         <h3 className="red">Rhyme Schemes</h3>
         <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-        <Link to="#" className="red">Read more »</Link>
+        <Link to="/rhyme/scheme" className="red">Read more »</Link>
       </section>
       <section>
         <h3 className="yellow">Rhymes by Type</h3>
