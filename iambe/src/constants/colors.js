@@ -1,0 +1,6 @@
+export const BLACK = '#30323D'
+export const WHITE = '#FFFFFF'
+export const PALE = '#F7F0F9'
+export const BLUE = '#3887D6'
+export const RED = '#FE5F55'
+export const YELLOW = '#BD9B22'
