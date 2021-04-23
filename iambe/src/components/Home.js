@@ -1,4 +1,5 @@
-import React, {useState} from 'react'
+import React, {useState} from 'react';
+import {YellowSpan, RedSpan, BlueSpan} from './Spans';
 
 const initialValue = ""
 
@@ -21,9 +22,9 @@ const Home = () => {
     <div>
       <h3>Poetry is easier than ever with Iambe!</h3>
       <ul>
-        <li>Visualize <span className="red">rhyme schemes</span>!</li>
-        <li>Detect over a dozen kinds of <span className="yellow">slant rhyme</span>!</li>
-        <li>Identify <span className="blue">meter</span> and <span className="blue">verse form</span>!</li>
+        <li>Visualize <RedSpan>rhyme schemes</RedSpan>!</li>
+        <li>Detect over a dozen kinds of <YellowSpan>slant rhyme</YellowSpan>!</li>
+        <li>Identify <BlueSpan>meter</BlueSpan> and <BlueSpan>verse form</BlueSpan>!</li>
       </ul>
       <h3>Try it!</h3>
       <form>
