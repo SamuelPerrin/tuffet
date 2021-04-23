@@ -8,9 +8,9 @@ const GlobalStyle = createGlobalStyle`
     box-sizing: border-box;
     font-family: 'Roboto', sans-serif;
     }
-    html { 
+    /* html { 
     font-size: 10px; 
-    }
+    } */
     /* Remove default padding */
     ul[class],
     ol[class] {
@@ -41,13 +41,13 @@ const GlobalStyle = createGlobalStyle`
     line-height: 1.5;
     }
     /* Remove list styles on ul, ol elements  */
-    ul,
+    /* ul,
     ol {
     list-style: none;
-    }
+    } */
     /* A elements that don't have a class get default styles */
     a:not([class]) {
-    text-decoration-skip-ink: auto;
+    text-decoration:none;
     }
     /* Make images easier to work with */
     img {

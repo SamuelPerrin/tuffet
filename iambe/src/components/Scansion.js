@@ -1,14 +1,17 @@
 import React from 'react';
+import Container from './styled/Container';
+import Section from './styled/Section';
 import {YellowSpan, RedSpan} from './styled/Spans';
-import {Link} from 'react-router-dom';
 
 const Scansion = () => {
   return (
     <div>
-      <section>
-        <h3><YellowSpan>Scansion</YellowSpan></h3>
-        <p>This stanza's meter is a variant of: <RedSpan>common hymn</RedSpan>.</p>
-      </section>
+      <Container>
+        <Section>
+          <h3><YellowSpan>Scansion</YellowSpan></h3>
+          <p>This stanza's meter is a variant of: <RedSpan>common hymn</RedSpan>.</p>
+        </Section>
+      </Container>
     </div>
   )
 }
