@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {YellowSpan, RedSpan, BlueSpan} from './Spans';
+import {YellowSpan, RedSpan, BlueSpan} from './styled/Spans';
 
 const initialValue = ""
 

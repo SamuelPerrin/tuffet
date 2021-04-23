@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import {RED, BLUE, YELLOW} from '../constants/colors'
+import {RED, BLUE, YELLOW} from '../../constants/colors'
 
 export const RedSpan = styled.span`
   color: ${RED};

@@ -1,5 +1,5 @@
 import React from 'react';
-import {YellowSpan, RedSpan} from './Spans';
+import {YellowSpan, RedSpan} from './styled/Spans';
 import {Link} from 'react-router-dom';
 
 const Scansion = () => {

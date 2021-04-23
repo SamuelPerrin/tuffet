@@ -1,5 +1,5 @@
 import React from 'react';
-import {BlueSpan, RedSpan} from './Spans';
+import {BlueSpan, RedSpan} from './styled/Spans';
 import {Link} from 'react-router-dom';
 
 const Meter = () => {
