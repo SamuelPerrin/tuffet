@@ -44,7 +44,7 @@ const Home = props => {
       <Section>
         <h3>Try it!</h3>
         <form>
-          <TextArea type='text' value={poem} onChange={handleChange} placeholder="Enter a poem..." />
+          <TextArea value={poem} onChange={handleChange} placeholder="Enter a poem..." />
           <div>
             <Button onClick={submitRhymes}>Get Rhymes</Button>
             <Button onClick={submitMeter}>Get Meter</Button>

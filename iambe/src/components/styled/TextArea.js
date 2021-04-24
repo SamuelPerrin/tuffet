@@ -19,7 +19,7 @@ const TextAreaWrapper = styled.textarea`
 export default function TextArea(props) {
   const {onChange, value, name, placeholder, ...rest} = props;
   return(
-    <TextAreaWrapper {...rest} name={name} value={value} onChange={onChange} placeholder={placeholder} />
+    <TextAreaWrapper {...rest} name={name} value={value} onChange={onChange} placeholder={placeholder} rows='15' />
       // <textarea name={name} value={value} onChange={onChange} placeholder={placeholder}/>
     // </TextAreaWrapper>
   )
