@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 
 const TextAreaWrapper = styled.textarea`
-  width: '${props => props.theme.textAreaWidth}';
+  width: ${props => props.theme.textAreaWidth};
   margin-bottom: ${props => props.theme.space};
   textarea {
     border-radius: ${props => props.theme.borderRadius};
@@ -12,15 +12,15 @@ const TextAreaWrapper = styled.textarea`
     width: '100%';
     height: ${props => props.theme.textAreaHeight};
     padding: ${props => props.theme.textAreaPadding};
-    border: 12px solid ${props => props.theme.black};
+    border: '12px solid ${props => props.theme.black}';
   }
 `
 
 export default function TextArea(props) {
   const {onChange, value, name, placeholder, ...rest} = props;
   return(
-    <TextAreaWrapper {...rest}>
-      <textarea name={name} value={value} onChange={onChange} placeholder={placeholder}/>
-    </TextAreaWrapper>
+    <TextAreaWrapper {...rest} name={name} value={value} onChange={onChange} placeholder={placeholder} />
+      // <textarea name={name} value={value} onChange={onChange} placeholder={placeholder}/>
+    // </TextAreaWrapper>
   )
 }

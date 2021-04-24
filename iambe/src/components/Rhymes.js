@@ -1,16 +1,19 @@
 import React from 'react';
+import {connect} from 'react-redux';
+
 import {YellowSpan, RedSpan} from './styled/Spans';
 import Container from './styled/Container';
 import Section from './styled/Section';
 import {Link} from 'react-router-dom';
 
-const Rhymes = () => {
+const Rhymes = props => {
+  const {poetry} = props;
   return (
     <div>
       <Container>
         <Section>
           <h3><RedSpan>Rhyme Schemes</RedSpan></h3>
-          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+          <p>{poetry}</p>
           <Link to="/rhyme/scheme"><RedSpan>Read more »</RedSpan></Link>
         </Section>
         <Section>
@@ -27,4 +30,10 @@ const Rhymes = () => {
   )
 }
 
-export default Rhymes
+const mapStateToProps = state => ({
+  ...state,
+  poetry: state.poetry,
+})
+
+
+export default connect(mapStateToProps)(Rhymes)
