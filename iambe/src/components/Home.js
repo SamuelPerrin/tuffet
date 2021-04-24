@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import Section from './styled/Section';
 import {YellowSpan, RedSpan, BlueSpan} from './styled/Spans';
+import TextArea from './styled/TextArea';
 import Button from './styled/Button';
 
 const initialValue = ""
@@ -33,9 +34,11 @@ const Home = () => {
       <Section>
         <h3>Try it!</h3>
         <form>
-          <textarea value={poem} onChange={handleChange} placeholder="Enter a poem..." />
-          <Button onClick={submitRhymes}>Get Rhymes</Button>
-          <Button onClick={submitMeter}>Get Meter</Button>
+          <TextArea value={poem} onChange={handleChange} placeholder="Enter a poem..." />
+          <div>
+            <Button onClick={submitRhymes}>Get Rhymes</Button>
+            <Button onClick={submitMeter}>Get Meter</Button>
+          </div>
         </form>  
       </Section>
     </div>
