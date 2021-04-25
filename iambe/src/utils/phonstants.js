@@ -1,6 +1,8 @@
 // this file contains constants to be used in other utils
 export const MAKES_PLURAL_WITH_S = {'F':true, 'K':true, 'P':true, 'T':true, 'TH':true,};
 export const MAKES_PLURAL_WITH_IZ = {'S':true, 'Z':true, 'SH':true, 'ZH':true, 'CH':true, 'JH':true,};
+export const MAKES_PAST_WITH_T = {'F':true, 'K':true, 'P':true, 'S':true, 'SH':true, 'CH':true};
+export const MAKES_PAST_WITH_ID = {'T':true, 'D':true}
 export const VOWELS = {
   'AA':true,
   'AE':true,

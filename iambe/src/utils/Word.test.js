@@ -31,9 +31,53 @@ test('getPron pronounces "test" with and without rhyme', () => {
 })
 
 test('getPron pronounces "object" two ways', () => {
-  expect(new Word("object").getPron()).toStrictEqual(['AA1 B JH EH0 K T', 'AH0 B JH EH1 K T'])
+  expect(new Word("object").getPron()).toStrictEqual(['AA1 B JH EH0 K T', 'AH0 B JH EH1 K T']);
 })
 
 test('checkHardPron adds an S', () => {
-  expect(new Word("views").checkHardPron()).toEqual("V Y UW1 Z")
+  expect(new Word("views").checkHardPron()).toEqual("V Y UW1 Z");
+  expect(new Word("traps").checkHardPron()).toEqual("T R AE1 P S");
+  expect(new Word("rages").checkHardPron()).toEqual("R EY1 JH IH0 Z");
+})
+
+test('checkHardPron adds a D', () => {
+  expect(new Word("scraped").checkHardPron()).toEqual("S K R EY1 P T");
+  expect(new Word("heated").checkHardPron()).toEqual("HH IY1 T IH0 D");
+  expect(new Word("flared").checkHardPron()).toEqual("F L EH1 R D");
+  expect(new Word("believ'd").checkHardPron()).toEqual("B IH0 L IY1 V D");
+})
+
+test('checkHardPron adds ING', () => {
+  expect(new Word("testing").checkHardPron()).toEqual("T EH1 S T IH0 NG");
+  expect(new Word("opening").checkHardPron()).toEqual("OW1 P AH0 N IH3 NG");
+})
+
+test('checkHardPron adds ETH', () => {
+  expect(new Word("seeketh").checkHardPron()).toEqual("S IY1 K IH0 TH");
+  expect(new Word("maketh").checkHardPron()).toEqual("M EY1 K IH0 TH");
+})
+
+test('checkHardPron adds ER', () => {
+  expect(new Word("rarer").checkHardPron()).toEqual("R EH1 R ER0");
+  expect(new Word("hanger").checkHardPron()).toEqual("HH AE1 NG ER0");
+})
+
+test('checkHardPron adds EST', () => {
+  expect(new Word("rarest").checkHardPron()).toEqual("R EH1 R IH0 S T");
+  expect(new Word("lowest").checkHardPron()).toEqual("L OW1 IH0 S T");
+})
+
+test('checkHardPron adds NESS', () => {
+  expect(new Word("goodness").checkHardPron()).toEqual("G UH1 D N AH0 S");
+  expect(new Word("openness").checkHardPron()).toEqual("OW1 P AH0 N N AH3 S");
+})
+
+test('checkHardPron adds LESS', () => {
+  expect(new Word("loveless").checkHardPron()).toEqual("L AH1 V L AH0 S");
+  expect(new Word("fashionless").checkHardPron()).toEqual("F AE1 SH AH0 N L AH3 S");
+})
+
+test('checkHardPron adds LY', () => {
+  expect(new Word("plainly").checkHardPron()).toEqual("P L EY1 N L IY0");
+  expect(new Word("openly").checkHardPron()).toEqual("OW1 P AH0 N L IY3");
 })

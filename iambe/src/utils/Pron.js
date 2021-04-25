@@ -6,7 +6,7 @@ class Pron {
   constructor(text) {
     this.text = text;
     if (typeof this.text !== "string" || this.text.length === 0) {
-      throw this.text.length ? new Error(`"${this.text}" is not a valid pron.`) : new Error("Pron cannot be empty.");
+      throw this.text.length ? new Error(`"${this.text}" (${typeof this.text}) is not a valid pron.`) : new Error("Pron cannot be empty.");
     }
   }
 
