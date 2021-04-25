@@ -1,6 +1,10 @@
 import lexicon from './lexicon';
+import Pron from './Pron';
 
 class Word {
+  /*
+   * A string that represents a word.
+   */
   constructor(word) {
     this.word = word.toLowerCase();
     if (!this.word instanceof String || this.word.length === 0) {
@@ -32,6 +36,14 @@ class Word {
         pron = lexicon[this.word];
       } else {
         //*** if all prons have the same stresses, return first, else return list ***
+        const stressWords = new Set();
+        pron = lexicon[this.word];
+        for (let prawn in pron) {
+          stressWords.add(new Pron(prawn).getStress());
+        }
+        if (stressWords.length === 1) {
+          pron = pron[0];
+        }
       }
     }
 

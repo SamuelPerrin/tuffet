@@ -10,7 +10,7 @@ class Pron {
   getStress() {
     const arabs = ['1','2','3','4','0'];
     let stresses = [];
-    for (let char in this.text) {
+    for (let char of this.text) {
       if (arabs.includes(char)) {
         stresses.push(char);
       }
