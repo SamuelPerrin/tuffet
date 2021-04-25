@@ -7,7 +7,7 @@ class Word {
    */
   constructor(word) {
     this.word = word.toLowerCase();
-    if (!this.word instanceof String || this.word.length === 0) {
+    if (typeof this.word !== "string" || this.word.length === 0) {
       throw this.word.length ? new Error(`"${word}" is not a word.`) : new Error("Word cannot be empty.");
     }
     if (this.word.charAt(0) === "'" && this.word.slice(1,4) !== 'tis' && this.word.slice(1,3) !== 'tw') {

@@ -5,6 +5,10 @@ class Pron {
    */
   constructor(text) {
     this.text = text;
+    if (typeof this.text !== "string" || this.text.length === 0) {
+      throw this.text.length ? new Error(`"${this.text}" is not a valid pron.`) : new Error("Pron cannot be empty.");
+    }
+    console.log(`in Pron.constructor with ${this.text} of type ${typeof this.text}`)
   }
 
   getStress() {

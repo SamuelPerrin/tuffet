@@ -1,15 +1,6 @@
-import Word from './Word'
+import Word from './Word';
 
-test('getPron pronounces "test" with and without rhyme', () => {
-  expect(new Word("test").getPron()).toBe("T EH1 S T");
-  expect(new Word("test").getPron(true)).toStrictEqual(["T EH1 S T"]);
-})
-
-test('getPron pronounces "object" two ways', () => {
-  expect(new Word("object").getPron()).toStrictEqual(['AA1 B JH EH0 K T', 'AH0 B JH EH1 K T'])
-})
-
-test('handles words with apostrophes', () => {
+test('constructor handles words with apostrophes', () => {
   const tis = new Word("'tis");
   const i = new Word("i'");
   expect(tis.word).toBe("'tis");
@@ -32,4 +23,13 @@ test('constructor throws error for non-strings', () => {
   expect(nil).toThrow(Error);
   expect(arr).toThrow(Error);
   expect(obj).toThrow(Error);
+})
+
+test('getPron pronounces "test" with and without rhyme', () => {
+  expect(new Word("test").getPron()).toBe("T EH1 S T");
+  expect(new Word("test").getPron(true)).toStrictEqual(["T EH1 S T"]);
+})
+
+test('getPron pronounces "object" two ways', () => {
+  expect(new Word("object").getPron()).toStrictEqual(['AA1 B JH EH0 K T', 'AH0 B JH EH1 K T'])
 })
