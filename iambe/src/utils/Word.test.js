@@ -33,3 +33,7 @@ test('getPron pronounces "test" with and without rhyme', () => {
 test('getPron pronounces "object" two ways', () => {
   expect(new Word("object").getPron()).toStrictEqual(['AA1 B JH EH0 K T', 'AH0 B JH EH1 K T'])
 })
+
+test('checkHardPron adds an S', () => {
+  expect(new Word("views").checkHardPron()).toEqual("V Y UW1 Z")
+})

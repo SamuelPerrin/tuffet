@@ -1,5 +1,6 @@
 import lexicon from './lexicon';
 import Pron from './Pron';
+import * as phonstants from './phonstants';
 
 class Word {
   /*
@@ -35,7 +36,7 @@ class Word {
       } else if (rhyme) {
         pron = lexicon[this.word];
       } else {
-        //*** if all prons have the same stresses, return first, else return list ***
+        //otherwise, if all prons have the same stresses, return first, else return list
         const stressWords = new Set();
         pron = lexicon[this.word];
         for (let prawn in pron) {
@@ -86,6 +87,42 @@ class Word {
     // pick between two prons when the only difference is the presence of an IH0 or IY0 after R (choosing IH0) ["R IH0 P AO1 R T", not "R IY0 P AO1 R T"]
 
     return newPron;
+  }
+
+  checkHardPron() {
+    /*
+     * returns a guess at the pronunciation of a word that isn't in CMUPD by pronouncing the root and affix(es) separately
+     */
+    let pron = [];
+    console.log(`in checkHardPron with ${this.word}`)
+    
+    // check if root + s can be pronounced
+    if (this.word.slice(-1) === 's' && this.word.slice(-2,-1) !== "'" && this.word.slice(0,-1) in lexicon) {
+      console.log(`in 1`)
+      const rootPron = lexicon[this.word.slice(0,-1)][0]
+      const rootPronList = rootPron.split(' ');
+      const lastPhon = rootPronList[rootPronList.length - 1];
+      if (lastPhon in phonstants.MAKES_PLURAL_WITH_S) {
+        pron = rootPron + ' S';
+      } else if (lastPhon in phonstants.MAKES_PLURAL_WITH_IZ) {
+        pron = rootPron + ' IH0 Z';
+      } else {
+        pron = rootPron + ' Z';
+      }
+    } else if ((this.word.slice(-2) === "'s" || this.word.slice(-2) === "’s") && this.word.slice(0,-2) in lexicon) {
+      const rootPron = lexicon[this.word.slice(0,-2)][0];
+      const rootPronList = rootPron.split(' ');
+      const lastPhon = rootPronList[rootPronList.length - 1];
+      if (lastPhon in phonstants.MAKES_PLURAL_WITH_S) {
+        pron = rootPron + ' S';
+      } else if (lastPhon in phonstants.MAKES_PLURAL_WITH_IZ) {
+        pron = rootPron + ' IH0 Z';
+      } else {
+        pron = rootPron + ' Z';
+      }
+    }
+
+    return pron
   }
 }
 
