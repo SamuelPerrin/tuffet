@@ -3,7 +3,7 @@ export const MAKES_PLURAL_WITH_S = {'F':true, 'K':true, 'P':true, 'T':true, 'TH'
 export const MAKES_PLURAL_WITH_IZ = {'S':true, 'Z':true, 'SH':true, 'ZH':true, 'CH':true, 'JH':true,};
 export const MAKES_PAST_WITH_T = {'F':true, 'K':true, 'P':true, 'S':true, 'SH':true, 'CH':true};
 export const MAKES_PAST_WITH_ID = {'T':true, 'D':true}
-export const VOWELS = {
+export const CMUPD_VOWELS = {
   'AA':true,
   'AE':true,
   'AH':true,
@@ -45,7 +45,7 @@ export const PREPOSITIONS = {
   'through':true,
   'to':true,
   'with':true,
-}
+};
 export const PER_PRON_OBJ = {
   'me':true,
   'thee':true,
@@ -55,7 +55,7 @@ export const PER_PRON_OBJ = {
   'us':true,
   'you':true,
   'them':true,
-}
+};
 export const PER_PRON_SUB = {
   'i':true,
   'thou':true,
@@ -65,7 +65,7 @@ export const PER_PRON_SUB = {
   'we':true,
   'you':true,
   'they':true,
-}
+};
 export const VERB_TO_BE = {
   'am':true,
   'art':true,
@@ -75,4 +75,8 @@ export const VERB_TO_BE = {
   'wast':true,
   'were':true,
   'wert':true,
-}
+};
+export const ALPHA_VOWELS = new Set(['a', 'e', 'è', 'i', 'o', 'u']);
+export const SHORT_VOWELS = {'a':'AE2 ','e':'EH2 ','è':'IH0 ','i':'IH0 ','o':'AA2 ','u':'AH2 '};
+export const LONG_VOWELS = {'a':'EY1 ','e':'IY1 ','i':'AY1 ','o':'OW1 ','u':'UW1 ','y':'AY1 '};
+export const TERM_VOWELS = {'a':'AH0 ','i':'IY2 ','o':'OW2 ','u':'UW2 '};

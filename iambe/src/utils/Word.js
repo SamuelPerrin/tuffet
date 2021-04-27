@@ -36,7 +36,7 @@ class Word {
       } else if (rhyme) {
         pron = lexicon[this.word];
       } else {
-        //otherwise, if all prons have the same stresses, return first, else return list
+        // otherwise, if all prons have the same stresses, return first, else return list
         const stressWords = new Set();
         pron = lexicon[this.word];
         for (let prawn in pron) {
@@ -96,7 +96,7 @@ class Word {
     let pron = null;
     // console.log(`in checkHardPron with ${this.word}`)
     
-    // a helper function for checkHardPron that makes different adjustments to prons based on characteristic features of the last phone
+    // a helper function that makes different adjustments to prons based on characteristic features of the last phone
     const checkLastPhon = (word, lastLet, phonstArr, elsePhon, adjust = 0, addin = '') => {
       const root = word.slice(0,-lastLet.length + adjust) + addin;
       if (word.slice(-lastLet.length) === lastLet && root in lexicon) {
@@ -210,10 +210,10 @@ class Word {
       }
     }
 
-    
-
     return pron
   }
+
+  
 }
 
 export default Word
