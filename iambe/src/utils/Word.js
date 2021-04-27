@@ -93,7 +93,7 @@ class Word {
     /*
      * returns a guess at the pronunciation of a word that isn't in CMUPD by pronouncing the root and affix(es) separately
      */
-    let pron = [];
+    let pron = null;
     // console.log(`in checkHardPron with ${this.word}`)
     
     
@@ -121,34 +121,41 @@ class Word {
     //   }
     // }
 
-    const checkLastPhon = (word, lastLet, phonstArr, elsePhon) => {
-      let pron = []
+    const checkLastPhon = (word, lastLet, phonstArr, elsePhon, lexicon) => {
+      console.log(`in checkLastPhon with word: ${word} and lexicon of type: ${typeof lexicon}`)
       if (word.slice(-1) === lastLet && word.slice(0,-lastLet.length) in lexicon) {
         const rootPron = lexicon[word.slice(0,-lastLet.length)][0];
         const rootPronList = rootPron.split(' ');
         const lastPhon = rootPronList[rootPronList.length - 1];
-        let added = false;
+
         for (let each of phonstArr) {
           if (lastPhon in each[0]) {
-            pron = rootPron + each[1];
-            added = true;
+            return rootPron + each[1];
           }
         }
-        if (!added) {
-          pron = rootPron + elsePhon;
-        }
+        return rootPron + elsePhon;
+      } else {
+        console.log(`condition ${word} ends with ${lastLet} not met`)
       }
-      return pron
+      return null;
     }
-    while (pron === []) {
+
+    console.log(`before while loop with pron: ${pron} of type ${typeof pron}`)
+
+    while (pron === null) {
+      // pron is getting reset to null after the correct pron is found, since the condition is only re-evaluated at the top of each loop
+      console.log(`in while loop with pron: ${pron} and word: ${this.word}`)
       // check if root + s can be pronounced
-      pron = checkLastPhon(this.word, "s", [[phonstants.MAKES_PLURAL_WITH_S, ' S'], [phonstants.MAKES_PLURAL_WITH_IZ, ' IH0 Z']], ' Z');
-      pron = checkLastPhon(this.word, "'s", [[phonstants.MAKES_PLURAL_WITH_S, ' S'], [phonstants.MAKES_PLURAL_WITH_IZ, ' IH0 Z']], ' Z');
+      pron = checkLastPhon(this.word, "s", [[phonstants.MAKES_PLURAL_WITH_S, ' S'], [phonstants.MAKES_PLURAL_WITH_IZ, ' IH0 Z']], ' Z', lexicon);
+      pron = checkLastPhon(this.word, "'s", [[phonstants.MAKES_PLURAL_WITH_S, ' S'], [phonstants.MAKES_PLURAL_WITH_IZ, ' IH0 Z']], ' Z', lexicon);
       
       // check if root + d can be pronounced
-      pron = checkLastPhon(this.word, "’s", [[phonstants.MAKES_PLURAL_WITH_S, ' S'], [phonstants.MAKES_PLURAL_WITH_IZ, ' IH0 Z']], ' Z');
-      pron = checkLastPhon(this.word, "ed", [[phonstants.MAKES_PAST_WITH_T, ' T'], [phonstants.MAKES_PAST_WITH_ID, ' IH0 D']], ' D');
+      pron = checkLastPhon(this.word, "’s", [[phonstants.MAKES_PLURAL_WITH_S, ' S'], [phonstants.MAKES_PLURAL_WITH_IZ, ' IH0 Z']], ' Z', lexicon);
+      pron = checkLastPhon(this.word, "ed", [[phonstants.MAKES_PAST_WITH_T, ' T'], [phonstants.MAKES_PAST_WITH_ID, ' IH0 D']], ' D', lexicon);
+      pron = pron === null ? [] : pron;
     }
+
+    console.log(`exiting while loop with pron: ${pron}`)
 
     if (this.word.slice(-2) === 'ed' && this.word.slice(0,-1) in lexicon) {
       const rootPron = lexicon[this.word.slice(0,-1)][0];
