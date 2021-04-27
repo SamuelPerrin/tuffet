@@ -121,10 +121,9 @@ class Word {
     //   }
     // }
 
-    const checkLastPhon = (word, lastLet, phonstArr, elsePhon, lexicon) => {
-      console.log(`in checkLastPhon with word: ${word} and lexicon of type: ${typeof lexicon}`)
-      if (word.slice(-1) === lastLet && word.slice(0,-lastLet.length) in lexicon) {
-        const rootPron = lexicon[word.slice(0,-lastLet.length)][0];
+    const checkLastPhon = (word, lastLet, phonstArr, elsePhon, adjust = 0, addin = '') => {
+      if (word.slice(-lastLet.length) === lastLet && (word.slice(0,-lastLet.length + adjust) + addin) in lexicon) {
+        const rootPron = lexicon[word.slice(0,-lastLet.length + adjust) + addin][0];
         const rootPronList = rootPron.split(' ');
         const lastPhon = rootPronList[rootPronList.length - 1];
 
@@ -134,55 +133,67 @@ class Word {
           }
         }
         return rootPron + elsePhon;
-      } else {
-        console.log(`condition ${word} ends with ${lastLet} not met`)
       }
       return null;
     }
 
-    console.log(`before while loop with pron: ${pron} of type ${typeof pron}`)
-
-    while (pron === null) {
-      // pron is getting reset to null after the correct pron is found, since the condition is only re-evaluated at the top of each loop
-      console.log(`in while loop with pron: ${pron} and word: ${this.word}`)
-      // check if root + s can be pronounced
-      pron = checkLastPhon(this.word, "s", [[phonstants.MAKES_PLURAL_WITH_S, ' S'], [phonstants.MAKES_PLURAL_WITH_IZ, ' IH0 Z']], ' Z', lexicon);
-      pron = checkLastPhon(this.word, "'s", [[phonstants.MAKES_PLURAL_WITH_S, ' S'], [phonstants.MAKES_PLURAL_WITH_IZ, ' IH0 Z']], ' Z', lexicon);
-      
-      // check if root + d can be pronounced
-      pron = checkLastPhon(this.word, "’s", [[phonstants.MAKES_PLURAL_WITH_S, ' S'], [phonstants.MAKES_PLURAL_WITH_IZ, ' IH0 Z']], ' Z', lexicon);
-      pron = checkLastPhon(this.word, "ed", [[phonstants.MAKES_PAST_WITH_T, ' T'], [phonstants.MAKES_PAST_WITH_ID, ' IH0 D']], ' D', lexicon);
-      pron = pron === null ? [] : pron;
-    }
-
-    console.log(`exiting while loop with pron: ${pron}`)
-
-    if (this.word.slice(-2) === 'ed' && this.word.slice(0,-1) in lexicon) {
-      const rootPron = lexicon[this.word.slice(0,-1)][0];
-      const rootPronList= rootPron.split(' ');
-      const lastPhon = rootPronList[rootPronList.length - 1];
-      if (lastPhon in phonstants.MAKES_PAST_WITH_T) {
-        pron = rootPron + ' T';
-      } else if (lastPhon in phonstants.MAKES_PAST_WITH_ID) {
-        pron = rootPron + ' IH0 D';
-      } else {
-        pron = rootPron + ' D';
-      }
-    } else if (this.word.slice(-2) === "'d" && this.word.slice(0,-2) + 'e' in lexicon) {
-      const rootPron = lexicon[this.word.slice(0,-2) + 'e'][0];
-      const rootPronList = rootPron.split(' ');
-      const lastPhon = rootPronList[rootPronList.length - 1];
-      if (lastPhon in phonstants.MAKES_PAST_WITH_T) {
-        pron = rootPron + ' T';
-      } else if (lastPhon in phonstants.MAKES_PAST_WITH_ID) {
-        pron = rootPron + ' IH0 D';
-      } else {
-        pron = rootPron + ' D';
+    // check if root + s can be pronounced
+    // check if root + d can be pronounced
+    
+    pron = checkLastPhon(this.word, "ed", [[phonstants.MAKES_PAST_WITH_T, ' T'], [phonstants.MAKES_PAST_WITH_ID, ' IH0 D']], ' D', 1);
+    if (pron !== null) return pron;
+    else {
+      pron = checkLastPhon(this.word, "s", [[phonstants.MAKES_PLURAL_WITH_S, ' S'], [phonstants.MAKES_PLURAL_WITH_IZ, ' IH0 Z']], ' Z');
+      if (pron !== null) return pron;
+      else {
+        pron = checkLastPhon(this.word, "'s", [[phonstants.MAKES_PLURAL_WITH_S, ' S'], [phonstants.MAKES_PLURAL_WITH_IZ, ' IH0 Z']], ' Z');
+        if (pron !== null) return pron;
+        else {
+          pron = checkLastPhon(this.word, "’s", [[phonstants.MAKES_PLURAL_WITH_S, ' S'], [phonstants.MAKES_PLURAL_WITH_IZ, ' IH0 Z']], ' Z');
+          if (pron !== null) return pron;
+          else {
+            pron = checkLastPhon(this.word, "es", [[[]]], ' IH0 Z');
+            if (pron !== null) return pron;
+            else {
+              pron = checkLastPhon(this.word, "ed", [[phonstants.MAKES_PAST_WITH_T, ' T'], [phonstants.MAKES_PAST_WITH_ID, ' IH0 D']], ' D');
+              if (pron !== null) return pron;
+              else {
+                pron = checkLastPhon(this.word, "'d", [[phonstants.MAKES_PAST_WITH_T, ' T'], [phonstants.MAKES_PAST_WITH_ID, ' IH0 D']], ' D', 0, 'e');
+                if (pron !== null) return pron
+              }
+            }
+          }
+        }
       }
     }
+
+    // if (this.word.slice(-2) === 'ed' && this.word.slice(0,-1) in lexicon) {
+    //   const rootPron = lexicon[this.word.slice(0,-1)][0];
+    //   const rootPronList= rootPron.split(' ');
+    //   const lastPhon = rootPronList[rootPronList.length - 1];
+    //   if (lastPhon in phonstants.MAKES_PAST_WITH_T) {
+    //     pron = rootPron + ' T';
+    //   } else if (lastPhon in phonstants.MAKES_PAST_WITH_ID) {
+    //     pron = rootPron + ' IH0 D';
+    //   } else {
+    //     pron = rootPron + ' D';
+    //   }
+    // } else 
+    // if (this.word.slice(-2) === "'d" && this.word.slice(0,-2) + 'e' in lexicon) {
+    //   const rootPron = lexicon[this.word.slice(0,-2) + 'e'][0];
+    //   const rootPronList = rootPron.split(' ');
+    //   const lastPhon = rootPronList[rootPronList.length - 1];
+    //   if (lastPhon in phonstants.MAKES_PAST_WITH_T) {
+    //     pron = rootPron + ' T';
+    //   } else if (lastPhon in phonstants.MAKES_PAST_WITH_ID) {
+    //     pron = rootPron + ' IH0 D';
+    //   } else {
+    //     pron = rootPron + ' D';
+    //   }
+    // }
 
     // check if root + ing can be pronounced
-    else if (this.word.slice(-3) === 'ing' && this.word.slice(0,-3) in lexicon) {
+    if (this.word.slice(-3) === 'ing' && this.word.slice(0,-3) in lexicon) {
       const stressStr = new Pron(lexicon[this.word.slice(0,-3)][0]).getStress();
       const lastSylStress = stressStr[stressStr.length - 1];
       if (lastSylStress === '0') {
