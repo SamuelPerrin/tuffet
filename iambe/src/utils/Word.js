@@ -96,31 +96,7 @@ class Word {
     let pron = null;
     // console.log(`in checkHardPron with ${this.word}`)
     
-    
-    // if (this.word.slice(-1) === 's' && this.word.slice(-2,-1) !== "'" && this.word.slice(0,-1) in lexicon) {
-    //   const rootPron = lexicon[this.word.slice(0,-1)][0];
-    //   const rootPronList = rootPron.split(' ');
-    //   const lastPhon = rootPronList[rootPronList.length - 1];
-    //   if (lastPhon in phonstants.MAKES_PLURAL_WITH_S) {
-    //     pron = rootPron + ' S';
-    //   } else if (lastPhon in phonstants.MAKES_PLURAL_WITH_IZ) {
-    //     pron = rootPron + ' IH0 Z';
-    //   } else {
-    //     pron = rootPron + ' Z';
-    //   }
-    // } else if ((this.word.slice(-2) === "'s" || this.word.slice(-2) === "’s") && this.word.slice(0,-2) in lexicon) {
-    //   const rootPron = lexicon[this.word.slice(0,-2)][0];
-    //   const rootPronList = rootPron.split(' ');
-    //   const lastPhon = rootPronList[rootPronList.length - 1];
-    //   if (lastPhon in phonstants.MAKES_PLURAL_WITH_S) {
-    //     pron = rootPron + ' S';
-    //   } else if (lastPhon in phonstants.MAKES_PLURAL_WITH_IZ) {
-    //     pron = rootPron + ' IH0 Z';
-    //   } else {
-    //     pron = rootPron + ' Z';
-    //   }
-    // }
-
+    // a helper function for checkHardPron that makes different adjustments to prons based on characteristic features of the last phone
     const checkLastPhon = (word, lastLet, phonstArr, elsePhon, adjust = 0, addin = '') => {
       const root = word.slice(0,-lastLet.length + adjust) + addin;
       if (word.slice(-lastLet.length) === lastLet && root in lexicon) {
@@ -138,8 +114,7 @@ class Word {
       return null;
     }
 
-    // check if root + s can be pronounced
-    // check if root + d can be pronounced
+    // check if root + -s, -'s, -es, -ed, or -'d can be pronounced
     pron = checkLastPhon(this.word, "ed", [[phonstants.MAKES_PAST_WITH_T, ' T'], [phonstants.MAKES_PAST_WITH_ID, ' IH0 D']], ' D', 1);
     if (pron !== null) return pron;
     else {
@@ -167,31 +142,7 @@ class Word {
       }
     }
 
-    // if (this.word.slice(-2) === 'ed' && this.word.slice(0,-1) in lexicon) {
-    //   const rootPron = lexicon[this.word.slice(0,-1)][0];
-    //   const rootPronList= rootPron.split(' ');
-    //   const lastPhon = rootPronList[rootPronList.length - 1];
-    //   if (lastPhon in phonstants.MAKES_PAST_WITH_T) {
-    //     pron = rootPron + ' T';
-    //   } else if (lastPhon in phonstants.MAKES_PAST_WITH_ID) {
-    //     pron = rootPron + ' IH0 D';
-    //   } else {
-    //     pron = rootPron + ' D';
-    //   }
-    // } else 
-    // if (this.word.slice(-2) === "'d" && this.word.slice(0,-2) + 'e' in lexicon) {
-    //   const rootPron = lexicon[this.word.slice(0,-2) + 'e'][0];
-    //   const rootPronList = rootPron.split(' ');
-    //   const lastPhon = rootPronList[rootPronList.length - 1];
-    //   if (lastPhon in phonstants.MAKES_PAST_WITH_T) {
-    //     pron = rootPron + ' T';
-    //   } else if (lastPhon in phonstants.MAKES_PAST_WITH_ID) {
-    //     pron = rootPron + ' IH0 D';
-    //   } else {
-    //     pron = rootPron + ' D';
-    //   }
-    // }
-
+    // a helper function that makes different adjustments to prons depending on the stress of the last syl
     const checkLastStress = (word, lastLet, afUnsEnd, afStrEnd) => {
       const root = word.slice(0,-lastLet.length);
       if (word.slice(-lastLet.length) === lastLet && root in lexicon) {
@@ -206,6 +157,7 @@ class Word {
       return null;
     }
 
+    // check if root + -ing, -less, -ness, or -ly can be pronounced
     pron = checkLastStress(this.word, 'ing', " IH3 NG", " IH0 NG");
     if (pron !== null) return pron
     else {
@@ -221,17 +173,7 @@ class Word {
       }
     }
 
-    // check if root + ing can be pronounced
-    // if (this.word.slice(-3) === 'ing' && this.word.slice(0,-3) in lexicon) {
-    //   const stressStr = new Pron(lexicon[this.word.slice(0,-3)][0]).getStress();
-    //   const lastSylStress = stressStr[stressStr.length - 1];
-    //   if (lastSylStress === '0') {
-    //     pron = lexicon[this.word.slice(0,-3)][0] + " IH3 NG";
-    //   } else {
-    //     pron = lexicon[this.word.slice(0,-3)][0] + " IH0 NG";
-    //   }
-    // }
-
+    // a helper function that tacks on an ending to a pron if the word has a given ending
     const checkEnding = (word, lastLet, subst, adjust=0) => {
       const root = word.slice(0,-lastLet.length + adjust);
       if (word.slice(-lastLet.length) === lastLet && root in lexicon) {
@@ -240,6 +182,7 @@ class Word {
       return null
     }
 
+    // check if root + -eth, -er, or -est can be pronounced
     pron = checkEnding(this.word, 'eth', ' IH0 TH');
     if (pron !== null) return pron
     else {
@@ -267,61 +210,7 @@ class Word {
       }
     }
 
-    // check if root + eth can be pronounced
-    // if (this.word.slice(-3) === 'eth' && this.word.slice(0,-3) in lexicon) {
-    //   pron = lexicon[this.word.slice(0,-3)][0] + ' IH0 TH';
-    // } else if (this.word.slice(-3) === "'th" && this.word.slice(0,-3) in lexicon) {
-    //   pron = lexicon[this.word.slice(0,-3)][0] + ' TH';
-    // } else if (this.word.slice(-3) === 'eth' && this.word.slice(0,-2) in lexicon) {
-    //   pron = lexicon[this.word.slice(0,-2)][0] + ' IH0 TH';
-    // }
-
-    // check if root + er can be pronounced
-    // else if (this.word.slice(-2) === 'er' && this.word.slice(0,-2) in lexicon) {
-    //   pron = lexicon[this.word.slice(0,-2)][0] + ' ER0';
-    // } else if (this.word.slice(-2) === 'er' && this.word.slice(0,-1) in lexicon) {
-    //   pron = lexicon[this.word.slice(0,-1)][0] + ' ER0';
-    // }
-
-    // check if root + est can be pronounced
-    // else if (this.word.slice(-3) === 'est' && this.word.slice(0,-3) in lexicon) {
-    //   pron = lexicon[this.word.slice(0,-3)][0] + ' IH0 S T';
-    // } else if (this.word.slice(-3) === 'est' && this.word.slice(0,-2) in lexicon) {
-    //   pron = lexicon[this.word.slice(0,-2)][0] + ' IH0 S T';
-    // }
-
-    // check if root + less can be pronounced
-    // else if (this.word.slice(-4) === 'less' && this.word.slice(0,-4) in lexicon) {
-    //   const stressStr = new Pron(lexicon[this.word.slice(0,-4)][0]).getStress();
-    //   const lastSylStress = stressStr[stressStr.length - 1];
-    //   if (lastSylStress === '0') {
-    //     pron = lexicon[this.word.slice(0,-4)][0] + ' L AH3 S';
-    //   } else {
-    //     pron = lexicon[this.word.slice(0,-4)][0] + ' L AH0 S';
-    //   }
-    // }
-
-    // check if root + ness can be pronounced
-    // else if (this.word.slice(-4) === 'ness' && this.word.slice(0,-4) in lexicon) {
-    //   const stressStr = new Pron(lexicon[this.word.slice(0,-4)][0]).getStress();
-    //   const lastSylStress = stressStr[stressStr.length - 1];
-    //   if (lastSylStress === '0') {
-    //     pron = lexicon[this.word.slice(0,-4)][0] + ' N AH3 S';
-    //   } else {
-    //     pron = lexicon[this.word.slice(0,-4)][0] + ' N AH0 S';
-    //   }
-    // }
-
-    // check if root + ly can be pronounced
-    // else if (this.word.slice(-2) === 'ly' && this.word.slice(0,-2) in lexicon) {
-    //   const stressStr = new Pron(lexicon[this.word.slice(0,-2)][0]).getStress();
-    //   const lastSylStress = stressStr[stressStr.length - 1];
-    //   if (lastSylStress === '0') {
-    //     pron = lexicon[this.word.slice(0,-2)][0] + ' L IY3';
-    //   } else {
-    //     pron = lexicon[this.word.slice(0,-2)][0] + ' L IY0';
-    //   }
-    // }
+    
 
     return pron
   }
