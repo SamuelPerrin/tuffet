@@ -79,7 +79,7 @@ test('checkHardPron adds NESS', () => {
 
 test('checkHardPron adds LESS', () => {
   expect(new Word("loveless").checkHardPron()).toEqual("L AH1 V L AH0 S");
-  expect(new Word("fashionless").checkHardPron()).toEqual("F AE1 SH AH0 N L AH3 S");
+  expect(new Word("numberless").checkHardPron()).toEqual("N AH1 M B ER0 L AH3 S");
 })
 
 test('checkHardPron adds LY', () => {
