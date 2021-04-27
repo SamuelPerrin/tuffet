@@ -65,6 +65,7 @@ test('checkHardPron adds ETH', () => {
 test('checkHardPron adds ER', () => {
   expect(new Word("rarer").checkHardPron()).toEqual("R EH1 R ER0");
   expect(new Word("hanger").checkHardPron()).toEqual("HH AE1 NG ER0");
+  expect(new Word("ranger").checkHardPron()).toEqual("R EY1 N JH ER0");
 })
 
 test('checkHardPron adds EST', () => {

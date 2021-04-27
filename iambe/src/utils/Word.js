@@ -183,25 +183,25 @@ class Word {
     }
 
     // check if root + -eth, -er, or -est can be pronounced
-    pron = checkEnding(this.word, 'eth', ' IH0 TH');
+    pron = checkEnding(this.word, 'eth', ' IH0 TH', 1);
     if (pron !== null) return pron
     else {
       pron = checkEnding(this.word, "'th", ' TH');
       if (pron !== null) return pron
       else {
-        pron = checkEnding(this.word, "eth", ' IH0 TH', 1);
+        pron = checkEnding(this.word, "eth", ' IH0 TH');
         if (pron !== null) return pron
         else {
-          pron = checkEnding(this.word, 'er', ' ER0');
+          pron = checkEnding(this.word, 'er', ' ER0', 1);
           if (pron !== null) return pron
           else {
-            pron = checkEnding(this.word, 'er', ' ER0', 1);
+            pron = checkEnding(this.word, 'er', ' ER0');
             if (pron !== null) return pron
             else {
-              pron = checkEnding(this.word, 'est', ' IH0 S T');
+              pron = checkEnding(this.word, 'est', ' IH0 S T', 1);
               if (pron !== null) return pron
               else {
-                pron = checkEnding(this.word, 'est', ' IH0 S T', 1);
+                pron = checkEnding(this.word, 'est', ' IH0 S T');
                 if (pron !== null) return pron
               }
             }
