@@ -109,3 +109,12 @@ test('atomize handles invented but possible English words', () => {
   expect(new Word('flaytrough').atomize()).toEqual(['fl','ay','tr','ou','gh']);
   expect(new Word('thripple').atomize()).toEqual(['thr','i','pp','l','e']);
 })
+
+test('guessHardPron doesn\'t butcher invented but possible words', () => {
+  expect(new Word('yazzy').guessHardPron()).toEqual('Y AE2 Z IY2');
+  expect(new Word('roqueneous').guessHardPron()).toEqual('R AA2 K W EH0 N IY0 AH3 S');
+  expect(new Word('wrothquick').guessHardPron()).toEqual('R AA2 TH K W IH0 K');
+  // expect(new Word('gnosion').guessHardPron()).toEqual('N OW1 ZH AH0 N'); // was failing badly
+  expect(new Word('flaytrough').guessHardPron()).toEqual('F L EY1 T R AW1');
+  expect(new Word('thripple').guessHardPron()).toEqual('TH R IH0 P AH0 L');
+})

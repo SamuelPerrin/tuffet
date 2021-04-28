@@ -334,7 +334,7 @@ class Word {
     const clusters = this.atomize();
     for (let c = 0; c < clusters.length; c++) {
       if (clusters[c].length === 1) {
-        if (clusters[c].length in phonstants.ALPHA_VOWELS) { // it's a vowel
+        if (clusters[c] in phonstants.ALPHA_VOWELS) { // it's a vowel
           if (clusters.length >= c+3 && clusters[c+1] in phonstants.CONSONANTS && clusters[c+2] === 'e') {// check for terminal VCe
             pron += phonstants.LONG_VOWELS[clusters[c]];
           } else if (clusters[c] === 'e') { // letter is e
@@ -420,10 +420,10 @@ class Word {
     pron = pron.trim();
 
     // check for mistakes related to 'tion' and 'ed'
-    if ('tion' in this.word && 'T AH0 N' in pron) {
-      if ('AE2 T AH0 N' in pron) pron = pron.replace('AE2 T AH0 N', 'EY1 SH AH0 N');
-      else if ('AH2 T AH0 N' in pron) pron = pron.replace('AH2 T AH0 N', 'UW1 SH AH0 N');
-      else if ('AA2 T AH0 N' in pron) pron = pron.replace('AA2 T AH0 N', 'OW1 SH AH0 N');
+    if (this.word.includes('tion') && pron.includes('T AH0 N')) {
+      if (pron.includes('AE2 T AH0 N')) pron = pron.replace('AE2 T AH0 N', 'EY1 SH AH0 N');
+      else if (pron.includes('AH2 T AH0 N')) pron = pron.replace('AH2 T AH0 N', 'UW1 SH AH0 N');
+      else if (pron.includes('AA2 T AH0 N')) pron = pron.replace('AA2 T AH0 N', 'OW1 SH AH0 N');
       else pron = pron.replace('T AH0 N', 'SH AH0 N');
     } else if (this.word.slice(-2) === 'ed' && pron.slice(-3,-2) in ['F', 'K', 'P', 'S']) pron = pron.slice(0,-1) + 'T';
 
