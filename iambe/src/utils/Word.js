@@ -325,6 +325,110 @@ class Word {
 
     return atoms;
   }
+
+  guessHardPron() {
+    /*
+     * returns a guess at the pronunciation of a word that isn't in the lexicon by guessing for each vowel- and consonant-cluster
+     */
+    let pron = '';
+    const clusters = this.atomize();
+    for (let c = 0; c < clusters.length; c++) {
+      if (clusters[c].length === 1) {
+        if (clusters[c].length in phonstants.ALPHA_VOWELS) { // it's a vowel
+          if (clusters.length >= c+3 && clusters[c+1] in phonstants.CONSONANTS && clusters[c+2] === 'e') {// check for terminal VCe
+            pron += phonstants.LONG_VOWELS[clusters[c]];
+          } else if (clusters[c] === 'e') { // letter is e
+            if (clusters.length === c+2) { // e is penult cluster
+              if (pron.slice(-2,-1) === 'L' && pron.slice(-4,-3).toLowerCase() in phonstants.CONSONANTS) { // is this for "whistled"?
+                pron = pron.slice(0,-2) + 'AH0 L ';
+              } else if (pron.slice(-2,-1) === 'R' && pron.length >= 4 && pron.slice(-4,-3) in ['B','C','D','F','G','K','P','T','V']) {
+                pron += 'IH0 '; // not sure this rule is right: Cre
+              } else if (clusters[c+1] === 'd') { // ends in ed
+                if (pron.slice(-2,-1) in ['T','D']) {
+                  pron += 'IH0 ';
+                } else continue
+              } else if (clusters[c+1] === 's') { // ends in es
+                pron += 'IH0 ' // this might be wrong
+              } else pron += 'EH2 ';
+            } else if (clusters.length === c+1) { // e is last cluster
+              if (pron.slice(-2,-1) === 'L' && pron.slice(-4,-3).toLowerCase() in phonstants.CONSONANTS) { // terminal Cle
+                pron = pron.slice(0,-2) + 'AH0 L ';
+              }
+            } else pron += 'EH0 ';
+          } else if (c+1 === clusters.length) { // last cluster is non-e vowel
+            pron += phonstants.TERM_VOWELS[clusters[c]];
+          } else { // vowel isn't e and isn't before 'silent' e and isn't terminal
+            pron += phonstants.SHORT_VOWELS[clusters[c]];
+          }
+        } else if (clusters[c] in phonstants.CONSONANTS) { // it's a single consonant
+          pron += phonstants.CONSONANTS[clusters[c]];
+        } else if (clusters[c] === 'r') { // it's an r
+          pron += 'R ';
+        } else if (clusters[c] === 'y') { // it's a y
+          if (c === 0) pron += 'Y '; // it's an initial Y
+          else if (clusters.length >= c+2  && clusters[c+1] in phonstants.CONSONANTS && clusters[c+2] === 'e') { // it's yCe
+            pron += phonstants.LONG_VOWELS[clusters[c]];
+          } else if (clusters[c-1][0] in phonstants.CONSONANTS) { // y is preceded by a consonant cluster
+            if (clusters.length > 2) pron += 'IY2 ';
+            else pron += 'AY1 ';
+          } else pron += 'IY2 ';
+        } else if (clusters[c] === 'w') pron += 'W ';
+      } else if (clusters[c].length === 2) {
+        if (clusters[c] in phonstants.DIGRAPHS) pron += phonstants.DIGRAPHS[clusters[c]];
+        else if (clusters[c] in phonstants.DIGRAMS) pron += phonstants.DIGRAMS[clusters[c]];
+        else if (clusters[c].slice(-1) === 'r') {
+          if (clusters[c].slice(-2,-1) in phonstants.ALPHA_VOWELS) {
+            pron += phonstants.VOWEL_R[clusters[c]];
+          }
+        } else if (clusters[c].slice(-1) in phonstants.CONSONANTS) {
+          for (let char in clusters[c]) {
+            pron += phonstants.CONSONANTS[char];
+          }
+        } else if (clusters[c].slice(0,1) in phonstants.ALPHA_VOWELS && clusters[c].slice(1,2) in phonstants.ALPHA_VOWELS) {
+          pron += phonstants.LONG_VOWELS[clusters[c].slice(0,1)];
+          pron += phonstants.SHORT_VOWELS[clusters[c].slice(1,2)];
+        }
+      } else if (clusters[c].length === 3) { 
+        if (clusters[c] in phonstants.TRIGRAPHS) pron += phonstants.TRIGRAPHS[clusters[c]];
+        else if (clusters[c] in phonstants.TRIGRAMS) pron += phonstants.TRIGRAMS[clusters[c]];
+        else if (clusters[c] in phonstants.DIGRAPH_R) pron += phonstants.DIGRAPH_R[clusters[c]];
+        else if (clusters[c].slice(-1) in phonstants.CONSONANTS || clusters[c].slice(-1) === 'r') { // weird cons cluster ending in r (?)
+          if (clusters[c].slice(0,2) in phonstants.DIGRAMS) pron += phonstants.DIGRAMS[clusters[c].slice(0,2)] + 'R ';
+        }
+      } else if (clusters[c].length === 4) {
+        if (clusters[c].slice(0,2) in phonstants.DIGRAMS) {
+          pron += phonstants.DIGRAMS[clusters[c].slice(0,2)]
+          if (clusters[c].slice(2) in phonstants.DIGRAMS) {
+            pron += phonstants.DIGRAMS[clusters[c].slice(2)]
+          } else if (clusters[c].slice(2) in phonstants.VOWEL_R) pron += phonstants.VOWEL_R[clusters[c].slice(2)]
+        } else if (clusters[c].slice(0,2) in phonstants.VOWEL_R) {
+          pron += phonstants.VOWEL_R[clusters[c].slice(0,2)];
+          if (clusters[c].slice(2) in phonstants.VOWEL_R) pron += phonstants.VOWEL_R[clusters[c].slice(2)];
+          else if (clusters[c].slice(2) in phonstants.DIGRAMS) pron += phonstants.DIGRAM[clusters[c].slice(2)];
+        } else {
+          for (let char in clusters[c]) {
+            if (char in phonstants.CONSONANTS) pron += phonstants.CONSONANTS[char];
+          }
+        }
+      } else if (clusters[c].length > 4) {
+          for (let char in clusters[c]) {
+            if (char in phonstants.CONSONANTS) pron += phonstants.CONSONANTS[char];
+          }
+      }
+    }
+
+    pron = pron.trim();
+
+    // check for mistakes related to 'tion' and 'ed'
+    if ('tion' in this.word && 'T AH0 N' in pron) {
+      if ('AE2 T AH0 N' in pron) pron = pron.replace('AE2 T AH0 N', 'EY1 SH AH0 N');
+      else if ('AH2 T AH0 N' in pron) pron = pron.replace('AH2 T AH0 N', 'UW1 SH AH0 N');
+      else if ('AA2 T AH0 N' in pron) pron = pron.replace('AA2 T AH0 N', 'OW1 SH AH0 N');
+      else pron = pron.replace('T AH0 N', 'SH AH0 N');
+    } else if (this.word.slice(-2) === 'ed' && pron.slice(-3,-2) in ['F', 'K', 'P', 'S']) pron = pron.slice(0,-1) + 'T';
+
+    return pron
+  }
 }
 
 export default Word
