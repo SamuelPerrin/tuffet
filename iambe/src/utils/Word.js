@@ -429,6 +429,16 @@ class Word {
 
     return pron
   }
+
+  getHardPron() {
+    /*
+     * returns a guess at the pronunciation of a word that isn't in the lexicon
+     */
+    const check = this.checkHardPron();
+    if (check.length > 0) return check;
+    const guess = this.guessHardPron();
+    if (guess.length > 0) return guess;
+  }
 }
 
 export default Word

@@ -118,3 +118,11 @@ test('guessHardPron doesn\'t butcher invented but possible words', () => {
   expect(new Word('flaytrough').guessHardPron()).toEqual('F L EY1 T R AW1');
   expect(new Word('thripple').guessHardPron()).toEqual('TH R IH0 P AH0 L');
 })
+
+test('getHardPron uses checkHardPron correctly', () => {
+  expect(new Word("future's").getHardPron()).toEqual(new Word("future's").getPron());
+  expect(new Word("gazes").getHardPron()).toEqual(new Word("gazes").getPron());
+  expect(new Word("gathered").getHardPron()).toEqual("G AE1 DH ER0 D");
+  expect(new Word("loveless").getHardPron()).toEqual("L AH1 V L AH0 S");
+  expect(new Word("hardness").getHardPron()).toEqual("HH AA1 R D N AH0 S");
+})
