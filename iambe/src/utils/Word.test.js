@@ -87,3 +87,25 @@ test('checkHardPron adds LY', () => {
   expect(new Word("plainly").checkHardPron()).toEqual("P L EY1 N L IY0");
   expect(new Word("openly").checkHardPron()).toEqual("OW1 P AH0 N L IY3");
 })
+
+test('atomize handles diverse words', () => {
+  expect(new Word('test').atomize()).toEqual(['t','e','st']);
+  expect(new Word('splotchy').atomize()).toEqual(['spl','o','tch','y']);
+  expect(new Word('tough').atomize()).toEqual(['t', 'ou','gh']);
+  expect(new Word('pleaded').atomize()).toEqual(['pl','ea','d','e','d']);
+  expect(new Word('screaming').atomize()).toEqual(['scr','ea','m','i','ng']);
+  expect(new Word('quagmire').atomize()).toEqual(['qu','a','gm','ire']);
+  expect(new Word('rawhide').atomize()).toEqual(['r','aw','h','i','d','e']);
+  expect(new Word('whenever').atomize()).toEqual(['wh','e', 'n', 'e','v','er']);
+  expect(new Word('equipped').atomize()).toEqual(['e','qu','i','pp','e','d']);
+})
+
+test('atomize handles invented but possible English words', () => {
+  expect(new Word('yazzy').atomize()).toEqual(['y','a','zz','y']);
+  expect(new Word('roqueneous').atomize()).toEqual(['r','o','qu','e','n','eou','s']);
+  expect(new Word('filtharveally').atomize()).toEqual(['f','i','lth','ar','v','ea','ll','y']);
+  expect(new Word('wrothquick').atomize()).toEqual(['wr','o','th','qu','i','ck']);
+  expect(new Word('gnosion').atomize()).toEqual(['gn','o','s','io','n']);
+  expect(new Word('flaytrough').atomize()).toEqual(['fl','ay','tr','ou','gh']);
+  expect(new Word('thripple').atomize()).toEqual(['thr','i','pp','l','e']);
+})

@@ -218,11 +218,14 @@ class Word {
      * returns a sequential list of the vowel- and consonant-clusters that make up the word's spelling, so that its pronunciation can be guessed at
      */
     let atom = '';
-    const atoms = []
+    const atoms = [];
     for (let alph of this.word) {
       if (alph in phonstants.ALPHA_VOWELS) {
         if (atom.length === 0 || atom.slice(-1) in phonstants.ALPHA_VOWELS) {
           atom += alph;
+        } else if (atom.slice(-1) in phonstants.CONSONANTS) {
+          atoms.push(atom);
+          atom = alph;
         } else switch (atom.slice(-1)) {
           case 'r':
             if (atom.length > 1 && atom.slice(-2,-1) in phonstants.ALPHA_VOWELS) {
@@ -255,15 +258,15 @@ class Word {
         if (atom.length === 0) {
           atom = alph;
         } else if (atom.slice(-1) in phonstants.ALPHA_VOWELS) {
-          atoms.push(atom);
-          atom = alph;
-        } else if (atom.slice(-1) in phonstants.CONSONANTS) {
-          if (atom.length === 2 && alph === 'l') {
             atoms.push(atom);
             atom = alph;
-          } else {
-            atom += alph;
-          }
+        } else if (atom.slice(-1) in phonstants.CONSONANTS) {
+            if (atom.length === 2 && alph === 'l' && !((atom + alph) in phonstants.TRIGRAMS)) {
+              atoms.push(atom);
+              atom = alph;
+            } else {
+              atom += alph;
+            }
         } else switch (atom.slice(-1)) {
             case 'r':
             case 'y':
@@ -271,12 +274,56 @@ class Word {
               atom = alph;
               break;
             case 'w':
+              if (atom.length > 1 && atom.slice(-2,-1) in phonstants.ALPHA_VOWELS) {
+                atoms.push(atom);
+                atom = alph;
+              } else if (atom.length > 1 && atom.slice(-2,-1) in phonstants.CONSONANTS) {
+                  atom += alph;
+              } else if (atom.length === 1) {
+                  atom += alph;
+              }
               break;
             default:
               break;
           }
+      } else if (alph === 'r') {
+          if (atom.length === 0) atom = alph;
+          else if (atom.slice(-1) === 'y') {
+            atoms.push(atom);
+            atom = alph;
+          } else {
+            atom += 'r'
+          }
+      } else if (alph === 'w') {
+        if (atom.length === 0) atom = alph;
+        else if (atom.slice(-1) in phonstants.ALPHA_VOWELS) {
+          atom += alph;
+          atoms.push(atom);
+          atom = '';
+        } else if (atom.slice(-1) in phonstants.CONSONANTS) atom += alph;
+          else if (atom.slice(-1) in ['r', 'y']) {
+            atoms.push(atom)
+            atom = alph;
+          }
+      } else if (alph === 'y') {
+        if (atom.length === 0) atom = alph;
+        else if (atom.slice(-1) in phonstants.ALPHA_VOWELS) atom += alph;
+        else if (atom.slice(-1) in phonstants.CONSONANTS) {
+          atoms.push(atom);
+          atom = alph;
+        } else if (atom.slice(-1) in ['r', 'w']) {
+          atoms.push(atom);
+          atom = alph;
+        }
+      } else if (alph === 'q') {
+        if (atom !== '') {
+          atoms.push(atom);
+          atom = alph;
+        } else atom = alph;
       }
-    }
+    } if (atom !== '') atoms.push(atom);
+
+    return atoms;
   }
 }
 
