@@ -213,7 +213,71 @@ class Word {
     return pron
   }
 
-  
+  atomize() {
+    /*
+     * returns a sequential list of the vowel- and consonant-clusters that make up the word's spelling, so that its pronunciation can be guessed at
+     */
+    let atom = '';
+    const atoms = []
+    for (let alph of this.word) {
+      if (alph in phonstants.ALPHA_VOWELS) {
+        if (atom.length === 0 || atom.slice(-1) in phonstants.ALPHA_VOWELS) {
+          atom += alph;
+        } else switch (atom.slice(-1)) {
+          case 'r':
+            if (atom.length > 1 && atom.slice(-2,-1) in phonstants.ALPHA_VOWELS) {
+              if (alph === 'e') {
+                atom += alph;
+              } else {
+                atoms.push(atom);
+                atom = alph;
+              }
+            } else {
+              atoms.push(atom);
+              atom = alph;
+            }
+            break;
+          case 'w':
+          case 'y':
+            atoms.push(atom);
+            atom = alph;
+            break;
+          case 'q':
+            atom += alph;
+            atoms.push(atom);
+            atom = '';
+            break;
+          default:
+            console.log(`in Word.atomize with ${this.word} and got this letter I don't know what to do with: ${alph}`)
+            break;
+        }
+      } else if (alph in phonstants.CONSONANTS) {
+        if (atom.length === 0) {
+          atom = alph;
+        } else if (atom.slice(-1) in phonstants.ALPHA_VOWELS) {
+          atoms.push(atom);
+          atom = alph;
+        } else if (atom.slice(-1) in phonstants.CONSONANTS) {
+          if (atom.length === 2 && alph === 'l') {
+            atoms.push(atom);
+            atom = alph;
+          } else {
+            atom += alph;
+          }
+        } else switch (atom.slice(-1)) {
+            case 'r':
+            case 'y':
+              atoms.push(atom);
+              atom = alph;
+              break;
+            case 'w':
+              break;
+            default:
+              break;
+          }
+      }
+    }
+  }
 }
 
 export default Word
