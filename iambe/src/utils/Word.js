@@ -61,6 +61,7 @@ class Word {
   correctPron(pron) {
     /*
      * Checks for certain fixable problems in individual prons or lists of prons, returning fixed pron(s)
+     * Called by: Word.getPron
      */
 
     const ENDS_IN_DACTYL = {'100':true,'0100':true,'2100':true,'20100':true,'10200':true};
@@ -84,6 +85,8 @@ class Word {
     }
 
     // Resolve problems with lists of prons
+
+    // *** come back to this with a diff-checking solution ***
     // pick between two prons when the only difference is pronouncing unstressed syl as AH0 or IH0 (picking IH0)
 
     // pick between two prons when the only difference is the presence of a T after an N (choosing T)
@@ -99,7 +102,8 @@ class Word {
 
   checkHardPron() {
     /*
-     * returns a guess at the pronunciation of a word that isn't in CMUPD by pronouncing the root and affix(es) separately
+     * returns a guess at the pronunciation of a word that isn't in CMUPD by pronouncing the root and affix(es) separately.
+     * Called by: Word.getHardPron()
      */
     let pron = null;
     // console.log(`in checkHardPron with ${this.word}`)
@@ -223,7 +227,8 @@ class Word {
 
   atomize() {
     /*
-     * returns a sequential list of the vowel- and consonant-clusters that make up the word's spelling, so that its pronunciation can be guessed at
+     * returns a sequential list of the vowel- and consonant-clusters that make up the word's spelling, so that its pronunciation can be guessed at.
+     * Called by: Word.guessHardPron
      */
     let atom = '';
     const atoms = [];
@@ -336,7 +341,8 @@ class Word {
 
   guessHardPron() {
     /*
-     * returns a guess at the pronunciation of a word that isn't in the lexicon by guessing for each vowel- and consonant-cluster
+     * returns a guess at the pronunciation of a word that isn't in the lexicon by guessing for each vowel- and consonant-cluster.
+     * Called by: Word.getHardPron
      */
     let pron = '';
     const clusters = this.atomize();
@@ -347,9 +353,10 @@ class Word {
             pron += phonstants.LONG_VOWELS[clusters[c]];
           } else if (clusters[c] === 'e') { // letter is e
             if (clusters.length === c+2) { // e is penult cluster
-              if (pron.slice(-2,-1) === 'L' && pron.slice(-4,-3).toLowerCase() in phonstants.CONSONANTS) { // is this for "whistled"?
-                pron = pron.slice(0,-2) + 'AH0 L ';
-              } else if (pron.slice(-2,-1) === 'R' && pron.length >= 4 && pron.slice(-4,-3) in ['B','C','D','F','G','K','P','T','V']) {
+              // if (pron.slice(-2,-1) === 'L' && pron.slice(-4,-3).toLowerCase() in phonstants.CONSONANTS) { // is this for "whistled"? turned off for "pleft"
+              //   pron = pron.slice(0,-2) + 'AH0 L ';
+              // } else 
+              if (pron.slice(-2,-1) === 'R' && pron.length >= 4 && pron.slice(-4,-3) in ['B','C','D','F','G','K','P','T','V']) {
                 pron += 'IH0 '; // not sure this rule is right: Cre
               } else if (clusters[c+1] === 'd') { // ends in ed
                 if (pron.slice(-2,-1) in ['T','D']) {
@@ -435,17 +442,37 @@ class Word {
       else pron = pron.replace('T AH0 N', 'SH AH0 N');
     } else if (this.word.slice(-2) === 'ed' && pron.slice(-3,-2) in ['F', 'K', 'P', 'S']) pron = pron.slice(0,-1) + 'T';
 
+    pron = this.guessStress(pron);
+
     return pron
   }
 
   getHardPron() {
     /*
-     * returns a guess at the pronunciation of a word that isn't in the lexicon
+     * returns a guess at the pronunciation of a word that isn't in the lexicon.
+     * Called by: Word.getPron
      */
     const check = this.checkHardPron();
     if (check.length > 0) return check;
     const guess = this.guessHardPron();
     if (guess.length > 0) return guess;
+  }
+
+  guessStress(pron) {
+    /*
+     * makes a guess at the correct stress for a word from guessHardPron and returns the corrected pron.
+     * Called by: Word.guessHardPron
+     */
+    // add primary stress to a one-syllable pron
+    if (new Pron(pron).getStress().length === 1 && !pron.includes('1')) {
+      for (let char of pron) {
+        if (['2','3','4','0'].includes(char)) {
+          pron = pron.replace(char,'1');
+        }
+      }
+    }
+
+    return pron;
   }
 }
 

@@ -117,6 +117,7 @@ test('guessHardPron doesn\'t butcher invented but possible words', () => {
   // expect(new Word('gnosion').guessHardPron()).toEqual('N OW1 ZH AH0 N'); // was failing badly
   expect(new Word('flaytrough').guessHardPron()).toEqual('F L EY1 T R AW1');
   expect(new Word('thripple').guessHardPron()).toEqual('TH R IH0 P AH0 L');
+  expect(new Word('pleft').guessHardPron()).toEqual('P L EH1 F T');
 })
 
 test('getHardPron uses checkHardPron correctly', () => {
@@ -132,4 +133,12 @@ test('correctPron handles words ending in a dactyl', () => {
   expect(new Word("doable").correctPron('D UW1 AH0 B AH0 L')).toEqual('D UW1 AH0 B AH0 L');
   expect(new Word("city").correctPron('S IH1 T IY0')).toEqual('S IH1 T IY0');
   expect(new Word("mystery").correctPron(["M IH1 S T ER0 IY0", "M IH1 S T R IY0"])).toEqual(["M IH1 S T ER0 IY3", "M IH1 S T R IY0"]);
+})
+
+test('guessStress gives primary stress to monosyllables', () => {
+  expect(new Word('one').guessStress('W AH1 N')).toEqual('W AH1 N');
+  expect(new Word('two').guessStress('T UW2')).toEqual('T UW1');
+  expect(new Word('three').guessStress('TH R IY3')).toEqual('TH R IY1');
+  expect(new Word('four').guessStress('F AO4 R')).toEqual('F AO1 R');
+  expect(new Word('nil').guessStress('N IH0 L')).toEqual('N IH1 L');
 })
