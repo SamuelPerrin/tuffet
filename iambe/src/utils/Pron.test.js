@@ -23,7 +23,7 @@ test('constructor throws error for non-string args', () => {
   expect(obj).toThrow(Error);
 })
 
-test('getStress determines stress of "test"', () => {
+test('getStress determines stress of "test" and "openly"', () => {
   const test = new Pron("T EH1 S T");
   const testStress = test.getStress();
   expect(testStress).toBe("1");
@@ -35,4 +35,10 @@ test('getStress determines stress of "unusupecting"', () => {
   const unsuspecting = new Pron("AH2 N S AH0 S P EH1 K T IH0 NG");
   const stress = unsuspecting.getStress();
   expect(stress).toBe('2010');
+})
+
+test('getLastPrime finds last primary stress correctly', () => {
+  expect(new Pron("test").getLastPrime(["T", "EH1", "S", "T"])).toBe(1);
+  expect(new Pron("unsuspecting").getLastPrime(["AH2", "N", "S", "AH0", "S", "P", "EH1", "K", "T", "IH0", "NG"])).toBe(6);
+  expect(new Pron("yet").getLastPrime(["Y", "EH3", "T"])).toBe(1);
 })

@@ -21,6 +21,45 @@ class Pron {
     stresses = stresses.join('');
     return stresses
   }
+
+  getLastPrime(pron) {
+    /*
+     * returns the index of the last primary-stressed syllable in a list of CMUPD phones.
+     * if there is no primary-stressed syllable, returns the index of the last, most-stressed syllable
+     */
+    let ind = 'N/A';
+    for (let phon in pron) {
+      if (pron[phon].includes('1')) {
+        ind = Number(phon);
+      }
+    } if (ind !== 'N/A') {
+      return ind;
+    } else {
+      for (let phon in pron) {
+        if (pron[phon].includes('2')) {
+          ind = Number(phon);
+        }
+      } if (ind !== 'N/A') {
+        return ind;
+      } else {
+        for (let phon in pron) {
+          if (pron[phon].includes('3')) {
+            ind = Number(phon);
+          }
+        } if (ind !== 'N/A') {
+          return ind;
+        } else {
+          for (let phon in pron) {
+            if (pron[phon].includes('0')) {
+              ind = Number(phon);
+            }
+          } if (ind !== 'N/A') {
+            return ind;
+          }
+        }
+      }
+    } return ind;
+  }
 }
 
 export default Pron
