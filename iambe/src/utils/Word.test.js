@@ -126,3 +126,10 @@ test('getHardPron uses checkHardPron correctly', () => {
   expect(new Word("loveless").getHardPron()).toEqual("L AH1 V L AH0 S");
   expect(new Word("hardness").getHardPron()).toEqual("HH AA1 R D N AH0 S");
 })
+
+test('correctPron handles words ending in a dactyl', () => {
+  expect(new Word("openly").correctPron('OW1 P AH0 N L IY0')).toEqual('OW1 P AH0 N L IY3');
+  expect(new Word("doable").correctPron('D UW1 AH0 B AH0 L')).toEqual('D UW1 AH0 B AH0 L');
+  expect(new Word("city").correctPron('S IH1 T IY0')).toEqual('S IH1 T IY0');
+  expect(new Word("mystery").correctPron(["M IH1 S T ER0 IY0", "M IH1 S T R IY0"])).toEqual(["M IH1 S T ER0 IY3", "M IH1 S T R IY0"]);
+})

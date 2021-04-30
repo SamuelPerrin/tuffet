@@ -27,6 +27,8 @@ test('getStress determines stress of "test"', () => {
   const test = new Pron("T EH1 S T");
   const testStress = test.getStress();
   expect(testStress).toBe("1");
+  const openly = new Pron("OW1 P AH0 N L IY0");
+  expect(openly.getStress()).toBe("100");
 })
 
 test('getStress determines stress of "unusupecting"', () => {

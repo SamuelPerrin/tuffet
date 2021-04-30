@@ -26,7 +26,7 @@ class Word {
      * Output is an array of strings for words with multiple possible pronunciations.
      * When the parameter `rhyme` is true, output is always a list of possible pronunciations.
      */
-    let corrected = false;
+
     let pron = '';
 
     // Check the lexicon for the pronunciation
@@ -39,7 +39,7 @@ class Word {
         // otherwise, if all prons have the same stresses, return first, else return list
         const stressWords = new Set();
         pron = lexicon[this.word];
-        for (let prawn in pron) {
+        for (let prawn of pron) {
           stressWords.add(new Pron(prawn).getStress());
         }
         if (stressWords.length === 1) {
@@ -50,29 +50,37 @@ class Word {
 
     // if the lexicon doesn't have the pronunciation, get it from CMUPD, by guessing, or by asking the user
     else {
-      // *** add in missing logic here for CMUPD and getHardPron ***
+      // *** add in missing logic here for CMUPD ***
+      pron = this.getHardPron();
     }
-
-    if (!corrected) {
-      pron = this.correct_pron(pron);
-    }
+    pron = this.correctPron(pron);
 
     return pron;
   }
 
-  correct_pron(pron) {
+  correctPron(pron) {
     /*
      * Checks for certain fixable problems in individual prons or lists of prons, returning fixed pron(s)
      */
 
+    const ENDS_IN_DACTYL = {'100':true,'0100':true,'2100':true,'20100':true,'10200':true};
     let newPron = pron;
 
     // Correct problems with individual prons
     // add minimal stress to some -y suffixes
-    if (pron instanceof String) {
-      // *** insert logic once Pron.getStress is written ***
-    } else if(pron instanceof Array) {
-      // *** insert logic once Pron.getStress is written ***
+    if (typeof pron === 'string') {
+      if (new Pron(pron).getStress() in ENDS_IN_DACTYL && pron.slice(-3) === 'IY0') {
+        newPron = pron.slice(0,-1) + '3';
+      }
+    } else if(Array.isArray(pron)) {
+      newPron = [];
+      for (let nunc of pron) {
+        if (new Pron(nunc).getStress() in ENDS_IN_DACTYL && nunc.slice(-3) === 'IY0') {
+          newPron.push(nunc.slice(0,-1) + '3');
+        } else {
+          newPron.push(nunc);
+        }
+      }
     }
 
     // Resolve problems with lists of prons
