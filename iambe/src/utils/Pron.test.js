@@ -24,8 +24,8 @@ test('constructor throws error for non-string args', () => {
 })
 
 test('getStress determines stress of "test" and "openly"', () => {
-  const test = new Pron("T EH1 S T");
-  const testStress = test.getStress();
+  const testWord = new Pron("T EH1 S T");
+  const testStress = testWord.getStress();
   expect(testStress).toBe("1");
   const openly = new Pron("OW1 P AH0 N L IY0");
   expect(openly.getStress()).toBe("100");
@@ -38,7 +38,16 @@ test('getStress determines stress of "unusupecting"', () => {
 })
 
 test('getLastPrime finds last primary stress correctly', () => {
-  expect(new Pron("test").getLastPrime(["T", "EH1", "S", "T"])).toBe(1);
-  expect(new Pron("unsuspecting").getLastPrime(["AH2", "N", "S", "AH0", "S", "P", "EH1", "K", "T", "IH0", "NG"])).toBe(6);
-  expect(new Pron("yet").getLastPrime(["Y", "EH3", "T"])).toBe(1);
+  expect(new Pron("T EH1 S T").getLastPrime(["T", "EH1", "S", "T"])).toBe(1);
+  expect(new Pron("AH2 N S AH0 S P EH1 K T IH0 NG").getLastPrime(["AH2", "N", "S", "AH0", "S", "P", "EH1", "K", "T", "IH0", "NG"])).toBe(6);
+  expect(new Pron("Y EH3 T").getLastPrime(["Y", "EH3", "T"])).toBe(1);
+})
+
+test('isAVowel identifies vowels correctly', () => {
+  const testWord = new Pron("T EH1 S T");
+  expect(testWord.isAVowel("EH1")).toBe(true);
+  expect(testWord.isAVowel("T")).toBe(false);
+  expect(testWord.isAVowel("S T")).toBe(false);
+  expect(testWord.isAVowel("EH ")).toBe(false);
+  expect(testWord.isAVowel(" EH")).toBe(false);
 })

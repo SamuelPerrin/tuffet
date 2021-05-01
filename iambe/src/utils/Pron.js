@@ -1,3 +1,4 @@
+import * as phonstants from './phonstants';
 
 class Pron {
   /*
@@ -59,6 +60,15 @@ class Pron {
         }
       }
     } return ind;
+  }
+
+  isAVowel(phon) {
+    /*
+     * returns True if phon is a CMUPD vowel, else returns false
+     */
+    if (phon.length === 3 && phon.slice(0,2) in phonstants.CMUPD_VOWELS && ['1','2','3','4','0'].includes(phon.slice(2))) {
+      return true;
+    } return false;
   }
 }
 
