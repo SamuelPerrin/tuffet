@@ -20,6 +20,25 @@ class Line {
 
     return line.split(' ');
   }
+
+  getTerm(n=1) {
+    /*
+     * returns a list in reverse order of the last n words in the line, where n is 1 by default
+     */
+    const tokens = this.getTokens();
+    let term = [];
+    if (tokens.length >= n) {
+      for (let i=0; i < n; i++) {
+        term.push(tokens.slice(-1-i)[0]);
+      }
+    } else {
+      for (let i=0; i<tokens.length; i++) {
+        term.push(tokens.slice(-1-i)[0]);
+      }
+    }
+
+    return term;
+  }
 }
 
 export default Line;

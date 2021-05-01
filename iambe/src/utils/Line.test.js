@@ -11,3 +11,8 @@ test('getTokens splits line into list and removes punctuation', () => {
   expect(newLine.getTokens()).toEqual(["'Tis",'better','to','have','loved','and','lost']);
 })
 
+test('getTerm returns a list of the last n words in the line in reverse order', () => {
+  const newLine = new Line('Let me see, then, what thereat is');
+  expect(newLine.getTerm(2)).toEqual(['is','thereat']);
+  expect(newLine.getTerm()).toEqual(['is'])
+})
