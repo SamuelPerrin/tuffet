@@ -41,6 +41,7 @@ test('getLastPrime finds last primary stress correctly', () => {
   expect(new Pron("T EH1 S T").getLastPrime(["T", "EH1", "S", "T"])).toBe(1);
   expect(new Pron("AH2 N S AH0 S P EH1 K T IH0 NG").getLastPrime(["AH2", "N", "S", "AH0", "S", "P", "EH1", "K", "T", "IH0", "NG"])).toBe(6);
   expect(new Pron("Y EH3 T").getLastPrime(["Y", "EH3", "T"])).toBe(1);
+  expect(new Pron("AH3 N S AH3 S P EH3 K T IH3 NG").getLastPrime(["AH3", "N", "S", "AH3", "S", "P", "EH3", "K", "T", "IH3", "NG"])).toBe(9);
 })
 
 test('isAVowel identifies vowels correctly', () => {
@@ -50,4 +51,46 @@ test('isAVowel identifies vowels correctly', () => {
   expect(testWord.isAVowel("S T")).toBe(false);
   expect(testWord.isAVowel("EH ")).toBe(false);
   expect(testWord.isAVowel(" EH")).toBe(false);
+})
+
+test('getRimes identifies rimes correctly for "test"', () => {
+  const testWord = new Pron("T EH1 S T");
+  const rimes = testWord.getRimes();
+  expect(rimes.rime).toBe("EH1 S T");
+  expect(rimes.nucl).toBe("EH1");
+  expect(rimes.coda).toBe("S T");
+  expect(rimes.lastRime).toEqual(rimes.rime);
+  expect(rimes.lastNucl).toEqual(rimes.nucl);
+  expect(rimes.coda).toEqual(rimes.coda);
+  expect(rimes.unstRime).toEqual('');
+  expect(rimes.unstNucl).toEqual('');
+  expect(rimes.unstCoda).toEqual('');
+})
+
+test('getRimes identifies rimes correctly for "unsuspecting"', () => {
+  const testWord = new Pron("AH2 N S AH0 S P EH1 K T IH0 NG");
+  const rimes = testWord.getRimes();
+  expect(rimes.rime).toBe("EH1 K T IH0 NG");
+  expect(rimes.nucl).toBe("EH1");
+  expect(rimes.coda).toBe("K T IH0 NG");
+  expect(rimes.lastRime).toEqual(rimes.rime);
+  expect(rimes.lastNucl).toEqual(rimes.nucl);
+  expect(rimes.coda).toEqual(rimes.coda);
+  expect(rimes.unstRime).toBe("IH0 NG");
+  expect(rimes.unstNucl).toBe("IH0");
+  expect(rimes.unstCoda).toBe("NG");
+})
+
+test('getRimes identifies rimes correctly for "objectifying"', () => {
+  const testWord = new Pron("AH2 B JH EH1 K T IH0 F AY2 IH0 NG");
+  const rimes = testWord.getRimes();
+  expect(rimes.rime).toBe("EH1 K T IH0 F AY2 IH0 NG");
+  expect(rimes.nucl).toBe("EH1");
+  expect(rimes.coda).toBe("K T IH0 F AY2 IH0 NG");
+  expect(rimes.lastRime).toBe("AY2 IH0 NG");
+  expect(rimes.lastNucl).toBe("AY2");
+  expect(rimes.lastCoda).toBe("IH0 NG");
+  expect(rimes.unstRime).toBe("IH0 NG");
+  expect(rimes.unstNucl).toBe("IH0");
+  expect(rimes.unstCoda).toBe("NG");
 })
