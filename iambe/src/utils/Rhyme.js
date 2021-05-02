@@ -50,9 +50,9 @@ class Rhyme {
      */
     
     // establish necessary parts of term1
-    const term1 = new Line(this.line1).getTerm()[0];
+    const term1 = new Line(this.line1).getTerm()[0].toLowerCase();
     if (pron1 === null) {
-      let pron1 = new Word(term1).getPron(true);
+      pron1 = new Word(term1).getPron(true);
     }
     if (pron1 instanceof Array) {
       // *** once resolvePron is written, use it here ***
@@ -63,9 +63,9 @@ class Rhyme {
     const nlLastRime1 = this.numless(rimes1.lastRime);
 
     // establish necessary parts of term2
-    const term2 = new Line(this.line2).getTerm()[0];
+    const term2 = new Line(this.line2).getTerm()[0].toLowerCase();
     if (pron2 === null) {
-      let pron2 = new Word(term2).getPron(true);
+      pron2 = new Word(term2).getPron(true);
     }
     if (pron2 instanceof Array) {
       pron2 = pron2[0];
@@ -74,15 +74,15 @@ class Rhyme {
     const nlRime2 = this.numless(rimes2.rime);
     const nlLastRime2 = this.numless(rimes2.lastRime);
 
-    let rhymeType = 'N/A'
+    let rhymeType = 'N/A';
 
     // check for full, ident, homo rhymes
     if (rimes1.rime === rimes2.rime) {
       if (pron1 !== pron2) rhymeType = 'full rhyme';
       else if (term1 === term2 || term1 + "'" === term2 || term1 === term2 + "'") {
-        rhymeType = 'identical rhyme'
+        rhymeType = 'identical rhyme';
       } else {
-        rhymeType = 'homophone rhyme'
+        rhymeType = 'homophone rhyme';
       }
     } else if ((!rimes1.rime.includes('1') || !rimes2.rime.includes('1')) && this.numless(rimes1.rime) === this.numless(rimes2.rime)) {
       rhymeType = 'full rhyme';
@@ -105,6 +105,7 @@ class Rhyme {
 
       for (let sib of phonstants.SIBILANTS) {
         if (rimes1.lastCoda.length > 0 && sib === rimes1.lastCoda.slice(-2)) {
+          console.log(`candidate for sibilant consonance: ${term1}, ${term2}`)
           for (let bis of phonstants.SIBILANTS) {
             if (bis !== sib && rimes2.lastCoda.length > 0 && bis === rimes2.lastCoda.slice(-2)) {
               rhymeType = 'sibilant assonance';
@@ -116,7 +117,7 @@ class Rhyme {
     }
 
     // check for diphthong rhymes
-    
+
 
 
     return rhymeType

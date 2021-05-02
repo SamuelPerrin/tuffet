@@ -121,6 +121,6 @@ export const RHYME_FULLNESS = {
   'nasal consonance':8,
   'N/A':0,
 };
-export const NASALS = {'M':true, 'N':true, 'NG':true};
-export const SIBILANTS = {' S':true, ' Z':true, 'SH':true, 'ZH':true};
+export const NASALS = ['M','N','NG'];
+export const SIBILANTS = [' S', ' Z', 'SH', 'SH'];
 export const DIPHTHONGS = {'AW':true, 'AY':true, 'EY':true, 'OW':true, 'OY':true};
