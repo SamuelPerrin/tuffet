@@ -89,3 +89,38 @@ export const TRIGRAMS = {'fth':'F TH ', 'ght':'T ','lch':'L CH ', 'ldr':'L D R '
 export const DIGRAPH_R = {'air':'EH1 R ','arr':'AA1 R ', 'ear':'IY1 R ', 'eer':'IY1 R ', 'eir':'IY1 R ', 'err':'EH1 R ', 'eur':'UH2 R ', 'ier':'IY1 R ', 'ior':'IY0 AO1 R ', 'irr':'ER1 ', 'oar':'AO1 R ', 'oer':'AO1 R ', 'oir':'W AA1 R ', 'oor':'UH1 R ', 'orr':'AO1 R ', 'our':'AW1 R ','urr':'ER1 '};
 export const PUNCTS_TO_DELETE = [',','⁠','.','!','?','"',';',':','(',')']; // the one that looks empty is a zero-width word-joiner
 export const PUNCTS_TO_SPACE = ['...','--','—','–','-'];
+export const RHYME_FULLNESS = {
+  'full rhyme':100,
+  'homophone rhyme':95,
+  'identical rhyme':90,
+  'promotion rhyme':80,
+  'mosaic full':79,
+  'diph-diph rhyme':76,
+  'diph-vow rhyme':75,
+  'vow-diph rhyme':74,
+  'diph-vow promotion rhyme':72,
+  'vow-diph promotion rhyme':71,
+  'diph-diph promotion rhyme':70,
+  'mosaic slant rhyme':68,
+  'sibilant assonance':66,
+  'nasal assonance':65,
+  'assonance':51,
+  'full consonance':50,
+  'promotion consonance':40,
+  'diph-vow assonance':22,
+  'vow-diph assonance':21,
+  'diph-diph assonance':20,
+  'partial consonance':19,
+  'unstressed rhyme':18,
+  'diph-vow promotion assonance':17,
+  'vow-diph promotion assonance':16,
+  'diph-diph promotion assonance':15,
+  'anisobaric rhyme':14,
+  'zero consonance':10,
+  'sibilant consonance':9,
+  'nasal consonance':8,
+  'N/A':0,
+};
+export const NASALS = {'M':true, 'N':true, 'NG':true};
+export const SIBILANTS = {' S':true, ' Z':true, 'SH':true, 'ZH':true};
+export const DIPHTHONGS = {'AW':true, 'AY':true, 'EY':true, 'OW':true, 'OY':true};
