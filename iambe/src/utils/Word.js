@@ -3,9 +3,7 @@ import Pron from './Pron';
 import * as phonstants from './phonstants';
 
 class Word {
-  /*
-   * A string that represents a word.
-   */
+  // A string that represents a word
   constructor(word) {
     this.word = word.toLowerCase();
     if (typeof this.word !== "string" || this.word.length === 0) {
