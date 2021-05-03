@@ -451,7 +451,7 @@ class Word {
      * Called by: Word.getPron
      */
     const check = this.checkHardPron();
-    if (check.length > 0) return check;
+    if (check && check.length > 0) return check;
     const guess = this.guessHardPron();
     if (guess.length > 0) return guess;
   }
