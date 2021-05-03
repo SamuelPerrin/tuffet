@@ -122,5 +122,5 @@ export const RHYME_FULLNESS = {
   'N/A':0,
 };
 export const NASALS = ['M','N','NG'];
-export const SIBILANTS = [' S', ' Z', 'SH', 'SH'];
+export const SIBILANTS = ['S', 'Z', 'SH', 'ZH'];
 export const DIPHTHONGS = {'AW':true, 'AY':true, 'EY':true, 'OW':true, 'OY':true};

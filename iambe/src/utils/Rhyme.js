@@ -105,7 +105,6 @@ class Rhyme {
 
       for (let sib of phonstants.SIBILANTS) {
         if (rimes1.lastCoda.length > 0 && sib === rimes1.lastCoda.slice(-2)) {
-          console.log(`candidate for sibilant consonance: ${term1}, ${term2}`)
           for (let bis of phonstants.SIBILANTS) {
             if (bis !== sib && rimes2.lastCoda.length > 0 && bis === rimes2.lastCoda.slice(-2)) {
               rhymeType = 'sibilant assonance';
