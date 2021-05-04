@@ -93,3 +93,10 @@ test('getRhymeType identifies promotion diphthong assonance', () => {
   expect(seen.getRhymeType()).toBe("diph-vow promotion assonance");
   expect(size.getRhymeType()).toBe("vow-diph promotion assonance");
 })
+
+test ('getRhymeType identifies full consonance', () => {
+  const sat = new Rhyme("This is not","Where I sat");
+  const doubting = new Rhyme("I'm debating","not doubting");
+  expect(sat.getRhymeType()).toBe("full consonance");
+  expect(doubting.getRhymeType()).not.toBe("full consonance");
+})

@@ -161,6 +161,21 @@ class Rhyme {
       }
     }
 
+    // consonantal rhymes
+    if (['N/A','maybe assonance'].includes(rhymeType) && rimes1.coda === rimes2.coda) {
+      if (rimes1.coda === '' && !((rimes1.nucl + rimes2.nucl).includes('ER'))) {
+        rhymeType = 'zero consonance';
+      } else {
+        let has_vow = false;
+        
+        for (let vow of Object.keys(phonstants.CMUPD_VOWELS)) {
+          if (rimes1.coda.includes(vow)) has_vow = true;
+        }
+
+        if (!has_vow) rhymeType = 'full consonance';
+      }
+    }
+
     if (rhymeType === 'N/A') console.log(`no rhyme for ${pron1} and ${pron2}`);
 
     return rhymeType
