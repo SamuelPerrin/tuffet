@@ -84,3 +84,8 @@ test('getRhymeType identifies promotion diphthong rhymes', () => {
   expect(butterfly.getRhymeType()).toBe("diph-vow promotion rhyme");
   expect(history.getRhymeType()).toBe("vow-diph promotion rhyme");
 })
+
+test('getRhymeType identifies promotion diphthong assonance', () => {
+  const size = new Rhyme("Unluckily","That's not my size!");
+  expect(size.getRhymeType()).toBe("vow-diph promotion assonance");
+})

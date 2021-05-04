@@ -220,6 +220,18 @@ class Word {
       }
     }
 
+    // a helper function that adds a prefix
+    const checkPrefix = (word, prefixSpelling, prefixPron) => {
+      const root = word.slice(prefixSpelling.length);
+      if (word.slice(0,prefixSpelling.length) === prefixSpelling && root in lexicon) {
+        return prefixPron + lexicon[root];
+      }
+    }
+
+    // check if un + root can be pronounced
+    pron = checkPrefix(this.word, 'un', 'AH2 N');
+    if (pron !== null) return pron
+
     return pron
   }
 
