@@ -86,6 +86,10 @@ test('getRhymeType identifies promotion diphthong rhymes', () => {
 })
 
 test('getRhymeType identifies promotion diphthong assonance', () => {
+  const flight = new Rhyme("Yesterday","I took flight");
+  const seen = new Rhyme("To justify","The things I have seen");
   const size = new Rhyme("Unluckily","That's not my size!");
+  expect(flight.getRhymeType()).toBe("diph-diph promotion assonance");
+  expect(seen.getRhymeType()).toBe("diph-vow promotion assonance");
   expect(size.getRhymeType()).toBe("vow-diph promotion assonance");
 })
