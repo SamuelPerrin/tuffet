@@ -94,9 +94,30 @@ test('getRhymeType identifies promotion diphthong assonance', () => {
   expect(size.getRhymeType()).toBe("vow-diph promotion assonance");
 })
 
-test ('getRhymeType identifies full consonance', () => {
+test('getRhymeType identifies zero consonance', () => {
+  const me = new Rhyme("Tell me","How");
+  const blur = new Rhyme("I prefer","to blur");
+  expect(me.getRhymeType()).toBe("zero consonance");
+  expect(blur.getRhymeType()).not.toBe("zero consonance");
+})
+
+test('getRhymeType identifies full consonance', () => {
   const sat = new Rhyme("This is not","Where I sat");
   const doubting = new Rhyme("I'm debating","not doubting");
   expect(sat.getRhymeType()).toBe("full consonance");
   expect(doubting.getRhymeType()).not.toBe("full consonance");
+})
+
+test('getRhymeType identifies promotion consonance', () => {
+  const satisfied = new Rhyme("I'm satisfied","He said");
+  const centigrade = new Rhyme("An attitude","Of centigrade");
+  expect(satisfied.getRhymeType()).toBe("promotion consonance");
+  expect(centigrade.getRhymeType()).toBe("promotion consonance");
+})
+
+test('getRhymeType identifies partial consonance', () => {
+  const hand = new Rhyme("He said","My hand");
+  const bolts = new Rhyme("Stun myself","With bolts");
+  expect(hand.getRhymeType()).toBe("partial consonance");
+  expect(bolts.getRhymeType()).toBe("partial consonance");
 })

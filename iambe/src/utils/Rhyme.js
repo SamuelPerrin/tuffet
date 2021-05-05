@@ -176,6 +176,30 @@ class Rhyme {
       }
     }
 
+    if (['N/A','maybe assonance'].includes(rhymeType)) {
+      if ((this.numless(rimes1.lastCoda) === this.numless(rimes2.coda) && rimes2.coda !== '') || 
+      (this.numless(rimes1.coda) === this.numless(rimes2.lastCoda) && rimes1.coda !== '') ||
+      (this.numless(rimes1.lastCoda) === this.numless(rimes2.lastCoda) && rimes1.lastCoda !== '')) {
+        rhymeType = 'promotion consonance'
+      } else if (rimes1.lastCoda !== '' && rimes2.lastCoda !== '') {
+        for (let phone1 of rimes1.lastCoda.split(' ')) {
+          if (rimes2.lastCoda.split(' ').includes(phone1) && !(phone1 in phonstants.CMUPD_VOWELS)) {
+            if ((rimes1.rime === rimes2.unstRime || rimes1.lastRime === rimes2.unstRime) ||
+            (rimes1.unstRime === rimes2.rime || rimes1.unstRime === rimes2.lastRime)) {
+              rhymeType = 'anisobaric rhyme';
+              break;
+            } else if (rimes1.unstRime === rimes2.unstRime && rimes1.unstRime !== '') {
+              rhymeType = 'unstressed rhyme';
+              break;
+            } else {
+              rhymeType = 'partial consonance';
+              break;
+            }
+          }
+        }
+      }
+    }
+
     if (rhymeType === 'N/A') console.log(`no rhyme for ${pron1} and ${pron2}`);
 
     return rhymeType
