@@ -121,3 +121,21 @@ test('getRhymeType identifies partial consonance', () => {
   expect(hand.getRhymeType()).toBe("partial consonance");
   expect(bolts.getRhymeType()).toBe("partial consonance");
 })
+
+test('getRhymeType identifies nasal consonance', () => {
+  const hung = new Rhyme("He flung","The sand");
+  const sent = new Rhyme("I sent","It down");
+  const him = new Rhyme("Ask him","A question");
+  expect(hung.getRhymeType()).toBe("nasal consonance");
+  expect(sent.getRhymeType()).not.toBe("nasal consonance");
+  expect(him.getRhymeType()).not.toBe("nasal consonance");
+})
+
+test('getRhymeType identifies sibilant consonance', () => {
+  const rose = new Rhyme("The rose","Of paradise");
+  const splash = new Rhyme("The splash","And buzz");
+  const branches = new Rhyme("The branches","Her face")
+  expect(rose.getRhymeType()).toBe("sibilant consonance");
+  expect(splash.getRhymeType()).toBe("sibilant consonance");
+  expect(branches.getRhymeType()).not.toBe("sibilant consonance");
+})

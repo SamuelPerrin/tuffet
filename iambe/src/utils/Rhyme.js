@@ -200,6 +200,33 @@ class Rhyme {
       }
     }
 
+    if (['N/A','maybe assonance'].includes(rhymeType) && rimes1.lastCoda.length) {
+      if (rimes1.lastCoda === rimes2.lastcoda && rimes1.lastCoda !== '' && !((rimes1.lastNucl + rimes2.lastNucl).includes('ER'))) {
+        rhymeType = 'zero consonance';
+      } 
+      for (let nas of phonstants.NASALS) {
+        if (rimes1.lastCoda.includes(nas)) {
+          for (let sal of phonstants.NASALS) {
+            if (rimes2.lastCoda.includes(sal) && sal !== nas && !(new Pron(rimes1.lastCoda + rimes2.lastCoda).getStress())) {
+              rhymeType = 'nasal consonance';
+            }
+          }
+        }
+      }
+      for (let sib of phonstants.SIBILANTS) {
+        if (rimes1.lastCoda.length && sib === rimes1.lastCoda.slice(-2)) {
+          for (let bis of phonstants.SIBILANTS) {
+            if (rimes2.lastCoda.length && bis === rimes2.lastCoda.slice(-2) && !(new Pron(rimes1.lastCoda + rimes2.lastCoda).getStress())) {
+              rhymeType = 'sibilant consonance';
+            }
+          }
+        }
+      }
+    }
+
+    // rhymes with unstressed syllables
+
+
     if (rhymeType === 'N/A') console.log(`no rhyme for ${pron1} and ${pron2}`);
 
     return rhymeType
