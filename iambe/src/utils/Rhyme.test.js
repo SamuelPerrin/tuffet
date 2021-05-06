@@ -55,7 +55,11 @@ test('getRhymeType identifies nasal assonance', () => {
 
 test('getRhymeType identifies sibilant assonance', () => {
   const eyes = new Rhyme("Dim--long expectant eyes", "Patient till Paradise");
+  const gauze = new Rhyme("Film of gauze", "No more dross");
+  const thus = new Rhyme("So thus","I blush");
   expect(eyes.getRhymeType()).toBe("sibilant assonance");
+  expect(gauze.getRhymeType()).toBe("sibilant assonance");
+  expect(thus.getRhymeType()).toBe("sibilant assonance");
 })
 
 test('getRhymeType identifies diphthong rhymes', () => {
@@ -138,4 +142,23 @@ test('getRhymeType identifies sibilant consonance', () => {
   expect(rose.getRhymeType()).toBe("sibilant consonance");
   expect(splash.getRhymeType()).toBe("sibilant consonance");
   expect(branches.getRhymeType()).not.toBe("sibilant consonance");
+})
+
+test('getRhymeType identifies assonance', () => {
+  const goad = new Rhyme("An ox-goad","Is all he knows");
+  const thus = new Rhyme("So thus","I blush");
+  expect(goad.getRhymeType()).toBe("assonance");
+  expect(thus.getRhymeType()).not.toBe("assonance");
+})
+
+test('getRhymeType identifies anisobaric rhyme', () => {
+  const shadow = new Rhyme("Do you know","What's in the shadow");
+  const prefer = new Rhyme("better","prefer");
+  expect(shadow.getRhymeType()).toBe("anisobaric rhyme");
+  expect(prefer.getRhymeType()).toBe("anisobaric rhyme");
+})
+
+test('getRhymeType identifies unstressed rhyme', () => {
+  const shadow = new Rhyme("There's a shadow","In the window");
+  expect(shadow.getRhymeType()).toBe("unstressed rhyme");
 })

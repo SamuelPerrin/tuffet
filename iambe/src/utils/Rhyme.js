@@ -225,7 +225,11 @@ class Rhyme {
     }
 
     // rhymes with unstressed syllables
-
+    if (['N/A','maybe assonance','partial consonance'].includes(rhymeType)) {
+      if ((nlRime1 === this.numless(rimes2.unstRime) || nlLastRime1 === this.numless(rimes2.unstRime)) || (nlRime2 === this.numless(rimes1.unstRime) || nlLastRime2 === this.numless(rimes1.unstRime))) {
+        rhymeType = 'anisobaric rhyme';
+      } else if (rimes1.unstRime === rimes2.unstRime && rimes1.unstRime !== '') rhymeType = 'unstressed rhyme';
+    } if (rhymeType === 'maybe assonance') rhymeType = 'assonance';
 
     if (rhymeType === 'N/A') console.log(`no rhyme for ${pron1} and ${pron2}`);
 
