@@ -43,6 +43,18 @@ class Rhyme {
 
   }
 
+  getScore() {
+    /*
+     * returns a number between 0 and 1 that represents the fullness of a rhymetype
+     */
+    const rhymeType = this.getRhymeType();
+    if (phonstants.RHYME_SCORE.includes(rhymeType)) return phonstants.RHYME_SCORE[rhymeType];
+    else {
+      console.log(`Rhyme.getScore can't score rhymes of the type ${rhymeType}`);
+      return 0.0;
+    }
+  }
+
   getRhymeType(pron1=null,pron2=null) {
     /*
      * Determines how and whether the two lines rhyme and returns a string labelling the rhyme type.
