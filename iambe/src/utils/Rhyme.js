@@ -231,6 +231,8 @@ class Rhyme {
       } else if (rimes1.unstRime === rimes2.unstRime && rimes1.unstRime !== '') rhymeType = 'unstressed rhyme';
     } if (rhymeType === 'maybe assonance') rhymeType = 'assonance';
 
+    // *** Check for mosaic rhyme here ***
+
     if (rhymeType === 'N/A') console.log(`no rhyme for ${pron1} and ${pron2}`);
 
     return rhymeType

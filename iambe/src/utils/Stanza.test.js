@@ -9,3 +9,8 @@ test('getLines splits stanza into a list', () => {
   const metro = new Stanza("The apparition of these faces in a crowd\nPetals on a wet, black bough");
   expect(metro.getLines()).toEqual(["The apparition of these faces in a crowd", "Petals on a wet, black bough"]);
 });
+
+test('getRhymeScheme identifies rhymeschemes in couplets', () => {
+  const shells = new Stanza("She sells","Sea shells");
+  expect(shells.getRhymeScheme()).toBe("cplt1");
+})
