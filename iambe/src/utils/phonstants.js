@@ -121,6 +121,38 @@ export const RHYME_FULLNESS = {
   'nasal consonance':8,
   'N/A':0,
 };
+export const RHYME_SCORE = {
+  'full rhyme':1.0,
+  'homophone rhyme':0.5,
+  'identical rhyme':0.5,
+  'promotion rhyme':0.75,
+  'mosaic full':0.75,
+  'diph-diph rhyme':0.75,
+  'diph-vow rhyme':0.75,
+  'vow-diph rhyme':0.75,
+  'diph-vow promotion rhyme':0.6,
+  'vow-diph promotion rhyme':0.6,
+  'diph-diph promotion rhyme':0.6,
+  'mosaic slant rhyme':0.5,
+  'sibilant assonance':0.6,
+  'nasal assonance':0.6,
+  'assonance':0.3,
+  'full consonance':0.5,
+  'promotion consonance':0.4,
+  'diph-vow assonance':0.2,
+  'vow-diph assonance':0.2,
+  'diph-diph assonance':0.2,
+  'partial consonance':0.2,
+  'unstressed rhyme':0.2,
+  'diph-vow promotion assonance':0.2,
+  'vow-diph promotion assonance':0.2,
+  'diph-diph promotion assonance':0.2,
+  'anisobaric rhyme':0.2,
+  'zero consonance':0.33,
+  'sibilant consonance':0.1,
+  'nasal consonance':0.1,
+  'N/A':0.0,
+};
 export const NASALS = ['M','N','NG'];
 export const SIBILANTS = ['S', 'Z', 'SH', 'ZH'];
 export const DIPHTHONGS = {'AW':true, 'AY':true, 'EY':true, 'OW':true, 'OY':true};
