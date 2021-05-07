@@ -48,7 +48,7 @@ class Rhyme {
      * returns a number between 0 and 1 that represents the fullness of a rhymetype
      */
     const rhymeType = this.getRhymeType();
-    if (phonstants.RHYME_SCORE.includes(rhymeType)) return phonstants.RHYME_SCORE[rhymeType];
+    if (rhymeType in phonstants.RHYME_SCORE) return phonstants.RHYME_SCORE[rhymeType];
     else {
       console.log(`Rhyme.getScore can't score rhymes of the type ${rhymeType}`);
       return 0.0;
