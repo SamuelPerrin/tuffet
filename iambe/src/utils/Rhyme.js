@@ -245,7 +245,7 @@ class Rhyme {
 
     // *** Check for mosaic rhyme here ***
 
-    if (rhymeType === 'N/A') console.log(`no rhyme for ${pron1} and ${pron2}`);
+    // if (rhymeType === 'N/A') console.log(`no rhyme for ${pron1} and ${pron2}`);
 
     return rhymeType
   }
