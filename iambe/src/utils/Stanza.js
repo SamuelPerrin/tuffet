@@ -45,14 +45,15 @@ class Stanza {
           // }
         }
       })
-      console.log(`secondPossibles: ${secondPossibles}`);
+      console.log(`secondPossibles: ${secondPossibles.map(x => x.rs)}`);
 
       // if there aren't any stanzas that account for all the full rhymes, reset 1s to 0.9 and try again
       if (!secondPossibles.length) {
         const noOnes = Object.fromEntries(Object.entries(rhymes).map(k => k[1] === 1 ? [k[0],0.9] : [k[0],k[1]]));
         console.log(`too many ones, so trying again with noOnes: ${Object.entries(noOnes)}`);
         if (!recurring) return this.winnower(rhymeSchemes,noOnes,true);
-      } else {
+      } 
+      else {
         // count how many nonrhymes the remaining options would produce
         if (secondPossibles.length === 1) {
           let zeroes = 0;
@@ -62,6 +63,16 @@ class Stanza {
           else {
             console.log(`My best guess was ${secondPossibles[0].rs}, but it had ${zeroes} zeroes`);
             return bestGuess;
+          }
+        } else {
+          // check if the rhymes in each rhymeScheme in secondPossibles are also in nonzeroes
+          // only stanzas that don't result in any non-rhymes will be allowed into thirdPossibles
+          const thirdPossibles = secondPossibles.filter(scheme => scheme.pairs.every(pair => nonzeroes.includes(pair)));
+          if (!thirdPossibles.length) {
+            console.log(`that filtered out all of them`)
+          }
+          else {
+            console.log(`thirdPossibles: ${thirdPossibles}`)
           }
         }
 
