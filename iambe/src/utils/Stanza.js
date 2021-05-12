@@ -45,7 +45,7 @@ class Stanza {
           // }
         }
       })
-      console.log(`secondPossibles: ${secondPossibles.map(x => x.rs)}`);
+      console.log(`secondPossibles: ${secondPossibles.map(x => " | " + x.rs + ": " + x.pairs.toString())}`);
 
       // if there aren't any stanzas that account for all the full rhymes, reset 1s to 0.9 and try again
       if (!secondPossibles.length) {
@@ -67,12 +67,22 @@ class Stanza {
         } else {
           // check if the rhymes in each rhymeScheme in secondPossibles are also in nonzeroes
           // only stanzas that don't result in any non-rhymes will be allowed into thirdPossibles
-          const thirdPossibles = secondPossibles.filter(scheme => scheme.pairs.every(pair => nonzeroes.includes(pair)));
+          const thirdPossibles = secondPossibles.filter(scheme => scheme.pairs.every(pair => nonzeroes.map(item => item[0]).includes(pair)));
           if (!thirdPossibles.length) {
-            console.log(`that filtered out all of them`)
+            console.log(`that filtered out all of them: length ${thirdPossibles.length}\nRunning again with nonzeroes instead of rhymes`);
+            const new_scores = {};
+            nonzeroes.forEach(i => new_scores[i[0]] = i[1]);
+            return this.winnower(rhymeSchemes,new_scores);
           }
           else {
-            console.log(`thirdPossibles: ${thirdPossibles}`)
+            console.log(`thirdPossibles: ${thirdPossibles.map(x => " | " + x.rs + ": " + x.pairs.toString())}`);
+            if (thirdPossibles.length === 1) { // found it?!
+              bestGuess = thirdPossibles[0].rs;
+              return [bestGuess];
+            } else {
+              // Average the scores of the rhymes of each remaining rs, returning the one with the highest average
+              // In other words, only the rs that best accounts for the stanza's rhymes will be allowed through
+            }
           }
         }
 
