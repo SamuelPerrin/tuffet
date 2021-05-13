@@ -1,3 +1,4 @@
+import Line from './Line';
 import Rhyme from './Rhyme';
 
 class Stanza {
@@ -171,6 +172,33 @@ class Stanza {
         if (fourthPossibles.length > 0) {
           bestGuess = fourthPossibles[0][0];
         } return bestGuess;
+      }
+    }
+  }
+
+  getRhymes() {
+    /**
+     * returns an object containing the rhymes in the stanza, with each rhyme consisting of a list of the lines, the rhyme words, and the rhymetype
+     */
+
+    const rs = this.getRhymeScheme();
+    const lines = this.getLines();
+    let rhymes = {};
+
+    if (lines.length === 2) {
+      if (rs === 'cplt1') {
+        rhymes.lines = lines;
+        rhymes.words = [new Line(lines[0]).getTerm()[0], new Line(lines[1]).getTerm()[0]];
+        rhymes.rt = new Rhyme(lines[0],lines[1]).getRhymeType();
+        return rhymes;
+      }
+    }
+    else if (lines.length === 4) {
+      if (rs === 'quatr') {
+        rhymes.lines = lines;
+        rhymes.words = [new Line(lines[1]).getTerm()[0], new Line(lines[3]).getTerm()[0]];
+        rhymes.rt = new Rhyme(lines[1], lines[3]).getRhymeType();
+        return rhymes;
       }
     }
   }

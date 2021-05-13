@@ -82,4 +82,16 @@ test('getRhymeScheme identifies rhyme schemes in quatrains', () => {
   expect(cpls2.getRhymeScheme()).toBe("cpls2");
   expect(abaax.getRhymeScheme()).toBe("abaax");
   expect(aabax.getRhymeScheme()).toBe("aabax");
+});
+
+test('getRhymes identifies rhymes in couplets', () => {
+  const cplt = new Stanza('I know\nThe woe');
+  const cpltRhymes = {lines:['I know','The woe'], words: ['know','woe'], rt:'full rhyme'};
+  expect(cplt.getRhymes()).toStrictEqual(cpltRhymes);
+});
+
+test('getRhymes identifies rhymes in quatrains', () => {
+  const quatr = new Stanza("very brave\nI know\nthe bosom\nof Woe");
+  const quatrRhymes = {lines:['very brave','I know','the bosom','of Woe'], words: ['know','Woe'], rt: 'full rhyme'};
+  expect(quatr.getRhymes()).toStrictEqual(quatrRhymes);
 })
