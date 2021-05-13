@@ -130,7 +130,7 @@ class Rhyme {
     // check for diphthong rhymes
     if (['N/A','maybe assonance'].includes(rhymeType) && rimes1.nucl.slice(0,2) in phonstants.DIPHTHONGS) {
       // diphthong-first rhymes
-      if (rimes2.nucl.slice(0,2) in phonstants.DIPHTHONGS && rimes1.nucl.slice(-2) == rimes2.nucl.slice(-2)) {
+      if (rimes2.nucl.slice(0,2) in phonstants.DIPHTHONGS && rimes1.nucl.slice(-2) === rimes2.nucl.slice(-2)) {
         if (rimes1.coda === rimes2.coda) rhymeType = 'diph-diph rhyme';
         else if (rimes1.nucl !== rimes2.nucl) rhymeType = 'diph-diph assonance';
       } else if ((rimes1.nucl.slice(-2,-1) === 'Y' && rimes2.nucl.slice(0,2) === 'IY') || (rimes1.nucl.slice(-2,-1) === 'W' && rimes2.nucl.slice(0,2) === 'UW')) {

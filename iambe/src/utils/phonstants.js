@@ -156,3 +156,17 @@ export const RHYME_SCORE = {
 export const NASALS = ['M','N','NG'];
 export const SIBILANTS = ['S', 'Z', 'SH', 'ZH'];
 export const DIPHTHONGS = {'AW':true, 'AY':true, 'EY':true, 'OW':true, 'OY':true};
+export const RHYME_SCHEMES = {
+  'cplt1':'couplet',
+  'aaaxx':'AAA',
+  'aabxx':'AAB',
+  'abaxx':'ABA',
+  'abbxx':'ABB',
+  'quatr':'ABCB',
+  'ababx':'ABAB',
+  'abbax':'ABBA',
+  'aaaax':'AAAA',
+  'cpls2':'2 couplets (AABB)',
+  'abaax':'ABAA',
+  'aabax':'AABA',
+}

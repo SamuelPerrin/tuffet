@@ -429,7 +429,7 @@ class Word {
         } else if (clusters[c].slice(0,2) in phonstants.VOWEL_R) {
           pron += phonstants.VOWEL_R[clusters[c].slice(0,2)];
           if (clusters[c].slice(2) in phonstants.VOWEL_R) pron += phonstants.VOWEL_R[clusters[c].slice(2)];
-          else if (clusters[c].slice(2) in phonstants.DIGRAMS) pron += phonstants.DIGRAM[clusters[c].slice(2)];
+          else if (clusters[c].slice(2) in phonstants.DIGRAMS) pron += phonstants.DIGRAMS[clusters[c].slice(2)];
         } else {
           for (let char in clusters[c]) {
             if (char in phonstants.CONSONANTS) pron += phonstants.CONSONANTS[char];
