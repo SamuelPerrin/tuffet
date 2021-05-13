@@ -29,7 +29,7 @@ test('winnower filters rhymeScheme choices', () => {
     'twofour':0.7,
     'threefour':0,
   };
-  expect(new Stanza('this\nis\na\nfake stanza').winnower(possibles,allScores)).toStrictEqual(['quatr']);
+  expect(new Stanza('this\nis\na\nfake stanza').winnower(possibles,allScores)).toStrictEqual([['quatr', 0.7],['ababx',(0.7+0.1)/2]]);
 });
 
 test("winnower doesn't return a rhyme scheme that would produce too many nonrhymes", () => {
@@ -67,3 +67,19 @@ test('getRhymeScheme identifies rhyme schemes in tercets', () => {
   expect(abaxx.getRhymeScheme()).toBe("abaxx");
 });
 
+test('getRhymeScheme identifies rhyme schemes in quatrains', () => {
+  const quatr = new Stanza("To fight aloud is very brave\nBut gallanter I know\nWho charge within the bosom\nThe cavalry of Woe");
+  const ababx = new Stanza("Out of the night that covers me,\nBlack as the pit from pole to pole\nI thank whatever gods may be\nFor my unconquerable soul.");
+  const abbax = new Stanza("We have but faith: we cannot know;\nFor knowledge is of things we see\nAnd yet we trust it comes from thee,\nA beam in darkness: let it grow.");
+  const aaaax = new Stanza("the night\nis tight\nin flight\nno light");
+  const cpls2 = new Stanza("I know\nYou so\nI like\nA spike");
+  const abaax = new Stanza("I see\nA yellow\nBee\nIn a tree");
+  const aabax = new Stanza("The day\nIn May\nWas not\nSo gay");
+  expect(quatr.getRhymeScheme()).toBe('quatr');
+  expect(ababx.getRhymeScheme()).toBe("ababx");
+  expect(abbax.getRhymeScheme()).toBe("abbax");
+  expect(aaaax.getRhymeScheme()).toBe("aaaax");
+  expect(cpls2.getRhymeScheme()).toBe("cpls2");
+  expect(abaax.getRhymeScheme()).toBe("abaax");
+  expect(aabax.getRhymeScheme()).toBe("aabax");
+})

@@ -84,8 +84,8 @@ class Stanza {
               // In other words, only the rs that best accounts for the stanza's rhymes will be allowed through
               const fourthPossibles = thirdPossibles.map(i => [i.rs, (i.pairs.reduce((a,b) => a + rhymes[b], 0)) / i.pairs.length]);
               console.log(`fourthPossibles: ${fourthPossibles.toString()}`)
-              bestGuess = fourthPossibles.sort((a,b) => b[1] - a[1])[0];
-              return [bestGuess[0]];
+              bestGuess = fourthPossibles.sort((a,b) => b[1] - a[1]);
+              return bestGuess;
             }
           }
         }
@@ -127,6 +127,7 @@ class Stanza {
       const twothree = new Rhyme(stan[1], stan[2]).getScore();
       const twofour = new Rhyme(stan[1], stan[3]).getScore();
       const threefour = new Rhyme(stan[2], stan[3]).getScore();
+
       const possibles = [
         {rs:'quatr', pairs:['twofour']},
         {rs:'ababx', pairs:['onethree', 'twofour']},
@@ -136,6 +137,8 @@ class Stanza {
         {rs:'abaax', pairs:['onethree', 'onefour', 'threefour']},
         {rs:'aabax', pairs:['onetwo', 'onefour', 'twofour']},
       ];
+      let fourthPossibles = [];
+
       const allScores = {
         'onetwo':onetwo,
         'onethree':onethree,
@@ -144,7 +147,31 @@ class Stanza {
         'twofour':twofour,
         'threefour':threefour,
       };
+
       let output = this.winnower(possibles, allScores);
+      if (!!output) bestGuess = output[0];
+      if (!!output && output.length > 1) {
+        fourthPossibles = output;
+      } else if (!!output && output.length === 1) {
+        return output[0];
+      }
+
+      // Perform a few last checks to correct some of winnower's biases
+      const schemes = {quatr:false,ababx:false,aabax:false,cpls2:false,aaaax:false};
+      fourthPossibles.forEach(scheme => {schemes[scheme[0]] = true});
+      if (schemes.quatr) {
+        if (schemes.ababx && allScores['onethree'] > THRESHOLD) bestGuess = 'ababx';
+        else bestGuess = 'ababx';
+        if (schemes.aabax && allScores['onewo'] > THRESHOLD && allScores['onefour'] > THRESHOLD) bestGuess = 'aabax';
+        return bestGuess;
+      } else if (schemes.cpls2 && schemes.aaaax && allScores['twothree'] > THRESHOLD) {
+        bestGuess = 'aaaax';
+        return bestGuess
+      } else {
+        if (fourthPossibles.length > 0) {
+          bestGuess = fourthPossibles[0][0];
+        } return bestGuess;
+      }
     }
   }
 }

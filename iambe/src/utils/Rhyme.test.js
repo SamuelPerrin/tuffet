@@ -162,3 +162,8 @@ test('getRhymeType identifies unstressed rhyme', () => {
   const shadow = new Rhyme("There's a shadow","In the window");
   expect(shadow.getRhymeType()).toBe("unstressed rhyme");
 })
+
+test('getScore scores rhymes', () => {
+  const flight = new Rhyme("The night","No light");
+  expect(flight.getScore()).toBe(1);
+})
