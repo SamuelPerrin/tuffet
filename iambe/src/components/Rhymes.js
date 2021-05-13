@@ -6,7 +6,7 @@ import Container from './styled/Container';
 import Section from './styled/Section';
 import {Link} from 'react-router-dom';
 import Stanza from '../utils/Stanza';
-import {RHYME_SCHEMES} from '../utils/phonstants';
+import {RHYME_SCHEMES, RHYME_TYPES} from '../utils/phonstants';
 
 const Rhymes = props => {
   let {poetry, rs, rhymes} = props;
@@ -24,7 +24,7 @@ const Rhymes = props => {
           <h3><YellowSpan>Rhymes by Type</YellowSpan></h3>
           <p>The most common rhyme-types in this sample are:</p>
           <ol>
-            <li>{rhymes.rt}: ({rhymes.words[0]} - {rhymes.words[1]})</li>
+            <li>{RHYME_TYPES[rhymes.rt]}: ({rhymes.words[0]} - {rhymes.words[1]})</li>
           </ol>
           <Link href="#"><YellowSpan>Read more »</YellowSpan></Link>
         </Section>
@@ -33,12 +33,15 @@ const Rhymes = props => {
   )
 }
 
-const mapStateToProps = state => ({
+const mapStateToProps = state => {
+  console.log(`in mapStateToProps with ${state.rhymes.rt}`)
+  return {
   ...state,
   poetry: new Stanza(state.poetry).getLines(),
   rs: RHYME_SCHEMES[state.rs],
   rhymes: state.rhymes,
-})
+  }
+}
 
 
 export default connect(mapStateToProps)(Rhymes)
