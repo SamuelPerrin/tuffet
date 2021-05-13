@@ -82,15 +82,15 @@ class Stanza {
             } else {
               // Average the scores of the rhymes of each remaining rs, returning the one with the highest average
               // In other words, only the rs that best accounts for the stanza's rhymes will be allowed through
+              const fourthPossibles = thirdPossibles.map(i => [i.rs, (i.pairs.reduce((a,b) => a + rhymes[b], 0)) / i.pairs.length]);
+              console.log(`fourthPossibles: ${fourthPossibles.toString()}`)
+              bestGuess = fourthPossibles.sort((a,b) => b[1] - a[1])[0];
+              return [bestGuess[0]];
             }
           }
         }
-
       }
-
     }
-
-
   }
 
   getRhymeScheme() {

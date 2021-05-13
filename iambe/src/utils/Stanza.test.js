@@ -29,27 +29,7 @@ test('winnower filters rhymeScheme choices', () => {
     'twofour':0.7,
     'threefour':0,
   };
-  expect(new Stanza('this\nis\na\nfake stanza').winnower(possibles,allScores)).toBe(['quatr']);
-});
-
-test('winnower handles too many ones', () => {
-  const possibles = [
-    {rs:'quatr', pairs:['twofour']},
-    {rs:'ababx', pairs:['onethree', 'twofour']},
-    {rs:'abbax', pairs:['onefour', 'twothree']},
-    {rs:'cpls2', pairs:['onetwo', 'threefour']},
-    {rs:'abaax', pairs:['onethree', 'onefour', 'threefour']},
-    {rs:'aabax', pairs:['onetwo', 'onefour', 'twofour']},
-  ];
-  const allScores = {
-    'onetwo':1,
-    'onethree':1,
-    'onefour':0,
-    'twothree':1,
-    'twofour':0,
-    'threefour':0,
-  };
-  expect(new Stanza('this\nis\na\nfake stanza').winnower(possibles,allScores)).toBe('N/A')
+  expect(new Stanza('this\nis\na\nfake stanza').winnower(possibles,allScores)).toStrictEqual(['quatr']);
 });
 
 test("winnower doesn't return a rhyme scheme that would produce too many nonrhymes", () => {
@@ -68,8 +48,8 @@ test("winnower doesn't return a rhyme scheme that would produce too many nonrhym
     'twofour':0.7,
     'threefour':1,
   };
-  expect(new Stanza('this\nis\na\nfake stanza').winnower(possibles, allScores)).toBe('N/A');
-})
+  expect(new Stanza('this\nis\na\nfake stanza').winnower(possibles, allScores)).toStrictEqual('N/A');
+});
 
 test('getRhymeScheme identifies rhyme schemes in couplets', () => {
   const shells = new Stanza("She sells\nSea shells");
@@ -85,4 +65,5 @@ test('getRhymeScheme identifies rhyme schemes in tercets', () => {
   expect(aaaxx.getRhymeScheme()).toBe("aaaxx");
   expect(aabxx.getRhymeScheme()).toBe("aabxx");
   expect(abaxx.getRhymeScheme()).toBe("abaxx");
-})
+});
+
