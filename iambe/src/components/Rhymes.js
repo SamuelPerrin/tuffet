@@ -5,15 +5,19 @@ import {YellowSpan, RedSpan} from './styled/Spans';
 import Container from './styled/Container';
 import Section from './styled/Section';
 import {Link} from 'react-router-dom';
+import Stanza from '../utils/Stanza';
+import {RHYME_SCHEMES} from '../utils/phonstants';
 
 const Rhymes = props => {
-  const {poetry} = props;
+  let {poetry, rs} = props;
+
   return (
     <div>
       <Container>
         <Section>
           <h3><RedSpan>Rhyme Schemes</RedSpan></h3>
-          <p>{poetry}</p>
+          {poetry.map(line => <p>{line}</p>)}<br/>
+          <p>Rhyme Scheme for this stanza: {rs}</p>
           <Link to="/rhyme/scheme"><RedSpan>Read more »</RedSpan></Link>
         </Section>
         <Section>
@@ -32,7 +36,8 @@ const Rhymes = props => {
 
 const mapStateToProps = state => ({
   ...state,
-  poetry: state.poetry,
+  poetry: new Stanza(state.poetry).getLines(),
+  rs: RHYME_SCHEMES[state.rs],
 })
 
 

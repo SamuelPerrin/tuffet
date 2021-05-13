@@ -16,7 +16,6 @@ const Home = props => {
 
   const handleChange = e => {
     setPoem(e.target.value);
-    console.log(`poem's text is now: ${poem}`)
   }
 
   const submitRhymes = e => {

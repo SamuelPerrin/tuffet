@@ -9,7 +9,8 @@ const reducer = (state=initialState, action) => {
     case actions.GET_RHYMES:
       return {
         ...state,
-        poetry: action.payload
+        poetry: action.payload.poetry,
+        rs: action.payload.rs,
       }
     case actions.GET_METER:
       return {
