@@ -9,7 +9,7 @@ import Stanza from '../utils/Stanza';
 import {RHYME_SCHEMES} from '../utils/phonstants';
 
 const Rhymes = props => {
-  let {poetry, rs} = props;
+  let {poetry, rs, rhymes} = props;
 
   return (
     <div>
@@ -24,8 +24,7 @@ const Rhymes = props => {
           <h3><YellowSpan>Rhymes by Type</YellowSpan></h3>
           <p>The most common rhyme-types in this sample are:</p>
           <ol>
-            <li>Full rhyme</li>
-            <li>Promotion rhyme</li>
+            <li>{rhymes.rt}: ({rhymes.words[0]} - {rhymes.words[1]})</li>
           </ol>
           <Link href="#"><YellowSpan>Read more »</YellowSpan></Link>
         </Section>
@@ -38,6 +37,7 @@ const mapStateToProps = state => ({
   ...state,
   poetry: new Stanza(state.poetry).getLines(),
   rs: RHYME_SCHEMES[state.rs],
+  rhymes: state.rhymes,
 })
 
 
