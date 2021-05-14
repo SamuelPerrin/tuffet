@@ -26,7 +26,7 @@ const Rhymes = props => {
           <h3><YellowSpan>Rhymes by Type</YellowSpan></h3>
           <p>The most common rhyme-types in this sample are:</p>
           <ol>
-            {rhymes && <li>{RHYME_TYPES[rhymes.rt]}: ({rhymes.words[0]} - {rhymes.words[1]})</li>}
+            {rhymes && rhymes.rt && <li>{RHYME_TYPES[rhymes.rt]}: ({rhymes.words[0]} - {rhymes.words[1]})</li>}
           </ol>
           <Link href="#"><YellowSpan>Read more »</YellowSpan></Link>
         </Section>
