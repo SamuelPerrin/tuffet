@@ -86,12 +86,18 @@ test('getRhymeScheme identifies rhyme schemes in quatrains', () => {
 
 test('getRhymes identifies rhymes in couplets', () => {
   const cplt = new Stanza('I know\nThe woe');
-  const cpltRhymes = {lines:['I know','The woe'], words: ['know','woe'], rt:'full rhyme'};
+  const cpltRhymes = [{lines:['I know','The woe'], words: ['know','woe'], rt:'full rhyme'}];
   expect(cplt.getRhymes()).toStrictEqual(cpltRhymes);
 });
 
 test('getRhymes identifies rhymes in quatrains', () => {
   const quatr = new Stanza("very brave\nI know\nthe bosom\nof Woe");
-  const quatrRhymes = {lines:['very brave','I know','the bosom','of Woe'], words: ['know','Woe'], rt: 'full rhyme'};
+  const quatrRhymes = [{lines:['I know','of Woe'], words: ['know','Woe'], rt: 'full rhyme'}];
   expect(quatr.getRhymes()).toStrictEqual(quatrRhymes);
+});
+
+test('getRhymes identifies rhymes in cross-rhymed quatrains', () => {
+  const ababx = new Stanza("The curfew tolls the knell of parting day,\nThe lowing herd wind slowly o'er the lea,\nThe plowman homeward plods his weary way,\nAnd leaves the world to darkness and to me.");
+  const ababxRhymes = [{lines:['The curfew tolls the knell of parting day,','The plowman homeward plods his weary way,'], words:['day','way'], rt:'full rhyme'}, {lines:["The lowing herd wind slowly o'er the lea,", "And leaves the world to darkness and to me."], words:['lea','me'], rt:'full rhyme'}];
+  expect(ababx.getRhymes()).toStrictEqual(ababxRhymes);
 })

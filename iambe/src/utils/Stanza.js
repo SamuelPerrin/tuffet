@@ -182,21 +182,36 @@ class Stanza {
 
     const rs = this.getRhymeScheme();
     const lines = this.getLines();
-    let rhymes = {};
+    const rhymes = [];
 
     if (lines.length === 2) {
       if (rs === 'cplt1') {
-        rhymes.lines = lines;
-        rhymes.words = [new Line(lines[0]).getTerm()[0], new Line(lines[1]).getTerm()[0]];
-        rhymes.rt = new Rhyme(lines[0],lines[1]).getRhymeType();
+        const rhyme1 = {}
+        rhyme1.lines = lines;
+        rhyme1.words = [new Line(lines[0]).getTerm()[0], new Line(lines[1]).getTerm()[0]];
+        rhyme1.rt = new Rhyme(lines[0],lines[1]).getRhymeType();
+        rhymes.push(rhyme1);
         return rhymes;
       }
     }
     else if (lines.length === 4) {
       if (rs === 'quatr') {
-        rhymes.lines = lines;
-        rhymes.words = [new Line(lines[1]).getTerm()[0], new Line(lines[3]).getTerm()[0]];
-        rhymes.rt = new Rhyme(lines[1], lines[3]).getRhymeType();
+        const rhyme1 = {};
+        rhyme1.lines = [lines[1],lines[3]];
+        rhyme1.words = [new Line(lines[1]).getTerm()[0], new Line(lines[3]).getTerm()[0]];
+        rhyme1.rt = new Rhyme(lines[1], lines[3]).getRhymeType();
+        rhymes.push(rhyme1);
+        return rhymes;
+      } else if (rs === 'ababx') {
+        const rhyme1 = {};
+        const rhyme2 = {};
+        rhyme1.lines = [lines[0],lines[2]];
+        rhyme2.lines = [lines[1],lines[3]];
+        rhyme1.words = [new Line(lines[0]).getTerm()[0], new Line(lines[2]).getTerm()[0]];
+        rhyme2.words = [new Line(lines[1]).getTerm()[0], new Line(lines[3]).getTerm()[0]];
+        rhyme1.rt = new Rhyme(lines[0], lines[2]).getRhymeType();
+        rhyme2.rt = new Rhyme(lines[1], lines[3]).getRhymeType();
+        rhymes.push(rhyme1,rhyme2);
         return rhymes;
       }
     }
