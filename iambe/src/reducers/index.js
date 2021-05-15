@@ -5,10 +5,11 @@ const initialState = {
   rhymes: null,
   rhymeTypeCounts: null,
   rhymeSchemeCounts: null,
+  stanzaNum: null,
 }
 
 const reducer = (state=initialState, action) => {
-  switch(action.type){
+  switch (action.type) {
     case actions.GET_RHYMES:
       return {
         ...state,
@@ -16,6 +17,11 @@ const reducer = (state=initialState, action) => {
         rhymes: action.payload.rhymes,
         rhymeTypeCounts: action.payload.rhymeTypeCounts,
         rhymeSchemeCounts: action.payload.rhymeSchemeCounts,
+      }
+    case actions.GET_RHYME_DETAILS:
+      return {
+        ...state,
+        stanzaNum: action.payload.stanzaNum,
       }
     case actions.GET_METER:
       return {

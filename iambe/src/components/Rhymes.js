@@ -5,8 +5,8 @@ import {YellowSpan, RedSpan} from './styled/Spans';
 import Container from './styled/Container';
 import Section from './styled/Section';
 import StanzaTile from './styled/StanzaTile';
-import {Link} from 'react-router-dom';
-import HoverCard from './styled/HoverCard';
+import {Link, useHistory} from 'react-router-dom';
+import {getRhymeDetails} from '../actions';
 
 import Anthology from '../utils/Anthology';
 import Poem from '../utils/Poem';
@@ -14,7 +14,17 @@ import Stanza from '../utils/Stanza';
 import {RHYME_SCHEMES, RHYME_TYPES} from '../utils/phonstants';
 
 const Rhymes = props => {
-  let {poems, rhymes, rhymeTypeCounts, rhymeSchemeCounts} = props;
+  let {poems, rhymes, rhymeTypeCounts, rhymeSchemeCounts, getRhymeDetails} = props;
+  let history = useHistory();
+
+  const rhymeDetail = e => {
+    e.preventDefault();
+    console.log(e.target.attributes.stanzaNum.value);
+    getRhymeDetails(e.target.attributes.stanzaNum.value);
+    history.push("/rhyme/scheme");
+  }
+
+  let stanzaNum = -1;
 
   return (
     <div>
@@ -22,9 +32,13 @@ const Rhymes = props => {
         <Section>
           <h3><RedSpan>Rhyme Schemes</RedSpan></h3>
           {poems.map(poem => new Poem(poem).getStanzas().map(stanza => {
+              stanzaNum++
               return <StanzaTile 
+                onClick={rhymeDetail}
                 children={new Stanza(stanza).getLines()} 
                 hoverText={"Rhyme scheme: " + RHYME_SCHEMES[new Stanza(stanza).getRhymeScheme()]}
+                key={stanzaNum}
+                stanzaNum={stanzaNum}
               />
             }
           ))}
@@ -58,4 +72,4 @@ const mapStateToProps = state => {
 }
 
 
-export default connect(mapStateToProps)(Rhymes)
+export default connect(mapStateToProps, { getRhymeDetails })(Rhymes)
