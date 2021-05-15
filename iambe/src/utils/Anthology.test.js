@@ -60,3 +60,12 @@ test('getRhymeStats counts rhymetypes', () => {
   expect(stats['diph-diph rhyme']).toBe(0);
   expect(stats['N/A']).toBe(0);
 })
+
+test('getRhymeSchemeStats counts rhyme schemes', () => {
+  const stats = anth.getRhymeSchemeStats();
+  expect(stats['cplt1']).toBe(1);
+  expect(stats['abbax']).toBe(2);
+  expect(stats['quatr']).toBe(0);
+  expect(stats['irreg']).toBe(0);
+  expect(stats['N/A']).toBe(0);
+})

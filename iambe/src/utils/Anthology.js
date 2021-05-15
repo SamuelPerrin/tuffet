@@ -1,4 +1,5 @@
 import Poem from "./Poem";
+import Stanza from "./Stanza";
 
 
 class Anthology {
@@ -66,6 +67,31 @@ class Anthology {
       })
 
       return counts;
+  }
+
+  getRhymeSchemeStats() {
+    // returns an object with the number of occurrences of each rhyme scheme in the anthology
+    const poems = this.getPoems();
+    const counts = {
+      'cplt1':0,
+      'aaaxx':0,
+      'aabxx':0,
+      'abaxx':0,
+      'abbxx':0,
+      'quatr':0,
+      'ababx':0,
+      'abbax':0,
+      'aaaax':0,
+      'cpls2':0,
+      'abaax':0,
+      'aabax':0,
+      'irreg':0,
+      'N/A':0,
+    };
+    
+    poems.forEach(poem => new Poem(poem).getStanzas().forEach(stanza => counts[new Stanza(stanza).getRhymeScheme()]++));
+
+    return counts;
   }
 }
 
