@@ -1,5 +1,7 @@
 import Anthology from './Anthology';
 
+const anth = new Anthology("The apparition of these faces in the crowd\nPetals on a wet, black bough\n\n\n\nMe up at does\nout of the floor\nquietly Stare\na poisoned mouse\n\nstill who alive\nis asking What\nhave i done that\nYou wouldn't have");
+
 test('constructor sets text attribute', () => {
   const anth = new Anthology("The apparition of these faces in the crowd\nPetals on a wet, black bough\n\n\n\nMe up at does\nout of the floor\nquietly Stare\na poisoned mouse\n\nstill who alive\nis asking What\nhave i done that\nYou wouldn't have");
   expect(anth.text).toBe("The apparition of these faces in the crowd\nPetals on a wet, black bough\n\n\n\nMe up at does\nout of the floor\nquietly Stare\na poisoned mouse\n\nstill who alive\nis asking What\nhave i done that\nYou wouldn't have");
@@ -11,7 +13,6 @@ test('getPoems splits anthology into a list', () => {
 });
 
 test('getRhymes returns a list of rhyme objects from each poem', () => {
-  const anth = new Anthology("The apparition of these faces in the crowd\nPetals on a wet, black bough\n\n\n\nMe up at does\nout of the floor\nquietly Stare\na poisoned mouse\n\nstill who alive\nis asking What\nhave i done that\nYou wouldn't have");
   expect(anth.getRhymes()).toStrictEqual([
     [
       [
@@ -50,3 +51,12 @@ test('getRhymes returns a list of rhyme objects from each poem', () => {
     ]
   ]);
 });
+
+test('getRhymeStats counts rhymetypes', () => {
+  const stats = anth.getRhymeStats();
+  expect(stats['assonance']).toBe(1);
+  expect(stats['sibilant consonance']).toBe(1);
+  expect(stats['full consonance']).toBe(3);
+  expect(stats['diph-diph rhyme']).toBe(0);
+  expect(stats['N/A']).toBe(0);
+})
