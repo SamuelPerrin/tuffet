@@ -147,8 +147,10 @@ test('getRhymeType identifies sibilant consonance', () => {
 test('getRhymeType identifies assonance', () => {
   const goad = new Rhyme("An ox-goad","Is all he knows");
   const thus = new Rhyme("So thus","I blush");
+  const crowd = new Rhyme("The apparition of these faces in the crowd","Petals on a wet, black bough");
   expect(goad.getRhymeType()).toBe("assonance");
   expect(thus.getRhymeType()).not.toBe("assonance");
+  expect(crowd.getRhymeType()).toBe("assonance");
 })
 
 test('getRhymeType identifies anisobaric rhyme', () => {

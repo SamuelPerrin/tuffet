@@ -53,8 +53,10 @@ test("winnower doesn't return a rhyme scheme that would produce too many nonrhym
 
 test('getRhymeScheme identifies rhyme schemes in couplets', () => {
   const shells = new Stanza("She sells\nSea shells");
+  const crowd = new Stanza("The apparition of these faces in the crowd\nPetals on a wet, black bough");
   const once = new Stanza("Once upon a time\nThere lived a goat");
   expect(shells.getRhymeScheme()).toBe("cplt1");
+  expect(crowd.getRhymeScheme()).toBe("cplt1");
   expect(once.getRhymeScheme()).toBe("irreg");
 })
 
@@ -87,7 +89,16 @@ test('getRhymeScheme identifies rhyme schemes in quatrains', () => {
 test('getRhymes identifies rhymes in couplets', () => {
   const cplt = new Stanza('I know\nThe woe');
   const cpltRhymes = [{lines:['I know','The woe'], words: ['know','woe'], rt:'full rhyme'}];
+  const crowd = new Stanza("The apparition of these faces in the crowd\nPetals on a wet, black bough");
+  const crowdRhymes = [
+    {
+      lines:["The apparition of these faces in the crowd", "Petals on a wet, black bough"],
+      words:["crowd","bough"],
+      rt:"assonance"
+    }
+  ]
   expect(cplt.getRhymes()).toStrictEqual(cpltRhymes);
+  expect(crowd.getRhymes()).toStrictEqual(crowdRhymes);
 });
 
 test('getRhymes identifies rhymes in quatrains', () => {
@@ -97,7 +108,7 @@ test('getRhymes identifies rhymes in quatrains', () => {
 });
 
 test('getRhymes identifies rhymes in cross-rhymed quatrains', () => {
-  const ababx = new Stanza("The curfew tolls the knell of parting day,\nThe lowing herd wind slowly o'er the lea,\nThe plowman homeward plods his weary way,\nAnd leaves the world to darkness and to me.");
+  const gray = new Stanza("The curfew tolls the knell of parting day,\nThe lowing herd wind slowly o'er the lea,\nThe plowman homeward plods his weary way,\nAnd leaves the world to darkness and to me.");
   const ababxRhymes = [{lines:['The curfew tolls the knell of parting day,','The plowman homeward plods his weary way,'], words:['day','way'], rt:'full rhyme'}, {lines:["The lowing herd wind slowly o'er the lea,", "And leaves the world to darkness and to me."], words:['lea','me'], rt:'full rhyme'}];
-  expect(ababx.getRhymes()).toStrictEqual(ababxRhymes);
+  expect(gray.getRhymes()).toStrictEqual(ababxRhymes);
 })

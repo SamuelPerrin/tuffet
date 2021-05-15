@@ -136,7 +136,7 @@ export const RHYME_SCORE = {
   'mosaic slant rhyme':0.5,
   'sibilant assonance':0.6,
   'nasal assonance':0.6,
-  'assonance':0.3,
+  'assonance':0.31,
   'full consonance':0.5,
   'promotion consonance':0.4,
   'diph-vow assonance':0.2,

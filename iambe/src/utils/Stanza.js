@@ -213,6 +213,17 @@ class Stanza {
         rhyme2.rt = new Rhyme(lines[1], lines[3]).getRhymeType();
         rhymes.push(rhyme1,rhyme2);
         return rhymes;
+      } else if (rs === 'abbax') {
+        const rhyme1 = {};
+        const rhyme2 = {};
+        rhyme1.lines = [lines[0],lines[3]];
+        rhyme2.lines = [lines[1],lines[2]];
+        rhyme1.words = [new Line(lines[0]).getTerm()[0], new Line(lines[3]).getTerm()[0]];
+        rhyme2.words = [new Line(lines[1]).getTerm()[0], new Line(lines[2]).getTerm()[0]];
+        rhyme1.rt = new Rhyme(lines[0],lines[3]).getRhymeType();
+        rhyme2.rt = new Rhyme(lines[1],lines[2]).getRhymeType();
+        rhymes.push(rhyme1,rhyme2);
+        return rhymes;
       }
     }
   }

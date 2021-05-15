@@ -8,7 +8,7 @@ class Poem {
   }
 
   getStanzas() {
-    // returns an array of lines representing the stanzas of the poem, splitting this.text on \n
+    // returns an array of strings representing the stanzas of the poem, splitting this.text on \n
     return this.text.split('\n\n').filter(x => !!x);
   }
 
