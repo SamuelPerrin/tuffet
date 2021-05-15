@@ -6,6 +6,8 @@ import Container from './styled/Container';
 import Section from './styled/Section';
 import StanzaTile from './styled/StanzaTile';
 import {Link} from 'react-router-dom';
+import HoverCard from './styled/HoverCard';
+
 import Anthology from '../utils/Anthology';
 import Poem from '../utils/Poem';
 import Stanza from '../utils/Stanza';
@@ -19,8 +21,14 @@ const Rhymes = props => {
       <Container>
         <Section>
           <h3><RedSpan>Rhyme Schemes</RedSpan></h3>
-          {poems.map(poem => new Poem(poem).getStanzas().map(stanza => <StanzaTile children={new Stanza(stanza).getLines()} />))}
-          <p>The most common rhyme schemes in this sample are:</p>
+          {poems.map(poem => new Poem(poem).getStanzas().map(stanza => {
+              return <StanzaTile 
+                children={new Stanza(stanza).getLines()} 
+                hoverText={"Rhyme scheme: " + RHYME_SCHEMES[new Stanza(stanza).getRhymeScheme()]}
+              />
+            }
+          ))}
+          <p style={{fontWeight:'bold'}}>The most common rhyme schemes in this sample are:</p>
           <ol>
             {rhymeSchemeCounts && Object.entries(rhymeSchemeCounts).filter(entry => entry[1] > 0).sort((a,b) => b[1] - a[1]).map(entry => <li key={entry[0]}>{RHYME_SCHEMES[entry[0]]} ({entry[1]} stanza{entry[1] > 0 ? 's' : ''})</li>)}
           </ol>
@@ -34,6 +42,12 @@ const Rhymes = props => {
           </ol>
           <Link href="#"><YellowSpan>Read more »</YellowSpan></Link>
         </Section>
+        <div>
+          <h3>Here's a HoverCard:</h3>
+          <HoverCard hoverText={"Here's the hover text"}>
+            Hover over this.
+          </HoverCard>
+        </div>
       </Container>
     </div>
   )

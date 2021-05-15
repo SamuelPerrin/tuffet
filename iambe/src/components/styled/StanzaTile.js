@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import HoverCard from './HoverCard';
 
 const StanzaTileWrapper = styled.div`
   display:flex;
@@ -14,17 +15,19 @@ const StanzaTileWrapper = styled.div`
   }
   &:hover {
     border: 1px solid ${props => props.theme.black};
-    border-radius: 15%;
+    border-radius: 5%;
     cursor:pointer;
   }
 `
 
 export default function StanzaTile(props) {
-  const { children, maxWidth, className } = props;
+  const { children, maxWidth, className, hoverText } = props;
 
   return (
     <StanzaTileWrapper maxWidth={maxWidth} className={className}>
-      {children.map(child => <p>{child}</p>)}
+      <HoverCard hoverText={hoverText}>
+        {children.map(child => <p>{child}</p>)}
+      </HoverCard>
     </StanzaTileWrapper>
   )
 };
