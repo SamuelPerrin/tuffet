@@ -1,3 +1,4 @@
+import Stanza from "./Stanza";
 
 
 class Poem {
@@ -7,8 +8,18 @@ class Poem {
   }
 
   getStanzas() {
-    // returning an array of lines representing the stanzas of the poem, splitting this.text on \n
+    // returns an array of lines representing the stanzas of the poem, splitting this.text on \n
     return this.text.split('\n\n').filter(x => !!x);
+  }
+
+  getRhymes() {
+    // returns an array of objects with rhyme data from every stanza in the poem
+
+    const rhymes = [];
+
+    this.getStanzas().forEach(stanza => rhymes.push(new Stanza(stanza).getRhymes()));
+
+    return rhymes;
   }
 }
 
