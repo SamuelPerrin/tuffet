@@ -3,7 +3,8 @@ import * as actions from '../actions';
 const initialState = {
   poetry: null,
   rhymes: null,
-  rhymeCounts: null
+  rhymeTypeCounts: null,
+  rhymeSchemeCounts: null,
 }
 
 const reducer = (state=initialState, action) => {
@@ -13,7 +14,8 @@ const reducer = (state=initialState, action) => {
         ...state,
         poetry: action.payload.poetry,
         rhymes: action.payload.rhymes,
-        rhymeCounts: action.payload.rhymeCounts,
+        rhymeTypeCounts: action.payload.rhymeTypeCounts,
+        rhymeSchemeCounts: action.payload.rhymeSchemeCounts,
       }
     case actions.GET_METER:
       return {

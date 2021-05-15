@@ -12,26 +12,25 @@ import Stanza from '../utils/Stanza';
 import {RHYME_SCHEMES, RHYME_TYPES} from '../utils/phonstants';
 
 const Rhymes = props => {
-  let {poems, rhymes, rhymeCounts} = props;
+  let {poems, rhymes, rhymeTypeCounts, rhymeSchemeCounts} = props;
 
   return (
     <div>
       <Container>
         <Section>
           <h3><RedSpan>Rhyme Schemes</RedSpan></h3>
-          {poems.map(poem => {
-            return new Poem(poem).getStanzas().map(stanza => {
-              return <StanzaTile children={new Stanza(stanza).getLines()} />
-          })
-            })}
-          {/* <p>Rhyme Scheme for this stanza: {rs}</p> */}
+          {poems.map(poem => new Poem(poem).getStanzas().map(stanza => <StanzaTile children={new Stanza(stanza).getLines()} />))}
+          <p>The most common rhyme schemes in this sample are:</p>
+          <ol>
+            {rhymeSchemeCounts && Object.entries(rhymeSchemeCounts).filter(entry => entry[1] > 0).sort((a,b) => b[1] - a[1]).map(entry => <li key={entry[0]}>{RHYME_SCHEMES[entry[0]]} ({entry[1]} stanza{entry[1] > 0 ? 's' : ''})</li>)}
+          </ol>
           <Link to="/rhyme/scheme"><RedSpan>Read more »</RedSpan></Link>
         </Section>
         <Section>
           <h3><YellowSpan>Rhymes by Type</YellowSpan></h3>
           <p>The most common rhyme-types in this sample are:</p>
           <ol>
-            {rhymeCounts && Object.entries(rhymeCounts).filter(entry => entry[1] > 0).sort((a,b) => b[1]-a[1]).map(entry => <li key={entry[0]}>{RHYME_TYPES[entry[0]]} ({entry[1]} rhyme{entry[1] > 0 ? 's' : ''})</li>)}
+            {rhymeTypeCounts && Object.entries(rhymeTypeCounts).filter(entry => entry[1] > 0).sort((a,b) => b[1] - a[1]).map(entry => <li key={entry[0]}>{RHYME_TYPES[entry[0]]} ({entry[1]} rhyme{entry[1] > 0 ? 's' : ''})</li>)}
           </ol>
           <Link href="#"><YellowSpan>Read more »</YellowSpan></Link>
         </Section>
@@ -41,12 +40,12 @@ const Rhymes = props => {
 }
 
 const mapStateToProps = state => {
-  console.log(`in mapStateToProps with ${state.rhymes.rt}`)
   return {
   ...state,
   poems: new Anthology(state.poetry).getPoems(),
   rhymes: state.rhymes,
-  rhymeCounts: state.rhymeCounts,
+  rhymeTypeCounts: state.rhymeTypeCounts,
+  rhymeSchemeCounts: state.rhymeSchemeCounts,
   }
 }
 
