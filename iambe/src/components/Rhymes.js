@@ -42,12 +42,6 @@ const Rhymes = props => {
           </ol>
           <Link href="#"><YellowSpan>Read more »</YellowSpan></Link>
         </Section>
-        <div>
-          <h3>Here's a HoverCard:</h3>
-          <HoverCard hoverText={"Here's the hover text"}>
-            Hover over this.
-          </HoverCard>
-        </div>
       </Container>
     </div>
   )

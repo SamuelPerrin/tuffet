@@ -14,9 +14,11 @@ const StanzaTileWrapper = styled.div`
     font-size: 1rem;
   }
   &:hover {
-    border: 1px solid ${props => props.theme.black};
+    /* border: 1px solid ${props => props.theme.blue}; */
     border-radius: 5%;
     cursor:pointer;
+    /* padding:calc(1rem - 1px); */
+    background:${props => props.theme.pale};
   }
 `
 

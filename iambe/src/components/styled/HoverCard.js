@@ -13,6 +13,7 @@ const HoverCardWrapper = styled.div`
     border-radius: 6px;
     padding: 8px 6px;
     font-size: ${props => props.theme.smallFont};
+    box-shadow: 2px 2px 5px ${props => props.theme.gray};
 
     /* Position the tooltip */
     position: absolute;
