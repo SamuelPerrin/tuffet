@@ -9,8 +9,7 @@ class Stanza {
 
   getLines() {
     // returns an order-preserving list of strings representing the lines of the stanza
-    const lines = this.text.split('\n').filter(x => !!x);
-    return lines;
+    return this.text.split('\n').filter(x => !!x);
   }
 
   winnower(rhymeSchemes,rhymes,recurring=false) {
