@@ -205,6 +205,13 @@ export const RHYME_SCHEMES = {
   'oc148':'AABCDDEC',
   'ocaaa':'AAABCCCB',
   'djuan':'ABABABCC',
+  'cpmp3':'AABCCBDDB',
+  'raven':'AABCCCBBB',
+  'shalo':'AAAABCCCB',
+  'spens':'ABABBCBCC',
+  'sonit':'ABBAABBACDCDCD',
+  'sonsh':'ABABCDCDEFEFGG',
+  'sonpe':'ABBAABBACDECDE',
 };
 export const RHYME_TYPES = {
   'full rhyme':'full rhyme',

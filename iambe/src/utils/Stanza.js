@@ -545,17 +545,33 @@ class Stanza {
     }
     else if (lines.length === 9) {
       switch (rs) {
+        case 'cpmp3':
+          return makeRhymes([[0, 1], [2, 5], [3, 4], [5, 8], [6, 7]]);
+        case 'raven':
+          return makeRhymes([[0, 1], [2, 6], [3, 4], [4, 5], [6, 7], [7, 8]]);
+        case 'shalo':
+          return makeRhymes([[0, 1], [1, 2], [2, 3], [4, 8], [5, 6], [6, 7]]);
+        case 'spens':
+          return makeRhymes([[0, 2], [1, 3], [3, 4], [4, 6], [5, 7], [7, 8]]);
         default:
           return rhymes;
       }
     }
     else if (lines.length === 14) {
       switch (rs) {
+        case 'sonit':
+          return makeRhymes([[0, 3], [1, 2], [2, 5], [3, 4], [4, 7], [5, 6], [8, 10], [9, 11], [10, 12], [11, 13]]);
+        case 'sonsh':
+          return makeRhymes([[0, 2], [1, 3], [4, 6], [5, 7], [8, 10], [9, 11], [12, 13]]);
+        case 'sonpe':
+          return makeRhymes([[0, 3], [1, 2], [2, 5], [3, 4], [4, 7], [5, 6], [8, 11], [9, 12], [10, 13]]);
         default:
           return rhymes;
       }
     }
-    else if (lines.length === 16) {}
+    else if (lines.length === 16) {
+      if (rs === 'cpls8') return makeRhymes([[0, 1], [2, 3], [4, 5], [6, 7], [8, 9], [10, 11], [12, 13], [14, 15]]);
+    }
   }
 }
 
