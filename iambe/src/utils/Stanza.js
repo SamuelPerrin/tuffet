@@ -382,6 +382,293 @@ class Stanza {
       
       return bestGuess;
     }
+    else if (stan.length === 7) {
+      const onethree = new Rhyme(stan[0], stan[2]).getScore();
+      const onefour = new Rhyme(stan[0], stan[3]).getScore();
+      const onefive = new Rhyme(stan[0], stan[4]).getScore();
+      const twofour = new Rhyme(stan[1], stan[3]).getScore();
+      const twofive = new Rhyme(stan[1], stan[4]).getScore();
+      const twosix = new Rhyme(stan[1], stan[5]).getScore();
+      const twoseven = new Rhyme(stan[1], stan[6]).getScore();
+      const threefive = new Rhyme(stan[2], stan[4]).getScore();
+      const fourfive = new Rhyme(stan[3], stan[4]).getScore();
+      const fivesix = new Rhyme(stan[4], stan[5]).getScore();
+      const fiveseven = new Rhyme(stan[4], stan[6]).getScore();
+      const sixseven = new Rhyme(stan[5], stan[6]).getScore();
+
+      const possibles = [
+        {rs:'babc3', pairs:['onethree', 'twofour', 'fivesix','fiveseven','sixseven']},
+        {rs:'cacbb', pairs:['onefour', 'twosix','twoseven','threefive','sixseven']},
+        {rs:'srima', pairs:['onethree', 'onefive','twofour','threefive','sixseven']},
+        {rs:'royal', pairs:['onethree','twofour','twofive','fourfive','sixseven']},
+      ];
+
+      const allScores = {
+        'onethree':onethree,
+        'onefour':onefour,
+        'onefive':onefive,
+        'twofour':twofour,
+        'twofive':twofive,
+        'twosix':twosix,
+        'twoseven':twoseven,
+        'threefive':threefive,
+        'fourfive':fourfive,
+        'fivesix':fivesix,
+        'fiveseven':fiveseven,
+        'sixseven':sixseven,
+      };
+
+      let fourthPossibles = [];
+      let output = this.winnower(possibles, allScores);
+      if (!!output) bestGuess = output[0];
+      if (!!output && output.length > 1) {
+        fourthPossibles = output;
+        bestGuess = fourthPossibles[0][0]
+      } else if (!!output && output.length === 1) {
+        return output[0];
+      }
+
+      return bestGuess;
+    }
+    else if (stan.length === 8) {
+      const onetwo = new Rhyme(stan[0], stan[1]).getScore();
+      const onethree = new Rhyme(stan[0], stan[2]).getScore();
+      const onefive = new Rhyme(stan[0], stan[4]).getScore();
+      const twothree = new Rhyme(stan[1], stan[2]).getScore();
+      const twofour = new Rhyme(stan[1], stan[3]).getScore();
+      const twosix = new Rhyme(stan[1], stan[5]).getScore();
+      const threefive = new Rhyme(stan[2], stan[4]).getScore();
+      const fourfive = new Rhyme(stan[3], stan[4]).getScore();
+      const foursix = new Rhyme(stan[3], stan[5]).getScore();
+      const foureight = new Rhyme(stan[3], stan[7]).getScore();
+      const fivesix = new Rhyme(stan[4], stan[5]).getScore();
+      const fiveseven = new Rhyme(stan[4], stan[6]).getScore();
+      const fiveeight = new Rhyme(stan[4], stan[7]).getScore();
+      const sixseven = new Rhyme(stan[5], stan[6]).getScore();
+      const seveneight = new Rhyme(stan[6], stan[7]).getScore();
+
+      const possibles = [
+        {rs:'oct24', pairs:['twosix', 'foureight']},
+        {rs:'oct48', pairs:['foureight']},
+        {rs:'oc458', pairs:['fourfive','foureight','fiveeight']},
+        {rs:'oc148', pairs:['onetwo', 'foureight', 'fivesix']},
+        {rs:'ocaaa', pairs:['onetwo', 'onethree', 'twothree', 'foureight', 'fivesix', 'fiveseven', 'sixseven']},
+        {rs:'djuan', pairs:['onethree','onefive','twofour','twosix','threefive','foursix','seveneight']},
+      ];
+
+      const allScores = {
+        'onetwo':onetwo,
+        'onethree':onethree,
+        'onefive':onefive,
+        'twothree':twothree,
+        'twofour':twofour,
+        'twosix':twosix,
+        'threefive':threefive,
+        'fourfive':fourfive,
+        'foursix':foursix,
+        'foureight':foureight,
+        'fivesix':fivesix,
+        'fiveseven':fiveseven,
+        'fiveeight':fiveeight,
+        'sixseven':sixseven,
+        'seveneight':seveneight,
+      };
+
+      let fourthPossibles = [];
+      let output = this.winnower(possibles, allScores);
+      if (!!output) bestGuess = output[0];
+      if (!!output && output.length > 1) {
+        fourthPossibles = output;
+      } else if (!!output && output.length === 1) {
+        return output[0];
+      }
+
+      // Perform a few last checks to correct some of winnower's biases
+      const schemes = { oct48:false, oct24:false, oc458:false, oc148:false, ocaaa:false };
+      fourthPossibles.forEach(scheme => {schemes[scheme[0]] = true});
+
+      if (schemes.oct48) {
+        if (schemes.oc148 && allOver(allScores, ['onetwo','fivesix'])) {
+          bestGuess = 'oc148';
+          if (schemes.ocaaa && allOver(allScores, ['onethree','twothree','fiveseven','sixseven'])) {
+            bestGuess = 'ocaaa';
+          }
+        }
+        else bestGuess = 'oct48';
+        if (schemes.oct24 && allScores['twosix'] > THRESHOLD) bestGuess = 'oct24';
+        if (schemes.oc458 && allOver(allScores, ['fourfive','fiveeight'])) {
+          bestGuess = 'oc458';
+        }
+      }
+      if (bestGuess === 'N/A') {
+        if (fourthPossibles.length > 0) bestGuess = fourthPossibles[0][0];
+      }
+
+      return bestGuess;
+    }
+    else if (stan.length === 9) {
+      const onetwo = new Rhyme(stan[0], stan[1]).getScore();
+      const onethree = new Rhyme(stan[0], stan[2]).getScore();
+      const onefour = new Rhyme(stan[0], stan[3]).getScore();
+      const twothree = new Rhyme(stan[1], stan[2]).getScore();
+      const twofour = new Rhyme(stan[1], stan[3]).getScore();
+      const twofive = new Rhyme(stan[1], stan[4]).getScore();
+      const twoseven = new Rhyme(stan[1], stan[6]).getScore();
+      const threefour = new Rhyme(stan[2], stan[3]).getScore();
+      const threesix = new Rhyme(stan[2], stan[5]).getScore();
+      const threeseven = new Rhyme(stan[2], stan[6]).getScore();
+      const threeeight = new Rhyme(stan[2], stan[7]).getScore();
+      const threenine = new Rhyme(stan[2], stan[8]).getScore();
+      const fourfive = new Rhyme(stan[3], stan[4]).getScore();
+      const foursix = new Rhyme(stan[3], stan[5]).getScore();
+      const fourseven = new Rhyme(stan[3], stan[6]).getScore();
+      const fivesix = new Rhyme(stan[4], stan[5]).getScore();
+      const fiveseven = new Rhyme(stan[4], stan[6]).getScore();
+      const fivenine = new Rhyme(stan[4], stan[8]).getScore();
+      const sixseven = new Rhyme(stan[5], stan[6]).getScore();
+      const sixeight = new Rhyme(stan[5], stan[7]).getScore();
+      const sixnine = new Rhyme(stan[5], stan[8]).getScore();
+      const seveneight = new Rhyme(stan[6], stan[7]).getScore();
+      const sevennine = new Rhyme(stan[6], stan[8]).getScore();
+      const eightnine = new Rhyme(stan[7], stan[8]).getScore();
+
+      const possibles = [
+        {rs:'cpmp3', pairs:['onetwo', 'threesix','threenine','fourfive','sixnine','seveneight']},
+        {rs:'raven', pairs:['onetwo','threeseven','threeeight','threenine','fourfive','foursix','fivesix','seveneight','sevennine','eightnine']},
+        {rs:'shalo', pairs:['onetwo','onethree','onefour','twothree','twofour','threefour','fivenine','sixseven','sixeight','seveneight']},
+        {rs:'spens', pairs:['onethree', 'twofour', 'twofive','twoseven','fourfive','fourseven','fiveseven','sixeight','sixnine','eightnine']},
+      ];
+
+      const allScores = {
+        'onetwo':onetwo,
+        'onethree':onethree,
+        'onefour':onefour,
+        'twothree':twothree,
+        'twofour':twofour,
+        'twofive':twofive,
+        'twoseven':twoseven,
+        'threefour':threefour,
+        'threesix':threesix,
+        'threeseven':threeseven,
+        'threeeight':threeeight,
+        'threenine':threenine,
+        'fourfive':fourfive,
+        'foursix':foursix,
+        'fourseven':fourseven,
+        'fivesix':fivesix,
+        'fiveseven':fiveseven,
+        'fivenine':fivenine,
+        'sixseven':sixseven,
+        'sixeight':sixeight,
+        'sixnine':sixnine,
+        'seveneight':seveneight,
+        'sevennine':sevennine,
+        'eightnine':eightnine,
+      };
+
+      let fourthPossibles = [];
+      let output = this.winnower(possibles, allScores);
+      if (!!output) bestGuess = output[0];
+      if (!!output && output.length > 1) {
+        fourthPossibles = output;
+        bestGuess = fourthPossibles[0][0]
+      } else if (!!output && output.length === 1) {
+        return output[0];
+      }
+
+      return bestGuess;
+    }
+    else if (stan.length === 14) {
+      const onethree = new Rhyme(stan[0], stan[2]).getScore();
+      const onefour = new Rhyme(stan[0], stan[3]).getScore();
+      const onefive = new Rhyme(stan[0], stan[4]).getScore();
+      const oneeight = new Rhyme(stan[0], stan[7]).getScore();
+      const twothree = new Rhyme(stan[1], stan[2]).getScore();
+      const twofour = new Rhyme(stan[1], stan[3]).getScore();
+      const twosix = new Rhyme(stan[1], stan[5]).getScore();
+      const twoseven = new Rhyme(stan[1], stan[6]).getScore();
+      const threesix = new Rhyme(stan[2], stan[5]).getScore();
+      const threeseven = new Rhyme(stan[2], stan[6]).getScore();
+      const fourfive = new Rhyme(stan[3], stan[4]).getScore();
+      const foureight = new Rhyme(stan[3], stan[7]).getScore();
+      const fiveseven = new Rhyme(stan[4], stan[6]).getScore();
+      const fiveeight = new Rhyme(stan[4], stan[7]).getScore();
+      const sixseven = new Rhyme(stan[5], stan[6]).getScore();
+      const sixeight = new Rhyme(stan[5], stan[7]).getScore();
+      const nineeleven = new Rhyme(stan[8], stan[10]).getScore();
+      const ninetwelve = new Rhyme(stan[8], stan[11]).getScore();
+      const ninethirteen = new Rhyme(stan[8], stan[12]).getScore();
+      const tentwelve = new Rhyme(stan[9], stan[11]).getScore();
+      const tenthirteen = new Rhyme(stan[9], stan[12]).getScore();
+      const tenfourteen = new Rhyme(stan[9], stan[13]).getScore();
+      const eleventhirteen = new Rhyme(stan[10], stan[12]).getScore();
+      const elevenfourteen = new Rhyme(stan[10], stan[13]).getScore();
+      const twelvefourteen = new Rhyme(stan[11], stan[13]).getScore();
+      const thirteenfourteen = new Rhyme(stan[12], stan[13]).getScore();
+
+      const possibles = [
+        {rs:'sonit', pairs:['onefour', 'onefive','oneeight','twothree','twosix','twoseven','threesix','threeseven','fourfive','foureight','fiveeight','sixseven','nineeleven','ninethirteen','tentwelve','tenfourteen','eleventhirteen','twelvefourteen']},
+        {rs:'sonsh', pairs:['onethree','twofour','fiveseven','sixeight','nineeleven','tentwelve','thirteenfourteen']},
+        {rs:'sonpe', pairs:['onefour','onefive','oneeight','twothree','twosix','threefourtwoseven','threesix','threeseven','fourfive','foureight','fiveeight','sixseven','ninetwelve','tenthirteen','elevenfourteen']},
+      ];
+
+      const allScores = {
+        'onethree':onethree,
+        'onefour':onefour,
+        'onefive':onefive,
+        'oneeight':oneeight,
+        'twothree':twothree,
+        'twofour':twofour,
+        'twosix':twosix,
+        'twoseven':twoseven,
+        'threesix':threesix,
+        'threeseven':threeseven,
+        'fourfive':fourfive,
+        'foureight':foureight,
+        'fiveseven':fiveseven,
+        'fiveeight':fiveeight,
+        'sixseven':sixseven,
+        'sixeight':sixeight,
+        'nineeleven':nineeleven,
+        'ninetwelve':ninetwelve,
+        'ninethirteen':ninethirteen,
+        'tentwelve':tentwelve,
+        'tenthirteen':tenthirteen,
+        'tenfourteen':tenfourteen,
+        'eleventhirteen':eleventhirteen,
+        'elevenfourteen':elevenfourteen,
+        'twelvefourteen':twelvefourteen,
+        'thirteenfourteen':thirteenfourteen
+      };
+
+      let fourthPossibles = [];
+      let output = this.winnower(possibles, allScores);
+      if (!!output) bestGuess = output[0];
+      if (!!output && output.length > 1) {
+        fourthPossibles = output;
+        bestGuess = fourthPossibles[0][0]
+      } else if (!!output && output.length === 1) {
+        return output[0];
+      }
+
+      return bestGuess;
+    }
+    else if (stan.length === 16) {
+      const onetwo = new Rhyme(stan[0], stan[1]).getScore();
+      const threefour = new Rhyme(stan[2], stan[3]).getScore();
+      const fivesix = new Rhyme(stan[4], stan[5]).getScore();
+      const seveneight = new Rhyme(stan[6], stan[7]).getScore();
+      const nineten = new Rhyme(stan[8], stan[9]).getScore();
+      const eleventwelve = new Rhyme(stan[10], stan[11]).getScore();
+      const thirteenfourteen = new Rhyme(stan[12], stan[13]).getScore();
+      const fifteensixteen = new Rhyme(stan[14], stan[15]).getScore();
+      
+      const scores = [onetwo, threefour, fivesix, seveneight, nineten, eleventwelve, thirteenfourteen, fifteensixteen];
+      const allIn = scores.filter(score => score > THRESHOLD);
+      if (allIn.length >= 5) bestGuess = 'cpls8';
+    }
+
+    return bestGuess
   }
 
   getRhymes() {
@@ -571,6 +858,10 @@ class Stanza {
     }
     else if (lines.length === 16) {
       if (rs === 'cpls8') return makeRhymes([[0, 1], [2, 3], [4, 5], [6, 7], [8, 9], [10, 11], [12, 13], [14, 15]]);
+    }
+    else {
+      console.log(`couldn't find ${rs} in Stanza.getRhymes()`);
+      return rhymes;
     }
   }
 }
