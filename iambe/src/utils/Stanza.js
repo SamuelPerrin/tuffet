@@ -93,6 +93,13 @@ class Stanza {
     let bestGuess = 'N/A';
     const THRESHOLD = 0.3;
     const stan = this.getLines();
+
+    // a helper function to be used in this method
+    function allOver(scores, arr) {
+      // returns true if the score of each pair in arr is greater than the THRESHOLD
+      return arr.every(x => scores[x] > THRESHOLD)
+    }
+
     if (stan.length === 2) {
       const onetwo = new Rhyme(...stan).getScore();
       if (onetwo > THRESHOLD) bestGuess = 'cplt1';
@@ -239,24 +246,24 @@ class Stanza {
             bestGuess = 'aabbb';
           }
         } else if (bestGuess === 'N/A') bestGuess = 'splt1';
-        if (schemes.ababa && ['onethree','onefive','twofour'].every(x => allScores[x] > THRESHOLD)) {
+        if (schemes.ababa && allOver(allScores, ['onethree','onefive','twofour'])) {
           bestGuess = 'ababa';
         }
       }
       if (schemes.splt3) {
         if (schemes.abccb && allScores['threefour'] > THRESHOLD) {
           bestGuess = 'abccb';
-          if (schemes.abaab && ['onethree','onefour'].every(x => allScores[x] > THRESHOLD)) {
+          if (schemes.abaab && allOver(allScores, ['onethree', 'onefour'])) {
             bestGuess = 'abaab';
           }
         } else if (bestGuess === 'N/A') bestGuess = 'splt3';
-        if (schemes.ababb && ['onethree','twofour','fourfive'].every(x => allScores[x] > THRESHOLD)) {
+        if (schemes.ababb && allOver(allScores, ['onethree', 'twofour', 'fourfive'])) {
           bestGuess = 'ababb';
         }
-        if (schemes.abbab && ['onefour','twothree','threefive'].every(x => allScores[x] > THRESHOLD)) {
+        if (schemes.abbab && allOver(allScores, ['onefour', 'twothree', 'threefive'])) {
           bestGuess = 'abbab';
         }
-        if (schemes.aabba && ['onetwo','onefive','threefour'].every(x => allScores[x] > THRESHOLD)) {
+        if (schemes.aabba && allOver(allScores, ['onetwo', 'onefive', 'threefour'])) {
           bestGuess = 'aabba';
         }
       }
@@ -272,6 +279,107 @@ class Stanza {
       if (bestGuess === 'N/A') {
         if (fourthPossibles.length > 0) bestGuess = fourthPossibles[0][0];
       }
+      return bestGuess;
+    }
+    else if (stan.length === 6) {
+      const onetwo = new Rhyme(stan[0], stan[1]).getScore();
+      const onethree = new Rhyme(stan[0], stan[2]).getScore();
+      const onefour = new Rhyme(stan[0], stan[3]).getScore();
+      const onefive = new Rhyme(stan[0], stan[4]).getScore();
+      const onesix = new Rhyme(stan[0], stan[5]).getScore();
+      // const twothree = new Rhyme(stan[1], stan[2]).getScore();
+      const twofour = new Rhyme(stan[1], stan[3]).getScore();
+      const twofive = new Rhyme(stan[1], stan[4]).getScore();
+      const twosix = new Rhyme(stan[1], stan[5]).getScore();
+      const threefour = new Rhyme(stan[2], stan[3]).getScore();
+      const threefive = new Rhyme(stan[2], stan[4]).getScore();
+      const threesix = new Rhyme(stan[2], stan[5]).getScore();
+      const fourfive = new Rhyme(stan[3], stan[4]).getScore();
+      const foursix = new Rhyme(stan[3], stan[5]).getScore();
+      const fivesix = new Rhyme(stan[4], stan[5]).getScore();
+
+      const possibles = [
+        {rs:'compm', pairs:['onetwo', 'threesix', 'fourfive']},
+        {rs:'bcbdb', pairs:['twofour', 'twosix','foursix']},
+        {rs:'babab', pairs:['onethree', 'onefive','twofour','twosix','threefive','foursix']},
+        {rs:'spl13', pairs:['threesix']},
+        {rs:'spl12', pairs:['foursix']},
+        {rs:'cpls3', pairs:['onetwo', 'threefour', 'fivesix']},
+        {rs:'babcc', pairs:['onethree', 'twofour', 'fivesix']},
+        {rs:'bacbc', pairs:['onethree', 'twofive', 'foursix']},
+        {rs:'baccc', pairs:['onethree', 'fourfive', 'foursix', 'fivesix']},
+        {rs:'baccb', pairs:['onethree', 'twosix', 'fourfive']},
+        {rs:'bcabc', pairs:['onefour', 'twofive', 'threesix']},
+        {rs:'bccab', pairs:['onefive', 'twosix', 'threefour']},
+        {rs:'a2b3a', pairs:['onetwo','onesix','twosix','threefour','threefive','fourfive']},
+      ];
+
+      const allScores = {
+        'onetwo':onetwo,
+        'onethree':onethree,
+        'onefour':onefour,
+        'onefive':onefive,
+        'onseix':onesix,
+        // 'twothree':twothree,
+        'twofour':twofour,
+        'twofive':twofive,
+        'twosix':twosix,
+        'threefour':threefour,
+        'threefive':threefive,
+        'threesix':threesix,
+        'fourfive':fourfive,
+        'foursix':foursix,
+        'fivesix':fivesix
+      };
+
+      let fourthPossibles = [];
+      let output = this.winnower(possibles, allScores);
+      if (!!output) bestGuess = output[0];
+      if (!!output && output.length > 1) {
+        fourthPossibles = output;
+      } else if (!!output && output.length === 1) {
+        return output[0];
+      }
+
+      // Perform a few last checks to correct some of winnower's biases
+      const schemes = {
+        spl13: false,
+        compm: false,
+        bcabc: false,
+        spl12: false,
+        bacbc: false,
+        bcbdb: false,
+        babab: false,
+        baccc: false,
+      };
+      fourthPossibles.forEach(scheme => {schemes[scheme[0]] = true});
+
+      if (schemes.spl13) {
+        if (schemes.compm && allOver(allScores, ['onetwo', 'fourfive'])) {
+          bestGuess = 'compm';
+        } else bestGuess = 'spl13';
+      }
+      if (schemes.spl12) {
+        if (schemes.bcbdb && allOver(allScores, ['twofour', 'twosix'])) {
+          bestGuess = 'bcbdb';
+          if (schemes.babab && allOver(allScores, ['onethree', 'onefive', 'threefive'])) {
+            bestGuess = 'babab';
+          }
+        } else bestGuess = 'spl12';
+        if (schemes.bacbc && allOver(allScores, ['onethree', 'twofive'])) {
+          bestGuess = 'bacbc';
+        }
+        if (schemes.baccc && allOver(allScores, ['onethree', 'onefive', 'threefive'])) {
+          bestGuess = 'baccc';
+        }
+      }
+      if (bestGuess === 'N/A' && schemes.bcbdb && schemes.babab) {
+        if (allOver(allScores, 'onethree', 'onefive', 'threefive')) {
+          bestGuess = 'babab';
+        } else bestGuess = 'bcbdb';
+      }
+      if (bestGuess === 'N/A' && fourthPossibles.length > 0) bestGuess = fourthPossibles[0][0]
+      
       return bestGuess;
     }
   }

@@ -8,7 +8,9 @@ test('constructor trims extra spaces', () => {
 
 test('getTokens splits line into list and removes punctuation', () => {
   const newLine = new Line(`'Tis, better? to: have-loved; "and (lost).`);
+  const dashes = new Line(`This–is – a–test–`);
   expect(newLine.getTokens()).toEqual(["'Tis",'better','to','have','loved','and','lost']);
+  expect(dashes.getTokens()).toEqual(['This','is','a','test']);
 })
 
 test('getTerm returns a list of the last n words in the line in reverse order', () => {

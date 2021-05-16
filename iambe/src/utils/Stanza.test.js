@@ -92,6 +92,13 @@ test('getRhymeScheme identifies rhyme schemes in quintains', () => {
   expect(aabba.getRhymeScheme()).toBe('aabba');
 });
 
+test('getRhymeScheme identifies rhyme schemes in sestets', () => {
+  const compm = new Stanza("Oh fraud that cannot cheat the Bee,\nAlmost thy plausibility\nInduces my belief,\nTill ranks of seeds their witness bear–\nAnd softly thro' the altered air\nHurries a timid leaf.");
+  const babab = new Stanza("She walks in beauty, like the night\nOf cloudless climes and starry skies;\nAnd all that's best of dark and bright\nMeet in her aspect and her eyes;\nThus mellowed to that tender light\nWhich heaven to gaudy day denies.");
+  expect(compm.getRhymeScheme()).toBe('compm');
+  expect(babab.getRhymeScheme()).toBe('babab');
+})
+
 test('getRhymes identifies rhymes in couplets', () => {
   const cplt = new Stanza('I know\nThe woe');
   const cpltRhymes = [{lines:['I know','The woe'], words: ['know','woe'], rt:'full rhyme'}];

@@ -88,7 +88,7 @@ export const TRIGRAPHS = {'are':'EH1 R ','eau':'OW1 ','eou':'IY0 AH3 ','ere':'IY
 export const TRIGRAMS = {'fth':'F TH ', 'ght':'T ','lch':'L CH ', 'ldr':'L D R ', 'lph':'L F ', 'lth':'L TH ', 'ltr':'L T R ', 'mbr':'M B R ', 'mpr':'M P R ', 'mpt':'M P T ', 'nch':'N CH ', 'ncl':'N K L ', 'ndr':'N D R ', 'nfr':'N F R ', 'ngd':'NG D ', 'ngl':'NG L ', 'ngr':'NG R ', 'nst':'N S T ', 'nth':'N TH ', 'ntr':'N T R ', 'rld':'R L D ', 'sch':'SH ', 'scl':'S K L ', 'scr':'S K R ', 'shr':'SH R ', 'skr':'S K R ', 'spl':'S P L ', 'spr':'S P R ', 'str':'S T R ', 'tch':'CH ', 'thr':'TH R ', 'xcr':'K S K R ', 'xpr':'K S P R ', 'xtr':'K S T R '};
 export const DIGRAPH_R = {'air':'EH1 R ','arr':'AA1 R ', 'ear':'IY1 R ', 'eer':'IY1 R ', 'eir':'IY1 R ', 'err':'EH1 R ', 'eur':'UH2 R ', 'ier':'IY1 R ', 'ior':'IY0 AO1 R ', 'irr':'ER1 ', 'oar':'AO1 R ', 'oer':'AO1 R ', 'oir':'W AA1 R ', 'oor':'UH1 R ', 'orr':'AO1 R ', 'our':'AW1 R ','urr':'ER1 '};
 export const PUNCTS_TO_DELETE = [',','⁠','.','!','?','"',';',':','(',')']; // the one that looks empty is a zero-width word-joiner
-export const PUNCTS_TO_SPACE = ['...','--','—','–','-'];
+export const PUNCTS_TO_SPACE = ['...','--',' – ','—','–','-','  '];
 export const RHYME_FULLNESS = {
   'full rhyme':100,
   'homophone rhyme':95,

@@ -12,13 +12,13 @@ class Line {
      */
     let line = this.text;
     for (let i in phonstants.PUNCTS_TO_DELETE) {
-      line = line.replace(phonstants.PUNCTS_TO_DELETE[i],'');
+      line = line.replace(new RegExp('\\' + phonstants.PUNCTS_TO_DELETE[i],'g'),'');
     }
     for (let i in phonstants.PUNCTS_TO_SPACE) {
-      line = line.replace(phonstants.PUNCTS_TO_SPACE[i],' ');
+      line = line.replace(new RegExp('\\' + phonstants.PUNCTS_TO_SPACE[i], 'g'),' ');
     }
 
-    return line.split(' ');
+    return line.split(' ').filter(x => x.length > 0);
   }
 
   getTerm(n=1) {
