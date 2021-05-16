@@ -393,46 +393,122 @@ class Stanza {
     const lines = this.getLines();
     const rhymes = [];
 
+    // a helper function used in this method to format outgoing rhymedata objects
+    function makeRhymes(arr) {
+      const rhymes = [];
+      for (let list of arr) {
+        let rhyme = {};
+        rhyme.lines = [lines[list[0]], lines[list[1]]];
+        rhyme.words = [new Line(lines[list[0]]).getTerm()[0], new Line(lines[list[1]]).getTerm()[0]];
+        rhyme.rt = new Rhyme(lines[list[0]], lines[list[1]]).getRhymeType();
+        rhymes.push(rhyme);
+      }
+      return rhymes;
+    }
+
     if (lines.length === 2) {
       if (rs === 'cplt1') {
-        const rhyme1 = {}
-        rhyme1.lines = lines;
-        rhyme1.words = [new Line(lines[0]).getTerm()[0], new Line(lines[1]).getTerm()[0]];
-        rhyme1.rt = new Rhyme(lines[0],lines[1]).getRhymeType();
-        rhymes.push(rhyme1);
-        return rhymes;
+        return makeRhymes([[0, 1]]);
+      }
+    }
+    else if (lines.length === 3) {
+      switch (rs) {
+        case 'aaaxx':
+          return makeRhymes([[0, 1], [1, 2]]);
+        case 'aabxx':
+          return makeRhymes([[0, 1]]);
+        case 'abaxx':
+          return makeRhymes([[0, 2]]);
+        case 'abbxx':
+          return makeRhymes([[1, 2]]);
+        default:
+          return rhymes;
       }
     }
     else if (lines.length === 4) {
-      if (rs === 'quatr') {
-        const rhyme1 = {};
-        rhyme1.lines = [lines[1],lines[3]];
-        rhyme1.words = [new Line(lines[1]).getTerm()[0], new Line(lines[3]).getTerm()[0]];
-        rhyme1.rt = new Rhyme(lines[1], lines[3]).getRhymeType();
-        rhymes.push(rhyme1);
-        return rhymes;
-      } else if (rs === 'ababx') {
-        const rhyme1 = {};
-        const rhyme2 = {};
-        rhyme1.lines = [lines[0],lines[2]];
-        rhyme2.lines = [lines[1],lines[3]];
-        rhyme1.words = [new Line(lines[0]).getTerm()[0], new Line(lines[2]).getTerm()[0]];
-        rhyme2.words = [new Line(lines[1]).getTerm()[0], new Line(lines[3]).getTerm()[0]];
-        rhyme1.rt = new Rhyme(lines[0], lines[2]).getRhymeType();
-        rhyme2.rt = new Rhyme(lines[1], lines[3]).getRhymeType();
-        rhymes.push(rhyme1,rhyme2);
-        return rhymes;
-      } else if (rs === 'abbax') {
-        const rhyme1 = {};
-        const rhyme2 = {};
-        rhyme1.lines = [lines[0],lines[3]];
-        rhyme2.lines = [lines[1],lines[2]];
-        rhyme1.words = [new Line(lines[0]).getTerm()[0], new Line(lines[3]).getTerm()[0]];
-        rhyme2.words = [new Line(lines[1]).getTerm()[0], new Line(lines[2]).getTerm()[0]];
-        rhyme1.rt = new Rhyme(lines[0],lines[3]).getRhymeType();
-        rhyme2.rt = new Rhyme(lines[1],lines[2]).getRhymeType();
-        rhymes.push(rhyme1,rhyme2);
-        return rhymes;
+      switch (rs) {
+        case 'quatr':
+          return makeRhymes([[1, 3]]);
+        case 'ababx':
+          return makeRhymes([[0, 2], [1, 3]]);
+        case 'abbax':
+          return makeRhymes([[0, 3], [1, 2]]);
+        case 'aaaax':
+          return makeRhymes([[0, 1], [1, 2], [2, 3]]);
+        case 'cpls2':
+          return makeRhymes([[0, 1], [2, 3]]);
+        case 'abaax':
+          return makeRhymes([[0, 2], [2, 3]]);
+        case 'aabax':
+          return makeRhymes([[0, 1], [1, 3]]);
+        default:
+          return rhymes;
+      }
+    }
+    else if (lines.length === 5) {
+      switch (rs) {
+        case 'abccb':
+          return makeRhymes([[1, 4], [2, 3]]);
+        case 'aabcb':
+          return makeRhymes([[0, 1], [2, 4]]);
+        case 'splt1':
+          return makeRhymes([2, 4]);
+        case 'splt3':
+          return makeRhymes([[1, 4]]);
+        case 'aabab':
+          return makeRhymes([[0, 1], [1, 3], [2, 4]]);
+        case 'aabbb':
+          return makeRhymes([[0, 1], [2, 3], [3, 4]]);
+        case 'aabbc':
+          return makeRhymes([[0, 1], [2, 3]]);
+        case 'ababa':
+          return makeRhymes([[0, 2], [1, 3], [2, 4]]);
+        case 'abbaa':
+          return makeRhymes([[0, 3], [1, 2], [3, 4]]);
+        case 'aaabb':
+          return makeRhymes([[0, 1], [1, 2], [3, 4]]);
+        case 'ababb':
+          return makeRhymes([[0, 2], [1, 3], [3, 4]]);
+        case 'abbab':
+          return makeRhymes([[0, 3], [1, 2], [2, 4]]);
+        case 'abaab':
+          return makeRhymes([[0, 2], [1, 4], [2, 3]]);
+        case 'aabba':
+          return makeRhymes([[0, 1], [1, 4], [2, 3]]);
+        default:
+          return rhymes;
+      }
+    }
+    else if (lines.length === 6) {
+      switch (rs) {
+        case 'compm':
+          return makeRhymes([[0, 1], [2, 5], [3, 4]]);
+        case 'bcbdb':
+          return makeRhymes([[1, 3], [3, 5]]);
+        case 'babab':
+          return makeRhymes([[0, 2], [1, 3], [2, 4], [3, 5]]);
+        case 'spl13':
+          return makeRhymes([[2, 5]]);
+        case 'spl12':
+          return makeRhymes([[3, 5]]);
+        case 'cpls3':
+          return makeRhymes([[0, 1], [2, 3], [4, 5]]);
+        case 'babcc':
+          return makeRhymes([[0, 2], [1, 3], [4, 5]]);
+        case 'bacbc':
+          return makeRhymes([[0, 2], [1, 4], [3, 5]])
+        case 'baccc':
+          return makeRhymes([[0, 2], [3, 4], [4, 5]]);
+        case 'baccb':
+          return makeRhymes([[0, 2], [1, 5], [3, 4]]);
+        case 'bcabc':
+          return makeRhymes([[0, 3], [1, 4], [2, 5]]);
+        case 'bccab':
+          return makeRhymes([[0, 4], [1, 5], [2, 3]]);
+        case 'a2b3a':
+          return makeRhymes([[0, 1], [1, 5], [2, 3], [3, 4]]);
+        default:
+          return rhymes;
       }
     }
   }
