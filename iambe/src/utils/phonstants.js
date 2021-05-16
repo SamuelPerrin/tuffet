@@ -157,7 +157,7 @@ export const NASALS = ['M','N','NG'];
 export const SIBILANTS = ['S', 'Z', 'SH', 'ZH'];
 export const DIPHTHONGS = {'AW':true, 'AY':true, 'EY':true, 'OW':true, 'OY':true};
 export const RHYME_SCHEMES = {
-  'cplt1':'couplet',
+  'cplt1':'couplet (AA)',
   'aaaxx':'AAA',
   'aabxx':'AAB',
   'abaxx':'ABA',
@@ -169,6 +169,19 @@ export const RHYME_SCHEMES = {
   'cpls2':'2 couplets (AABB)',
   'abaax':'ABAA',
   'aabax':'AABA',
+  'abccb':'ABCCB',
+  'aabcb':'AABCB',
+  'splt1':'ABCDC',
+  'splt3':'ABCDB',
+  'aabab':'AABAB',
+  'aabbb':'AABBB',
+  'aabbc':'AABBC',
+  'ababa':'ABABA',
+  'abbaa':'ABBAA',
+  'ababb':'ABABB',
+  'abbab':'ABBAB',
+  'abaab':'ABAAB',
+  'aabba':'AABBA',
 };
 export const RHYME_TYPES = {
   'full rhyme':'full rhyme',

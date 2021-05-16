@@ -36,13 +36,6 @@ class Stanza {
           return ones.every(pair => scheme.pairs.includes(pair[0]));
         } else {
           return scheme.pairs.includes(nonzeroes[nonzeroes.length - 1][0]) ? true : false;
-          // if (scheme.pairs.includes(nonzeroes[nonzeroes.length - 1][0])) {
-          //   console.log(`scheme.pairs, ${scheme.pairs}, includes ${nonzeroes[nonzeroes.length - 1][0]}`)
-          //   return true;
-          // } else {
-          //   console.log(`scheme.pairs, ${scheme.pairs}, doesn't include ${nonzeroes[nonzeroes.length - 1][0]}`)
-          //   return false;
-          // }
         }
       })
       // console.log(`secondPossibles: ${secondPossibles.map(x => " | " + x.rs + ": " + x.pairs.toString())}`);
