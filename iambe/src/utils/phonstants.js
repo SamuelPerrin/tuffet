@@ -195,6 +195,16 @@ export const RHYME_SCHEMES = {
   'bcabc':'ABCABC',
   'bccab':'ABCCAB',
   'a2b3a':'AABBBA',
+  'babc3':'ABABCCC',
+  'cacbb':'ABCACBB',
+  'srima':'ABABACC',
+  'royal':'ABABBCC',
+  'oct24':'ABCDEBFD',
+  'oct48':'ABCDEFGD',
+  'oc458':'ABCDDEFD',
+  'oc148':'AABCDDEC',
+  'ocaaa':'AAABCCCB',
+  'djuan':'ABABABCC',
 };
 export const RHYME_TYPES = {
   'full rhyme':'full rhyme',

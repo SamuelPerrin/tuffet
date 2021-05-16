@@ -389,7 +389,7 @@ class Stanza {
      * returns an object containing the rhymes in the stanza, with each rhyme consisting of a list of the lines, the rhyme words, and the rhymetype
      */
 
-    const rs = this.getRhymeScheme();
+    const rs = this.getRhymeScheme()
     const lines = this.getLines();
     const rhymes = [];
 
@@ -511,6 +511,51 @@ class Stanza {
           return rhymes;
       }
     }
+    else if (lines.length === 7) {
+      switch (rs) {
+        case 'babc3':
+          return makeRhymes([[0, 2], [1, 3], [4, 5], [5, 6]]);
+        case 'cacbb':
+          return makeRhymes([[0, 3], [1, 5], [2, 4], [5, 6]]);
+        case 'srima':
+          return makeRhymes([[0, 2], [1, 3], [2, 4], [5, 6]]);
+        case 'royal':
+          return makeRhymes([[0, 2], [1, 3], [3, 4], [5, 6]]);
+        default:
+          return rhymes;
+      }
+    }
+    else if (lines.length === 8) {
+      switch (rs) {
+        case 'oct24':
+          return makeRhymes([[1, 5], [3, 7]]);
+        case 'oct48':
+          return makeRhymes([[3, 7]]);
+        case 'oc458':
+          return makeRhymes([[3, 4], [4, 7]]);
+        case 'oc148':
+          return makeRhymes([[0, 1], [3, 7], [4, 5]]);
+        case 'ocaaa':
+          return makeRhymes([[0, 1], [1, 2], [3, 7], [4, 5], [5, 6]]);
+        case 'djuan':
+          return makeRhymes([[0, 2], [1, 3], [2, 4], [3, 5], [6, 7]]);
+        default:
+          return rhymes;
+      }
+    }
+    else if (lines.length === 9) {
+      switch (rs) {
+        default:
+          return rhymes;
+      }
+    }
+    else if (lines.length === 14) {
+      switch (rs) {
+        default:
+          return rhymes;
+      }
+    }
+    else if (lines.length === 16) {}
   }
 }
 
