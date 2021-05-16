@@ -209,9 +209,9 @@ export const RHYME_SCHEMES = {
   'raven':'AABCCCBBB',
   'shalo':'AAAABCCCB',
   'spens':'ABABBCBCC',
-  'sonit':'ABBAABBACDCDCD',
-  'sonsh':'ABABCDCDEFEFGG',
-  'sonpe':'ABBAABBACDECDE',
+  'sonit':'Italian sonnet (ABBAABBACDCDCD)',
+  'sonsh':'Shakespearean sonnet (ABABCDCDEFEFGG)',
+  'sonpe':'Petrarchan sonnet (ABBAABBACDECDE)',
 };
 export const RHYME_TYPES = {
   'full rhyme':'full rhyme',

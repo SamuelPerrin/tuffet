@@ -42,9 +42,9 @@ const Rhymes = props => {
               />
             }
           ))}
-          <p style={{fontWeight:'bold'}}>The most common rhyme schemes in this sample are:</p>
+          {Object.entries(rhymeSchemeCounts).reduce((a,b) => a+b[1], 0) > 1 ? <p style={{fontWeight:'bold'}}>The most common rhyme schemes in this sample are:</p> : <p style={{fontWeight:'bold'}}>This stanza's rhyme scheme is:</p>}
           <ol>
-            {rhymeSchemeCounts && Object.entries(rhymeSchemeCounts).filter(entry => entry[1] > 0).sort((a,b) => b[1] - a[1]).map(entry => <li key={entry[0]}>{RHYME_SCHEMES[entry[0]]} ({entry[1]} stanza{entry[1] > 0 ? 's' : ''})</li>)}
+            {rhymeSchemeCounts && Object.entries(rhymeSchemeCounts).filter(entry => entry[1] > 0).sort((a,b) => b[1] - a[1]).map(entry => <li key={entry[0]}>{RHYME_SCHEMES[entry[0]]} ({entry[1]} stanza{entry[1] > 1 ? 's' : ''})</li>)}
           </ol>
           <Link to="/rhyme/scheme"><RedSpan>Read more »</RedSpan></Link>
         </Section>

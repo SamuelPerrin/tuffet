@@ -641,12 +641,10 @@ class Stanza {
         'thirteenfourteen':thirteenfourteen
       };
 
-      let fourthPossibles = [];
       let output = this.winnower(possibles, allScores);
       if (!!output) bestGuess = output[0];
       if (!!output && output.length > 1) {
-        fourthPossibles = output;
-        bestGuess = fourthPossibles[0][0]
+        return output[0][0];
       } else if (!!output && output.length === 1) {
         return output[0];
       }
