@@ -23,7 +23,7 @@ class Stanza {
     // a list of linepairs that rhyme somehow, where each element is a list [key, rhymes[key]]
     const nonzeroes = Object.entries(rhymes).filter(x => x[1] > 0); 
 
-    console.log(`about to check length of nonzeroes: ${nonzeroes}`)
+    // console.log(`about to check length of nonzeroes: ${nonzeroes}`);
     if (nonzeroes.length === 0) return [bestGuess];
     else {
       nonzeroes.sort((a,b) => a[1] - b[1]) // sort rhyme scores in ascending order
@@ -45,23 +45,23 @@ class Stanza {
           // }
         }
       })
-      console.log(`secondPossibles: ${secondPossibles.map(x => " | " + x.rs + ": " + x.pairs.toString())}`);
+      // console.log(`secondPossibles: ${secondPossibles.map(x => " | " + x.rs + ": " + x.pairs.toString())}`);
 
       // if there aren't any stanzas that account for all the full rhymes, reset 1s to 0.9 and try again
       if (!secondPossibles.length) {
         const noOnes = Object.fromEntries(Object.entries(rhymes).map(k => k[1] === 1 ? [k[0],0.9] : [k[0],k[1]]));
-        console.log(`too many ones, so trying again with noOnes: ${Object.entries(noOnes)}`);
+        // console.log(`too many ones, so trying again with noOnes: ${Object.entries(noOnes)}`);
         if (!recurring) return this.winnower(rhymeSchemes,noOnes,true);
       } 
       else {
         // count how many nonrhymes the remaining options would produce
         if (secondPossibles.length === 1) {
           let zeroes = 0;
-          console.log(`secondPossibles[0]: ${secondPossibles[0].rs}, ${secondPossibles[0].pairs}`)
+          // console.log(`secondPossibles[0]: ${secondPossibles[0].rs}, ${secondPossibles[0].pairs}`);
           secondPossibles[0].pairs.forEach(x => zeroes += rhymes[x] === 0 ? 1 : 0);
           if (zeroes < 2) return [secondPossibles[0].rs]
           else {
-            console.log(`My best guess was ${secondPossibles[0].rs}, but it had ${zeroes} zeroes`);
+            // console.log(`My best guess was ${secondPossibles[0].rs}, but it had ${zeroes} zeroes`);
             return bestGuess;
           }
         } else {
@@ -69,13 +69,13 @@ class Stanza {
           // only stanzas that don't result in any non-rhymes will be allowed into thirdPossibles
           const thirdPossibles = secondPossibles.filter(scheme => scheme.pairs.every(pair => nonzeroes.map(item => item[0]).includes(pair)));
           if (!thirdPossibles.length) {
-            console.log(`that filtered out all of them: length ${thirdPossibles.length}\nRunning again with nonzeroes instead of rhymes`);
+            // console.log(`that filtered out all of them: length ${thirdPossibles.length}\nRunning again with nonzeroes instead of rhymes`);
             const new_scores = {};
             nonzeroes.forEach(i => new_scores[i[0]] = i[1]);
             return this.winnower(rhymeSchemes,new_scores);
           }
           else {
-            console.log(`thirdPossibles: ${thirdPossibles.map(x => " | " + x.rs + ": " + x.pairs.toString())}`);
+            // console.log(`thirdPossibles: ${thirdPossibles.map(x => " | " + x.rs + ": " + x.pairs.toString())}`);
             if (thirdPossibles.length === 1) { // found it?!
               bestGuess = thirdPossibles[0].rs;
               return [bestGuess];
@@ -83,7 +83,7 @@ class Stanza {
               // Average the scores of the rhymes of each remaining rs, returning the one with the highest average
               // In other words, only the rs that best accounts for the stanza's rhymes will be allowed through
               const fourthPossibles = thirdPossibles.map(i => [i.rs, (i.pairs.reduce((a,b) => a + rhymes[b], 0)) / i.pairs.length]);
-              console.log(`fourthPossibles: ${fourthPossibles.toString()}`)
+              // console.log(`fourthPossibles: ${fourthPossibles.toString()}`);
               bestGuess = fourthPossibles.sort((a,b) => b[1] - a[1]);
               return bestGuess;
             }
@@ -172,6 +172,114 @@ class Stanza {
           bestGuess = fourthPossibles[0][0];
         } return bestGuess;
       }
+    }
+    else if (stan.length === 5) {
+      const onetwo = new Rhyme(stan[0], stan[1]).getScore();
+      const onethree = new Rhyme(stan[0], stan[2]).getScore();
+      const onefour = new Rhyme(stan[0], stan[3]).getScore();
+      const onefive = new Rhyme(stan[0], stan[4]).getScore();
+      const twothree = new Rhyme(stan[1], stan[2]).getScore();
+      const twofour = new Rhyme(stan[1], stan[3]).getScore();
+      const twofive = new Rhyme(stan[1], stan[4]).getScore();
+      const threefour = new Rhyme(stan[2], stan[3]).getScore();
+      const threefive = new Rhyme(stan[2], stan[4]).getScore();
+      const fourfive = new Rhyme(stan[3], stan[4]).getScore();
+
+      const possibles = [
+        {rs:'abccb', pairs:['twofive', 'threefour']},
+        {rs:'aabcb', pairs:['onetwo', 'threefive']},
+        {rs:'splt1', pairs:['threefive']},
+        {rs:'splt3', pairs:['twofive']},
+        {rs:'aabab', pairs:['onetwo', 'onefour', 'twofour', 'threefive']},
+        {rs:'aabbb', pairs:['onetwo', 'threefour', 'threefive', 'fourfive']},
+        {rs:'aabbc', pairs:['onetwo', 'threefour']},
+        {rs:'ababa', pairs:['onethree', 'onefive', 'twofour', 'threefive']},
+        {rs:'abbaa', pairs:['onefour', 'onefive', 'twothree', 'fourfive']},
+        {rs:'ababb', pairs:['onethree', 'twofour', 'twofive', 'fourfive']},
+        {rs:'abbab', pairs:['onefour', 'twothree', 'twofive', 'threefive']},
+        {rs:'abaab', pairs:['onethree', 'onefour', 'twofive', 'threefour']},
+        {rs:'aabba', pairs:['onetwo','onefive','twofive','threefour']},
+      ];
+      let fourthPossibles = [];
+
+      const allScores = {
+        'onetwo':onetwo,
+        'onethree':onethree,
+        'onefour':onefour,
+        'onefive':onefive,
+        'twothree':twothree,
+        'twofour':twofour,
+        'twofive':twofive,
+        'threefour':threefour,
+        'threefive':threefive,
+        'fourfive':fourfive,
+      };
+
+      let output = this.winnower(possibles, allScores);
+      if (!!output) bestGuess = output[0];
+      if (!!output && output.length > 1) {
+        fourthPossibles = output;
+      } else if (!!output && output.length === 1) {
+        return output[0];
+      }
+
+      // Perform a few last checks to correct some of winnower's biases
+      const schemes = {
+        splt1:false,
+        aabcb:false,
+        aabbb:false,
+        ababa:false,
+        splt3:false,
+        abccb:false,
+        abaab:false,
+        ababb:false,
+        abbab:false,
+        aabbc:false,
+        aabba:false
+      };
+      fourthPossibles.forEach(scheme => {schemes[scheme[0]] = true});
+
+      if (schemes.splt1) {
+        if (schemes.aabcb && allScores['onetwo'] > THRESHOLD) {
+          bestGuess = 'aabcb';
+          if (schemes.aabbb && allScores['threefour'] > THRESHOLD && allScores['fourfive'] > THRESHOLD) {
+            bestGuess = 'aabbb';
+          }
+        } else if (bestGuess === 'N/A') bestGuess = 'splt1';
+        if (schemes.ababa && ['onethree','onefive','twofour'].every(x => allScores[x] > THRESHOLD)) {
+          bestGuess = 'ababa';
+        }
+      }
+      if (schemes.splt3) {
+        if (schemes.abccb && allScores['threefour'] > THRESHOLD) {
+          bestGuess = 'abccb';
+          if (schemes.abaab && ['onethree','onefour'].every(x => allScores[x] > THRESHOLD)) {
+            bestGuess = 'abaab';
+          }
+        } else if (bestGuess === 'N/A') bestGuess = 'splt3';
+        if (schemes.ababb && ['onethree','twofour','fourfive'].every(x => allScores[x] > THRESHOLD)) {
+          bestGuess = 'ababb';
+        }
+        if (schemes.abbab && ['onefour','twothree','threefive'].every(x => allScores[x] > THRESHOLD)) {
+          bestGuess = 'abbab';
+        }
+        if (schemes.aabba && ['onetwo','onefive','threefour'].every(x => allScores[x] > THRESHOLD)) {
+          bestGuess = 'aabba';
+        }
+      }
+      if (schemes.aabcb) {
+        if (allScores['threefive'] > allScores['threefour']) {
+          if ((bestGuess === 'N/A' || bestGuess === 'aabbc') && fourthPossibles[0][0] === 'aabcb') {
+            bestGuess = 'aabcb';
+          }
+        } else if (allScores['threefive'] < allScores['threefour']) {
+          if (bestGuess === 'N/A' || bestGuess === 'aabcb') bestGuess = 'aabbc';
+        }
+      }
+      if (bestGuess === 'N/A') {
+        if (fourthPossibles.length > 0) bestGuess = fourthPossibles[0][0];
+      }
+      return bestGuess;
     }
   }
 

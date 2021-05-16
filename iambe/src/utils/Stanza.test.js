@@ -85,6 +85,12 @@ test('getRhymeScheme identifies rhyme schemes in quatrains', () => {
   expect(abaax.getRhymeScheme()).toBe("abaax");
   expect(aabax.getRhymeScheme()).toBe("aabax");
 });
+test('getRhymeScheme identifies rhyme schemes in quintains', () => {
+  const splt1 = new Stanza("To fight aloud\nIs very brave\nBut gallanter I know\nWho charge within the bosom\nThe cavalry of Woe");
+  const aabba = new Stanza("And how the swift beat of the brain\nFalters because it is in vain,\nIn Autumn at the fall of the leaf\nKnowest thou not? and how the chief\nOf joys seems—not to suffer pain?");
+  expect(splt1.getRhymeScheme()).toBe('splt1');
+  expect(aabba.getRhymeScheme()).toBe('aabba');
+});
 
 test('getRhymes identifies rhymes in couplets', () => {
   const cplt = new Stanza('I know\nThe woe');
