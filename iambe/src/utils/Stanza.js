@@ -671,7 +671,9 @@ class Stanza {
 
   getRhymes() {
     /**
-     * returns an object containing the rhymes in the stanza, with each rhyme consisting of a list of the lines, the rhyme words, and the rhymetype
+     * returns a list of objects containing the rhymes in the stanza, with each rhyme consisting of a list of the lines, the rhyme words, and the rhymetype.
+     * 
+     * Each returned object has this structure: {lines, words, rt}
      */
 
     const rs = this.getRhymeScheme()
