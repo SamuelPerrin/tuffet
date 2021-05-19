@@ -46,6 +46,9 @@ const RhymedStanza = props => {
     }))
   }, [])
 
+  const seenLines = {};
+  let colorsUsed = -1;
+
   return (
     <FlexRow>
       <div>
@@ -55,15 +58,17 @@ const RhymedStanza = props => {
         <g fill={'none'} strokeWidth={3}>
           {console.log(`rendering arcs from rhymePairs`, rhymePairs)}
           {rhymePairs.map((pair, i) => {
-            // console.log()
+            colorsUsed += stanzaRhymes[i].lines[0] in seenLines ? 0 : 1;
+            stanzaRhymes[i].lines[0] in seenLines ? console.log(`seen! for rhyme ${i} using ${seenLines[stanzaRhymes[i].lines[0]]}`) : console.log(`unseen: for rhyme ${i} using ${COLOR_SEQUENCE[colorsUsed % COLOR_SEQUENCE.length]}`)
+            seenLines[stanzaRhymes[i].lines[1]] = stanzaRhymes[i].lines[0] in seenLines ? seenLines[stanzaRhymes[i].lines[0]] : COLOR_SEQUENCE[colorsUsed % COLOR_SEQUENCE.length];
             return (
             <path 
-              d = {`M ${0},${pair[1] - rhymePairs[0][1]*heightScalar}
-                    C ${breadthScalar*(pair[2] - pair[1])},${pair[1] - rhymePairs[0][1]*heightScalar}
-                    ${breadthScalar*(pair[2] - pair[1])},${pair[2] - rhymePairs[0][1]*heightScalar}
-                    ${0},${pair[2] - rhymePairs[0][1]*heightScalar}`}
+              d = {`M ${0},${pair[1] - rhymePairs[0][1] * heightScalar}
+                    C ${breadthScalar * (pair[2] - pair[1])},${pair[1] - rhymePairs[0][1] * heightScalar}
+                    ${breadthScalar * (pair[2] - pair[1])},${pair[2] - rhymePairs[0][1] * heightScalar}
+                    ${0},${pair[2] - rhymePairs[0][1] * heightScalar}`}
               // d = {`M ${0},${35*i} C ${50},${35*i} ${50},${35*i + 50} ${0},${35*i + 50}`}
-              stroke={COLOR_SEQUENCE[i % COLOR_SEQUENCE.length]}
+              stroke={stanzaRhymes[i].lines[0] in seenLines ? seenLines[stanzaRhymes[i].lines[0]] : COLOR_SEQUENCE[colorsUsed % COLOR_SEQUENCE.length]}
               key={i}
             />
           )})}
