@@ -8,3 +8,4 @@ export const PURPLE = '#C63ADD'
 export const CYAN = '#32B4C6'
 export const GREEN = '#1AC15D'
 export const GRAY = '#95959B'
+export const COLOR_SEQUENCE = [BLUE, RED, YELLOW, CYAN, PURPLE, GREEN, GRAY];
