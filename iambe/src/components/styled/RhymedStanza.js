@@ -11,6 +11,7 @@ const StyledLine = styled.span`
 `
 const StyledSVG = styled.svg`
   display:inline;
+  width:20%;
 `
 const FlexRow = styled.div`
   display:flex;
@@ -25,20 +26,12 @@ const RhymedStanza = props => {
   .filter(x => x.innerHTML === stanzaRhymes[0].lines[0]).length;
   console.log('stanza', stanza, stanza.length)
   const stanzaRhymes = new Stanza(stanza.join('\n')).getRhymes();
-  const offset = 16;
+  const offset = 20; // controls alignment of arcs with verses
+  const breadthScalar = 0.75; // affects breadth of arcs
+  const heightScalar = 0.8; // affects alignment of arcs with verses
 
   console.log(`firstLine is ${firstLine} because span is ${Array.from(document.querySelector('span'))
   .filter(x => x.innerHTML === stanzaRhymes[0].lines[0])[0]}`)
-  // const rhymePairs = firstLine ? stanzaRhymes.map(rhyme => {
-  //   return {
-  //     1: Array.from(document.querySelectorAll('span'))
-  //       .filter(x => x.innerHTML === rhyme.lines[0])[0]
-  //       .getBoundingClientRect().bottom - offset,
-  //     2: Array.from(document.querySelectorAll('span'))
-  //       .filter(x => x.innerHTML === rhyme.lines[1])[0]
-  //       .getBoundingClientRect().bottom - offset,
-  //   }
-  // }) : [1,2,3,4,5];
 
   useEffect(() => {
     setRhymePairs(stanzaRhymes.map(rhyme => {
@@ -61,17 +54,19 @@ const RhymedStanza = props => {
       <StyledSVG>
         <g fill={'none'} strokeWidth={3}>
           {console.log(`rendering arcs from rhymePairs`, rhymePairs)}
-          {rhymePairs.map((line, i) => (
+          {rhymePairs.map((pair, i) => {
+            // console.log()
+            return (
             <path 
-              d = {`M ${0},${line[1] - rhymePairs[0][1] * 0.85}
-                    C ${50},${line[1] - rhymePairs[0][1] * 0.85}
-                    ${50},${line[2] - rhymePairs[0][1] * 0.85}
-                    ${0},${line[2] - rhymePairs[0][1] * 0.85}`}
+              d = {`M ${0},${pair[1] - rhymePairs[0][1]*heightScalar}
+                    C ${breadthScalar*(pair[2] - pair[1])},${pair[1] - rhymePairs[0][1]*heightScalar}
+                    ${breadthScalar*(pair[2] - pair[1])},${pair[2] - rhymePairs[0][1]*heightScalar}
+                    ${0},${pair[2] - rhymePairs[0][1]*heightScalar}`}
               // d = {`M ${0},${35*i} C ${50},${35*i} ${50},${35*i + 50} ${0},${35*i + 50}`}
-              stroke={COLOR_SEQUENCE[i % rhymePairs.length]}
+              stroke={COLOR_SEQUENCE[i % COLOR_SEQUENCE.length]}
               key={i}
             />
-          ))}
+          )})}
         </g>
       </StyledSVG>
     </FlexRow>
