@@ -4,6 +4,7 @@ import {connect} from 'react-redux';
 import Container from './styled/Container';
 import Section from './styled/Section';
 import {YellowSpan} from './styled/Spans';
+import Table from './styled/Table';
 
 const RhymeType = props => {
   const {rhymes, rt, rhymeTypeCounts} = props;
@@ -15,8 +16,8 @@ const RhymeType = props => {
       <Container>
         <Section>
           <h3><YellowSpan>Rhyme Type</YellowSpan></h3>
-          <p>This selection has {rhymeTypeCounts[rt]} instances of {rt}:</p>
-          <table>
+          <Table maxWidth={'1200px'}>
+            <caption>This selection has {rhymeTypeCounts[rt]} instances of {rt}:</caption>
             <thead>
               <tr>
                 <th>Word 1</th>
@@ -35,7 +36,7 @@ const RhymeType = props => {
                 </tr>
               ))}
             </tbody>
-          </table>
+          </Table>
         </Section>
       </Container>
     </div>

@@ -25,7 +25,6 @@ const Rhymes = props => {
   }
 
   const submitRhymeType = e => {
-    console.log(`running submitRhymeType with e.target.dataset.rt:`,e.target.dataset.rt)
     e.preventDefault();
     getRhymeTypeDetails(e.target.dataset.rt);
     history.push("/rhyme/type");
@@ -61,7 +60,7 @@ const Rhymes = props => {
           <ol>
             {rhymeTypeCounts && Object.entries(rhymeTypeCounts).filter(entry => entry[1] > 0).sort((a,b) => b[1] - a[1]).map(entry => <ListItemTile key={entry[0]} onClick={submitRhymeType} rt={entry[0]}>{RHYME_TYPES[entry[0]]} ({entry[1]} rhyme{entry[1] > 0 ? 's' : ''})</ListItemTile>)}
           </ol>
-          <Link href="#"><YellowSpan>Read more »</YellowSpan></Link>
+          <Link to="/rhyme/type"><YellowSpan>Read more »</YellowSpan></Link>
         </Section>
       </Container>
     </div>
