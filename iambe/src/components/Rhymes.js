@@ -14,12 +14,11 @@ import Stanza from '../utils/Stanza';
 import {RHYME_SCHEMES, RHYME_TYPES} from '../utils/phonstants';
 
 const Rhymes = props => {
-  let {poems, rhymes, rhymeTypeCounts, rhymeSchemeCounts, getRhymeDetails} = props;
+  let {poems, rhymeTypeCounts, rhymeSchemeCounts, getRhymeDetails} = props;
   let history = useHistory();
 
   const rhymeDetail = e => {
     e.preventDefault();
-    console.log(e.target.attributes.stanzaNum.value);
     getRhymeDetails(e.target.attributes.stanzaNum.value);
     history.push("/rhyme/scheme");
   }

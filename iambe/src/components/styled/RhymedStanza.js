@@ -22,16 +22,10 @@ const FlexRow = styled.div`
 const RhymedStanza = props => {
   const {stanza} = props; // stanza should be a list of strings
   const [rhymePairs, setRhymePairs] = useState([]);
-  const firstLine = !!Array.from(document.querySelector('span'))
-  .filter(x => x.innerHTML === stanzaRhymes[0].lines[0]).length;
-  console.log('stanza', stanza, stanza.length)
   const stanzaRhymes = new Stanza(stanza.join('\n')).getRhymes();
   const offset = 20; // controls alignment of arcs with verses
   const breadthScalar = 0.75; // affects breadth of arcs
   const heightScalar = 0.8; // affects alignment of arcs with verses
-
-  console.log(`firstLine is ${firstLine} because span is ${Array.from(document.querySelector('span'))
-  .filter(x => x.innerHTML === stanzaRhymes[0].lines[0])[0]}`)
 
   useEffect(() => {
     setRhymePairs(stanzaRhymes.map(rhyme => {
@@ -44,7 +38,7 @@ const RhymedStanza = props => {
           .getBoundingClientRect().bottom - offset,
       }
     }))
-  }, [])
+  }, []);
 
   const seenLines = {};
   let colorsUsed = -1;
@@ -56,18 +50,20 @@ const RhymedStanza = props => {
       </div>
       <StyledSVG>
         <g fill={'none'} strokeWidth={3}>
-          {console.log(`rendering arcs from rhymePairs`, rhymePairs)}
           {rhymePairs.map((pair, i) => {
-            colorsUsed += stanzaRhymes[i].lines[0] in seenLines ? 0 : 1;
-            stanzaRhymes[i].lines[0] in seenLines ? console.log(`seen! for rhyme ${i} using ${seenLines[stanzaRhymes[i].lines[0]]}`) : console.log(`unseen: for rhyme ${i} using ${COLOR_SEQUENCE[colorsUsed % COLOR_SEQUENCE.length]}`)
-            seenLines[stanzaRhymes[i].lines[1]] = stanzaRhymes[i].lines[0] in seenLines ? seenLines[stanzaRhymes[i].lines[0]] : COLOR_SEQUENCE[colorsUsed % COLOR_SEQUENCE.length];
+            if (stanzaRhymes[i].lines[0] in seenLines) {
+              seenLines[stanzaRhymes[i].lines[1]] = seenLines[stanzaRhymes[i].lines[0]]
+            } else {
+              colorsUsed += 1;
+              seenLines[stanzaRhymes[i].lines[1]] = COLOR_SEQUENCE[colorsUsed % COLOR_SEQUENCE.length];
+            }
+            
             return (
             <path 
               d = {`M ${0},${pair[1] - rhymePairs[0][1] * heightScalar}
                     C ${breadthScalar * (pair[2] - pair[1])},${pair[1] - rhymePairs[0][1] * heightScalar}
                     ${breadthScalar * (pair[2] - pair[1])},${pair[2] - rhymePairs[0][1] * heightScalar}
                     ${0},${pair[2] - rhymePairs[0][1] * heightScalar}`}
-              // d = {`M ${0},${35*i} C ${50},${35*i} ${50},${35*i + 50} ${0},${35*i + 50}`}
               stroke={stanzaRhymes[i].lines[0] in seenLines ? seenLines[stanzaRhymes[i].lines[0]] : COLOR_SEQUENCE[colorsUsed % COLOR_SEQUENCE.length]}
               key={i}
             />
