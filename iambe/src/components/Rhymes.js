@@ -37,17 +37,19 @@ const Rhymes = props => {
       <Container>
         <Section>
           <h3><RedSpan>Rhyme Schemes</RedSpan></h3>
-          {poems.map(poem => new Poem(poem).getStanzas().map(stanza => {
-              stanzaNum++
-              return <StanzaTile 
-                onClick={submitRhymeDetail}
-                children={new Stanza(stanza).getLines()} 
-                hoverText={"Rhyme scheme: " + RHYME_SCHEMES[new Stanza(stanza).getRhymeScheme()]}
-                key={stanzaNum}
-                stanzaNum={stanzaNum}
-              />
-            }
-          ))}
+          <div>
+            {poems.map(poem => new Poem(poem).getStanzas().map(stanza => {
+                stanzaNum++
+                return <StanzaTile 
+                  onClick={submitRhymeDetail}
+                  children={new Stanza(stanza).getLines()} 
+                  hoverText={"Rhyme scheme: " + RHYME_SCHEMES[new Stanza(stanza).getRhymeScheme()]}
+                  key={stanzaNum}
+                  stanzaNum={stanzaNum}
+                />
+              }
+            ))}
+          </div>
           {Object.entries(rhymeSchemeCounts).reduce((a,b) => a+b[1], 0) > 1 ? <p style={{fontWeight:'bold'}}>The most common rhyme schemes in this sample are:</p> : <p style={{fontWeight:'bold'}}>This stanza's rhyme scheme is:</p>}
           <ol>
             {rhymeSchemeCounts && Object.entries(rhymeSchemeCounts).filter(entry => entry[1] > 0).sort((a,b) => b[1] - a[1]).map(entry => <li key={entry[0]}>{RHYME_SCHEMES[entry[0]]} ({entry[1]} stanza{entry[1] > 1 ? 's' : ''})</li>)}
