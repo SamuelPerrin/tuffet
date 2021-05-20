@@ -65,7 +65,7 @@ const RhymedStanza = props => {
                     ${breadthScalar * (pair[2] - pair[1])},${pair[2] - rhymePairs[0][1] * heightScalar}
                     ${0},${pair[2] - rhymePairs[0][1] * heightScalar}`}
               stroke={stanzaRhymes[i].lines[0] in seenLines ? seenLines[stanzaRhymes[i].lines[0]] : COLOR_SEQUENCE[colorsUsed % COLOR_SEQUENCE.length]}
-              key={i}
+              key={stanzaRhymes[i].lines[0]}
             />
           )})}
         </g>

@@ -28,7 +28,7 @@ export default function StanzaTile(props) {
   return (
     <StanzaTileWrapper maxWidth={maxWidth} className={className}>
       <HoverCard hoverText={hoverText} onClick={onClick}>
-        {children.map(child => <p stanzanum={stanzaNum} onClick={onClick}>{child}</p>)}
+        {children.map(child => <p stanzanum={stanzaNum} onClick={onClick} key={child}>{child}</p>)}
       </HoverCard>
     </StanzaTileWrapper>
   )
