@@ -244,14 +244,15 @@ export const RHYME_TYPES = {
   'assonance':'assonance',
   'full consonance':'consonance',
   'promotion consonance':'promotion consonance',
+  'diphthong assonance':'diphthong assonance',
   'diph-vow assonance':'diphthong assonance',
   'vow-diph assonance':'diphthong assonance',
   'diph-diph assonance':'diphthong assonance',
   'partial consonance':'partial consonance',
   'unstressed rhyme':'unstressed rhyme',
-  'diph-vow promotion assonance':'diphthong promotion assonance',
-  'vow-diph promotion assonance':'diphthong promotion assonance',
-  'diph-diph promotion assonance':'diphthong promotion assonance',
+  'diph-vow promotion assonance':'promotion diphthong assonance',
+  'vow-diph promotion assonance':'promotion diphthong assonance',
+  'diph-diph promotion assonance':'promotion diphthong assonance',
   'promotion diphthong assonance':'promotion diphthong assonance',
   'anisobaric rhyme':'anisobaric rhyme',
   'zero consonance':'zero consonance',
@@ -317,7 +318,7 @@ export const RHYME_TYPE_DESCRIPTIONS = {
     <p>A diphthong is a vowel sound that glides from one vowel to another. For instance, in the word <i>ride</i>, the diphthong [aɪ] begins at the vowel [a] and glides toward the vowel [ɪ]. Standard English has several diphthongs, including the vowels in the following words: <i>bait</i>, <i>bite</i>, <i>boat</i>, <i>bout</i>, and <i>boy</i>. <strong>Diphthong assonance</strong> is a rhyme like assonance with one exception: instead of having matching vowels, a diphthong rhyme has vowels that match only in the second half of the vowel (the &lsquo;off-glide&rsquo;). For instance, in a pairing like <i>Blake</i>&ndash;<i>meet</i>, the off-glide of the diphthong [eɪ] in <i>Blake</i> is equivalent to the [i] vowel in <i>meet</i>.</p>
   </div>,
   'partial consonance':<div className={'paragraph'}>
-    <p><strong>Partial consonance</strong> differs from what might be called full consonance because not all of the consonant sounds in a cluster are present in both words. For instance, in the partial consonantal rhyme <i>book</i>&ndash;<i>think</i>, both words share the [k] sound, but <i>Book</i> doesn&rsquo;t have the [ŋ] sound that is present in <i>think</i>. In the rhyme <i>dissolved</i>&ndash;<i>proved</i>, both words end in [vd], but <i>dissolved</i>&rsquo;s [l] is missing from <i>proved</i>.</p>
+    <p><strong>Partial consonance</strong> differs from what might be called full consonance because not all of the consonant sounds in a cluster are present in both words. For instance, in the partial consonantal rhyme <i>book</i>&ndash;<i>think</i>, both words share the [k] sound, but <i>book</i> doesn&rsquo;t have the [ŋ] sound that is present in <i>think</i>. In the rhyme <i>dissolved</i>&ndash;<i>proved</i>, both words end in [vd], but <i>dissolved</i>&rsquo;s [l] is missing from <i>proved</i>.</p>
   </div>,
   'unstressed rhyme':<div className={'paragraph'}>
     <p>One way to make a partial rhyme with words that end in unstressed syllables is to ignore the stressed syllables altogether, leaving the sound resemblance to the unstressed syllables alone. Such a rhyme might be called <strong>unstressed rhyme</strong> or <strong>homeoteleuton</strong>, which is Greek for &ldquo;same endings&rdquo;. Traditionally, the term <i>homeoteleuton</i> has referred to the resemblance between the ending of two words when they have the same grammatical endings. Wimsatt gives the example of <i>exstinguendam</i>&ndash;<i>infringendam</i> from Latin, where the <i>-endam</i> ending on both words is something like the <i>-ing</i> at the end of <i>extinguishing</i> and <i>infringing</i> in English.</p>
