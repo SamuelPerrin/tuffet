@@ -8,6 +8,7 @@ import Home from './components/Home';
 import Rhymes from './components/Rhymes';
 import Meter from './components/Meter';
 import RhymeScheme from './components/RhymeScheme';
+import RhymeType from './components/RhymeType';
 import Scansion from './components/Scansion';
 
 function App() {
@@ -25,6 +26,7 @@ function App() {
           <Route exact path='/rhyme' component={Rhymes} />
           <Route exact path="/meter" component={Meter} />
           <Route exact path="/rhyme/scheme" component={RhymeScheme}/>
+          <Route exact path="/rhyme/type" component={RhymeType} />
           <Route exact path="/meter/scansion" component={Scansion} />
         </Switch>
       </div>
