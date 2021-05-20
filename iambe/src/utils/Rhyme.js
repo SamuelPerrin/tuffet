@@ -131,19 +131,19 @@ class Rhyme {
     if (['N/A','maybe assonance'].includes(rhymeType) && rimes1.nucl.slice(0,2) in phonstants.DIPHTHONGS) {
       // diphthong-first rhymes
       if (rimes2.nucl.slice(0,2) in phonstants.DIPHTHONGS && rimes1.nucl.slice(-2) === rimes2.nucl.slice(-2)) {
-        if (rimes1.coda === rimes2.coda) rhymeType = 'diph-diph rhyme';
-        else if (rimes1.nucl !== rimes2.nucl) rhymeType = 'diph-diph assonance';
+        if (rimes1.coda === rimes2.coda) rhymeType = 'diphthong rhyme'; // 'diph-diph rhyme';
+        else if (rimes1.nucl !== rimes2.nucl) rhymeType = 'diphthong assonance'; // 'diph-diph assonance';
       } else if ((rimes1.nucl.slice(-2,-1) === 'Y' && rimes2.nucl.slice(0,2) === 'IY') || (rimes1.nucl.slice(-2,-1) === 'W' && rimes2.nucl.slice(0,2) === 'UW')) {
-        if (rimes1.coda === rimes2.coda) rhymeType = 'diph-vow rhyme';
-        else rhymeType = 'diph-vow assonance';
+        if (rimes1.coda === rimes2.coda) rhymeType = 'diphthong rhyme'; //'diph-vow rhyme';
+        else rhymeType = 'diphthong assonance'; // 'diph-vow assonance';
       }
     }
 
     if (['N/A', 'maybe assonance'].includes(rhymeType) && !(rimes1.nucl.slice(0,2) in phonstants.DIPHTHONGS) && rimes2.nucl.slice(0,2) in phonstants.DIPHTHONGS) {
       // diphthong-second rhymes
       if ((rimes2.nucl.slice(-2,-1) === 'Y' && rimes1.nucl.slice(0,2) === 'IY') || (rimes2.nucl.slice(-2,-1) === 'W' && rimes1.nucl.slice(0,2) === 'UW')) {
-        if (rimes1.coda === rimes2.coda) rhymeType = 'vow-diph rhyme';
-        else rhymeType = 'vow-diph assonance';
+        if (rimes1.coda === rimes2.coda) rhymeType = 'diphthong rhyme'; // 'vow-diph rhyme';
+        else rhymeType = 'diphthong assonance'; // 'vow-diph assonance';
       }
     }
 
@@ -153,14 +153,14 @@ class Rhyme {
       if (rimes2.lastNucl.slice(0,2) in phonstants.DIPHTHONGS) {
         // prom diph-diph rhymes
         if (rimes1.lastNucl.slice(-2,-1) === rimes2.lastNucl.slice(-2,-1)) {
-          if (this.numless(rimes1.lastCoda) === this.numless(rimes2.lastCoda)) rhymeType = 'diph-diph promotion rhyme';
-          else if (this.numless(rimes1.lastNucl) !== this.numless(rimes2.lastNucl)) rhymeType = 'diph-diph promotion assonance';
+          if (this.numless(rimes1.lastCoda) === this.numless(rimes2.lastCoda)) rhymeType = 'promotion diphthong rhyme'; // 'diph-diph promotion rhyme';
+          else if (this.numless(rimes1.lastNucl) !== this.numless(rimes2.lastNucl)) rhymeType = 'promotion diphthong assonance'; // 'diph-diph promotion assonance';
         }
       } else {
         if ((rimes1.lastNucl.slice(-2,-1) === 'Y' && rimes2.lastNucl.slice(0,2) === 'IY') || (rimes1.lastNucl.slice(-2,-2) === 'W' && rimes2.lastNucl.slice(0,2) === 'UW')) {
           // prom diph-vow rhymes
-          if (this.numless(rimes1.lastCoda) === this.numless(rimes2.lastCoda)) rhymeType = 'diph-vow promotion rhyme';
-          else rhymeType = 'diph-vow promotion assonance';
+          if (this.numless(rimes1.lastCoda) === this.numless(rimes2.lastCoda)) rhymeType = 'promotion diphthong rhyme'; // 'diph-vow promotion rhyme';
+          else rhymeType = 'promotion diphthong assonance'; // 'diph-vow promotion assonance';
         }
       }
     }
@@ -168,8 +168,8 @@ class Rhyme {
     if (['N/A', 'maybe assonance'].includes(rhymeType) && !(rimes1.lastNucl.slice(0,2) in phonstants.DIPHTHONGS) && rimes2.lastNucl.slice(0,2) in phonstants.DIPHTHONGS) {
       // prom diph-second rhymes
       if ((rimes2.lastNucl.slice(-2,-1) === 'Y' && rimes1.lastNucl.slice(0,2) === 'IY') || (rimes2.lastNucl.slice(-2,-1) === 'W' && rimes1.lastNucl.slice(0,2) === 'UW')) {
-        if (this.numless(rimes1.lastCoda) === this.numless(rimes2.lastCoda)) rhymeType = 'vow-diph promotion rhyme';
-        else rhymeType = 'vow-diph promotion assonance';
+        if (this.numless(rimes1.lastCoda) === this.numless(rimes2.lastCoda)) rhymeType = 'promotion diphthong rhyme'; // 'vow-diph promotion rhyme';
+        else rhymeType = 'promotion diphthong assonance'; // 'vow-diph promotion assonance';
       }
     }
 

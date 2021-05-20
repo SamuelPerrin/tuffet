@@ -161,8 +161,8 @@ class Stanza {
       fourthPossibles.forEach(scheme => {schemes[scheme[0]] = true});
       if (schemes.quatr) {
         if (schemes.ababx && allScores['onethree'] > THRESHOLD) bestGuess = 'ababx';
-        else bestGuess = 'ababx';
-        if (schemes.aabax && allScores['onewo'] > THRESHOLD && allScores['onefour'] > THRESHOLD) bestGuess = 'aabax';
+        else bestGuess = 'quatr';
+        if (schemes.aabax && allScores['onetwo'] > THRESHOLD && allScores['onefour'] > THRESHOLD) bestGuess = 'aabax';
         return bestGuess;
       } else if (schemes.cpls2 && schemes.aaaax && allScores['twothree'] > THRESHOLD) {
         bestGuess = 'aaaax';
