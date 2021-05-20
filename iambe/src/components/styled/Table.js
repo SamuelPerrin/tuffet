@@ -4,8 +4,7 @@ import styled from 'styled-components';
 const TableWrapper = styled.div`
   table {
     table-layout: fixed;
-    width: 100%;
-    maxWidth: ${props => props.maxWidth}
+    max-width: ${props => props.maxWidth};
     border-collapse: collapse;
     border: 2px solid ${props => props.theme.blue};
   }
@@ -43,7 +42,11 @@ const TableWrapper = styled.div`
   }
 
   tbody tr:nth-child(even) {
-    background-color: ${props => props.theme.gray};
+    background-color: ${props => props.theme.white};
+  }
+  
+  caption {
+    text-align: left;
   }
 `
 

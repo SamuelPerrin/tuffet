@@ -11,12 +11,13 @@ const StyledLine = styled.span`
 `
 const StyledSVG = styled.svg`
   display:inline;
-  width:20%;
+  max-width:10%;
 `
 const FlexRow = styled.div`
   display:flex;
   flex-flow:row nowrap;
-
+  width:100%;
+  justify-content:center;
 `
 
 const RhymedStanza = props => {
@@ -45,7 +46,7 @@ const RhymedStanza = props => {
 
   return (
     <FlexRow>
-      <div>
+      <div style={{marginLeft:'0.3rem'}}>
         {stanza.map(line => <StyledLine>{line}</StyledLine>)}
       </div>
       <StyledSVG>
