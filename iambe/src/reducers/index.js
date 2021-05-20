@@ -18,7 +18,7 @@ const reducer = (state=initialState, action) => {
         rhymeTypeCounts: action.payload.rhymeTypeCounts,
         rhymeSchemeCounts: action.payload.rhymeSchemeCounts,
       }
-    case actions.GET_RHYME_DETAILS:
+    case actions.GET_RHYME_SCHEME_DETAILS:
       return {
         ...state,
         stanzaNum: action.payload.stanzaNum,

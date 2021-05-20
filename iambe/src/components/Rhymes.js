@@ -6,7 +6,7 @@ import Container from './styled/Container';
 import Section from './styled/Section';
 import StanzaTile from './styled/StanzaTile';
 import {Link, useHistory} from 'react-router-dom';
-import {getRhymeDetails} from '../actions';
+import {getRhymeSchemeDetails} from '../actions';
 
 import Anthology from '../utils/Anthology';
 import Poem from '../utils/Poem';
@@ -14,12 +14,12 @@ import Stanza from '../utils/Stanza';
 import {RHYME_SCHEMES, RHYME_TYPES} from '../utils/phonstants';
 
 const Rhymes = props => {
-  let {poems, rhymeTypeCounts, rhymeSchemeCounts, getRhymeDetails} = props;
+  let {poems, rhymeTypeCounts, rhymeSchemeCounts, getRhymeSchemeDetails} = props;
   let history = useHistory();
 
   const rhymeDetail = e => {
     e.preventDefault();
-    getRhymeDetails(e.target.attributes.stanzaNum.value);
+    getRhymeSchemeDetails(e.target.attributes.stanzaNum.value);
     history.push("/rhyme/scheme");
   }
 
@@ -71,4 +71,4 @@ const mapStateToProps = state => {
 }
 
 
-export default connect(mapStateToProps, { getRhymeDetails })(Rhymes)
+export default connect(mapStateToProps, { getRhymeSchemeDetails })(Rhymes)
