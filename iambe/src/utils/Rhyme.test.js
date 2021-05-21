@@ -66,36 +66,36 @@ test('getRhymeType identifies diphthong rhymes', () => {
   const fate = new Rhyme("You are right","This is fate");
   const boy = new Rhyme("He was a boy","She was a she");
   const hoping = new Rhyme("His eyelids' drooping","His pupils' hoping");
-  expect(fate.getRhymeType()).toBe("diph-diph rhyme");
-  expect(boy.getRhymeType()).toBe("diph-vow rhyme");
-  expect(hoping.getRhymeType()).toBe("vow-diph rhyme");
+  expect(fate.getRhymeType()).toBe("diphthong rhyme"); // diph-diph
+  expect(boy.getRhymeType()).toBe("diphthong rhyme"); // diph-vow
+  expect(hoping.getRhymeType()).toBe("diphthong rhyme"); // vow-diph
 })
 
 test('getRhymeType identifies diphthong assonance', () => {
   const knife = new Rhyme("a knife","is late");
   const leaf = new Rhyme("two knights","a leaf");
   const disappearing = new Rhyme("is disappearing", "from sight");
-  expect(knife.getRhymeType()).toBe("diph-diph assonance");
-  expect(leaf.getRhymeType()).toBe("diph-vow assonance");
-  expect(disappearing.getRhymeType()).toBe("vow-diph assonance");
+  expect(knife.getRhymeType()).toBe("diphthong assonance"); // diph-diph
+  expect(leaf.getRhymeType()).toBe("diphthong assonance"); // diph-vow
+  expect(disappearing.getRhymeType()).toBe("diphthong assonance"); // vow-diph
 })
 
 test('getRhymeType identifies promotion diphthong rhymes', () => {
   const justify = new Rhyme("to justify","his ploy");
   const butterfly = new Rhyme("a butterfly","I oversee");
   const history = new Rhyme("a history","of day");
-  expect(justify.getRhymeType()).toBe("diph-diph promotion rhyme");
-  expect(butterfly.getRhymeType()).toBe("diph-vow promotion rhyme");
-  expect(history.getRhymeType()).toBe("vow-diph promotion rhyme");
+  expect(justify.getRhymeType()).toBe("promotion diphthong rhyme"); // diph-diph
+  expect(butterfly.getRhymeType()).toBe("promotion diphthong rhyme"); // diph-vow
+  expect(history.getRhymeType()).toBe("promotion diphthong rhyme"); // vow-diph
 })
 
 test('getRhymeType identifies promotion diphthong assonance', () => {
   const flight = new Rhyme("Yesterday","I took flight");
   const seen = new Rhyme("To justify","The things I have seen");
   const size = new Rhyme("Unluckily","That's not my size!");
-  expect(flight.getRhymeType()).toBe("diph-diph promotion assonance");
-  expect(seen.getRhymeType()).toBe("diph-vow promotion assonance");
-  expect(size.getRhymeType()).toBe("vow-diph promotion assonance");
+  expect(flight.getRhymeType()).toBe("promotion diphthong assonance"); // diph-diph
+  expect(seen.getRhymeType()).toBe("promotion diphthong assonance"); // diph-vow
+  expect(size.getRhymeType()).toBe("promotion diphthong assonance"); // vow-diph
 })
 
 test('getRhymeType identifies zero consonance', () => {
@@ -168,4 +168,9 @@ test('getRhymeType identifies unstressed rhyme', () => {
 test('getScore scores rhymes', () => {
   const flight = new Rhyme("The night","No light");
   expect(flight.getScore()).toBe(1);
+})
+
+test('getRhymeType identifies Deity-away as prom diph', () => {
+  const deity = new Rhyme("The Deity","Is away");
+  expect(deity.getRhymeType()).toBe('promotion diphthong rhyme');
 })

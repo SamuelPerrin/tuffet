@@ -148,28 +148,28 @@ class Rhyme {
     }
 
     // prom diph rhymes
-    if (['N/A', 'maybe assonance', 'vow-diph assonance'].includes(rhymeType) && rimes1.lastNucl.slice(0,2) in phonstants.DIPHTHONGS) {
+    if (['N/A', 'maybe assonance', 'diphthong assonance'].includes(rhymeType) && rimes1.lastNucl.slice(0,2) in phonstants.DIPHTHONGS) {
       // promotion diphthong-first rhymes
       if (rimes2.lastNucl.slice(0,2) in phonstants.DIPHTHONGS) {
         // prom diph-diph rhymes
         if (rimes1.lastNucl.slice(-2,-1) === rimes2.lastNucl.slice(-2,-1)) {
           if (this.numless(rimes1.lastCoda) === this.numless(rimes2.lastCoda)) rhymeType = 'promotion diphthong rhyme'; // 'diph-diph promotion rhyme';
-          else if (this.numless(rimes1.lastNucl) !== this.numless(rimes2.lastNucl)) rhymeType = 'promotion diphthong assonance'; // 'diph-diph promotion assonance';
+          else if (this.numless(rimes1.lastNucl) !== this.numless(rimes2.lastNucl) && rhymeType !== 'diphthong assonance') rhymeType = 'promotion diphthong assonance'; // 'diph-diph promotion assonance';
         }
       } else {
         if ((rimes1.lastNucl.slice(-2,-1) === 'Y' && rimes2.lastNucl.slice(0,2) === 'IY') || (rimes1.lastNucl.slice(-2,-2) === 'W' && rimes2.lastNucl.slice(0,2) === 'UW')) {
           // prom diph-vow rhymes
           if (this.numless(rimes1.lastCoda) === this.numless(rimes2.lastCoda)) rhymeType = 'promotion diphthong rhyme'; // 'diph-vow promotion rhyme';
-          else rhymeType = 'promotion diphthong assonance'; // 'diph-vow promotion assonance';
+          else if (rhymeType !== 'diphthong assonance') rhymeType = 'promotion diphthong assonance'; // 'diph-vow promotion assonance';
         }
       }
     }
 
-    if (['N/A', 'maybe assonance'].includes(rhymeType) && !(rimes1.lastNucl.slice(0,2) in phonstants.DIPHTHONGS) && rimes2.lastNucl.slice(0,2) in phonstants.DIPHTHONGS) {
+    if (['N/A', 'maybe assonance', 'diphthong assonance'].includes(rhymeType) && !(rimes1.lastNucl.slice(0,2) in phonstants.DIPHTHONGS) && rimes2.lastNucl.slice(0,2) in phonstants.DIPHTHONGS) {
       // prom diph-second rhymes
       if ((rimes2.lastNucl.slice(-2,-1) === 'Y' && rimes1.lastNucl.slice(0,2) === 'IY') || (rimes2.lastNucl.slice(-2,-1) === 'W' && rimes1.lastNucl.slice(0,2) === 'UW')) {
         if (this.numless(rimes1.lastCoda) === this.numless(rimes2.lastCoda)) rhymeType = 'promotion diphthong rhyme'; // 'vow-diph promotion rhyme';
-        else rhymeType = 'promotion diphthong assonance'; // 'vow-diph promotion assonance';
+        else if (rhymeType !== 'diphthong assonance') rhymeType = 'promotion diphthong assonance'; // 'vow-diph promotion assonance';
       }
     }
 

@@ -57,7 +57,7 @@ test('getRhymeStats counts rhymetypes', () => {
   expect(stats['assonance']).toBe(1);
   expect(stats['sibilant consonance']).toBe(1);
   expect(stats['full consonance']).toBe(3);
-  expect(stats['diph-diph rhyme']).toBe(0);
+  expect(stats['diphthong rhyme']).toBe(0);
   expect(stats['N/A']).toBe(0);
 })
 
