@@ -6,6 +6,7 @@ const BreadcrumbWrapper = styled.nav`
   flex-flow: row wrap;
   justify-content:flex-start;
   margin: ${props => props.theme.space};
+  margin-top: 2.5rem;
 
   .current {
     font-weight: bold;

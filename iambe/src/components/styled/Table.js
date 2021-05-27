@@ -35,6 +35,7 @@ const TableWrapper = styled.div`
 
   thead th {
     background-color: ${props => props.theme.blue};
+    color: ${props => props.theme.white};
   }
 
   tbody tr:nth-child(odd) {
