@@ -9,7 +9,7 @@ const ContainerWrapper = styled.div`
     flex-direction: column;
     align-items: center;
     p {
-        font-size: 1rem;
+        font-size: ${props => props.theme.fontSize};
     }
 `
 

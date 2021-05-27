@@ -38,7 +38,17 @@ const RhymedStanza = props => {
           .filter(x => x.innerHTML === rhyme.lines[1])[0]
           .getBoundingClientRect().bottom - offset,
       }
-    }))
+    }));
+    console.log(`stanzaRhymes:`, stanzaRhymes);
+    console.log(`rhymePairs:`, stanzaRhymes.map(rhyme => {
+      return {
+        1: Array.from(document.querySelectorAll('span'))
+          .filter(x => x.innerHTML === rhyme.lines[0])[0]
+          .getBoundingClientRect().bottom - offset,
+        2: Array.from(document.querySelectorAll('span'))
+          .filter(x => x.innerHTML === rhyme.lines[1])[0]
+          .getBoundingClientRect().bottom - offset,
+      }}));
   }, []);
 
   const seenLines = {};
@@ -57,7 +67,7 @@ const RhymedStanza = props => {
             } else {
               colorsUsed += 1;
               seenLines[stanzaRhymes[i].lines[1]] = COLOR_SEQUENCE[colorsUsed % COLOR_SEQUENCE.length];
-            }
+            } console.log(`y1: ${pair[1]} - ${rhymePairs[0][1]} * ${heightScalar} = ${pair[1] - rhymePairs[0][1] * heightScalar}`)
             
             return (
             <path 

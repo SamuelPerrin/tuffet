@@ -6,16 +6,16 @@ const Section = styled.section`
   justify-content: space-evenly;
   align-items: center;
   width: 100%;
-  margin-bottom: 1rem;
+  margin-bottom: ${props => props.theme.space};
   h3 {
-    font-size: 1.5rem;
+    font-size: ${props => props.theme.headerFontSize};
     text-align: left;
   }
   p {
-    font-size: 1rem;
+    font-size: ${props => props.theme.fontSize};
   }
   li {
-    font-size: 1rem;
+    font-size: ${props => props.theme.fontSize};
   }
   a {
     font-size: .85rem;
