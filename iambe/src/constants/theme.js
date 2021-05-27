@@ -19,6 +19,7 @@ export const Theme = {
   fontSize: '1rem',
   inputFontSize: '1rem',
   smallFont: '0.75rem',
+  headerFontSize: '1.5rem',
 
   // button
   buttonWidth:'30%',
