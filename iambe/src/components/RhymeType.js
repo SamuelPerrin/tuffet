@@ -1,6 +1,9 @@
 import React from 'react';
 import {connect} from 'react-redux';
+import {Link} from 'react-router-dom';
 
+import Navbar from './styled/Navbar';
+import Breadcrumbs from './styled/Breadcrumbs';
 import Container from './styled/Container';
 import Section from './styled/Section';
 import {YellowSpan, RedSpan} from './styled/Spans';
@@ -14,6 +17,12 @@ const RhymeType = props => {
 
   return (
     <div>
+      <Navbar />
+      <Breadcrumbs>
+        <Link to='/'>Home</Link>
+        <Link to='/rhyme'>Rhyme</Link>
+        <Link to='/rhyme/type' className='current'>{RHYME_TYPES[rt]}</Link>
+      </Breadcrumbs>
       <Container>
         <Section>
           <h3><YellowSpan>Rhyme Type: {RHYME_TYPES[rt]}</YellowSpan></h3>

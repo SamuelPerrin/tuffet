@@ -1,12 +1,14 @@
 import React from 'react';
 import {connect} from 'react-redux';
+import { Link, useHistory } from 'react-router-dom';
 
+import Navbar from './styled/Navbar';
+import Breadcrumbs from './styled/Breadcrumbs';
 import { YellowSpan, RedSpan } from './styled/Spans';
 import Container from './styled/Container';
 import Section from './styled/Section';
 import StanzaTile from './styled/StanzaTile';
 import ListItemTile from './styled/ListItemTile';
-import { Link, useHistory } from 'react-router-dom';
 import { getRhymeSchemeDetails, getRhymeTypeDetails } from '../actions';
 
 import Anthology from '../utils/Anthology';
@@ -34,6 +36,11 @@ const Rhymes = props => {
 
   return (
     <div>
+      <Navbar />
+      <Breadcrumbs>
+        <Link to='/'>Home</Link>
+        <Link to='/rhyme' className='current'>Rhyme</Link>
+      </Breadcrumbs>
       <Container>
         <Section>
           <h3><RedSpan>Rhyme Schemes</RedSpan></h3>
@@ -78,6 +85,5 @@ const mapStateToProps = state => {
   rhymeSchemeCounts: state.rhymeSchemeCounts,
   }
 }
-
 
 export default connect(mapStateToProps, { getRhymeSchemeDetails, getRhymeTypeDetails })(Rhymes)
