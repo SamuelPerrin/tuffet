@@ -28,7 +28,6 @@ const RhymeScheme = props => {
 
   return (
     <div>
-      <Navbar />
       <Breadcrumbs>
         <Link to='/'>Home</Link>
         <Link to='/rhyme'>Rhyme</Link>

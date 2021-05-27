@@ -36,7 +36,6 @@ const Rhymes = props => {
 
   return (
     <div>
-      <Navbar />
       <Breadcrumbs>
         <Link to='/'>Home</Link>
         <Link to='/rhyme' className='current'>Rhyme</Link>

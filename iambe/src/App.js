@@ -4,6 +4,7 @@ import {Switch, Route, Link} from 'react-router-dom';
 import {ThemeProvider} from 'styled-components';
 import {Theme} from './constants/theme';
 import GlobalStyle from './components/styled/Global';
+import Navbar from './components/styled/Navbar';
 import Home from './components/Home';
 import Rhymes from './components/Rhymes';
 import Meter from './components/Meter';
@@ -17,9 +18,7 @@ function App() {
       <GlobalStyle />
       <div>
         <header>
-          <Link to='/'>Home</Link>
-          <Link to='/rhyme'>Rhymes</Link>
-          <Link to='/meter'>Meter</Link>
+          <Navbar />
         </header>
         <Switch>
           <Route exact path ='/' component={Home} />
