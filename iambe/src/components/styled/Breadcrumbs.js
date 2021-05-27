@@ -5,6 +5,7 @@ const BreadcrumbWrapper = styled.nav`
   display: flex;
   flex-flow: row wrap;
   justify-content:flex-start;
+  margin: ${props => props.theme.space};
 
   .current {
     font-weight: bold;
@@ -19,7 +20,7 @@ export default function Breadcrumbs(props) {
       {children.map((child, i) =>
       <>
         <span key={child}>{child}</span>
-        {i === children.length - 1 ? null : <>&nbsp;&gt;&nbsp;</>}
+        {i === children.length - 1 ? null : <>&nbsp;/&nbsp;</>}
       </>)}
     </BreadcrumbWrapper>
   )

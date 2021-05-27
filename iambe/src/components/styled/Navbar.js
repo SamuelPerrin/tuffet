@@ -11,6 +11,8 @@ const NavWrapper = styled.nav`
   color: ${props => props.theme.white};
   font-size: ${props => props.theme.headerFontSize};
   width:100%;
+  position:fixed;
+  top:0;
 
   .logo {
     color: ${props => props.theme.white};
