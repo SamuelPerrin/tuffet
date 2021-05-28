@@ -4,9 +4,13 @@ import {useHistory} from 'react-router-dom';
 
 import Section from './styled/Section';
 import {YellowSpan, RedSpan, BlueSpan} from './styled/Spans';
+import TryPoem from './styled/TryPoem';
 import TextArea from './styled/TextArea';
 import Button from './styled/Button';
 import {getRhymes, getMeter} from '../actions';
+
+import * as samples from '../constants/samples';
+import * as theme from '../constants/colors'; 
 
 const initialValue = ""
 
@@ -30,9 +34,14 @@ const Home = props => {
     history.push('/meter');
   }
 
+  const submitSample = sample => {
+    props.getRhymes(sample);
+    history.push('/rhyme');
+  };
+
   return (
     <div>
-      <Section>
+      <Section style={{marginTop:'3rem'}}>
         <h3>Poetry is easier than ever with Iambe!</h3>
         <ul>
           <li>Visualize <RedSpan>rhyme schemes</RedSpan>!</li>
@@ -42,9 +51,20 @@ const Home = props => {
       </Section>
       <Section>
         <h3>Try it!</h3>
+        <div style={{display:'flex', flexFlow:'row wrap', alignItems:'space-between'}}>
+          <TryPoem onClick={() => submitSample(samples.STITCH)} bgc='1'>
+            <p>A stitch in time</p>
+          </TryPoem>
+          <TryPoem onClick={() => submitSample(samples.MARY)} bgc='2'>
+            <p>Mary had a little lamb</p>
+          </TryPoem>
+          <TryPoem onClick={() => submitSample(samples.GRACE)} bgc='3'>
+            <p>Amazing grace!</p>
+          </TryPoem>
+        </div>
         <form>
           <TextArea value={poem} onChange={handleChange} placeholder="Enter a poem..." />
-          <div>
+          <div style={{display:'flex', justifyContent:'space-around'}}>
             <Button onClick={submitRhymes}>Get Rhymes</Button>
             <Button onClick={submitMeter}>Get Meter</Button>
           </div>
