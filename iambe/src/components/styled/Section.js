@@ -17,9 +17,6 @@ const Section = styled.section`
   li {
     font-size: ${props => props.theme.fontSize};
   }
-  a {
-    font-size: .85rem;
-  }
   .paragraph p {
     max-width: 30rem;
     margin: 1rem 0.3rem;
