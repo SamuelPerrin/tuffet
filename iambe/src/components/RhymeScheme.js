@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {connect} from 'react-redux';
 import {Link} from 'react-router-dom';
 
@@ -25,6 +25,10 @@ const RhymeScheme = props => {
   poems.forEach(poem => new Poem(poem).getStanzas().forEach(stanza => stanzaList.push(stanza)));
 
   const stanza = new Stanza(stanzaList[stanzaNum]);
+  
+  useEffect(() => {
+    window.scrollTo(0,0);
+  }, []);
 
   return (
     <div>

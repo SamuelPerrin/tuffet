@@ -1,8 +1,7 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {connect} from 'react-redux';
 import {Link} from 'react-router-dom';
 
-import Navbar from './styled/Navbar';
 import Breadcrumbs from './styled/Breadcrumbs';
 import Container from './styled/Container';
 import Section from './styled/Section';
@@ -14,6 +13,10 @@ const RhymeType = props => {
   const {rhymes, rt, rhymeTypeCounts} = props;
   const rhymeList = [];
   rhymes.forEach(poem => poem.forEach(stanza => stanza.forEach(rhyme => rhymeList.push(rhyme))));
+
+  useEffect(() => {
+    window.scrollTo(0,0);
+  }, []);
 
   return (
     <div>
