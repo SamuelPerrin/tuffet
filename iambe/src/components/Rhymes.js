@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {connect} from 'react-redux';
 import { Link, useHistory } from 'react-router-dom';
 
@@ -18,6 +18,10 @@ import { RHYME_SCHEMES, RHYME_TYPES } from '../utils/phonstants';
 const Rhymes = props => {
   let {poems, rhymeTypeCounts, rhymeSchemeCounts, getRhymeSchemeDetails, getRhymeTypeDetails} = props;
   let history = useHistory();
+
+  useEffect(() => {
+    window.scrollTo(0,0);
+  }, []);
 
   const submitRhymeDetail = e => {
     e.preventDefault();
