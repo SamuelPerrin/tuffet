@@ -2,7 +2,6 @@ import React from 'react';
 import {connect} from 'react-redux';
 import { Link, useHistory } from 'react-router-dom';
 
-import Navbar from './styled/Navbar';
 import Breadcrumbs from './styled/Breadcrumbs';
 import { YellowSpan, RedSpan } from './styled/Spans';
 import Container from './styled/Container';

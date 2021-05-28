@@ -6,7 +6,6 @@ import Anthology from '../utils/Anthology';
 import Poem from '../utils/Poem';
 import Stanza from '../utils/Stanza';
 
-import Navbar from './styled/Navbar';
 import Breadcrumbs from './styled/Breadcrumbs';
 import Container from './styled/Container';
 import Section from './styled/Section';
