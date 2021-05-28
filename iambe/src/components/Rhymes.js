@@ -34,7 +34,22 @@ const Rhymes = props => {
 
   let stanzaNum = -1;
 
-  return (
+  if (Object.keys(rhymeTypeCounts).reduce((a,b) => a + rhymeTypeCounts[b], 0) === 0) {
+    return (
+      <div>
+        <Breadcrumbs>
+          <Link to='/'>Home</Link>
+          <Link to='/rhyme' className='current'>Rhyme</Link>
+        </Breadcrumbs>
+        <Container>
+          <Section>
+            <h3><YellowSpan>Oops!</YellowSpan></h3>
+            <p>No rhymes found. <Link to='/'>Try again</Link> with a different poem.</p>
+          </Section>
+        </Container>
+      </div>
+    )
+  } else return (
     <div>
       <Breadcrumbs>
         <Link to='/'>Home</Link>
