@@ -477,7 +477,7 @@ class Stanza {
       let fourthPossibles = [];
       let output = this.winnower(possibles, allScores);
       if (!!output) bestGuess = output[0];
-      if (!!output && output.length > 1) {
+      if (!!output && output.length > 1 && output !== 'N/A') {
         fourthPossibles = output;
       } else if (!!output && output.length === 1) {
         return output[0];
