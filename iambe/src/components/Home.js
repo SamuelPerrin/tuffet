@@ -52,15 +52,6 @@ const Home = props => {
       <Section>
         <h3>Try it!</h3>
         <div style={{display:'flex', flexFlow:'row wrap', justifyContent:'center', alignItems:'center', width:'100%'}}>
-          {/* <TryPoem onClick={() => submitSample(samples.STITCH)} bgc='1'>
-            <p>A stitch in time</p>
-          </TryPoem>
-          <TryPoem onClick={() => submitSample(samples.MARY)} bgc='2'>
-            <p>Mary had a little lamb</p>
-          </TryPoem>
-          <TryPoem onClick={() => submitSample(samples.GRACE)} bgc='3'>
-            <p>Amazing grace!</p>
-          </TryPoem> */}
           <Button onClick={() => submitSample(samples.STITCH)}>A stitch in time</Button>
           <Button onClick={() => submitSample(samples.GRACE)}>Amazing grace</Button>
           <Button onClick={() => submitSample(samples.MARY)}>Mary had a little lamb</Button>
