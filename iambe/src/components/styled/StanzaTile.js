@@ -6,18 +6,12 @@ const StanzaTileWrapper = styled.div`
   flex-flow: column nowrap;
   justify-content: space-evenly;
   align-items: flex-start;
-  /* width: 100%; */
   padding:1rem;
   border: none;
-  
-  p {
-    font-size: 1rem;
-  }
+
   &:hover {
-    /* border: 1px solid ${props => props.theme.blue}; */
     border-radius: 5%;
     cursor:pointer;
-    /* padding:calc(1rem - 1px); */
     background:${props => props.theme.pale};
   }
 `
