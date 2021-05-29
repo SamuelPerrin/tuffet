@@ -2,17 +2,16 @@ import styled from 'styled-components';
 import HoverCard from './HoverCard';
 
 const StanzaTileWrapper = styled.div`
-  display:flex;
+  display: flex;
   flex-flow: column nowrap;
   justify-content: space-evenly;
   align-items: flex-start;
-  padding:1rem;
-  border: none;
+  padding: 1rem;
 
   &:hover {
     border-radius: 5%;
-    cursor:pointer;
-    background:${props => props.theme.pale};
+    cursor: pointer;
+    background: ${props => props.theme.pale};
   }
 `
 

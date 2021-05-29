@@ -41,7 +41,7 @@ const Home = props => {
   return (
     <div>
       <Section style={{marginTop:'3rem'}}>
-        <h3>Poetry is easier than ever with Iambe!</h3>
+        <h3>Poetry is easier than ever with Tuffet!</h3>
         <ul>
           <li>Visualize <RedSpan>rhyme schemes</RedSpan>!</li>
           <li>Detect over a dozen kinds of <YellowSpan>slant rhyme</YellowSpan>!</li>
@@ -56,6 +56,7 @@ const Home = props => {
           <Button onClick={() => submitSample(samples.SONNET116)}>Sonnet 116</Button>
         </ButtonRow>
         <form style={{width:'100%', display:'flex', flexFlow:'column nowrap', alignItems:'center', justifyContent:'center'}}>
+          <h3>Enter a poem:</h3>
           <TextArea value={poem} onChange={handleChange} placeholder="Enter a poem..." />
           <ButtonRow>
             <Button onClick={submitRhymes}>Get Rhymes</Button>
