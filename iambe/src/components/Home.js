@@ -54,7 +54,7 @@ const Home = props => {
         <div style={{display:'flex', flexFlow:'row wrap', justifyContent:'center', alignItems:'center', width:'100%'}}>
           <Button onClick={() => submitSample(samples.STITCH)}>A stitch in time</Button>
           <Button onClick={() => submitSample(samples.GRACE)}>Amazing grace</Button>
-          <Button onClick={() => submitSample(samples.MARY)}>Mary had a little lamb</Button>
+          <Button onClick={() => submitSample(samples.SONNET116)}>Sonnet 116</Button>
         </div>
         <form style={{width:'100%', display:'flex', flexFlow:'column nowrap', alignItems:'center', justifyContent:'center'}}>
           <TextArea value={poem} onChange={handleChange} placeholder="Enter a poem..." />
