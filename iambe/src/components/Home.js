@@ -51,8 +51,8 @@ const Home = props => {
       </Section>
       <Section>
         <h3>Try it!</h3>
-        <div style={{display:'flex', flexFlow:'row wrap', alignItems:'space-between'}}>
-          <TryPoem onClick={() => submitSample(samples.STITCH)} bgc='1'>
+        <div style={{display:'flex', flexFlow:'row wrap', justifyContent:'center', alignItems:'center', width:'100%'}}>
+          {/* <TryPoem onClick={() => submitSample(samples.STITCH)} bgc='1'>
             <p>A stitch in time</p>
           </TryPoem>
           <TryPoem onClick={() => submitSample(samples.MARY)} bgc='2'>
@@ -60,11 +60,14 @@ const Home = props => {
           </TryPoem>
           <TryPoem onClick={() => submitSample(samples.GRACE)} bgc='3'>
             <p>Amazing grace!</p>
-          </TryPoem>
+          </TryPoem> */}
+          <Button onClick={() => submitSample(samples.STITCH)}>A stitch in time</Button>
+          <Button onClick={() => submitSample(samples.GRACE)}>Amazing grace</Button>
+          <Button onClick={() => submitSample(samples.MARY)}>Mary had a little lamb</Button>
         </div>
-        <form>
+        <form style={{width:'100%', display:'flex', flexFlow:'column nowrap', alignItems:'center', justifyContent:'center'}}>
           <TextArea value={poem} onChange={handleChange} placeholder="Enter a poem..." />
-          <div style={{display:'flex', justifyContent:'space-around'}}>
+          <div style={{display:'flex', justifyContent:'center', alignItems:'center', flexFlow:'row nowrap', width:'100%'}}>
             <Button onClick={submitRhymes}>Get Rhymes</Button>
             <Button onClick={submitMeter}>Get Meter</Button>
           </div>

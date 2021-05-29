@@ -2,15 +2,16 @@ import React from 'react';
 import styled from 'styled-components';
 
 const TextAreaWrapper = styled.textarea`
-  width: ${props => props.theme.textAreaWidth};
-  margin-bottom: ${props => props.theme.space};
+  width: calc(100% - 2rem);
+  max-width: ${props => props.theme.textAreaWidth};
+  margin: ${props => props.theme.space};
   border-radius: ${props => props.theme.borderRadius};
   background-color: ${props => props.theme.white};
   color: ${props => props.theme.black};
   font-size: ${props => props.theme.inputFontSize};
   height: ${props => props.theme.textAreaHeight};
   padding: ${props => props.theme.textAreaPadding};
-  border: '12px solid ${props => props.theme.black}';
+  border: 2px solid ${props => props.theme.black};
 `
 
 export default function TextArea(props) {

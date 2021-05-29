@@ -7,12 +7,7 @@ const ButtonWrapper = styled.button`
   cursor: pointer;
   outline: none;
   border: none;
-  border-radius: ${props => {
-    switch(props) {
-      default:
-        return props.theme.borderRadius
-    }
-  }};
+  border-radius: ${props => props.theme.borderRadius};
   background-color: ${props => {
     switch(props.variant) {
       case 'danger':
@@ -23,30 +18,13 @@ const ButtonWrapper = styled.button`
         return props.theme.blue
     }
   }};
-  font-size: ${props => {
-    switch(props.variant) {
-      default:
-        return props.theme.fontSize
-    }
-  }};
-  width: ${props => {
-    switch(props) {
-      default:
-        return props.theme.buttonWidth
-    }
-  }};
-  height: ${props => {
-    switch(props) {
-      default:
-        return props.theme.buttonHeight
-    }
-  }};
-  margin: ${props => {
-    switch(props) {
-      default:
-        return props.theme.space
-    }
-  }};
+
+  font-size: ${props => props.theme.fontSize};
+  width: ${props => props.theme.buttonWidth};
+  max-width: 18rem;
+  height: ${props => props.theme.buttonHeight};
+  margin: ${props => props.theme.space};
+
   &:hover{
     color:${props => props.theme.pale};
     background-color: ${props => {
@@ -59,6 +37,7 @@ const ButtonWrapper = styled.button`
           return '#2877C6'
       }
     }};
+
     transition: all 0.1s ease-in-out;
   }
   transition: all 0.1s ease-in-out;
