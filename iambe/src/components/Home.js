@@ -4,13 +4,12 @@ import {useHistory} from 'react-router-dom';
 
 import Section from './styled/Section';
 import {YellowSpan, RedSpan, BlueSpan} from './styled/Spans';
-import TryPoem from './styled/TryPoem';
+import ButtonRow from './styled/ButtonRow';
 import TextArea from './styled/TextArea';
 import Button from './styled/Button';
 import {getRhymes, getMeter} from '../actions';
 
 import * as samples from '../constants/samples';
-import * as theme from '../constants/colors'; 
 
 const initialValue = ""
 
@@ -51,17 +50,17 @@ const Home = props => {
       </Section>
       <Section>
         <h3>Try it!</h3>
-        <div style={{display:'flex', flexFlow:'row wrap', justifyContent:'center', alignItems:'center', width:'100%'}}>
+        <ButtonRow>
           <Button onClick={() => submitSample(samples.STITCH)}>A stitch in time</Button>
           <Button onClick={() => submitSample(samples.GRACE)}>Amazing grace</Button>
           <Button onClick={() => submitSample(samples.SONNET116)}>Sonnet 116</Button>
-        </div>
+        </ButtonRow>
         <form style={{width:'100%', display:'flex', flexFlow:'column nowrap', alignItems:'center', justifyContent:'center'}}>
           <TextArea value={poem} onChange={handleChange} placeholder="Enter a poem..." />
-          <div style={{display:'flex', justifyContent:'center', alignItems:'center', flexFlow:'row nowrap', width:'100%'}}>
+          <ButtonRow>
             <Button onClick={submitRhymes}>Get Rhymes</Button>
             <Button onClick={submitMeter}>Get Meter</Button>
-          </div>
+          </ButtonRow>
         </form>  
       </Section>
     </div>
