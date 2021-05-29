@@ -174,3 +174,13 @@ test('getRhymeType identifies Deity-away as prom diph', () => {
   const deity = new Rhyme("The Deity","Is away");
   expect(deity.getRhymeType()).toBe('promotion diphthong rhyme');
 })
+
+test('getRhymeType identifies shaken-taken as full rhyme', () => {
+  const taken = new Rhyme("Never shaken","Be taken");
+  expect(taken.getRhymeType()).toBe('full rhyme');
+})
+
+test('getRhymeType identifies weeks-cheeks as full rhyme', () => {
+  const cheeks = new Rhyme("Lips and cheeks","Hours and weeks");
+  expect(cheeks.getRhymeType()).toBe('full rhyme');
+})
