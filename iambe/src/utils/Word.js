@@ -495,7 +495,7 @@ class Word {
      */
 
     // console.log(`in Word.getStressList with ${this.word}`);
-    const ALWAYS_STRESSED = ['ah','o'];
+    const ALWAYS_STRESSED = {'ah':true,'o':true};
 
     let pron = this.getPron();
 
@@ -542,7 +542,7 @@ class Word {
     // For words with only one possible pronunciation
 
     // Make some corrections for particular words
-    const lastWord = Word.last.length > 0 ? Word.last.slice(-1) : '';
+    const lastWord = Word.last.length > 0 ? Word.last[Word.last.length - 1] : '';
     if (this.word === 'yet' && lastWord === 'and') pron = 'Y EH1 T';
     else if (this.word === 'so' && lastWord === 'and') pron = 'S OW1';
     else if (this.word === 'if' && (lastWord === 'and' || lastWord === 'as')) pron = 'IH1 F';
