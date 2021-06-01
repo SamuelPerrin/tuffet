@@ -142,3 +142,9 @@ test('guessStress gives primary stress to monosyllables', () => {
   expect(new Word('four').guessStress('F AO4 R')).toEqual('F AO1 R');
   expect(new Word('nil').guessStress('N IH0 L')).toEqual('N IH1 L');
 })
+
+test('getStressList handles words with one pronunciation', () => {
+  expect(new Word('one').getStressList()).toStrictEqual([2]);
+  expect(new Word('taken').getStressList()).toStrictEqual([1,4]);
+  expect(new Word('eternity').getStressList()).toStrictEqual([4,1,4,3]);
+})

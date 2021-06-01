@@ -4,6 +4,9 @@ import * as phonstants from './phonstants';
 
 class Word {
   // A string that represents a word
+
+  static last = [];
+
   constructor(word) {
     this.word = word.toLowerCase();
     if (typeof this.word !== "string" || this.word.length === 0) {
@@ -22,7 +25,7 @@ class Word {
      * Returns the pronunciation of the word in CMUPD symbols from lexicon.
      * Output is a string for words with only one possible pronunciation.
      * Output is an array of strings for words with multiple possible pronunciations.
-     * When the parameter `rhyme` is true, output is always a list of possible pronunciations.
+     * When the parameter `rhyme` is true, output is always an array of possible pronunciations.
      */
 
     let pron = '';
@@ -483,6 +486,113 @@ class Word {
     }
 
     return pron;
+  }
+
+  getStressList(crux=false) {
+    /**
+     * Returns an order-preserving array of integers representing the relative stress of each syllable in the word.
+     * If crux is specified as true, returns a list representing the ambiguity in the line's pronunciation.
+     */
+
+    // console.log(`in Word.getStressList with ${this.word}`);
+    const ALWAYS_STRESSED = ['ah','o'];
+
+    let pron = this.getPron();
+
+    // For words with multiple possible pronunciations
+    if (Array.isArray(pron)) {
+      if (!crux) return 'crux';
+      else {
+        const possibles = [];
+        for (let each of pron) {
+          let stress = [];
+          for (let phone of each) {
+            switch (phone) {
+              case '0':
+                stress.push(4);
+                break;
+              case '1':
+                stress.push(1);
+                break;
+              case '2':
+                stress.push(2);
+                break;
+              case '3':
+                stress.push(3);
+                break;
+              case '4':
+                stress.push(4);
+                break;
+              default:
+                break;
+            }
+          }
+
+          if (stress.length === 1 && stress[0] === 1 && !(ALWAYS_STRESSED.includes(this.word))) {
+            stress = [2];
+          }
+
+          possibles.push(stress);
+        }
+
+        return possibles;
+      }
+    }
+
+    // For words with only one possible pronunciation
+
+    // Make some corrections for particular words
+    const lastWord = Word.last.length > 0 ? Word.last.slice(-1) : '';
+    if (this.word === 'yet' && lastWord === 'and') pron = 'Y EH1 T';
+    else if (this.word === 'so' && lastWord === 'and') pron = 'S OW1';
+    else if (this.word === 'if' && (lastWord === 'and' || lastWord === 'as')) pron = 'IH1 F';
+    else if (Word.last.length > 0) {
+      if (lastWord in phonstants.PREPOSITIONS) {
+        if (this.word in phonstants.DETERMINERS) {
+          pron = pron.replace(/[123]/g,'4')
+        } else if (this.word in phonstants.PER_PRON_OBJ) {
+          pron = pron.replace('3','2');
+        }
+      }
+    }
+
+    // Convert pron to stress
+    let stress = [];
+    for (let phone of pron) {
+      switch (phone) {
+        case '0':
+          stress.push(4);
+          break;
+        case '1':
+          stress.push(1);
+          break;
+        case '2':
+          stress.push(2);
+          break;
+        case '3':
+          stress.push(3);
+          break;
+        case '4':
+          stress.push(4);
+          break;
+        default:
+          break;
+      }
+    }
+
+    // A couple more corrections
+    if (stress.length === 1 && stress[0] === 1 && !(this.word in ALWAYS_STRESSED)) stress = [2];
+
+    if (stress.length === 1 && Word.last.length > 0 && lastWord in ['how','so']) {
+      if (!(this.word in phonstants.DETERMINERS || this.word in phonstants.PREPOSITIONS || this.word in phonstants.PER_PRON_SUB || 
+        this.word in phonstants.PER_PRON_OBJ || this.word in phonstants.VERB_TO_BE || this.word === 'much')) {
+          stress = [1];
+      }
+    }
+
+    Word.last.push(this.word);
+
+    return stress;
   }
 }
 
