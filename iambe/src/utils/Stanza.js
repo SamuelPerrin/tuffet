@@ -864,6 +864,126 @@ class Stanza {
       return rhymes;
     }
   }
+
+  meterForCounts(counts) {
+    /**
+     * Given an object in which keys are strings like "iambic5false" and values are ints representing number of lines of that type present,
+     * returns a guess about the stanza's verse form.
+     * 
+     * Called by: Stanza.getMeter()
+     */
+
+    const totalLines = Object.values(counts).reduce((a,b) => a+b, 0);
+    let guess = "N/A";
+
+    if ((counts.iambic5false + counts.iambic6true) / totalLines >= 0.75) guess = 'iambic pentameter';
+    else if (totalLines === 2) {
+      if (counts.iambic6false + counts.iambic7true === 2) guess = 'alexandrines';
+      else if (counts.iambic7false === 2) guess = 'fourteeners';
+    }
+    else if (totalLines === 4) {
+      if (counts.iambic4false + counts.iambic4true + counts['N/A4false'] === 2) {
+        if (counts.iambic3false + counts['N/A3false'] === 2) guess = 'common hymn';
+      }
+      else if (counts.iambic4false + counts.iambic5true + counts.iambic4true === 4) guess = 'long hymn';
+      else if (counts.iambic4false + counts.iambic4true === 1) {
+        if (counts.iambic3false === 3 || counts.iambic3false + counts['N/A3false'] === 3) guess = 'short hymn';
+      }
+      else if (counts.trochaic4false === 2) {
+        if (counts.trochaic3true === 2) guess = '8s&5s';
+        else if (counts.trochaic4true === 2) guess = '8s&7s';
+      }
+      else if (counts.trochaic3false === 2 && counts.trochaic3true === 2) guess = '6s&5s';
+      if (counts.iambic4false + counts.trochaic4false + counts.trochaic4true + counts['N/A4false'] === 2) {
+        if (counts.iambic3False + counts.trochaic3false + counts.trochaic3true + counts['N/A3false'] === 2) guess = 'ballad';
+      }
+    }
+    else if (totalLines === 5) {
+      if (counts.iambic4false + counts.iambic4true === 1) {
+        if (counts['N/A2false'] + counts.iambic2false === 2 && counts.iambic3false === 2) guess = 'common hymn, split';
+      }
+      else if (counts.iambic4false + counts.iambic4true === 0) {
+        if (counts.iambic2false === 2 && counts.iambic3false === 3) guess = 'short hymn, split';
+      }
+      else if (counts.anapestic3false + counts.anapestic4true === 3) {
+        if (counts.anapestic2false + counts.anapestic3true === 2) guess = 'limerick';
+      }
+    }
+    else if (totalLines === 6) {
+      if (counts.iambic4false === 4 && counts.iambic3false === 2) guess = 'common particular';
+      else if (counts.trochaic8false + counts.trochaic8true > 2) guess = 'raven';
+    }
+    else if (totalLines === 9) {
+      if (counts.iambic4false === 8 && counts.iambic3false === 1) guess = 'Lady of Shalott';
+    }
+
+    return guess;
+  }
+
+  getMeter() {
+    /**
+     * Returns a string representing the stanza's verse form based on the number of lines with various meters.
+     * 
+     * Calls: Stanza.meterForCounts
+     */
+
+    const lines = this.getLines();
+    const lineMeters = lines.map(line => { // convert each line's metrical label to something like "iambic5false"
+      const lineLabel = new Line(line).getMeter().label;
+      return lineLabel.rhythm + lineLabel.meter.toString() + lineLabel.catalexis.toString();
+    })
+    
+    // count metrical types present in stanza
+    const metersPresent = {
+      'iambic2false':0,
+      'iambic2true':0,
+      'iambic3false':0,
+      'iambic3true':0,
+      'iambic4false':0,
+      'iambic4true':0,
+      'iambic5false':0,
+      'iambic5true':0,
+      'iambic6false':0,
+      'iambic6true':0,
+      'iambic7false':0,
+      'iambic7true':0,
+      'iambic8false':0,
+      'N/A2false':0,
+      'N/A2true':0,
+      'N/A3false':0,
+      'N/A3true':0,
+      'N/A4false':0,
+      'N/A4true':0,
+      'N/A5false':0,
+      'N/A5true':0,
+      'trochaic2false':0,
+      'trochaic2true':0,
+      'trochaic3false':0,
+      'trochaic3true':0,
+      'trochaic4false':0,
+      'trochaic4true':0,
+      'trochaic5false':0,
+      'trochaic5true':0,
+      'trochaic6false':0,
+      'trochaic6true':0,
+      'trochaic7false':0,
+      'trochaic7true':0,
+      'trochaic8false':0,
+      'trochaic8true':0,
+      'anapestic2false':0,
+      'anapestic2true':0,
+      'anapestic3false':0,
+      'anapestic3true':0,
+      'anapestic4false':0,
+      'anapestic4true':0,
+    }
+
+    lineMeters.forEach(lineMeter => {
+      metersPresent[lineMeter] = lineMeter in metersPresent ? metersPresent[lineMeter] + 1 : 1;
+    })
+    
+    return this.meterForCounts(metersPresent);
+  }
 }
 
 export default Stanza;

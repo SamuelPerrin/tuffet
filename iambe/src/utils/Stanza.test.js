@@ -85,6 +85,7 @@ test('getRhymeScheme identifies rhyme schemes in quatrains', () => {
   expect(abaax.getRhymeScheme()).toBe("abaax");
   expect(aabax.getRhymeScheme()).toBe("aabax");
 });
+
 test('getRhymeScheme identifies rhyme schemes in quintains', () => {
   const splt1 = new Stanza("To fight aloud\nIs very brave\nBut gallanter I know\nWho charge within the bosom\nThe cavalry of Woe");
   const aabba = new Stanza("And how the swift beat of the brain\nFalters because it is in vain,\nIn Autumn at the fall of the leaf\nKnowest thou not? and how the chief\nOf joys seems—not to suffer pain?");
@@ -125,3 +126,29 @@ test('getRhymes identifies rhymes in cross-rhymed quatrains', () => {
   const ababxRhymes = [{lines:['The curfew tolls the knell of parting day,','The plowman homeward plods his weary way,'], words:['day','way'], rt:'full rhyme'}, {lines:["The lowing herd wind slowly o'er the lea,", "And leaves the world to darkness and to me."], words:['lea','me'], rt:'full rhyme'}];
   expect(gray.getRhymes()).toStrictEqual(ababxRhymes);
 })
+
+test('getMeter identifies 6s&5s', () => {
+  // const dickinson = new Stanza("Morns like these–we parted–\nNoons like these–she rose–\nFluttering first–then firmer\nTo her fair repose.");
+  const dickinson = new Stanza("Never did she lisp it–\nIt was not for me–\nShe–was mute from transport–\nI–from agony–");
+  expect(dickinson.getMeter()).toBe('6s&5s');
+})
+
+test('getMeter identifies common hymns', () => {
+  const dickinson = new Stanza("As if I asked a common alms–\nAnd in my wandering hand,\nA stranger pressed a kingdom–\nAnd I–bewildered stand–");
+  expect(dickinson.getMeter()).toBe('common hymn');
+})
+
+test('getMeter identifies short hymns', () => {
+  const prose = new Stanza(`They shut me up in Prose–\nAs when a little Girl\nThey put me in the Closet–\nBecause they liked me "still"–`);
+  expect(prose.getMeter()).toBe('short hymn');
+})
+
+test('getMeter identifies iambic pentameter', () => {
+  const tennyson = new Stanza("And tell him what I think and what they say\nAnd yet I hate that he should linger here;");
+  expect(tennyson.getMeter()).toBe('iambic pentameter');
+})
+
+// test('getMeter identifies alexandrines', () => {
+//   const lewis = new Stanza("Beat with their ram repeatedly. The door-posts fall;\nThe entry's forced; its guardians have been butchered all.");
+//   expect(lewis.getMeter()).toBe('alexandrines');
+// })
