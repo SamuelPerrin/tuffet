@@ -84,3 +84,17 @@ test('getMeter uses resolveCrux to identify elision', () => {
   expect(tennyson.label.meter).toBe(5);
   expect(tennyson.label.rhythm).toBe("iambic");
 })
+
+test('getMeter identifies long iambic lines', () => {
+  const lewis2 = new Line("The entry's forced; its guardians have been butchered all.").getMeter();
+  expect(lewis2.feet).toStrictEqual([[3, 1], [4, 2], [2, 1], [4, 2], [2, 1], [4, 2]]);
+  expect(lewis2.foots).toStrictEqual(['I','I','I','I','I','I']);
+  expect(lewis2.label.meter).toBe(6);
+})
+
+test('getMeter identifies this line', () => {
+  const dickinson = new Line("They put me in the Closet–").getMeter();
+  expect(dickinson.feet).toStrictEqual([[3,2], [2, 3], [4, 1], 4]);
+  expect(dickinson.foots).toStrictEqual(['I','T','I','unstr']);
+  expect(dickinson.label.catalexis).toBe(true);
+})
