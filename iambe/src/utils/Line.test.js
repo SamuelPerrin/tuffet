@@ -78,7 +78,6 @@ test('getMeter identifies an anapestic line', () => {
 
 test('getMeter uses resolveCrux to identify elision', () => {
   const tennyson = new Line("O dewy flowers that open to the sun").getMeter();
-  console.log("tennyson:",tennyson);
   expect(tennyson.feet).toStrictEqual([[3, 1], [4, 2], [2, 1], [4, 3], [4, 2]]);
   expect(tennyson.foots).toStrictEqual(['I','I','I','I','I']);
   expect(tennyson.label.catalexis).toBe(false);
