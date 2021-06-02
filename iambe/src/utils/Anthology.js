@@ -177,7 +177,7 @@ class Anthology {
 
     return this.getPoems().map(poem => new Poem(poem).getStanzas().map(stanza => new Stanza(stanza).getMeter()));
   }
-  
+
   getMeterStatsByStanza() {
     /**
      * Returns an object with the number of occurrences of each stanzaic meter.
@@ -206,9 +206,7 @@ class Anthology {
 
       stanzaMeters.forEach(meter => counts[meter] += 1);
       return counts;
-  }
-
-  
+  } 
 }
 
 export default Anthology;

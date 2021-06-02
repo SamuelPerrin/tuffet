@@ -7,6 +7,8 @@ const initialState = {
   rhymeSchemeCounts: null,
   stanzaNum: null,
   rt: null,
+  stanzaMeters: null,
+  stanzaMeterCounts: null,
 }
 
 const reducer = (state=initialState, action) => {
@@ -32,7 +34,9 @@ const reducer = (state=initialState, action) => {
     case actions.GET_METER:
       return {
         ...state,
-        poetry: "in get meter with " + action.payload
+        poetry: action.payload.poetry,
+        stanzaMeters: action.payload.stanzaMeters,
+        stanzaMeterCounts: action.payload.stanzaMeterCounts,
       }
     default:
       return state
