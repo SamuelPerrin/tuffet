@@ -149,13 +149,11 @@ test('getStressList handles words with one pronunciation', () => {
   expect(new Word('eternity').getStressList()).toStrictEqual([4,1,4,3]);
 })
 
-// tests for getStressList words with mult prons
 test('getStressList returns `crux` for multiple pronunciations', () => {
   expect(new Word('use').getStressList()).toBe("crux");
   expect(new Word('object').getStressList()).toBe("crux");
 })
 
-// tests for special cases in getStressList (and yet, so much, etc.)
 test('getStressList handles special cases involving consecutive or exceptional words', () => {
   new Word('and').getStressList();
   expect(Word.last[Word.last.length - 1]).toBe('and');

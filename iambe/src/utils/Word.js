@@ -528,7 +528,7 @@ class Word {
             }
           }
 
-          if (stress.length === 1 && stress[0] === 1 && !(ALWAYS_STRESSED.includes(this.word))) {
+          if (stress.length === 1 && stress[0] === 1 && !(this.word in ALWAYS_STRESSED)) {
             stress = [2];
           }
 

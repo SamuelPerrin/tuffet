@@ -132,7 +132,7 @@ class Line {
     
       // update feet
       const newFeet = feet.slice(0,-from.length);
-      console.log('newFeet', newFeet, '\n')
+      // console.log('newFeet', newFeet, '\n')
       
       let i = to.length;
       const flatFeet = feet.slice(-from.length).flat();
@@ -149,9 +149,9 @@ class Line {
           }
           j++;
         }
-        console.log('nextFoot', nextFoot);
+        // console.log('nextFoot', nextFoot);
         newFeet.push(nextFoot);
-        console.log('newFeet', newFeet, '\n');
+        // console.log('newFeet', newFeet, '\n');
         nextFoot = [];
         i--;
       }
@@ -185,7 +185,6 @@ class Line {
       if (equiv(foots.slice(-3), ['T','A','unstr'])) changeFeet(['T','A','unstr'], ['T','U','T']);
       else if (equiv(foots.slice(-3), ['A','I','unstr'])) changeFeet(['A','I','unstr'], ['T','T','T']);
       else if (equiv(foots.slice(-4), ['T','D','I','unstr'])) changeFeet(['T','D','I','unstr'], ['T','T','T','T']);
-      else if (equiv(foots.slice(-4), ['T','D','I','str'])) changeFeet(['T','D','I','str'], ['T','T','T','T']);
       else if (equiv(foots.slice(-4), ['A','I','I','unstr'])) changeFeet(['A','I','I','unstr'], ['T','T','T','T']);
       else if (equiv(foots.slice(-4), ['D','I','I','unstr'])) changeFeet(['D','I','I','unstr'], ['T','T','T','T']);
       else if (equiv(foots.slice(-4), ['A','U','I','unstr'])) changeFeet(['A','U','I','unstr'], ['T','T','T','T']);
@@ -195,6 +194,7 @@ class Line {
       else if (equiv(foots.slice(-3), ['D','I','str']) && feet.slice(-3,-2)[0][2] < feet.slice(-2,-1)[0][0] && feet.slice(-2,-1)[0][1] < feet.slice(-1)[0]) {
         changeFeet(['D','I','str'], ['T','T','T']); 
       }
+      else if (equiv(foots.slice(-4), ['T','D','I','str'])) changeFeet(['T','D','I','str'], ['T','T','T','T']);
       else if (equiv(foots.slice(-4), ['T','D','D','str'])) changeFeet(['T','D','D','str'], ['A','A','A']);
       else if (equiv(foots.slice(-3), ['I','D','str'])) changeFeet(['I','D','str'], ['I','T','I']);
       else if (equiv(foots.slice(-3), ['T','D','str'])) {
@@ -231,6 +231,8 @@ class Line {
       }
       else if (equiv(foots.slice(-4), ['U','D','T','U'])) changeFeet(['A','A','A']);
     }
+
+    return [foots, feet];
   }
 
   resolveCrux() {
@@ -359,7 +361,6 @@ class Line {
       meter = totalFeet;
       if (ftCts['unstr'] === 1) {
         catalexis = true;
-        meter += 1;
       } else if (ftCts['str'] === 1) catalexis = true;
     } else if (ftCts['T'] > ftCts['I'] && ftCts['T'] > ftCts['A'] && ftCts['T'] > ftCts['D']) { // trochaic
       rhythm = 'trochaic';
@@ -409,7 +410,7 @@ class Line {
   getMeter(crux=false) {
     /**
      * Returns an object with three descriptions of the line's meter:
-     * label: a string representing a label for the line's meter (e.g., "")
+     * label: an object representing a label for the line's meter (e.g., {rhythm: "iambic", meter:5, catalexis:false})
      * foots: an array of one-letter strings representing each foot in the line (e.g., ['U','I','I'])
      * feet: an array of integers representing the relative stress of each syllable in the line (e.g., [2,2,1,4,3,2])
      * 
@@ -452,6 +453,8 @@ class Line {
       }
     }
 
+    // console.log("in getMeter with crux:", crux);
+
     // Handle special cases
     let raw;
     if (!crux) {
@@ -464,7 +467,9 @@ class Line {
     }
 
     // I think this is used when Line.resolveCrux calls this method, but I'm not sure (adapted from last version)
-    if ('foots' in raw && 'feet' in raw && typeof raw.catalexis === 'boolean') return raw;
+    if ('label' in raw && 'foots' in raw && 'feet' in raw && typeof raw.label.catalexis === 'boolean') return raw;
+
+    // console.log("raw:", raw);
 
     // Divide the line into metrical feet based on syllables' relative stress and position
     let feet = [];
@@ -514,9 +519,11 @@ class Line {
     }
 
     // Make some corrections
+    // console.log("going to correctWeirdFeet with foots:",foots);
     const corrected = this.correctWeirdFeet(foots, feet);
     foots = corrected[0];
     feet = corrected[1];
+    // console.log("back from correctWeirdFeet with foots:", foots);
 
     // Get a label for this line's meter
     const label = this.getLabel(foots, feet);
