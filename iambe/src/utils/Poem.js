@@ -21,6 +21,25 @@ class Poem {
 
     return rhymes;
   }
+
+  getPoemMeter() {
+    /**
+     * returns a string labelling the meter of the poem if the poem consists of only one kind of stanza, else 'N/A'
+     */
+    const meters = this.getMeters();
+
+    return meters.every(meter => meter === meters[0]) ? meters[0] : 'N/A';
+  }
+
+  getMeters() {
+    /**
+     * Returns an array of strings, with each string representing the meter of a stanza in the poem
+     */
+
+     const stanzas = this.getStanzas();
+
+     return stanzas.map(stanza => new Stanza(stanza).getMeter());
+  }
 }
 
 export default Poem;
