@@ -17,6 +17,7 @@ const reducer = (state=initialState, action) => {
       return {
         ...state,
         poetry: action.payload.poetry,
+        poems: action.payload.poems,
         rhymes: action.payload.rhymes,
         rhymeTypeCounts: action.payload.rhymeTypeCounts,
         rhymeSchemeCounts: action.payload.rhymeSchemeCounts,
@@ -35,8 +36,14 @@ const reducer = (state=initialState, action) => {
       return {
         ...state,
         poetry: action.payload.poetry,
+        poems: action.payload.poems,
         stanzaMeters: action.payload.stanzaMeters,
         stanzaMeterCounts: action.payload.stanzaMeterCounts,
+      }
+    case actions.GET_LINE_METER_DETAILS:
+      return {
+        ...state,
+        stanzaNum: action.payload.stanzaNum,
       }
     default:
       return state
