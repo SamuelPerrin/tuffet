@@ -1,3 +1,4 @@
+import Line from "./Line";
 import Poem from "./Poem";
 import Stanza from "./Stanza";
 
@@ -14,7 +15,7 @@ class Anthology {
   }
 
   getRhymes() {
-    // returns a list of rhyme data from every stanza in every poem in the anthology
+    // returns an array of rhyme data from every stanza in every poem in the anthology
      const rhymes = [];
      
      this.getPoems().forEach(poem => rhymes.push(new Poem(poem).getRhymes()));
@@ -140,6 +141,74 @@ class Anthology {
 
     return counts;
   }
+
+  getLineMeters() {
+    /**
+     * Returns an array of arrays of arrays of objects representing the meter of each line from each stanza in each poem
+     */
+
+    const meters = [];
+    const poems = this.getPoems();
+
+    poems.forEach(poem => {
+      // const stanzas = new Poem(poem).getStanzas();
+      // const lines = stanzas.map(stanza => new Stanza(stanza).getLines());
+      // console.log("in getLineMeters, lines is",lines);
+      // const meter = lines.map(line => new Line(line).getMeter());
+      // meters.push(meter);
+      const poemMeters = [];
+      new Poem(poem).getStanzas().forEach(stanza => {
+        const stanzaMeters = [];
+        new Stanza(stanza).getLines().forEach(line => {
+          stanzaMeters.push(new Line(line).getMeter());
+        })
+        poemMeters.push(stanzaMeters);
+      });
+      meters.push(poemMeters);
+    });
+
+    return meters;
+  }
+
+  getStanzaMeters() {
+    /**
+     * Returns an array of arrays of strings representing the metrical form of each stanza
+     */
+
+    return this.getPoems().map(poem => new Poem(poem).getStanzas().map(stanza => new Stanza(stanza).getMeter()));
+  }
+  
+  getMeterStatsByStanza() {
+    /**
+     * Returns an object with the number of occurrences of each stanzaic meter.
+     */
+    
+    const stanzaMeters = this.getPoems().map(poem => new Poem(poem).getStanzas().map(stanza => new Stanza(stanza).getMeter())).flat();
+    const counts =  {
+      'iambic pentameter':0,
+      'alexandrines':0,
+      'fourteeners':0,
+      'common hymn':0,
+      'long hymn':0,
+      'short hymn':0,
+      '8s&5s':0,
+      '8s&7s':0,
+      '6s&5s':0,
+      'ballad':0,
+      'common hymn, split':0,
+      'short hymn, split':0,
+      'limerick':0,
+      'raven':0,
+      'common particular':0,
+      'Lady of Shalott':0,
+      'N/A':0
+      };
+
+      stanzaMeters.forEach(meter => counts[meter] += 1);
+      return counts;
+  }
+
+  
 }
 
 export default Anthology;
