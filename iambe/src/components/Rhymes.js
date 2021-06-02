@@ -10,7 +10,6 @@ import StanzaTile from './styled/StanzaTile';
 import ListItemTile from './styled/ListItemTile';
 import { getRhymeSchemeDetails, getRhymeTypeDetails } from '../actions';
 
-import Anthology from '../utils/Anthology';
 import Poem from '../utils/Poem';
 import Stanza from '../utils/Stanza';
 import { RHYME_SCHEMES, RHYME_TYPES } from '../utils/phonstants';
@@ -96,7 +95,7 @@ const Rhymes = props => {
 const mapStateToProps = state => {
   return {
   ...state,
-  poems: new Anthology(state.poetry).getPoems(),
+  poems: state.poems,
   rhymes: state.rhymes,
   rhymeTypeCounts: state.rhymeTypeCounts,
   rhymeSchemeCounts: state.rhymeSchemeCounts,

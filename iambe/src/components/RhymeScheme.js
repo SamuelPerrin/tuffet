@@ -2,7 +2,6 @@ import React, {useEffect} from 'react';
 import {connect} from 'react-redux';
 import {Link} from 'react-router-dom';
 
-import Anthology from '../utils/Anthology';
 import Poem from '../utils/Poem';
 import Stanza from '../utils/Stanza';
 
@@ -51,7 +50,7 @@ const RhymeScheme = props => {
 const mapStateToProps = state => {
   return {
     ...state,
-    poems: new Anthology(state.poetry).getPoems(),
+    poems: state.poems,
     rhymes: state.rhymes,
     stanzaNum: state.stanzaNum,
   }
