@@ -109,6 +109,130 @@ class Line {
     return demerits[0][0];
   }
 
+  correctWeirdFeet(foots,feet) {
+    /**
+     * Given foots (an array of the feet in the line ['A' for anapest]) and feet (an array of ints), makes corrections to unlikely patterns, and
+     * returns an array containing the corrected foots and feet (in that order)
+     * 
+     * Called by: Line.getMeter
+     */
+
+    // Helper function to determine equivalence between two arrays
+    const equiv = (arr1, arr2) => {
+      return arr1.length === arr2.length && arr1.every((v,i) => v === arr2[i])
+    }
+    
+    // Helper function used only in this method to change feet from unlikely patterns to more likely ones
+    // Given two arrays of strings: 1) for bad pattern, 2) for desired pattern
+    const changeFeet = (from, to) => {
+      // update foots
+      const hold = foots.slice(0,-from.length);
+      to.forEach(x => hold.push(x));
+      foots = hold;
+    
+      // update feet
+      const newFeet = feet.slice(0,-from.length);
+      console.log('newFeet', newFeet, '\n')
+      
+      let i = to.length;
+      const flatFeet = feet.slice(-from.length).flat();
+      const footLength = {A: 3, D: 3, I: 2, str: 1, T: 2, U: 2, unstr: 1}
+      while (i > 0) {
+        let thisLength = i === 1 ? footLength[to.slice(-1)] : footLength[to.slice(-i, 1 - i)[0]];
+        let nextFoot = [];
+        let j = 0;
+        while (j < thisLength) {
+          if (thisLength > 1) {
+            nextFoot.push(flatFeet.shift());
+          } else {
+            nextFoot = flatFeet.shift();
+          }
+          j++;
+        }
+        console.log('nextFoot', nextFoot);
+        newFeet.push(nextFoot);
+        console.log('newFeet', newFeet, '\n');
+        nextFoot = [];
+        i--;
+      }
+      feet = newFeet;
+    }
+
+    // Helper function changing DTTTstr to TIIII, DTTstr to TIII, etc.
+    const dumpsters = () => {
+      if (equiv(foots.slice(-4), ['D','T','T','str'])) changeFeet(['D','T','T','str'], ['T','I','I','I']);
+      else if (equiv(foots.slice(-5), ['D','T','T','T','str'])) changeFeet(['D','T','T','T','str'], ['T','I','I','I','I']);
+      else if (equiv(foots.slice(-6), ['D','T','T','T','T','str'])) changeFeet(['D','T','T','T','T','str'], ['T','I','I','I','I','I']);
+      else if (equiv(foots.slice(-4), ['A','T','T','str'])) changeFeet(['A','T','T','str'], ['U','I','I','I']);
+      else if (equiv(foots.slice(-6), ['A','T','T','T','T','str'])) changeFeet(['A','T','T','T','T','str'], ['I','I','I','I','I','I']);
+    }
+    
+    if (foots.slice(-1)[0] === 'I') { // weird lines ending in 'I'
+      if (equiv(foots.slice(-2), ['A','I']) && feet.slice(-2,-1)[0][0] <= feet.slice(-2,-1)[0][1]) {
+        changeFeet(['A','I'],['T','T','str']);
+        dumpsters();
+      } else if (equiv(foots.slice(-2), ['D','I']) && feet.slice(-2,-1)[0][1] <= feet.slice(-2,-1)[0][2]) {
+        changeFeet(['D','I'], ['T','T','str']);
+        dumpsters();
+      } else if (equiv(foots.slice(-3), ['D','I','I'])) {
+        changeFeet(['D','I','I'], ['T','T','T','str']);
+        dumpsters();
+      } else if (equiv(foots.slice(-4), ['D','T','I','I'])) changeFeet(['D','T','I','I'], ['T','I','A','I']);
+    } else if (foots.slice(-1)[0] === 'T') { // weird lines ending in 'T'
+      if (equiv(foots.slice(-5), ['D','T','T','T','T'])) changeFeet(['D','T','T','T','T'], ['T','I','I','I','I','unstr']);
+      else if (equiv(foots.slice(-3), ['D','T','T'])) changeFeet(['D','T','T'], ['T','I','I','unstr']);
+    } else if (foots.slice(-1)[0] === 'unstr') { // weird lines ending in 'unstr'
+      if (equiv(foots.slice(-3), ['T','A','unstr'])) changeFeet(['T','A','unstr'], ['T','U','T']);
+      else if (equiv(foots.slice(-3), ['A','I','unstr'])) changeFeet(['A','I','unstr'], ['T','T','T']);
+      else if (equiv(foots.slice(-4), ['T','D','I','unstr'])) changeFeet(['T','D','I','unstr'], ['T','T','T','T']);
+      else if (equiv(foots.slice(-4), ['T','D','I','str'])) changeFeet(['T','D','I','str'], ['T','T','T','T']);
+      else if (equiv(foots.slice(-4), ['A','I','I','unstr'])) changeFeet(['A','I','I','unstr'], ['T','T','T','T']);
+      else if (equiv(foots.slice(-4), ['D','I','I','unstr'])) changeFeet(['D','I','I','unstr'], ['T','T','T','T']);
+      else if (equiv(foots.slice(-4), ['A','U','I','unstr'])) changeFeet(['A','U','I','unstr'], ['T','T','T','T']);
+      else if (equiv(foots.slice(-2), ['T','unstr'])) changeFeet(['T','unstr'], ['D']);
+    } else if (foots.slice(-1)[0] === 'str') { // weird lines ending in 'str'
+      if (equiv(foots.slice(-3), ['I','A','str'])) changeFeet(['I','A','str'], ['I','I','I']);
+      else if (equiv(foots.slice(-3), ['D','I','str']) && feet.slice(-3,-2)[0][2] < feet.slice(-2,-1)[0][0] && feet.slice(-2,-1)[0][1] < feet.slice(-1)[0]) {
+        changeFeet(['D','I','str'], ['T','T','T']); 
+      }
+      else if (equiv(foots.slice(-4), ['T','D','D','str'])) changeFeet(['T','D','D','str'], ['A','A','A']);
+      else if (equiv(foots.slice(-3), ['I','D','str'])) changeFeet(['I','D','str'], ['I','T','I']);
+      else if (equiv(foots.slice(-3), ['T','D','str'])) {
+        if (feet.slice(-3,-2)[0][0] > feet.slice(-2,-1)[0][0]) changeFeet(['T','D','str'], ['A','A']);
+        else changeFeet(['T','D','str'], ['T','I','I']);
+      }
+      else if (equiv(foots.slice(-3), ['U','D','str'])) changeFeet(['U','D','str'], ['I','T','I']);
+      else if (equiv(foots.slice(-2), ['D','str'])) changeFeet(['D','str'], ['T','I']);
+      else if (equiv(foots.slice(-4), ['I','A','T','str'])) changeFeet(['I','A','T','str'], ['I','I','I','I']);
+      else if (equiv(foots.slice(-3), ['D','T','str'])) {
+        changeFeet(['D','T','str'], ['T','I','I']);
+        if (equiv(foots.slice(-4), ['D','T','I','I'])) changeFeet(['D','T','I','I'], ['T','I','A','I']);
+      }
+      else if (equiv(foots.slice(-4), ['A','T','T','str'])) changeFeet(['A','T','T','str'], ['I','I','I','I']);
+      else if (equiv(foots.slice(-4), ['D','T','T','str'])) changeFeet(['D','T','T','str'], ['T','I','I','I']);
+      else if (equiv(foots.slice(-4), ['D','U','T','T','str'])) changeFeet(['D','U','T','T','str'], ['T','I','I','I','I']);
+      else if (equiv(foots.slice(-5), ['A','T','T','T','str'])) changeFeet(['A','T','T','T','str'], ['I','I','I','I','I']);
+      else if (equiv(foots.slice(-6), ['A','T','T','T','T','str'])) changeFeet(['A','T','T','T','T','str'], ['I','I','I','I','I','I']);
+      else if (equiv(foots.slice(-5), ['D','T','T','T','str'])) changeFeet(['D','T','T','T','str'], ['T','I','I','I','I']);
+      else if (equiv(foots.slice(-6), ['D','T','T','T','T','str'])) changeFeet(['D','T','T','T','T','str'], ['T','I','I','I','I','I']);
+      else if (equiv(foots.slice(-4), ['D','U','T','str'])) changeFeet(['D','U','T','str'], ['T','I','I','I']);
+      else if (equiv(foots.slice(-5), ['D','T','U','T','str'])) changeFeet(['D','T','U','T','str'], ['T','I','I','I','I']);
+      else if (equiv(foots.slice(-5), ['D','U','U','T','str'])) changeFeet(['D','U','U','T','str'], ['T','I','I','I','I']);
+      else if (equiv(foots.slice(-4), ['I','A','U','str'])) changeFeet(['I','A','U','str'], ['I','I','T','I']);
+      else if (equiv(foots.slice(-4), ['D','T','U','str'])) changeFeet(['D','T','U','str'], ['T','I','I','I']);
+      else if (equiv(foots.slice(-5), ['D','T','T','U','str'])) changeFeet(['D','T','T','U','str'], ['T','I','I','I','I']);
+      else if (equiv(foots.slice(-5), ['D','U','T','U','str'])) changeFeet(['D','U','T','U','str'], ['T','I','I','I','I']);
+      else if (equiv(foots.slice(-5), ['D','T','U','U','str'])) changeFeet(['D','T','U','U','str'], ['T','I','I','I','I']);
+      // weird lines ending in A, D, U
+      else if (equiv(foots.slice(-4), ['I','I','A','A'])) changeFeet(['I','I','A','A'], ['I','I','I','T','I']);
+      else if (equiv(foots.slice(-2), ['T','D']) && feet.slice(-1)[0][2] < feet.slice(-1)[0][1]) {
+        changeFeet(['T','D'], ['T','T','str']);
+        dumpsters()
+      }
+      else if (equiv(foots.slice(-4), ['U','D','T','U'])) changeFeet(['A','A','A']);
+    }
+  }
+
   resolveCrux() {
     /**
      * Returns an array representing the relative stress of each syllable in the most likely pronunciation
