@@ -407,6 +407,14 @@ class Line {
     return {rhythm, meter, catalexis};
   }
 
+  getMeterLabelPhrase() {
+    /**
+     * Returns a human-readable string that labels a line's meter (e.g., "iambic tetrameter catalectic")
+     */
+    const meter = this.getMeter().label;
+    return meter.rhythm + " " + phonstants.METER_NAMES[meter.meter] + (meter.catalexis ? " catalectic" : "");
+  }
+
   getMeter(crux=false) {
     /**
      * Returns an object with three descriptions of the line's meter:
