@@ -385,7 +385,6 @@ class Line {
       meter = totalFeet;
       if (ftCts['unstr'] === 1) {
         catalexis = true;
-        meter += 1;
       } else if (ftCts['str'] === 1) catalexis = true;
     } else if (ftCts['T'] === ftCts['I'] && ftCts['T'] > 0) { // trochees and iambs
       if (foots[0] === 'T' && foots.length === 2) {

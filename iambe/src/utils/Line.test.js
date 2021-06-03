@@ -93,8 +93,9 @@ test('getMeter identifies long iambic lines', () => {
 })
 
 test('getMeter identifies this line', () => {
-  const dickinson = new Line("They put me in the Closet–").getMeter();
-  expect(dickinson.feet).toStrictEqual([[3,2], [2, 3], [4, 1], 4]);
-  expect(dickinson.foots).toStrictEqual(['I','T','I','unstr']);
+  const dickinson = new Line("Till it is lost in Fleeces–").getMeter();
+  expect(dickinson.feet).toStrictEqual([[2,3], [2, 2], [3, 1], 4]);
+  expect(dickinson.foots).toStrictEqual(['T','U','I','unstr']);
   expect(dickinson.label.catalexis).toBe(true);
+  expect(dickinson.label.meter).toBe(4);
 })
