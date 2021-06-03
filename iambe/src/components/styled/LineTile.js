@@ -1,0 +1,40 @@
+import React from 'react';
+import styled from 'styled-components';
+
+import HoverCard from './HoverCard';
+
+import Line from '../../utils/Line';
+import {METER_NAMES} from '../../utils/phonstants';
+
+const LineTileWrapper = styled.div`
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: space-evenly;
+  align-items: flex-start;
+  font-size: ${props => props.theme.fontSize};
+  padding: ${props => props.theme.space};
+
+  &:hover {
+    border-radius: ${props => props.theme.borderRadius};
+    background-color: ${props => props.theme.pale};
+    cursor: pointer;
+  }
+`
+
+const LineTile = props => {
+  const {children} = props;
+  
+  const line = new Line(children);
+  const meterData = line.getMeter();
+  const label = meterData.label.rhythm + " " +  METER_NAMES[meterData.label.meter] + (meterData.label.catalexis ? " catalectic" : "");
+
+  return (
+    <LineTileWrapper>
+      <HoverCard hoverText={label}>
+        {line.text}
+      </HoverCard>
+    </LineTileWrapper>
+  )
+}
+
+export default LineTile;

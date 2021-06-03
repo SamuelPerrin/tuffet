@@ -9,13 +9,13 @@ import {YellowSpan, RedSpan} from './styled/Spans';
 
 import Poem from '../utils/Poem';
 import Stanza from '../utils/Stanza';
+import ScannedStanza from './styled/ScannedStanza';
 
 const Scansion = props => {
   const {poems, stanzaNum, stanzaMeters} = props;
 
   const stanzaList = [];
   poems.forEach(poem => new Poem(poem).getStanzas().forEach(stanza => stanzaList.push(stanza)));
-
   const stanza = new Stanza(stanzaList[stanzaNum]);
 
   return (
@@ -28,6 +28,8 @@ const Scansion = props => {
       <Container>
         <Section>
           <h3><RedSpan>Scansion</RedSpan></h3>
+          <ScannedStanza stanza={stanza} />
+          <br/>
           <p>This stanza's meter is: <RedSpan>{stanza.getMeter()}</RedSpan>.</p>
         </Section>
       </Container>

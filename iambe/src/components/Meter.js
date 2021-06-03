@@ -14,7 +14,7 @@ import Poem from '../utils/Poem';
 import Stanza from '../utils/Stanza';
 
 const Meter = props => {
-  const {poetry, poems, stanzaMeters, stanzaMeterCounts} = props;
+  const {poetry, poems, stanzaMeters, stanzaMeterCounts, getLineMeterDetails} = props;
   const history = useHistory();
 
   const submitLineMeterDetail = e => {
@@ -41,7 +41,7 @@ const Meter = props => {
                   return <StanzaTile 
                     onClick={submitLineMeterDetail}
                     children={thisStanza.getLines()} 
-                    hoverText={thisStanza.getMeter()}
+                    hoverText={"Meter: " + thisStanza.getMeter()}
                     key={stanzaNum}
                     stanzaNum={stanzaNum}
                   />

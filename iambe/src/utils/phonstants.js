@@ -351,3 +351,12 @@ export const RHYME_TYPE_DESCRIPTIONS = {
   </div>,
   'N/A':'nonrhyme',
 };
+export const METER_NAMES = {
+  2: 'dimeter',
+  3: 'trimeter',
+  4: 'tetrameter',
+  5: 'pentameter',
+  6: 'hexameter',
+  7: 'heptameter',
+  8: 'octameter',
+}
