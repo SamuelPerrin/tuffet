@@ -1,9 +1,6 @@
 import React from 'react';
-import styled from 'styled-components';
 
 import LineTile from './LineTile';
-
-import Stanza from '../../utils/Stanza';
 
 const ScannedStanza = props => {
   const {stanza} = props;

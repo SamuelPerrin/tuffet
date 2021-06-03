@@ -12,7 +12,7 @@ const LineTileWrapper = styled.div`
   justify-content: space-evenly;
   align-items: flex-start;
   font-size: ${props => props.theme.fontSize};
-  padding: ${props => props.theme.space};
+  padding: 0.5rem;
 
   &:hover {
     border-radius: ${props => props.theme.borderRadius};
