@@ -38,7 +38,7 @@ const RhymeScheme = props => {
       <Container>
         <Section>
           <h3><RedSpan>Rhyme Scheme</RedSpan></h3>
-          <RhymedStanza stanza={stanzaList[stanzaNum].split('\n')}/>
+          <RhymedStanza stanza={stanza.getLines()}/>
           <br/>
           <p>This stanza's rhyme scheme is: <BlueSpan>{RHYME_SCHEMES[stanza.getRhymeScheme()]}</BlueSpan>.</p>
         </Section>
