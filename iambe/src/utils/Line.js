@@ -171,7 +171,7 @@ class Line {
       if (equiv(foots.slice(-2), ['A','I']) && feet.slice(-2,-1)[0][0] <= feet.slice(-2,-1)[0][1]) {
         changeFeet(['A','I'],['T','T','str']);
         dumpsters();
-      } else if (equiv(foots.slice(-2), ['D','I']) && feet.slice(-2,-1)[0][1] <= feet.slice(-2,-1)[0][2]) {
+      } else if (equiv(foots.slice(-2), ['D','I']) && feet.slice(-2,-1)[0][2] <= feet.slice(-2,-1)[0][1]) {
         changeFeet(['D','I'], ['T','T','str']);
         dumpsters();
       } else if (equiv(foots.slice(-3), ['D','I','I'])) {
@@ -224,14 +224,15 @@ class Line {
       else if (equiv(foots.slice(-5), ['D','T','T','U','str'])) changeFeet(['D','T','T','U','str'], ['T','I','I','I','I']);
       else if (equiv(foots.slice(-5), ['D','U','T','U','str'])) changeFeet(['D','U','T','U','str'], ['T','I','I','I','I']);
       else if (equiv(foots.slice(-5), ['D','T','U','U','str'])) changeFeet(['D','T','U','U','str'], ['T','I','I','I','I']);
+    }
       // weird lines ending in A, D, U
       else if (equiv(foots.slice(-4), ['I','I','A','A'])) changeFeet(['I','I','A','A'], ['I','I','I','T','I']);
       else if (equiv(foots.slice(-2), ['T','D']) && feet.slice(-1)[0][2] < feet.slice(-1)[0][1]) {
         changeFeet(['T','D'], ['T','T','str']);
         dumpsters()
       }
-      else if (equiv(foots.slice(-4), ['U','D','T','U'])) changeFeet(['A','A','A']);
-    }
+      else if (equiv(foots.slice(-4), ['U','D','T','U'])) changeFeet(['U','D','T','U'], ['A','A','A']);
+      else if (equiv(foots.slice(-4), ['U','D','D','U'])) changeFeet(['U','D','D','U'], ['U','T','I','I','U']);
 
     return [foots, feet];
   }
