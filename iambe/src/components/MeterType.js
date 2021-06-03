@@ -13,7 +13,7 @@ import Stanza from '../utils/Stanza';
 import Line from '../utils/Line';
 
 const MeterType = props => {
-  const {mt, stanzaMeterCounts, stanzaNum, poems} = props;
+  const {mt, stanzaNum, poems} = props;
 
   useEffect(() => {
     window.scrollTo(0,0);
@@ -23,6 +23,11 @@ const MeterType = props => {
   poems.forEach(poem => new Poem(poem).getStanzas().forEach(stanza => stanzaList.push(stanza)));
 
   const lines = new Stanza(stanzaList[stanzaNum]).getLines();
+  const lineMeterCounts = {}
+  lines.forEach(line => {
+    const meterLabel = new Line(line).getMeterLabelPhrase();
+    lineMeterCounts[meterLabel] = meterLabel in lineMeterCounts ? lineMeterCounts[meterLabel] + 1 : 1;
+  })
 
   return (
     <div>
@@ -36,7 +41,7 @@ const MeterType = props => {
         <Section>
           <h3><RedSpan>Meter: {mt}</RedSpan></h3>
           <Table maxWidth='1200px'>
-            <caption>This stanza has {stanzaMeterCounts[mt]} instance{stanzaMeterCounts[mt] === 1 ? '' : 's'} of {mt}</caption>
+            <caption>This stanza has {lineMeterCounts[mt]} instance{lineMeterCounts[mt] === 1 ? '' : 's'} of {mt}:</caption>
             <thead>
               <tr>
                 <th>Line</th>
@@ -63,7 +68,6 @@ const MeterType = props => {
 
 const mapStateToProps = state => ({
   ...state,
-  stanzaMeterCounts: state.stanzaMeterCounts,
   mt: state.mt,
   stanzaNum: state.stanzaNum,
   poems: state.poems,
