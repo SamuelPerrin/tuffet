@@ -9,6 +9,7 @@ const initialState = {
   rt: null,
   stanzaMeters: null,
   stanzaMeterCounts: null,
+  mt: null,
 }
 
 const reducer = (state=initialState, action) => {
@@ -44,6 +45,11 @@ const reducer = (state=initialState, action) => {
       return {
         ...state,
         stanzaNum: action.payload.stanzaNum,
+      }
+    case actions.GET_METER_TYPE_DETAILS:
+      return {
+        ...state,
+        mt: action.payload.mt,
       }
     default:
       return state

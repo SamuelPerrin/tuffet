@@ -1,6 +1,6 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import {Link} from 'react-router-dom';
+import {Link, useHistory} from 'react-router-dom';
 
 import Breadcrumbs from './styled/Breadcrumbs';
 import Container from './styled/Container';
@@ -8,13 +8,15 @@ import Section from './styled/Section';
 import {YellowSpan, RedSpan} from './styled/Spans';
 import ScannedStanza from './styled/ScannedStanza';
 import ListItemTile from './styled/ListItemTile';
+import {getMeterTypeDetails} from '../actions';
 
 import Poem from '../utils/Poem';
 import Stanza from '../utils/Stanza';
 import Line from '../utils/Line';
 
 const Scansion = props => {
-  const {poems, stanzaNum, stanzaMeters} = props;
+  const {poems, stanzaNum, stanzaMeters, getMeterTypeDetails} = props;
+  const history = useHistory();
 
   const stanzaList = [];
   poems.forEach(poem => new Poem(poem).getStanzas().forEach(stanza => stanzaList.push(stanza)));
@@ -24,6 +26,12 @@ const Scansion = props => {
     const lineMeter = new Line(line).getMeterLabelPhrase();
     lineCounts[lineMeter] = lineMeter in lineCounts ? lineCounts[lineMeter] + 1 : 1;
   })
+
+  const submitMeterType = e => {
+    e.preventDefault();
+    getMeterTypeDetails(e.target.dataset.rt);
+    history.push("/meter/type");
+  }
 
   return (
     <div>
@@ -43,7 +51,7 @@ const Scansion = props => {
           <h3><YellowSpan>Lines by Meter</YellowSpan></h3>
           <p>The most common lines in this stanza are:</p>
             <ol>
-              {lineCounts && Object.entries(lineCounts).sort((a,b) => b[1] - a[1]).map(entry => <ListItemTile key={entry[0]}>{entry[0]} ({entry[1]} line{entry[1] === 1 ? '' : 's'})</ListItemTile>)}
+              {lineCounts && Object.entries(lineCounts).sort((a,b) => b[1] - a[1]).map(entry => <ListItemTile key={entry[0]} onClick={submitMeterType} rt={entry[0]}>{entry[0]} ({entry[1]} line{entry[1] === 1 ? '' : 's'})</ListItemTile>)}
             </ol>
         </Section>
       </Container>
@@ -60,4 +68,4 @@ const mapStateToProps = state => {
   }
 }
 
-export default connect(mapStateToProps, {})(Scansion)
+export default connect(mapStateToProps, {getMeterTypeDetails})(Scansion)
