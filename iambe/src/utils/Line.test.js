@@ -93,7 +93,7 @@ test('getMeter identifies long iambic lines', () => {
 })
 
 test('getMeter identifies this line', () => {
-  const line = new Line("i who have died am alive again today").getMeter();
+  const line = new Line("Rainbows, green fire, white diamonds, the fierce blue").getMeter();
   // expect(line.feet).toStrictEqual([[2,3], [2, 2], [3, 1], 4]);
   // expect(line.foots).toStrictEqual(['T','U','I','unstr']);
   // expect(line.label.catalexis).toBe(true);
