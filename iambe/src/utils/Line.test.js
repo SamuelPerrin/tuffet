@@ -100,3 +100,26 @@ test('getMeter identifies this line', () => {
   // expect(line.label.meter).toBe(4);
   console.log(`line.feet:`,line.feet,`line.foots`,line.foots);
 })
+
+test('equalizeVowels counts correctly', () => {
+  const phone = new Line("phone").equalizeVowels("phone",1,2,[1]);
+  const meagre = new Line("meagre").equalizeVowels("meagre",2,3,[1,4]);
+  const beautiful = new Line("beautiful").equalizeVowels("beautiful",3,5,[1,4,3]);
+  const mouse = new Line("mouse").equalizeVowels("mouse",1,3,[2]);
+  const fateful = new Line("fateful").equalizeVowels("fateful",2,3,[1,4]);
+  expect(phone.silentEs).toBe(1);
+  expect(meagre.diphCount).toBe(1);
+  expect(beautiful.toRemove).toStrictEqual([2,3]);
+  expect(mouse.diphCount).toBe(1);
+  expect(mouse.silentEs).toBe(1);
+  expect(fateful.toRemove).toStrictEqual([3]);
+})
+
+test('getLinesVowels identifies pronounced vowels', () => {
+  const line = new Line("A beautiful mouse is a fateful, meagre phone").getLinesVowels();
+  expect(line[0].word).toBe('A');
+  expect(line[1].word).toBe('beautiful');
+  expect(line[2].posList).toStrictEqual([1]);
+  expect(line[5].posList).toStrictEqual([1,5]);
+  expect(line[6].posList).toStrictEqual([1,5]);
+})

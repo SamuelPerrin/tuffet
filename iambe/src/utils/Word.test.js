@@ -174,3 +174,9 @@ test('getStressList handles special cases involving consecutive or exceptional w
 
   expect(new Word('ah').getStressList()).toStrictEqual([1]);
 })
+
+test('getStressList returns an array of arrays when crux is true and word has mult prons', () => {
+  const flower = new Word('flower');
+  console.log(flower.getStressList(true));
+  expect(flower.getStressList(true)).toStrictEqual([[2], [1, 4]]);
+})

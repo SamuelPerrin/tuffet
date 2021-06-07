@@ -427,7 +427,7 @@ class Line {
      * Returns an object with three descriptions of the line's meter:
      * label: an object representing a label for the line's meter (e.g., {rhythm: "iambic", meter:5, catalexis:false})
      * foots: an array of one-letter strings representing each foot in the line (e.g., ['U','I','I'])
-     * feet: an array of integers representing the relative stress of each syllable in the line (e.g., [2,2,1,4,3,2])
+     * feet: an array of arrays of integers representing the relative stress of each syllable in each foot in the line (e.g., [[2, 2], [1, 4], [3,2]])
      * 
      * If crux is not false, it is a stressList from resolveCrux.
      * 
@@ -551,6 +551,279 @@ class Line {
     }
 
     return {feet, foots, label};
+  }
+
+  equalizeVowels(wrd, sylCount, vowCount, stressList) {
+    /**
+     * Given a string representing a word from a line, an int representing the number of syllables in the word,
+     * an int representing the number of vowels in the line, and an array of ints representing the relative stress of each syl,
+     * Returns an object with data about the word's vowels:
+     * sylCount: the number of syllables in the word's pronunciation
+     * vowCount: the number of pronounced vowels in the word's spelling // should equal sylCount
+     * diphCount: the number of digrams pronounced as a single vowel
+     * toRemove: an array of the positions in the word's spelling that have vowels that seem like they're elided
+     * 
+     * Called by: Line.getLinesVowels()
+     */
+
+    const triphs = ['eye', 'eau', 'owe'];
+
+    let word = wrd.replace("'","").toLowerCase();
+    let diphCount = 0;
+    let silentEs = 0;
+    let toRemove = [];
+
+    if (word.includes('qu')) {
+      diphCount++;
+      vowCount--;
+      word = word.slice(0,word.indexOf('qu') + 1) + word.slice(word.indexOf('qu') + 2)
+    }
+
+    if (sylCount !== vowCount) { // try to find out which vowels aren't being pronounced as a syllable
+      if (word.slice(-1) === 'e') {
+        if (word.slice(-2,-1) !== 'r' && word.slice(-2,-1) !== 'l') { // found a silent 'e'
+          silentEs++;
+          vowCount--;
+          word = word.slice(0,-1);
+          const eq = this.equalizeVowels(word, sylCount, vowCount, stressList);
+          sylCount = eq.sylCount;
+          vowCount = eq.vowCount;
+          diphCount += eq.diphCount;
+          silentEs += eq.silentEs;
+          toRemove = eq.toRemove;
+        } else { // word ends in 're' or 'le'
+          if (!(word.slice(-3,-2) in phonstants.SHORT_VOWELS)) { // exception for 'trouble,' 'meagre,' and the like
+            Object.keys(phonstants.DIGRAPHS).forEach(digraph => {
+              if (word.includes(digraph)) {
+                diphCount++;
+                vowCount--;
+                word = word.slice(0, word.indexOf(digraph) + 1) + word.slice(word.indexOf(digraph) + 2);
+                const eq = this.equalizeVowels(word, sylCount, vowCount, stressList);
+                sylCount = eq.sylCount;
+                vowCount = eq.vowCount;
+                diphCount += eq.diphCount;
+                silentEs += eq.silentEs;
+                toRemove = eq.toRemove;
+              }
+            })
+          } else { // found a silent 'e'
+            silentEs++;
+            vowCount--;
+            word = word.slice(0,-1);
+            const eq = this.equalizeVowels(word, sylCount, vowCount, stressList);
+            sylCount = eq.sylCount;
+            vowCount = eq.vowCount;
+            diphCount += eq.diphCount;
+            silentEs += eq.silentEs;
+            toRemove = eq.toRemove;
+          }
+        }
+      } else if (word.slice(-3) === 'ies' || word.slice(-3) === 'ied') {
+        silentEs++;
+        vowCount--;
+        word = word.slice(0,-2) + word.slice(-1);
+        const eq = this.equalizeVowels(word, sylCount, vowCount, stressList);
+        sylCount = eq.sylCount;
+        vowCount = eq.vowCount;
+        diphCount += eq.diphCount;
+        silentEs += eq.silentEs;
+        toRemove = eq.toRemove;
+      } else if (sylCount !== vowCount) { // check for trigraphs and digraphs
+        triphs.forEach(triph => {
+          if (word.includes(triph)) {
+            vowCount -= 2;
+            word = word.slice(0,word.indexOf(triph) + 1) + word.slice(word.indexOf(triph) + 3);
+            const equalized = this.equalizeVowels(word, sylCount, vowCount, stressList);
+            sylCount = equalized.sylCount;
+            vowCount = equalized.vowCount;
+            diphCount += equalized.diphCount;
+            silentEs += equalized.silentEs;
+            toRemove = equalized.toRemove;
+            toRemove.push(word.indexOf(triph) + 3);
+            toRemove.push(word.indexOf(triph) + 4);
+          }
+        })
+        Object.keys(phonstants.DIGRAPHS).forEach(digraph => {
+          if (word.includes(digraph)) {
+            diphCount++;
+            vowCount--;
+            word = word.slice(0, word.indexOf(digraph) + 1) + word.slice(word.indexOf(digraph) + 2);
+            const eq = this.equalizeVowels(word, sylCount, vowCount, stressList);
+            sylCount = eq.sylCount;
+            vowCount = eq.vowCount;
+            diphCount += eq.diphCount;
+            silentEs += eq.silentEs;
+            toRemove = eq.toRemove;
+          }
+        })
+      }
+      if (sylCount !== vowCount && word.slice(-2) === 'ed') {
+        if (!(word.slice(-3, -2) in phonstants.SHORT_VOWELS)) {
+          silentEs++;
+          vowCount--;
+          word = word.slice(0,-2) + word.slice(-1);
+          const eq = this.equalizeVowels(word, sylCount, vowCount, stressList);
+          sylCount = eq.sylCount;
+          vowCount = eq.vowCount;
+          diphCount += eq.diphCount;
+          silentEs += eq.silentEs;
+          toRemove = eq.toRemove;
+        } else if (word.slice(-3, -2) === 'i') {
+          silentEs++;
+          vowCount--;
+          word = word.slice(0,-3) + word.slice(-2);
+          const eq = this.equalizeVowels(word, sylCount, vowCount, stressList);
+          sylCount = eq.sylCount;
+          vowCount = eq.vowCount;
+          diphCount += eq.diphCount;
+          silentEs += eq.silentEs;
+          toRemove = eq.toRemove;
+        }
+      } else if (sylCount !== vowCount && word.slice(-2) === 'es') {
+        if (!(word.slice(-3,-2) in phonstants.SHORT_VOWELS)) {
+          silentEs++;
+          vowCount--;
+          word = word.slice(0,-2) + word.slice(-1);
+          const eq = this.equalizeVowels(word, sylCount, vowCount, stressList);
+          sylCount = eq.sylCount;
+          vowCount = eq.vowCount;
+          diphCount += eq.diphCount;
+          silentEs += eq.silentEs;
+          toRemove = eq.toRemove;
+        } else if (word.slice(-3,-2) === 'i') {
+          silentEs++;
+          vowCount--;
+          word = word.slice(0,-3) + word.slice(-2);
+          const eq = this.equalizeVowels(word, sylCount, vowCount, stressList);
+          sylCount = eq.sylCount;
+          vowCount = eq.vowCount;
+          diphCount += eq.diphCount;
+          silentEs += eq.silentEs;
+          toRemove = eq.toRemove;
+        }
+      }
+    }
+
+    // check for vowels that might be elided
+    if (stressList && vowCount > sylCount) {
+      let elided = false;
+      if (stressList.every((v,i) => v === [1,4][i])) { // stressList is [1,4] like power => pow'r, so elide the second vowel
+        elided = 2;
+      } else if (stressList.every((v,i) => v === [4,1,4][i])) { // stressList is [4,1,4]
+        elided = 3;
+      } else if (stressList.every((v,i) => v === [2,1,4][i])) elided = 3;
+        else if (stressList.every((v,i) => v === [1,4,2][i])) elided = 2;
+      
+      if (elided) {
+        let vows = 0;
+        let pos = 0;
+        while (vows < elided) {
+          if (word[pos] in phonstants.SHORT_VOWELS) {
+            vows++;
+          }
+          pos++;
+        }
+
+        pos--;
+        toRemove.push(pos);
+      }
+    }
+
+    return {sylCount, vowCount, diphCount, silentEs, toRemove};
+  }
+
+  getLinesVowels() {
+    /**
+     * Returns an ordered array of arrays containing 1) a string representing a word from the line, and
+     * 2) an array of ints representing the positions in that word where there's a pronounced vowel
+     * 
+     * based on get_syllables_for from 5 Scansioner
+     * 
+     * Calls: Line.equalizeVowels
+     */
+
+    // Helper function used only in this method
+    const vowelCount = word => {
+      let count = word.toLowerCase()[0] === 'y' ? -1 : 0;
+      
+      for (let char of word.toLowerCase()) {
+        if (char in phonstants.LONG_VOWELS || char === 'è') {
+          count++;
+        }
+      }
+
+      return count;
+    }
+
+    const words = this.getTokens();
+    const flatFeet = this.getMeter().feet.flat();
+
+    const lineList = words.map(word => {
+      const stressList = new Word(word).getStressList(true);
+      let numSyls;
+
+      // get sylCount by checking which pron of the word is being used in this line
+      if (Array.isArray(stressList[0])) { // word is a crux
+        for (let pron of stressList) {
+          if (flatFeet.slice(0, pron.length) === pron) {
+            numSyls = pron.length;
+            var bestPron = pron;
+          }
+        }
+      } else {
+        numSyls = stressList.length;
+        bestPron = stressList;
+      }
+      const vowCount = vowelCount(word);
+      const match = this.equalizeVowels(word, numSyls, vowCount, bestPron);
+      match.text = word;
+      match.pron = bestPron;
+      return match;
+    });
+
+    // console.log(`lineList: `, lineList);
+    
+    const output = lineList.map(word => {
+      // make posList, an array of the position of every vowel in the word except those in toRemove
+      let posList = word.text.split('').map((char,ind) => {
+        if (char in phonstants.LONG_VOWELS && !(word.toRemove.includes(ind))) {
+          // console.log(`I want to add ${ind} to posList for ${word.text}`);
+          if (!(ind === 0 && char === 'y')) { // XOR
+            return ind;
+          }
+        }
+      }).filter(x => x !== undefined);
+
+      // remove silentEs from posList
+      if (word.silentEs > 0 && word.text[posList.slice(-1)[0]] === 'e') { // if the word has an e as its last vowel, remove it from posList
+        posList = posList.slice(0,-1);
+        word.silentEs--;
+      }
+
+
+      // remove the second vowel of co-syllabic digraphs from posList
+      while (word.diphCount > 0) {
+        let i = 0;
+        while (i+1 < posList.length) {
+          if (posList[i] + 1 === posList[i+1]) { // adjacent vowels
+            // shift which vowel gets marked if diphthong follows a 'q'
+            if (word.text[posList[i]] === 'u' && word.text[posList[i] - 1].toLowerCase() === 'q') {
+              posList.splice(i, 1);
+              word.diphCount--;
+            } else {
+              posList.splice(i+1, 1);
+              word.diphCount--;
+            }
+          }
+          i++;
+        }
+      }
+
+      return {word: word.text, posList: posList}
+    })
+
+    console.log(`output:`, output);
+    return output;
   }
 }
 
