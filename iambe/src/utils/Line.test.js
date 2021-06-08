@@ -123,3 +123,10 @@ test('getLinesVowels identifies pronounced vowels', () => {
   expect(line[5].posList).toStrictEqual([1,5]);
   expect(line[6].posList).toStrictEqual([1,5]);
 })
+
+test('getMarkString identifies stresses in a sample line', () => {
+  const sonnet30 = new Line("When to the sessions of sweet silent thought");
+  const foots = sonnet30.getMeter().foots;
+  const linesList = sonnet30.getLinesVowels();
+  expect(sonnet30.getMarkString(foots, linesList)).toBe('  /   ×   ×  /  ×    /    ×    / ×     /     ');
+})

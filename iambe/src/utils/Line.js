@@ -822,8 +822,104 @@ class Line {
       return {word: word.text, posList: posList}
     })
 
-    console.log(`output:`, output);
     return output;
+  }
+
+  getMarkString(foots,linesList) {
+    /**
+     * Given (i) an array of strings ('D','A','I',etc.) representing the metrical feet in the line and
+     * (ii) its lineList (from Line.getLinesVowels), an array of objects containing a word and its posList of positions of pronounced vowels,
+     * Returns a string representing with symbols the stress of each syllable in the line
+     */
+
+    const markList = [];
+    let syll = 0;
+    let foot = 0;
+    linesList.forEach(word => {
+      let lastPos = 0;
+      word.posList.forEach(pos => {
+        let pos1 = pos - lastPos;
+        markList.push(' '.repeat(pos1));
+
+        switch(foots[foot]) {
+          case 'A':
+            if (syll === 0 || syll === 1) {
+              markList.push(phonstants.NONICTUS);
+              syll++;
+            } else if (syll === 2) {
+              markList.push(phonstants.ICTUS);
+              syll = 0;
+              foot++;
+            }
+            break;
+          case 'D':
+            if (syll === 0) {
+              markList.push(phonstants.ICTUS);
+              syll++;
+            } else if (syll === 1) {
+              markList.push(phonstants.NONICTUS);
+              syll++;
+            } else if (syll === 2) {
+              markList.push(phonstants.NONICTUS);
+              syll = 0;
+              foot++;
+            }
+            break;
+          case 'I':
+            if (syll === 0) {
+              markList.push(phonstants.NONICTUS);
+              syll++;
+            } else if (syll === 1) {
+              markList.push(phonstants.ICTUS);
+              syll = 0;
+              foot++;
+            }
+            break;
+          case 'P':
+            if (syll === 0) {
+              markList.push(phonstants.NONICTUS);
+              syll++;
+            } else if (syll === 1) {
+              markList.push(phonstants.NONICTUS);
+              syll = 0;
+              foot++;
+            }
+            break;
+          case 'T':
+            if (syll === 0) {
+              markList.push(phonstants.ICTUS);
+              syll++;
+            } else if (syll === 1) {
+              markList.push(phonstants.NONICTUS);
+              syll = 0;
+              foot++;
+            }
+            break;
+          case 'U':
+            if (syll === 0) {
+              markList.push(phonstants.UNCERTAIN_ICTUS);
+              syll++;
+            } else if (syll === 1) {
+              markList.push(phonstants.UNCERTAIN_ICTUS);
+              syll = 0;
+              foot++;
+            }
+            break;
+          case 'str':
+            markList.push(phonstants.ICTUS);
+            break;
+          case 'unstr':
+            markList.push(phonstants.NONICTUS);
+            break;
+          default:
+            break;
+        }
+        lastPos = pos + 1;
+      })
+      markList.push(' '.repeat(word.word.length - word.posList.slice(-1)[0]));
+    })
+    const marks = markList.join(``);
+    return marks;
   }
 }
 

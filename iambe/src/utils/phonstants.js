@@ -359,4 +359,7 @@ export const METER_NAMES = {
   6: 'hexameter',
   7: 'heptameter',
   8: 'octameter',
-}
+};
+export const NONICTUS = '×';
+export const ICTUS = '/';
+export const UNCERTAIN_ICTUS = '×';
