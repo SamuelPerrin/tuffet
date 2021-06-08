@@ -432,7 +432,7 @@ class Line {
      * If crux is not false, it is a stressList from resolveCrux.
      * 
      * Calls: Line.getStress, Line.correctWeirdFeet, Line.getLabel
-     * Called by:
+     * Called by: Line.getMarkString
      */
 
     // Helper function for adding a foot, used only in this method
@@ -734,12 +734,13 @@ class Line {
 
   getLinesVowels() {
     /**
-     * Returns an ordered array of arrays containing 1) a string representing a word from the line, and
-     * 2) an array of ints representing the positions in that word where there's a pronounced vowel
+     * Returns an object containing 1) 'word': a string representing a word from the line, and
+     * 2) 'posList': an array of ints representing the positions in that word where there's a pronounced vowel
      * 
      * based on get_syllables_for from 5 Scansioner
      * 
      * Calls: Line.equalizeVowels
+     * Called by: Line.getMarkString
      */
 
     // Helper function used only in this method
@@ -786,7 +787,7 @@ class Line {
     const output = lineList.map(word => {
       // make posList, an array of the position of every vowel in the word except those in toRemove
       let posList = word.text.split('').map((char,ind) => {
-        if (char in phonstants.LONG_VOWELS && !(word.toRemove.includes(ind))) {
+        if (char.toLowerCase() in phonstants.LONG_VOWELS && !(word.toRemove.includes(ind))) {
           // console.log(`I want to add ${ind} to posList for ${word.text}`);
           if (!(ind === 0 && char === 'y')) { // XOR
             return ind;
@@ -825,21 +826,25 @@ class Line {
     return output;
   }
 
-  getMarkString(foots,linesList) {
+  getMarkString() {
     /**
-     * Given (i) an array of strings ('D','A','I',etc.) representing the metrical feet in the line and
-     * (ii) its lineList (from Line.getLinesVowels), an array of objects containing a word and its posList of positions of pronounced vowels,
      * Returns a string representing with symbols the stress of each syllable in the line
+     * 
+     * Calls: Line.getMeter, Line.getLinesVowels
      */
 
+    const meter = this.getMeter();
+    const foots = meter.foots;
+    const linesList = this.getLinesVowels();
     const markList = [];
+    const nbsp = ' ';
     let syll = 0;
     let foot = 0;
     linesList.forEach(word => {
       let lastPos = 0;
       word.posList.forEach(pos => {
         let pos1 = pos - lastPos;
-        markList.push(' '.repeat(pos1));
+        markList.push(nbsp.repeat(pos1));
 
         switch(foots[foot]) {
           case 'A':
@@ -916,7 +921,7 @@ class Line {
         }
         lastPos = pos + 1;
       })
-      markList.push(' '.repeat(word.word.length - word.posList.slice(-1)[0]));
+      markList.push(nbsp.repeat(word.word.length - word.posList.slice(-1)[0]));
     })
     const marks = markList.join(``);
     return marks;
