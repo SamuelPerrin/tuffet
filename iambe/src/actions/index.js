@@ -6,6 +6,7 @@ export const GET_RHYME_TYPE_DETAILS = 'GET_RHYME_TYPE_DETAILS';
 export const GET_METER = 'GET_METER';
 export const GET_LINE_METER_DETAILS = 'GET_LINE_METER_DETAILS';
 export const GET_METER_TYPE_DETAILS = 'GET_METER_TYPE_DETAILS';
+export const SET_LINE_NUM = 'SET_LINE_NUM';
 
 export const getRhymes = poetry => {
   const anth = new Anthology(poetry);
@@ -32,4 +33,6 @@ export const getMeter = poetry => {
 
 export const getLineMeterDetails = num => ({type:GET_LINE_METER_DETAILS, payload:{stanzaNum: num}}); // this is the same as getRhymeSchemeDetails: refactor?
 
-export const getMeterTypeDetails = meterType => ({type:GET_METER_TYPE_DETAILS, payload:{mt: meterType}})
+export const getMeterTypeDetails = meterType => ({type:GET_METER_TYPE_DETAILS, payload:{mt: meterType}});
+
+export const setLineNum = num => ({type:SET_LINE_NUM, payload:{lineNum: num}});

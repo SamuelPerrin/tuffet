@@ -10,6 +10,7 @@ const initialState = {
   stanzaMeters: null,
   stanzaMeterCounts: null,
   mt: null,
+  lineNum: null,
 }
 
 const reducer = (state=initialState, action) => {
@@ -50,6 +51,11 @@ const reducer = (state=initialState, action) => {
       return {
         ...state,
         mt: action.payload.mt,
+      }
+    case actions.SET_LINE_NUM:
+      return {
+        ...state,
+        lineNum: action.payload.lineNum,
       }
     default:
       return state

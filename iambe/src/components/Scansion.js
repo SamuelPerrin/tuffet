@@ -8,14 +8,14 @@ import Section from './styled/Section';
 import {YellowSpan, RedSpan} from './styled/Spans';
 import ScannedStanza from './styled/ScannedStanza';
 import ListItemTile from './styled/ListItemTile';
-import {getMeterTypeDetails} from '../actions';
+import {getMeterTypeDetails, setLineNum} from '../actions';
 
 import Poem from '../utils/Poem';
 import Stanza from '../utils/Stanza';
 import Line from '../utils/Line';
 
 const Scansion = props => {
-  const {poems, stanzaNum, stanzaMeters, getMeterTypeDetails} = props;
+  const {poems, stanzaNum, stanzaMeters, getMeterTypeDetails, setLineNum} = props;
   const history = useHistory();
 
   const stanzaList = [];
@@ -33,6 +33,13 @@ const Scansion = props => {
     history.push("/meter/type");
   }
 
+  const submitLineNum = e => {
+    e.preventDefault();
+    console.log(`e.target.attributes`, e.target.dataset);
+    setLineNum(e.target.attributes.lineNum);
+    history.push("/meter/line");
+  }
+
   return (
     <div>
       <Breadcrumbs>
@@ -43,7 +50,7 @@ const Scansion = props => {
       <Container>
         <Section>
           <h3><RedSpan>Scansion</RedSpan></h3>
-          <ScannedStanza stanza={stanza} />
+          <ScannedStanza stanza={stanza} submitLineNum={submitLineNum} />
           <br/>
           <p>This stanza's meter is: <RedSpan>{stanza.getMeter()}</RedSpan>.</p>
         </Section>
@@ -68,4 +75,4 @@ const mapStateToProps = state => {
   }
 }
 
-export default connect(mapStateToProps, {getMeterTypeDetails})(Scansion)
+export default connect(mapStateToProps, {getMeterTypeDetails, setLineNum})(Scansion)
