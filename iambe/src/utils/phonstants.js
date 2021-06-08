@@ -81,7 +81,7 @@ export const VERB_TO_BE = {
 };
 export const ALPHA_VOWELS = {'a':true, 'e':true, 'è':true, 'i':true, 'o':true, 'u':true};
 export const SHORT_VOWELS = {'a':'AE2 ','e':'EH2 ','è':'IH0 ','i':'IH0 ','o':'AA2 ','u':'AH2 '};
-export const LONG_VOWELS = {'a':'EY1 ','e':'IY1 ','i':'AY1 ','o':'OW1 ','u':'UW1 ','y':'AY1 '};
+export const LONG_VOWELS = {'a':'EY1 ','e':'IY1 ','è':'IH0','i':'AY1 ','o':'OW1 ','u':'UW1 ','y':'AY1 '};
 export const TERM_VOWELS = {'a':'AH0 ','i':'IY2 ','o':'OW2 ','u':'UW2 '};
 export const CONSONANTS = {'b':'B ','c':'K ','d':'D ','f':'F ','g':'G ','h':'HH ','j':'JH ','k':'K ','l':'L ','m':'M ','n':'N ','p':'P ','s':'S ','t':'T ','v':'V ', 'x':'K S ','z':'Z '};
 export const DIGRAPHS = {'ai':'EY1 ', 'au':'AO1 ', 'aw':'AO1 ', 'ay':'EY1 ', 'ea':'IY1 ', 'ee':'IY1 ', 'ei':'IY1 ', 'eu':'Y UW1 ', 'ew':'Y UW1 ', 'ey':'IY1 ', 'ie':'IY1 ', 'io':'AH0 ', 'oa':'OW1 ', 'oe':'OW1', 'oi':'OY1 ', 'oo':'UW1 ', 'ou':'AW1 ', 'ow':'AW1 ', 'oy':'OY1 ','ua':'W EY1 ', 'ue':'EH1 '};
@@ -363,3 +363,4 @@ export const METER_NAMES = {
 export const NONICTUS = '×';
 export const ICTUS = '/';
 export const UNCERTAIN_ICTUS = '×';
+export const ALPHAPLUS = ['a','b','c','d','e','è','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z','-','–','—',' ',"'"];

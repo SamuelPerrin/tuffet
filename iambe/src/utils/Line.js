@@ -757,7 +757,7 @@ class Line {
     }
 
     const words = this.getTokens();
-    const flatFeet = this.getMeter().feet.flat();
+    let flatFeet = this.getMeter().feet.flat();
 
     const lineList = words.map(word => {
       const stressList = new Word(word).getStressList(true);
@@ -766,7 +766,7 @@ class Line {
       // get sylCount by checking which pron of the word is being used in this line
       if (Array.isArray(stressList[0])) { // word is a crux
         for (let pron of stressList) {
-          if (flatFeet.slice(0, pron.length) === pron) {
+          if (flatFeet.slice(0, pron.length).every((v,i) => v === pron[i])) {
             numSyls = pron.length;
             var bestPron = pron;
           }
@@ -775,6 +775,7 @@ class Line {
         numSyls = stressList.length;
         bestPron = stressList;
       }
+      flatFeet = flatFeet.slice(bestPron.length);
       const vowCount = vowelCount(word);
       const match = this.equalizeVowels(word, numSyls, vowCount, bestPron);
       match.text = word;
@@ -838,6 +839,9 @@ class Line {
     const linesList = this.getLinesVowels();
     const markList = [];
     const nbsp = ' ';
+    
+    // an array of the position of each punctuation mark in the line
+    const punctPos = this.text.split('').map((v,i) => phonstants.ALPHAPLUS.includes(v.toLowerCase()) ? null :  i).filter(x => x !== null);
     let syll = 0;
     let foot = 0;
     linesList.forEach(word => {
@@ -905,7 +909,8 @@ class Line {
               markList.push(phonstants.UNCERTAIN_ICTUS);
               syll++;
             } else if (syll === 1) {
-              markList.push(phonstants.UNCERTAIN_ICTUS);
+              if (meter.label.rhythm === 'iambic') markList.push(phonstants.ICTUS); // show unknown feet as iambs in an iambic line
+              else markList.push(phonstants.UNCERTAIN_ICTUS);
               syll = 0;
               foot++;
             }
@@ -923,7 +928,14 @@ class Line {
       })
       markList.push(nbsp.repeat(word.word.length - word.posList.slice(-1)[0]));
     })
-    const marks = markList.join(``);
+    let finalMarkList = markList.join('').split('');
+
+    punctPos.forEach(punct => {
+      finalMarkList.splice(punct, 0, nbsp);
+    })
+
+    const marks = finalMarkList.join(``);
+
     return marks;
   }
 }

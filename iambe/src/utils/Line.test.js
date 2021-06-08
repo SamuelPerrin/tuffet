@@ -107,12 +107,14 @@ test('equalizeVowels counts correctly', () => {
   const beautiful = new Line("beautiful").equalizeVowels("beautiful",3,5,[1,4,3]);
   const mouse = new Line("mouse").equalizeVowels("mouse",1,3,[2]);
   const fateful = new Line("fateful").equalizeVowels("fateful",2,3,[1,4]);
+  const every = new Line("every").equalizeVowels("every",2,3,[1,4]);
   expect(phone.silentEs).toBe(1);
   expect(meagre.diphCount).toBe(1);
   expect(beautiful.toRemove).toStrictEqual([2,3]);
   expect(mouse.diphCount).toBe(1);
   expect(mouse.silentEs).toBe(1);
   expect(fateful.toRemove).toStrictEqual([3]);
+  expect(every.toRemove).toStrictEqual([2]);
 })
 
 test('getLinesVowels identifies pronounced vowels', () => {
@@ -131,6 +133,9 @@ test('getMarkString identifies stresses in a sample line', () => {
 })
 
 test('getMarkString identifies stresses in this line', () => {
-  const sonnet30 = new Line("And with old woes new wail my dear time's waste");
-  expect(sonnet30.getMarkString()).toBe('/    ×   ×    ×    ×   ×    ×  /    ×      ×    ');
+  const sonnet116 = new Line("It is the star to every wand'ring bark,");
+  expect(sonnet116.getMeter().feet.flat()).toStrictEqual([2, 2, 3, 2, 3, 1, 4, 1, 4, 2]);
+  const line = sonnet116.getLinesVowels();
+  expect(line[5].posList).toStrictEqual([0,4]);
+  expect(sonnet116.getMarkString()).toBe('×  /    ×   /   × /   ×  /    ×    /    ');
 })
