@@ -568,9 +568,10 @@ class Line {
      * Called by: Line.getLinesVowels()
      */
     
-    if (wrd === 'given') console.log("in equalizeVowels with wrd",wrd,"sylCount",sylCount,"vowCount",vowCount,"stressList",stressList)
+    // console.log("in equalizeVowels with wrd",wrd,"sylCount",sylCount,"vowCount",vowCount,"stressList",stressList)
     const triphs = ['eye', 'eau', 'owe'];
     let word = wrd.replace("'","").toLowerCase();
+    word = wrd.replace("’","");
     let diphCount = 0;
     let silentEs = 0;
     let toRemove = [];
@@ -579,6 +580,7 @@ class Line {
     if (word === 'bounteous' && stressList.length === 2) return {sylCount:2, vowCount:2, diphCount:0, toRemove:[2,5,7]};
     else if (word === 'beauteous' && stressList.length === 2) return {sylCount:2, vowCount:2, diphCount:0, toRemove:[2,3,5,7]};
     else if (word === 'antique') return {sylCount:2, vowCount:2, diphCount:0, toRemove:[5,6]};
+    else if (word === 'away') return {sylCount:2, vowCount:2, diphCount:1, toRemove:[]};
 
     if (word.includes('qu')) {
       diphCount++;
@@ -746,7 +748,7 @@ class Line {
       }
     }
 
-    // if (wrd === 'given') console.log("leaving equalizeVowels with given: ", "sylCount",sylCount,"diphCount",diphCount,"silentEs",silentEs,"toRemove",toRemove)
+    // console.log("leaving equalizeVowels with",word,"sylCount",sylCount,"diphCount",diphCount,"silentEs",silentEs,"toRemove",toRemove)
 
     return {sylCount, vowCount, diphCount, silentEs, toRemove};
   }
