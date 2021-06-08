@@ -71,6 +71,8 @@ test('checkHardPron adds ER', () => {
 test('checkHardPron adds EST', () => {
   expect(new Word("rarest").checkHardPron()).toEqual("R EH1 R IH0 S T");
   expect(new Word("lowest").checkHardPron()).toEqual("L OW1 IH0 S T");
+  expect(new Word("mightst").checkHardPron()).toEqual("M AY1 T S T");
+  expect(new Word("would'st").checkHardPron()).toEqual("W UH1 D S T");
 })
 
 test('checkHardPron adds NESS', () => {

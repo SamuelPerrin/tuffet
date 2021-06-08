@@ -216,7 +216,15 @@ class Word {
               else {
                 pron = checkEnding(this.word, 'est', ' IH0 S T');
                 if (pron !== null) return pron
-              }
+                else {
+                  pron = checkEnding(this.word, 'st', ' S T');
+                  if (pron !== null) return pron;
+                  else {
+                    pron = checkEnding(this.word, "'st", ' S T');
+                    if (pron !== null) return pron;
+                  }
+                }
+              } 
             }
           }
         }
