@@ -6,7 +6,7 @@ const GlobalStyle = createGlobalStyle`
     *::before,
     *::after {   
     box-sizing: border-box;
-    font-family: 'Roboto', sans-serif;
+    /* font-family: 'Roboto', sans-serif; */
     }
     /* html { 
     font-size: 10px; 
@@ -39,6 +39,7 @@ const GlobalStyle = createGlobalStyle`
     scroll-behavior: smooth;
     text-rendering: optimizeSpeed;
     line-height: 1.5;
+    font-family: 'Roboto', sans-serif;
     }
     /* Remove list styles on ul, ol elements  */
     /* ul,

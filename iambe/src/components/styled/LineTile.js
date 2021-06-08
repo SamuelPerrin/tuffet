@@ -22,16 +22,16 @@ const LineTileWrapper = styled.div`
 `
 
 const LineTile = props => {
-  const {children, onClick} = props;
+  const {children, onClick, rt} = props;
   
   const line = new Line(children);
   const meterData = line.getMeter();
   const label = meterData.label.rhythm + " " +  METER_NAMES[meterData.label.meter] + (meterData.label.catalexis ? " catalectic" : "");
 
   return (
-    <LineTileWrapper onClick={onClick}>
+    <LineTileWrapper>
       <HoverCard hoverText={label}>
-        {line.text}
+        <p id={rt} onClick={onClick}>{line.text}</p>
       </HoverCard>
     </LineTileWrapper>
   )

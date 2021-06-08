@@ -35,8 +35,7 @@ const Scansion = props => {
 
   const submitLineNum = e => {
     e.preventDefault();
-    console.log(`e.target.attributes`, e.target.dataset);
-    setLineNum(e.target.attributes.lineNum);
+    setLineNum(e.target.id);
     history.push("/meter/line");
   }
 
