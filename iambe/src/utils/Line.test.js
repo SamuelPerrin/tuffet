@@ -118,18 +118,20 @@ test('equalizeVowels counts correctly', () => {
 })
 
 test('getLinesVowels identifies pronounced vowels', () => {
-  const line = new Line("A beautiful mouse is a fateful and meagre phone").getLinesVowels();
+  const line = new Line("A beautiful mouse is a fateful, antique, meagre phone").getLinesVowels();
   expect(line[0].word).toBe('A');
   expect(line[1].word).toBe('beautiful');
   expect(line[2].posList).toStrictEqual([1]);
   expect(line[5].posList).toStrictEqual([1,5]);
-  expect(line[6].posList).toStrictEqual([0]);
+  expect(line[6].posList).toStrictEqual([0,3]);
   expect(line[7].posList).toStrictEqual([1,5]);
 })
 
 test('getMarkString identifies stresses in a sample line', () => {
-  const sonnet30 = new Line("When to the sessions of sweet silent thought");
-  expect(sonnet30.getMarkString()).toBe('  /   ×   ×  /  ×    /    ×    / ×     /     ');
+  const sonnet30 = new Line("And moan th' expense of many a vanish'd sight;");
+  expect(sonnet30.getMarkString()).toBe('×    /       ×  /    ×   /   ×  / ×      /     ');
+  expect(sonnet30.getMeter().feet).toStrictEqual([[2, 2], [4, 1], [3, 2], [4, 1], [4, 2]]);
+  expect(sonnet30.getMeter().foots).toStrictEqual(['U','I','I','I','I']);
 })
 
 test('getMarkString identifies stresses in this line', () => {

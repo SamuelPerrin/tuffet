@@ -66,6 +66,8 @@ class Line {
           if (feet[f][0] >= feet[f][1]) demerit++;
           if (feet[f][0] === 4) demerit++;
           if (feet[f][1] === 1) demerit++;
+        } else if (foots[f] === 'U') {
+          if (feet[f][0] === 1 && feet[f][1] === 1) demerit += 2;
         }
       }
 
@@ -171,6 +173,8 @@ class Line {
       if (equiv(foots.slice(-2), ['A','I']) && feet.slice(-2,-1)[0][0] <= feet.slice(-2,-1)[0][1]) {
         changeFeet(['A','I'],['T','T','str']);
         dumpsters();
+      } else if (equiv(foots.slice(-4), ['I','A','D','I']) && feet.slice(-3,-2)[0][0] > feet.slice(-3,-2)[0][1]) {
+        if (feet.slice(-3,-2)[0][2] > feet.slice(-2,-1)[0][0]) changeFeet(['I','A','D','I'], ['I','I','I','T','I']);
       } else if (equiv(foots.slice(-2), ['D','I']) && feet.slice(-2,-1)[0][2] <= feet.slice(-2,-1)[0][1]) {
         changeFeet(['D','I'], ['T','T','str']);
         dumpsters();
@@ -468,8 +472,6 @@ class Line {
       }
     }
 
-    // console.log("in getMeter with crux:", crux);
-
     // Handle special cases
     let raw;
     if (!crux) {
@@ -565,13 +567,18 @@ class Line {
      * 
      * Called by: Line.getLinesVowels()
      */
-
+    
+    if (wrd === 'given') console.log("in equalizeVowels with wrd",wrd,"sylCount",sylCount,"vowCount",vowCount,"stressList",stressList)
     const triphs = ['eye', 'eau', 'owe'];
-
     let word = wrd.replace("'","").toLowerCase();
     let diphCount = 0;
     let silentEs = 0;
     let toRemove = [];
+
+    // check for a few problematic words with hard-coded solutions
+    if (word === 'bounteous' && stressList.length === 2) return {sylCount:2, vowCount:2, diphCount:0, toRemove:[2,5,7]};
+    else if (word === 'beauteous' && stressList.length === 2) return {sylCount:2, vowCount:2, diphCount:0, toRemove:[2,3,5,7]};
+    else if (word === 'antique') return {sylCount:2, vowCount:2, diphCount:0, toRemove:[5,6]};
 
     if (word.includes('qu')) {
       diphCount++;
@@ -709,10 +716,20 @@ class Line {
       let elided = false;
       if (stressList.every((v,i) => v === [1,4][i])) { // stressList is [1,4] like power => pow'r, so elide the second vowel
         elided = 2;
-      } else if (stressList.every((v,i) => v === [4,1,4][i])) { // stressList is [4,1,4]
+      } else if (stressList.every((v,i) => v === [4,1,4][i]) && stressList.length === 3) { // stressList is [4,1,4]
         elided = 3;
-      } else if (stressList.every((v,i) => v === [2,1,4][i])) elided = 3;
-        else if (stressList.every((v,i) => v === [1,4,2][i])) elided = 2;
+      } else if (stressList.every((v,i) => v === [2,1,4][i]) && stressList.length === 3) elided = 3;
+        else if (stressList.every((v,i) => v === [1,4,2][i]) && stressList.length === 3) elided = 2;
+        else if (stressList.length === 1 && stressList[0] === 2 && word[word.length - 1] === 'y') { // for monosyllabic many
+          toRemove.push(word.length - 1);
+          word = word.slice(0,-1);
+          vowCount--;
+        } else if (stressList.length === 1 && stressList[0] === 2 && word.slice(-2,-1)[0] === 'e') {
+          console.log("I'm doing something risky and cutting an e out of",word)
+          toRemove.push(word.length - 2)
+          word = word.slice(0,-2) + word.slice(-1);
+          vowCount--;
+        }
       
       if (elided) {
         let vows = 0;
@@ -728,6 +745,8 @@ class Line {
         toRemove.push(pos);
       }
     }
+
+    // if (wrd === 'given') console.log("leaving equalizeVowels with given: ", "sylCount",sylCount,"diphCount",diphCount,"silentEs",silentEs,"toRemove",toRemove)
 
     return {sylCount, vowCount, diphCount, silentEs, toRemove};
   }
@@ -789,7 +808,6 @@ class Line {
       // make posList, an array of the position of every vowel in the word except those in toRemove
       let posList = word.text.split('').map((char,ind) => {
         if (char.toLowerCase() in phonstants.LONG_VOWELS && !(word.toRemove.includes(ind))) {
-          // console.log(`I want to add ${ind} to posList for ${word.text}`);
           if (!(ind === 0 && char === 'y')) { // XOR
             return ind;
           }
@@ -801,7 +819,6 @@ class Line {
         posList = posList.slice(0,-1);
         word.silentEs--;
       }
-
 
       // remove the second vowel of co-syllabic digraphs from posList
       while (word.diphCount > 0) {
@@ -926,7 +943,8 @@ class Line {
         }
         lastPos = pos + 1;
       })
-      markList.push(nbsp.repeat(word.word.length - word.posList.slice(-1)[0]));
+      if (word.posList.length === 0) markList.push(nbsp.repeat(word.word.length + 1));
+      else markList.push(nbsp.repeat(word.word.length - word.posList.slice(-1)[0]));
     })
     let finalMarkList = markList.join('').split('');
 
