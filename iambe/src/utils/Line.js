@@ -167,6 +167,7 @@ class Line {
       else if (equiv(foots.slice(-6), ['D','T','T','T','T','str'])) changeFeet(['D','T','T','T','T','str'], ['T','I','I','I','I','I']);
       else if (equiv(foots.slice(-4), ['A','T','T','str'])) changeFeet(['A','T','T','str'], ['U','I','I','I']);
       else if (equiv(foots.slice(-6), ['A','T','T','T','T','str'])) changeFeet(['A','T','T','T','T','str'], ['I','I','I','I','I','I']);
+      else if (equiv(foots.slice(-5), ['D','U','T','T','str'])) changeFeet(['D','U','T','T','str'], ['T','I','I','I','I']);
     }
     
     if (foots.slice(-1)[0] === 'I') { // weird lines ending in 'I'
@@ -224,6 +225,7 @@ class Line {
       else if (equiv(foots.slice(-6), ['D','T','T','T','T','str'])) changeFeet(['D','T','T','T','T','str'], ['T','I','I','I','I','I']);
       else if (equiv(foots.slice(-4), ['D','U','T','str'])) changeFeet(['D','U','T','str'], ['T','I','I','I']);
       else if (equiv(foots.slice(-5), ['D','T','U','T','str'])) changeFeet(['D','T','U','T','str'], ['T','I','I','I','I']);
+      else if (equiv(foots.slice(-5), ['D','U','T','T','str'])) changeFeet(['D','U','T','T','str'], ['T','I','I','I','I']);
       else if (equiv(foots.slice(-5), ['D','U','U','T','str'])) changeFeet(['D','U','U','T','str'], ['T','I','I','I','I']);
       else if (equiv(foots.slice(-4), ['I','A','U','str'])) changeFeet(['I','A','U','str'], ['I','I','T','I']);
       else if (equiv(foots.slice(-5), ['I','A','U','U','str'])) changeFeet(['I','A','U','U','str'], ['I','I','U','U','I'])
@@ -551,6 +553,8 @@ class Line {
         foots[f] = 'P';
       }
     }
+
+    if (this.text.includes("spirit")) console.log(foots,feet);
 
     return {feet, foots, label};
   }

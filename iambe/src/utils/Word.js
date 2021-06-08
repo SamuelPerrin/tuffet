@@ -127,12 +127,6 @@ class Word {
       return null;
     }
 
-    // check if the word is already in lexicon with a different spelling
-    // if (this.word.slice(-2) === "'d" && this.word.slice(0,-2) + 'e' + this.word.slice(-1) in lexicon) return lexicon[this.word.slice(0,-2) + 'e' + this.word.slice(-1)];
-    // else if (this.word.slice(-2) === "’d" && this.word.slice(0,-2) + 'e' + this.word.slice(-1) in lexicon) return lexicon[this.word.slice(0,2) + 'e' + this.word.slice(-1)];
-    // else if (this.word.slice(-2) === "’s" && this.word.slice(0,-2) + this.word.slice(-1) in lexicon) return lexicon[this.word.slice(0,2) + this.word.slice(-1)];
-    // else if (this.word.slice(-2) === "'s" && this.word.slice(0,-2) + this.word.slice(-1) in lexicon) return lexicon[this.word.slice(0,2) + this.word.slice(-1)];
-
     // check if root + -s, -'s, -es, -ed, or -'d can be pronounced
     pron = checkLastPhon(this.word, "ed", [[phonstants.MAKES_PAST_WITH_T, ' T'], [phonstants.MAKES_PAST_WITH_ID, ' IH0 D']], ' D', 1);
     if (pron !== null) return pron;
@@ -154,6 +148,10 @@ class Word {
               else {
                 pron = checkLastPhon(this.word, "'d", [[phonstants.MAKES_PAST_WITH_T, ' T'], [phonstants.MAKES_PAST_WITH_ID, ' IH0 D']], ' D', 0, 'e');
                 if (pron !== null) return pron;
+                else {
+                  pron = checkLastPhon(this.word, "’d", [[phonstants.MAKES_PAST_WITH_T, ' T'], [phonstants.MAKES_PAST_WITH_ID, ' IH0 D']], ' D', 0, 'e');
+                  if (pron !== null) return pron;
+                }
               }
             }
           }
@@ -223,11 +221,15 @@ class Word {
                 pron = checkEnding(this.word, 'est', ' IH0 S T');
                 if (pron !== null) return pron
                 else {
-                  pron = checkEnding(this.word, 'st', ' S T');
+                  pron = checkEnding(this.word, "'st", ' S T');
                   if (pron !== null) return pron;
                   else {
-                    pron = checkEnding(this.word, "'st", ' S T');
+                    pron = checkEnding(this.word, "’st", ' S T');
                     if (pron !== null) return pron;
+                    else {
+                      pron = checkEnding(this.word, 'st', ' S T');
+                      if (pron !== null) return pron;
+                    }
                   }
                 }
               } 
@@ -248,6 +250,12 @@ class Word {
     // check if un + root can be pronounced
     pron = checkPrefix(this.word, 'un', 'AH2 N');
     if (pron !== null) return pron
+
+    // try switching apostrophes if necessary
+    if (this.word.includes("’")) {
+      this.word = this.word.replace("’","'");
+      return this.getPron();
+    }
 
     return pron
   }
