@@ -217,6 +217,7 @@ class Line {
         if (equiv(foots.slice(-4), ['D','T','I','I'])) changeFeet(['D','T','I','I'], ['T','I','A','I']);
       }
       else if (equiv(foots.slice(-4), ['A','T','T','str'])) changeFeet(['A','T','T','str'], ['I','I','I','I']);
+      else if (equiv(foots.slice(-5), ['T','U','A','T','str'])) changeFeet(['T','U','A','T','str'], ['T','U','U','U','I']);
       else if (equiv(foots.slice(-4), ['D','T','T','str'])) changeFeet(['D','T','T','str'], ['T','I','I','I']);
       else if (equiv(foots.slice(-4), ['D','U','T','T','str'])) changeFeet(['D','U','T','T','str'], ['T','I','I','I','I']);
       else if (equiv(foots.slice(-5), ['A','T','T','T','str'])) changeFeet(['A','T','T','T','str'], ['I','I','I','I','I']);
@@ -554,7 +555,7 @@ class Line {
       }
     }
 
-    if (this.text.includes("spirit")) console.log(foots,feet);
+    // if (this.text.includes("")) console.log(foots, feet)
 
     return {feet, foots, label};
   }
@@ -585,6 +586,10 @@ class Line {
     else if (word === 'beauteous' && stressList.length === 2) return {sylCount:2, vowCount:2, diphCount:0, toRemove:[2,3,5,7]};
     else if (word === 'antique') return {sylCount:2, vowCount:2, diphCount:0, toRemove:[5,6]};
     else if (word === 'away') return {sylCount:2, vowCount:2, diphCount:1, toRemove:[]};
+    else if (word.includes('prayer') && stressList.length === 1) return {sylCount:1, vowCount:1, diphCount:0, toRemove:[3,4]};
+    else if (word.includes('ower') && stressList.length === 1) return {sylCount:1, vowCount:1, diphCount:0, toRemove:[word.indexOf('er')]};
+
+    if (word[0].toLowerCase() === 'y') toRemove.push(0);
 
     if (word.includes('qu')) {
       diphCount++;
@@ -732,7 +737,12 @@ class Line {
           vowCount--;
         } else if (stressList.length === 1 && stressList[0] === 2 && word.slice(-2,-1)[0] === 'e') {
           console.log("I'm doing something risky and cutting an e out of",word)
-          toRemove.push(word.length - 2)
+          toRemove.push(word.length - 2);
+          word = word.slice(0,-2) + word.slice(-1);
+          vowCount--;
+        } else if (stressList.length === 1 && stressList[0] === 2 && word.slice(-2,-1)[0] in phonstants.SHORT_VOWELS) {
+          console.log("I'm doing something risky and cutting an",word.slice(-2,-1)[0],"out of",word)
+          toRemove.push(word.length - 2);
           word = word.slice(0,-2) + word.slice(-1);
           vowCount--;
         }
@@ -752,7 +762,7 @@ class Line {
       }
     }
 
-    // console.log("leaving equalizeVowels with",word,"sylCount",sylCount,"diphCount",diphCount,"silentEs",silentEs,"toRemove",toRemove)
+    // if (this.text.includes("spirit")) console.log("leaving equalizeVowels with",word,"sylCount",sylCount,"diphCount",diphCount,"silentEs",silentEs,"toRemove",toRemove)
 
     return {sylCount, vowCount, diphCount, silentEs, toRemove};
   }

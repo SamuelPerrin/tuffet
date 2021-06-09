@@ -34,6 +34,11 @@ test('getPron pronounces "object" two ways', () => {
   expect(new Word("object").getPron()).toStrictEqual(['AA1 B JH EH0 K T', 'AH0 B JH EH1 K T']);
 })
 
+test('getPron pronounces "live" two ways', () => {
+  expect(new Word("live").getPron()).toStrictEqual(['L IH1 V', 'L AY1 V']);
+  expect(new Word("sourest").getPron()).toBe("S AW1 R IH0 S T");
+})
+
 test('checkHardPron adds an S', () => {
   expect(new Word("views").checkHardPron()).toEqual("V Y UW1 Z");
   expect(new Word("traps").checkHardPron()).toEqual("T R AE1 P S");

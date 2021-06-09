@@ -129,28 +129,36 @@ class Word {
 
     // check if root + -s, -'s, -es, -ed, or -'d can be pronounced
     pron = checkLastPhon(this.word, "ed", [[phonstants.MAKES_PAST_WITH_T, ' T'], [phonstants.MAKES_PAST_WITH_ID, ' IH0 D']], ' D', 1);
-    if (pron !== null) return pron;
+    if (pron) return pron;
     else {
       pron = checkLastPhon(this.word, "s", [[phonstants.MAKES_PLURAL_WITH_S, ' S'], [phonstants.MAKES_PLURAL_WITH_IZ, ' IH0 Z']], ' Z');
-      if (pron !== null) return pron;
+      if (pron) return pron;
       else {
         pron = checkLastPhon(this.word, "'s", [[phonstants.MAKES_PLURAL_WITH_S, ' S'], [phonstants.MAKES_PLURAL_WITH_IZ, ' IH0 Z']], ' Z');
-        if (pron !== null) return pron;
+        if (pron) return pron;
         else {
           pron = checkLastPhon(this.word, "’s", [[phonstants.MAKES_PLURAL_WITH_S, ' S'], [phonstants.MAKES_PLURAL_WITH_IZ, ' IH0 Z']], ' Z');
-          if (pron !== null) return pron;
+          if (pron) return pron;
           else {
             pron = checkLastPhon(this.word, "es", [[[]]], ' IH0 Z');
-            if (pron !== null) return pron;
+            if (pron) return pron;
             else {
               pron = checkLastPhon(this.word, "ed", [[phonstants.MAKES_PAST_WITH_T, ' T'], [phonstants.MAKES_PAST_WITH_ID, ' IH0 D']], ' D');
-              if (pron !== null) return pron;
+              if (pron) return pron;
               else {
                 pron = checkLastPhon(this.word, "'d", [[phonstants.MAKES_PAST_WITH_T, ' T'], [phonstants.MAKES_PAST_WITH_ID, ' IH0 D']], ' D', 0, 'e');
-                if (pron !== null) return pron;
+                if (pron) return pron;
                 else {
                   pron = checkLastPhon(this.word, "’d", [[phonstants.MAKES_PAST_WITH_T, ' T'], [phonstants.MAKES_PAST_WITH_ID, ' IH0 D']], ' D', 0, 'e');
-                  if (pron !== null) return pron;
+                  if (pron) return pron;
+                  else {
+                    pron = checkLastPhon(this.word, "’d", [[phonstants.MAKES_PAST_WITH_T, ' T'], [phonstants.MAKES_PAST_WITH_ID, ' IH0 D']], ' D', 0);
+                    if (pron) return pron;
+                    else {
+                      pron = checkLastPhon(this.word, "'d", [[phonstants.MAKES_PAST_WITH_T, ' T'], [phonstants.MAKES_PAST_WITH_ID, ' IH0 D']], ' D', 0);
+                      if (pron) return pron;
+                    }
+                  }
                 }
               }
             }
