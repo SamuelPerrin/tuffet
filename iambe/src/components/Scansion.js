@@ -15,7 +15,7 @@ import Stanza from '../utils/Stanza';
 import Line from '../utils/Line';
 
 const Scansion = props => {
-  const {poems, stanzaNum, stanzaMeters, getMeterTypeDetails, setLineNum} = props;
+  const {poems, stanzaNum, getMeterTypeDetails, setLineNum} = props;
   const history = useHistory();
 
   const stanzaList = [];

@@ -14,7 +14,7 @@ import Poem from '../utils/Poem';
 import Stanza from '../utils/Stanza';
 
 const Meter = props => {
-  const {poetry, poems, stanzaMeters, stanzaMeterCounts, getLineMeterDetails} = props;
+  const { poems, stanzaMeterCounts, getLineMeterDetails} = props;
   const history = useHistory();
 
   const submitLineMeterDetail = e => {
@@ -28,8 +28,8 @@ const Meter = props => {
   return (
     <div>
       <Breadcrumbs>
-        <Link to='/'>Home</Link>
-        <Link to='/meter' className='current'>Meter</Link>
+        <Link to='/' key='Home'>Home</Link>
+        <Link to='/meter' key='Meter' className='current'>Meter</Link>
       </Breadcrumbs>
       <Container>
         <Section>

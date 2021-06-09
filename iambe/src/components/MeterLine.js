@@ -5,7 +5,7 @@ import {Link} from 'react-router-dom';
 import Breadcrumbs from './styled/Breadcrumbs';
 import Container from './styled/Container';
 import Section from './styled/Section';
-import {YellowSpan, RedSpan} from './styled/Spans';
+import {YellowSpan} from './styled/Spans';
 import ScannedLine from './styled/ScannedLine';
 
 import Poem from '../utils/Poem';
@@ -13,7 +13,7 @@ import Stanza from '../utils/Stanza';
 import Line from '../utils/Line';
 
 const MeterLine = props => {
-  const {poems, stanzaMeters, stanzaNum, lineNum} = props;
+  const {poems, stanzaNum, lineNum} = props;
 
   const stanzaList = [];
   poems.forEach(poem => new Poem(poem).getStanzas().forEach(stanza => stanzaList.push(stanza)));
