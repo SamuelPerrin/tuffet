@@ -4,9 +4,12 @@ import {useHistory} from 'react-router-dom';
 
 import Section from './styled/Section';
 import {YellowSpan, RedSpan, BlueSpan} from './styled/Spans';
+import ButtonRow from './styled/ButtonRow';
 import TextArea from './styled/TextArea';
 import Button from './styled/Button';
 import {getRhymes, getMeter} from '../actions';
+
+import * as samples from '../constants/samples';
 
 const initialValue = ""
 
@@ -16,7 +19,6 @@ const Home = props => {
 
   const handleChange = e => {
     setPoem(e.target.value);
-    console.log(`poem's text is now: ${poem}`)
   }
 
   const submitRhymes = e => {
@@ -31,10 +33,15 @@ const Home = props => {
     history.push('/meter');
   }
 
+  const submitSample = sample => {
+    props.getRhymes(sample);
+    history.push('/rhyme');
+  };
+
   return (
     <div>
-      <Section>
-        <h3>Poetry is easier than ever with Iambe!</h3>
+      <Section style={{marginTop:'3rem'}}>
+        <h3>Poetry is easier than ever with Tuffet!</h3>
         <ul>
           <li>Visualize <RedSpan>rhyme schemes</RedSpan>!</li>
           <li>Detect over a dozen kinds of <YellowSpan>slant rhyme</YellowSpan>!</li>
@@ -43,12 +50,18 @@ const Home = props => {
       </Section>
       <Section>
         <h3>Try it!</h3>
-        <form>
+        <ButtonRow>
+          <Button onClick={() => submitSample(samples.STITCH)}>A stitch in time</Button>
+          <Button onClick={() => submitSample(samples.GRACE)}>Amazing grace</Button>
+          <Button onClick={() => submitSample(samples.SONNET116)}>Sonnet 116</Button>
+        </ButtonRow>
+        <form style={{width:'100%', display:'flex', flexFlow:'column nowrap', alignItems:'center', justifyContent:'center'}}>
+          <h3>Enter a poem:</h3>
           <TextArea value={poem} onChange={handleChange} placeholder="Enter a poem..." />
-          <div>
+          <ButtonRow>
             <Button onClick={submitRhymes}>Get Rhymes</Button>
             <Button onClick={submitMeter}>Get Meter</Button>
-          </div>
+          </ButtonRow>
         </form>  
       </Section>
     </div>

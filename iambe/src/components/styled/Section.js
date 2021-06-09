@@ -4,19 +4,23 @@ const Section = styled.section`
   display:flex;
   flex-flow: column nowrap;
   justify-content: space-evenly;
-  align-items: flex-start;
+  align-items: center;
   width: 100%;
+  margin-bottom: ${props => props.theme.space};
   h3 {
-    font-size: 1.5rem;
+    font-size: ${props => props.theme.headerFontSize};
+    text-align: left;
   }
   p {
-    font-size: 1rem;
+    font-size: ${props => props.theme.fontSize};
   }
   li {
-    font-size: 1rem;
+    font-size: ${props => props.theme.fontSize};
   }
-  a {
-    font-size: .85rem;
+  .paragraph p {
+    max-width: 30rem;
+    margin: 1rem 0.3rem;
+    text-align:justify;
   }
 `
 
