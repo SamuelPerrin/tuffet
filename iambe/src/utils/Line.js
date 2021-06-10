@@ -239,10 +239,12 @@ class Line {
     }
       // weird lines ending in A, D, U
       else if (equiv(foots.slice(-4), ['I','I','A','A'])) changeFeet(['I','I','A','A'], ['I','I','I','T','I']);
+      else if (equiv(foots.slice(-4), ['D','T','U','A'])) changeFeet(['D','T','U','A'], ['T','I','I','U','I']);
       else if (equiv(foots.slice(-2), ['T','D']) && feet.slice(-1)[0][2] < feet.slice(-1)[0][1]) {
         changeFeet(['T','D'], ['T','T','str']);
         dumpsters()
       }
+      else if (equiv(foots.slice(-3), ['I','D','D'])) changeFeet(['I','D','D'], ['I','T','I','U']);
       else if (equiv(foots.slice(-4), ['U','D','T','U'])) changeFeet(['U','D','T','U'], ['A','A','A']);
       else if (equiv(foots.slice(-4), ['U','D','D','U'])) changeFeet(['U','D','D','U'], ['U','T','I','I','U']);
       else if (equiv(foots.slice(-4), ['I','A','D','U'])) changeFeet(['I','A','D','U'], ['I','I','I','I','U']);
@@ -584,8 +586,10 @@ class Line {
     // check for a few problematic words with hard-coded solutions
     if (word === 'bounteous' && stressList.length === 2) return {sylCount:2, vowCount:2, diphCount:0, toRemove:[2,5,7]};
     else if (word === 'beauteous' && stressList.length === 2) return {sylCount:2, vowCount:2, diphCount:0, toRemove:[2,3,5,7]};
+    else if (word === 'aisle' && stressList.length === 1) return {sylCount:1, vowCount:1, diphCount:0, toRemove:[1,4]};
     else if (word === 'antique') return {sylCount:2, vowCount:2, diphCount:0, toRemove:[5,6]};
     else if (word === 'away') return {sylCount:2, vowCount:2, diphCount:1, toRemove:[]};
+    else if (word === 'tongue') return {sylCount:1, vowCount:1, diphCount:0, toRemove:[4,5]};
     else if (word.includes('prayer') && stressList.length === 1) return {sylCount:1, vowCount:1, diphCount:0, toRemove:[3,4]};
     else if (word.includes('ower') && stressList.length === 1) return {sylCount:1, vowCount:1, diphCount:0, toRemove:[word.indexOf('er')]};
 
@@ -759,6 +763,16 @@ class Line {
 
         pos--;
         toRemove.push(pos);
+      }
+    }
+
+    // check for interior silentE
+    if (vowCount > sylCount) {
+      const re = /[aeiou][bcdfghjklmnprstvwxyz]e/;
+      const spot = wrd.search(re);
+      if (spot > -1 && !(toRemove.includes(spot + 2))) {
+        vowCount--;
+        toRemove.push(spot + 2);
       }
     }
 

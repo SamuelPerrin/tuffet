@@ -93,7 +93,7 @@ test('getMeter identifies long iambic lines', () => {
 })
 
 test('getMeter identifies this line', () => {
-  const line = new Line("What’s in the brain, that ink may character,").getMeter();
+  const line = new Line("Mutt'ring his wayward fancies he would rove,").getMeter();
   // expect(line.feet).toStrictEqual([[2,3], [2, 2], [3, 1], 4]);
   // expect(line.foots).toStrictEqual(['T','U','I','unstr']);
   // expect(line.label.catalexis).toBe(true);
