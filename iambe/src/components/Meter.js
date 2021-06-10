@@ -1,6 +1,8 @@
 import React, {useEffect} from 'react';
 import {connect} from 'react-redux';
 
+import { Pie } from 'react-chartjs-2';
+
 import Breadcrumbs from './styled/Breadcrumbs';
 import Container from './styled/Container';
 import Section from './styled/Section';
@@ -12,6 +14,7 @@ import {Link, useHistory} from 'react-router-dom';
 
 import {getLineMeterDetails, getRhymes, getStanzaMeterDetails } from '../actions';
 
+import { COLOR_SEQUENCE } from '../constants/colors';
 import Poem from '../utils/Poem';
 import Stanza from '../utils/Stanza';
 
@@ -37,6 +40,29 @@ const Meter = props => {
     history.push("/rhyme");
   }
 
+  const counts = Object.entries(stanzaMeterCounts).filter(x => x[1] > 0).sort((a,b) => b[1] - a[1]);
+  
+  const pieData = {
+    labels: counts.map(x => x[0]),
+    datasets: [{
+      label: "Meter by Stanza",
+      data: counts.map(x => x[1]),
+      backgroundColor: COLOR_SEQUENCE,
+      borderWidth: 1,
+    }]
+  };
+
+  const pieOptions = {
+    plugins: {
+      legend: {
+        display: false,
+        labels: {
+          display: false
+        }
+      }
+    }
+  };
+
   let stanzaNum = -1;
 
   useEffect(() => {
@@ -53,10 +79,35 @@ const Meter = props => {
       <Container>
         <Section>
           <h3><YellowSpan>Stanzas by Meter</YellowSpan></h3>
-          {Object.entries(stanzaMeterCounts).reduce((a,b) => a+b[1], 0) > 1 ? <p>The most common meters in this sample are:</p> : <p>This stanza's meter is:</p>}
-          <ol>
-            {stanzaMeterCounts && Object.entries(stanzaMeterCounts).filter(entry => entry[1] > 0).sort((a,b) => b[1] - a[1]).map(entry => <ListItemTile key={entry[0]} onClick={submitStanzaMeterDetail} rt={entry[0]}>{entry[0]} ({entry[1]} stanza{entry[1] > 1 ? 's' : ''})</ListItemTile>)}
-          </ol>
+          <div style={{
+            display:'flex',
+            flexFlow:'row wrap',
+            justifyContent: 'center',
+          }}>
+            <Pie
+              data={pieData}
+              style={{maxWidth:200,maxHeight:200}}
+              options={pieOptions}
+            />
+            <div>
+              {Object.entries(stanzaMeterCounts)
+                .reduce((a,b) => a+b[1], 0) > 1 ?
+                <p>The most common meters in this sample are:</p> :
+                <p>This stanza's meter is:</p>}
+              <ol>
+                {stanzaMeterCounts && counts.map((entry,i) => (
+                  <ListItemTile
+                    key={entry[0]}
+                    onClick={submitStanzaMeterDetail}
+                    rt={entry[0]}
+                    style={{backgroundColor: COLOR_SEQUENCE[i % COLOR_SEQUENCE.length]}}
+                  >
+                    {entry[0]} ({entry[1]} stanza{entry[1] > 1 ? 's' : ''})
+                  </ListItemTile>
+                ))}
+              </ol>
+            </div>
+          </div>
           <Link to="/meter/scansion"><YellowSpan>Read more »</YellowSpan></Link>
           <div>
             {poems.map(poem => new Poem(poem).getStanzas().map(stanza => {
