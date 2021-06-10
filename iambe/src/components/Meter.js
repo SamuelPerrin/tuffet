@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {connect} from 'react-redux';
 
 import Breadcrumbs from './styled/Breadcrumbs';
@@ -24,6 +24,11 @@ const Meter = props => {
   }
 
   let stanzaNum = -1;
+
+  useEffect(() => {
+    window.scrollTo(0,0);
+  }, []);
+
 
   return (
     <div>

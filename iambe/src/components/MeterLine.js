@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {connect} from 'react-redux';
 import {Link} from 'react-router-dom';
 
@@ -20,6 +20,10 @@ const MeterLine = props => {
   const stanza = new Stanza(stanzaList[stanzaNum]);
   const line = stanza.getLines()[lineNum];
   const marks = new Line(line).getMarkString();
+
+  useEffect(() => {
+    window.scrollTo(0,0);
+  }, []);
 
   return (
     <div>

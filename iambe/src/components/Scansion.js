@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {connect} from 'react-redux';
 import {Link, useHistory} from 'react-router-dom';
 
@@ -38,6 +38,11 @@ const Scansion = props => {
     setLineNum(e.target.id);
     history.push("/meter/line");
   }
+
+  useEffect(() => {
+    window.scrollTo(0,0);
+  }, []);
+
 
   return (
     <div>
