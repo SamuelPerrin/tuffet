@@ -360,6 +360,88 @@ export const METER_NAMES = {
   7: 'heptameter',
   8: 'octameter',
 };
+export const LINE_METER_DESCRIPTIONS = {
+  'iambic trimeter': <div className='paragraph'>
+    <p><strong>Iambic trimeter</strong> consists of three metrical feet with rising rhythm.</p>
+  </div>,
+  'iambic trimeter catalectic': <div className='paragraph'>
+    <p><strong></strong></p>
+  </div>,
+  'iambic tetrameter': <div className='paragraph'>
+    <p><strong>Iambic tetrameter</strong> consists of four metrical feet with rising rhythm.</p>
+  </div>,
+  'iambic tetrameter catalectic': <div className='paragraph'>
+    <p><strong></strong></p>
+  </div>,
+  'iambic pentameter': <div className='paragraph'>
+  <p><strong>Iambic pentameter</strong> consists of five metrical feet with rising rhythm.</p>
+</div>,
+  'iambic pentameter catalectic': <div className='paragraph'>
+    <p><strong></strong></p>
+  </div>,
+  'iambic hexameter': <div className='paragraph'>
+    <p><strong></strong></p>
+  </div>,
+  'iambic hexameter catalectic': <div className='paragraph'>
+    <p><strong></strong></p>
+  </div>,
+  'iambic heptameter': <div className='paragraph'>
+    <p><strong></strong></p>
+  </div>,
+  'iambic heptameter catalectic': <div className='paragraph'>
+    <p><strong></strong></p>
+  </div>,
+};
+export const STANZA_METER_DESCRIPTIONS = {
+  'iambic pentameter': <div className='paragraph'>
+    <p><strong>Iambic pentameter</strong> consists of five metrical feet with rising rhythm. When iambic pentameter is unrhymed, it is called <strong>blank meter</strong>. When it is rhymed in couplets, it is called <strong>heroic couplets</strong>.</p>
+  </div>,
+  'alexandrines': <div className='paragraph'>
+    <p><strong></strong></p>
+  </div>,
+  'fourteeners': <div className='paragraph'>
+    <p><strong></strong></p>
+  </div>,
+  'common hymn': <div className='paragraph'>
+    <p><strong>Common hymn</strong>, sometimes called <strong>common meter</strong>, is a quatrain in which the first and third lines are iambic tetrameter and the second and fourth lines are iambic trimeter.</p>
+  </div>,
+  'long hymn': <div className='paragraph'>
+    <p><strong></strong></p>
+  </div>,
+  'short hymn': <div className='paragraph'>
+    <p><strong></strong></p>
+  </div>,
+  '8s&5s': <div className='paragraph'>
+    <p><strong></strong></p>
+  </div>,
+  '8s&7s': <div className='paragraph'>
+    <p><strong></strong></p>
+  </div>,
+  '6s&5s':<div className='paragraph'>
+    <p><strong></strong></p>
+  </div>,
+  'ballad':<div className='paragraph'>
+    <p><strong></strong></p>
+  </div>,
+  'common hymn, split': <div className='paragraph'>
+    <p><strong></strong></p>
+  </div>,
+  'short hymn, split': <div className='paragraph'>
+    <p><strong></strong></p>
+  </div>,
+  'limerick': <div className='paragraph'>
+    <p><strong></strong></p>
+  </div>,
+  'common particular': <div className='paragraph'>
+    <p><strong></strong></p>
+  </div>,
+  'raven': <div className='paragraph'>
+    <p><strong></strong></p>
+  </div>,
+  'Lady of Shalott': <div className='paragraph'>
+    <p><strong></strong></p>
+  </div>,
+};
 export const NONICTUS = '×';
 export const ICTUS = '/';
 export const UNCERTAIN_ICTUS = '×';

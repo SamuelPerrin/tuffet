@@ -11,6 +11,7 @@ import Table from './styled/Table';
 import Poem from '../utils/Poem';
 import Stanza from '../utils/Stanza';
 import Line from '../utils/Line';
+import { LINE_METER_DESCRIPTIONS } from '../utils/phonstants';
 
 const MeterType = props => {
   const {mt, stanzaNum, poems} = props;
@@ -60,6 +61,7 @@ const MeterType = props => {
         </Section>
         <Section>
           <h3><YellowSpan>What is {mt}?</YellowSpan></h3>
+          {LINE_METER_DESCRIPTIONS[mt]}
         </Section>
       </Container>
     </div>

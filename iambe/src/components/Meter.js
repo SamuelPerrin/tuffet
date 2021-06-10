@@ -5,23 +5,30 @@ import Breadcrumbs from './styled/Breadcrumbs';
 import Container from './styled/Container';
 import Section from './styled/Section';
 import {YellowSpan} from './styled/Spans';
+import ListItemTile from './styled/ListItemTile';
 import StanzaTile from './styled/StanzaTile';
 import Button from './styled/Button';
 import {Link, useHistory} from 'react-router-dom';
 
-import {getLineMeterDetails, getRhymes } from '../actions';
+import {getLineMeterDetails, getRhymes, getStanzaMeterDetails } from '../actions';
 
 import Poem from '../utils/Poem';
 import Stanza from '../utils/Stanza';
 
 const Meter = props => {
-  const { poetry, poems, stanzaMeterCounts, getLineMeterDetails, getRhymes} = props;
+  const { poetry, poems, stanzaMeterCounts, getLineMeterDetails, getRhymes, getStanzaMeterDetails} = props;
   const history = useHistory();
 
   const submitLineMeterDetail = e => {
     e.preventDefault();
     getLineMeterDetails(e.target.attributes.stanzaNum.value);
     history.push("/meter/scansion");
+  }
+
+  const submitStanzaMeterDetail = e => {
+    e.preventDefault();
+    getStanzaMeterDetails(e.target.dataset.rt);
+    history.push("/meter/stanza");
   }
 
   const goToRhymes = e => {
@@ -48,7 +55,7 @@ const Meter = props => {
           <h3><YellowSpan>Stanzas by Meter</YellowSpan></h3>
           {Object.entries(stanzaMeterCounts).reduce((a,b) => a+b[1], 0) > 1 ? <p>The most common meters in this sample are:</p> : <p>This stanza's meter is:</p>}
           <ol>
-            {stanzaMeterCounts && Object.entries(stanzaMeterCounts).filter(entry => entry[1] > 0).sort((a,b) => b[1] - a[1]).map(entry => <li key={entry[0]}>{entry[0]} ({entry[1]} stanza{entry[1] > 1 ? 's' : ''})</li>)}
+            {stanzaMeterCounts && Object.entries(stanzaMeterCounts).filter(entry => entry[1] > 0).sort((a,b) => b[1] - a[1]).map(entry => <ListItemTile key={entry[0]} onClick={submitStanzaMeterDetail} rt={entry[0]}>{entry[0]} ({entry[1]} stanza{entry[1] > 1 ? 's' : ''})</ListItemTile>)}
           </ol>
           <Link to="/meter/scansion"><YellowSpan>Read more »</YellowSpan></Link>
           <div>
@@ -79,4 +86,4 @@ const mapStateToProps = state => ({
   stanzaMeterCounts: state.stanzaMeterCounts,
 })
 
-export default connect(mapStateToProps, { getLineMeterDetails, getRhymes })(Meter)
+export default connect(mapStateToProps, { getLineMeterDetails, getRhymes, getStanzaMeterDetails })(Meter)
