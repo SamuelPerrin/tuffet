@@ -2480,6 +2480,7 @@ const lexicon = {
 	"drowsiest": ["D R AW1 S IY1 S T"],
 	"drowsiness": ["D R AW1 Z IY0 N AH3 S"],
 	"drowsing": ["D R AW1 Z IH0 NG"],
+	"drowsy": ["D R AW1 Z IY0"],
 	"druid": ["D R UW1 IH0 D"],
 	"drum": ["D R AH1 M"],
 	"drunk": ["D R AH1 NG K"],
