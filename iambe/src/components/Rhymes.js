@@ -34,7 +34,9 @@ const Rhymes = props => {
 
   const submitRhymeType = e => {
     e.preventDefault();
-    getRhymeTypeDetails(e.target.dataset.rt);
+    if ('rt' in e.target.dataset) getRhymeTypeDetails(e.target.dataset.rt);
+    else if ('rt' in e.target.attributes) getRhymeTypeDetails(e.target.attributes.rt.value);
+    else console.log("couldn't find rt in e",e);
     history.push("/rhyme/type");
   }
 
@@ -93,6 +95,7 @@ const Rhymes = props => {
       <Container>
       <Section>
           <h3><YellowSpan>Rhymes by Type</YellowSpan></h3>
+          <p>The most common rhyme-types in this sample are:</p>
           <div style={{
             display:'flex',
             flexFlow:'row wrap',
@@ -101,23 +104,20 @@ const Rhymes = props => {
             <Pie 
               data={pieData}
               options={pieOptions}
-              style={{maxWidth:200,maxHeight:200}}
+              style={{maxWidth:200,maxHeight:200,marginTop:'2rem'}}
             />
-            <div>
-              <p>The most common rhyme-types in this sample are:</p>
-              <ol>
-                  {rhymeTypeCounts && typeCounts.map((entry,i) =>
-                    <ListItemTile
-                      key={entry[0]}
-                      onClick={submitRhymeType}
-                      rt={entry[0]}
-                      style={{backgroundColor: COLOR_SEQUENCE[i % COLOR_SEQUENCE.length]}}
-                    >
+            <ul>
+                {rhymeTypeCounts && typeCounts.map((entry,i) =>
+                  <ListItemTile
+                    key={entry[0]}
+                    onClick={submitRhymeType}
+                    rt={entry[0]}
+                    bulletColor={COLOR_SEQUENCE[i % COLOR_SEQUENCE.length]}
+                  >
                       {RHYME_TYPES[entry[0]]} ({entry[1]} rhyme{entry[1] > 0 ? 's' : ''})
-                    </ListItemTile>
-                  )}
-              </ol>
-            </div>
+                  </ListItemTile>
+                )}
+            </ul>
           </div>
           <Link to="/rhyme/type"><YellowSpan>Read more »</YellowSpan></Link>
         </Section>

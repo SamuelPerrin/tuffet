@@ -8,6 +8,7 @@ import Section from './styled/Section';
 import {YellowSpan, RedSpan} from './styled/Spans';
 import ScannedStanza from './styled/ScannedStanza';
 import ListItemTile from './styled/ListItemTile';
+import { BLACK } from '../constants/colors';
 import {getMeterTypeDetails, setLineNum} from '../actions';
 
 import Poem from '../utils/Poem';
@@ -61,9 +62,19 @@ const Scansion = props => {
         <Section>
           <h3><YellowSpan>Lines by Meter</YellowSpan></h3>
           <p>The most common lines in this stanza are:</p>
-            <ol>
-              {lineCounts && Object.entries(lineCounts).sort((a,b) => b[1] - a[1]).map(entry => <ListItemTile key={entry[0]} onClick={submitMeterType} rt={entry[0]}>{entry[0]} ({entry[1]} line{entry[1] === 1 ? '' : 's'})</ListItemTile>)}
-            </ol>
+          <ul>
+            {lineCounts && Object.entries(lineCounts)
+              .sort((a,b) => b[1] - a[1])
+              .map(entry => (
+                <ListItemTile
+                  key={entry[0]}
+                  onClick={submitMeterType}
+                  rt={entry[0]}
+                  bulletColor={BLACK}
+                >
+                  {entry[0]} ({entry[1]} line{entry[1] === 1 ? '' : 's'})
+                </ListItemTile>))}
+          </ul>
         </Section>
       </Container>
     </div>
