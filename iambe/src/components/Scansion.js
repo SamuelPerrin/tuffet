@@ -9,14 +9,14 @@ import {YellowSpan, RedSpan} from './styled/Spans';
 import ScannedStanza from './styled/ScannedStanza';
 import ListItemTile from './styled/ListItemTile';
 import { BLACK } from '../constants/colors';
-import {getMeter, getMeterTypeDetails, getStanzaMeterDetails, setLineNum} from '../actions';
+import {getMeterTypeDetails, getStanzaMeterDetails, setLineNum} from '../actions';
 
 import Poem from '../utils/Poem';
 import Stanza from '../utils/Stanza';
 import Line from '../utils/Line';
 
 const Scansion = props => {
-  const {poems, stanzaNum, getMeterTypeDetails, setLineNum} = props;
+  const {poems, stanzaNum, getMeterTypeDetails, getStanzaMeterDetails, setLineNum} = props;
   const history = useHistory();
 
   const stanzaList = [];
@@ -34,6 +34,15 @@ const Scansion = props => {
     else if ('rt' in e.target.attributes) getMeterTypeDetails(e.target.attributes.rt.value);
     else console.log("couldn't find rt in e",e);
     history.push("/meter/type");
+  }
+
+  const submitStanzaMeterDetail = e => {
+    e.preventDefault();
+    getStanzaMeterDetails(e.target.innerHTML);
+    // if ('rt' in e.target.dataset) getStanzaMeterDetails(e.target.dataset.rt);
+    // else if ('rt' in e.target.attributes) getStanzaMeterDetails(e.target.attributes.rt.value);
+    console.log("couldn't find rt in e",e);
+    history.push("/meter/stanza");
   }
 
   const submitLineNum = e => {
@@ -59,7 +68,13 @@ const Scansion = props => {
           <h3><RedSpan>Scansion</RedSpan></h3>
           <ScannedStanza stanza={stanza} submitLineNum={submitLineNum} />
           <br/>
-          <p>This stanza's meter is: <RedSpan>{stanza.getMeter()}</RedSpan>.</p>
+          <p>This stanza's meter is:&nbsp;
+            <RedSpan
+              onClick={submitStanzaMeterDetail}
+              style={{cursor:'pointer'}}
+            >
+              {stanza.getMeter()}
+            </RedSpan>.</p>
         </Section>
         <Section>
           <h3><YellowSpan>Lines by Meter</YellowSpan></h3>
@@ -92,4 +107,4 @@ const mapStateToProps = state => {
   }
 }
 
-export default connect(mapStateToProps, {getMeterTypeDetails, setLineNum})(Scansion)
+export default connect(mapStateToProps, {getMeterTypeDetails, getStanzaMeterDetails, setLineNum})(Scansion)
