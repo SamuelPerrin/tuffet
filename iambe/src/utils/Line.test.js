@@ -135,9 +135,9 @@ test('getMarkString identifies stresses in a sample line', () => {
 })
 
 test('getMarkString identifies stresses in this line', () => {
-  const sonnet116 = new Line("It is the star to every wand'ring bark,");
-  expect(sonnet116.getMeter().feet.flat()).toStrictEqual([2, 2, 3, 2, 3, 1, 4, 1, 4, 2]);
-  const line = sonnet116.getLinesVowels();
-  expect(line[5].posList).toStrictEqual([0,4]);
-  expect(sonnet116.getMarkString()).toBe('×  /    ×   /   × /   ×  /    ×    /    ');
+  const kipling = new Line(`Our Loved Egyptian night?"`);
+  expect(kipling.getMeter().feet.flat()).toStrictEqual([3, 2, 4, 1, 4, 2]);
+  // const egyptian = kipling.equalizeVowels("Egyptian",3,4,[4,1,4]);
+  // expect(egyptian.toRemove).toStrictEqual([6]);
+  expect(kipling.getMarkString()).toBe('×    /    × /  ×    /     ');
 })

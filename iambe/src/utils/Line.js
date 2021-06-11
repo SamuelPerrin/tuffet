@@ -578,7 +578,7 @@ class Line {
     // console.log("in equalizeVowels with wrd",wrd,"sylCount",sylCount,"vowCount",vowCount,"stressList",stressList)
     const triphs = ['eye', 'eau', 'owe'];
     let word = wrd.replace("'","").toLowerCase();
-    word = wrd.replace("’","");
+    word = word.replace("’","");
     let diphCount = 0;
     let silentEs = 0;
     let toRemove = [];
@@ -751,10 +751,10 @@ class Line {
           vowCount--;
         }
       
-      if (elided) {
+      if (elided) { // remove the nth vowel, which we think is elided
         let vows = 0;
         let pos = 0;
-        while (vows < elided) {
+        while (vows < elided && pos < word.length) {
           if (word[pos] in phonstants.SHORT_VOWELS) {
             vows++;
           }
@@ -776,7 +776,7 @@ class Line {
       }
     }
 
-    // if (this.text.includes("spirit")) console.log("leaving equalizeVowels with",word,"sylCount",sylCount,"diphCount",diphCount,"silentEs",silentEs,"toRemove",toRemove)
+    // if (this.text.includes("Egyptian")) console.log("leaving equalizeVowels with",word,"sylCount",sylCount,"diphCount",diphCount,"silentEs",silentEs,"toRemove",toRemove)
 
     return {sylCount, vowCount, diphCount, silentEs, toRemove};
   }
