@@ -679,7 +679,7 @@ class Stanza {
      * Each returned object has this structure: {lines, words, rt}
      */
 
-    const rs = this.getRhymeScheme()
+    const rs = this.getRhymeScheme();
     const lines = this.getLines();
     const rhymes = [];
 
@@ -742,7 +742,7 @@ class Stanza {
         case 'aabcb':
           return makeRhymes([[0, 1], [2, 4]]);
         case 'splt1':
-          return makeRhymes([2, 4]);
+          return makeRhymes([[2, 4]]);
         case 'splt3':
           return makeRhymes([[1, 4]]);
         case 'aabab':

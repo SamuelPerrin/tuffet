@@ -24,12 +24,18 @@ const RhymedStanza = props => {
   const {stanza} = props; // stanza should be a list of strings
   const [rhymePairs, setRhymePairs] = useState([]);
   const stanzaRhymes = new Stanza(stanza.join('\n')).getRhymes();
-  const offset = 20; // controls alignment of arcs with verses
+  let offset = 80; // controls alignment of arcs with verses
   const breadthScalar = 0.75; // affects breadth of arcs
   const heightScalar = 0.8; // affects alignment of arcs with verses
 
   useEffect(() => {
-    setRhymePairs(stanzaRhymes.map(rhyme => {
+    setRhymePairs(stanzaRhymes.map((rhyme,i) => {
+      if (i === 0) {
+        const firstBottom = Array.from(document.querySelectorAll('span'))
+          .filter(x => x.innerHTML === rhyme.lines[0])[0]
+          .getBoundingClientRect().bottom;
+        if (firstBottom > 140) offset -= 4*((firstBottom - 140));
+      }
       return {
         1: Array.from(document.querySelectorAll('span'))
           .filter(x => x.innerHTML === rhyme.lines[0])[0]
@@ -39,16 +45,16 @@ const RhymedStanza = props => {
           .getBoundingClientRect().bottom - offset,
       }
     }));
-    console.log(`stanzaRhymes:`, stanzaRhymes);
-    console.log(`rhymePairs:`, stanzaRhymes.map(rhyme => {
-      return {
-        1: Array.from(document.querySelectorAll('span'))
-          .filter(x => x.innerHTML === rhyme.lines[0])[0]
-          .getBoundingClientRect().bottom - offset,
-        2: Array.from(document.querySelectorAll('span'))
-          .filter(x => x.innerHTML === rhyme.lines[1])[0]
-          .getBoundingClientRect().bottom - offset,
-      }}));
+    // console.log(`stanzaRhymes:`, stanzaRhymes);
+    // console.log(`rhymePairs:`, stanzaRhymes.map(rhyme => {
+    //   return {
+    //     1: Array.from(document.querySelectorAll('span'))
+    //       .filter(x => x.innerHTML === rhyme.lines[0])[0]
+    //       .getBoundingClientRect().bottom - offset,
+    //     2: Array.from(document.querySelectorAll('span'))
+    //       .filter(x => x.innerHTML === rhyme.lines[1])[0]
+    //       .getBoundingClientRect().bottom - offset,
+    //   }}));
   }, []);
 
   const seenLines = {};
@@ -67,7 +73,7 @@ const RhymedStanza = props => {
             } else {
               colorsUsed += 1;
               seenLines[stanzaRhymes[i].lines[1]] = COLOR_SEQUENCE[colorsUsed % COLOR_SEQUENCE.length];
-            } console.log(`y1: ${pair[1]} - ${rhymePairs[0][1]} * ${heightScalar} = ${pair[1] - rhymePairs[0][1] * heightScalar}`)
+            }
             
             return (
             <path 
