@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useState, useRef} from 'react';
 import styled from 'styled-components';
 
 import Stanza from '../../utils/Stanza';
@@ -23,37 +23,40 @@ const FlexRow = styled.div`
 const RhymedStanza = props => {
   const {stanza} = props; // stanza should be a list of strings
   const [rhymePairs, setRhymePairs] = useState([]);
+  let offset = useRef(80);
   const stanzaRhymes = new Stanza(stanza.join('\n')).getRhymes();
-  let offset = 80; // controls alignment of arcs with verses
+  // let offset = 80; // controls alignment of arcs with verses
   const breadthScalar = 0.75; // affects breadth of arcs
   const heightScalar = 0.8; // affects alignment of arcs with verses
 
   useEffect(() => {
     setRhymePairs(stanzaRhymes.map((rhyme,i) => {
       if (i === 0) {
-        const firstBottom = Array.from(document.querySelectorAll('span'))
+        const firstBottom = Array.from(document.querySelectorAll('span.rhymedLine'))
           .filter(x => x.innerHTML === rhyme.lines[0])[0]
           .getBoundingClientRect().bottom;
-        if (firstBottom > 140) offset -= 4*((firstBottom - 140));
+        if (firstBottom > 140) offset.current -= 4*((firstBottom - 140));
+        else if (firstBottom === 124) offset.current = -64;
+        // console.log("firstBottom:",firstBottom);
       }
       return {
-        1: Array.from(document.querySelectorAll('span'))
+        1: Array.from(document.querySelectorAll('span.rhymedLine'))
           .filter(x => x.innerHTML === rhyme.lines[0])[0]
-          .getBoundingClientRect().bottom - offset,
-        2: Array.from(document.querySelectorAll('span'))
+          .getBoundingClientRect().bottom - offset.current,
+        2: Array.from(document.querySelectorAll('span.rhymedLine'))
           .filter(x => x.innerHTML === rhyme.lines[1])[0]
-          .getBoundingClientRect().bottom - offset,
+          .getBoundingClientRect().bottom - offset.current,
       }
     }));
     // console.log(`stanzaRhymes:`, stanzaRhymes);
     // console.log(`rhymePairs:`, stanzaRhymes.map(rhyme => {
     //   return {
-    //     1: Array.from(document.querySelectorAll('span'))
+    //     1: Array.from(document.querySelectorAll('span.rhymedLine'))
     //       .filter(x => x.innerHTML === rhyme.lines[0])[0]
-    //       .getBoundingClientRect().bottom - offset,
-    //     2: Array.from(document.querySelectorAll('span'))
+    //       .getBoundingClientRect().bottom - offset.current,
+    //     2: Array.from(document.querySelectorAll('span.rhymedLine'))
     //       .filter(x => x.innerHTML === rhyme.lines[1])[0]
-    //       .getBoundingClientRect().bottom - offset,
+    //       .getBoundingClientRect().bottom - offset.current,
     //   }}));
   }, []);
 
@@ -63,7 +66,7 @@ const RhymedStanza = props => {
   return (
     <FlexRow>
       <div style={{marginLeft:'0.3rem'}}>
-        {stanza.map(line => <StyledLine>{line}</StyledLine>)}
+        {stanza.map(line => <StyledLine className='rhymedLine'>{line}</StyledLine>)}
       </div>
       <StyledSVG>
         <g fill={'none'} strokeWidth={3}>
