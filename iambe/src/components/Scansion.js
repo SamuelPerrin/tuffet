@@ -9,7 +9,7 @@ import {YellowSpan, RedSpan} from './styled/Spans';
 import ScannedStanza from './styled/ScannedStanza';
 import ListItemTile from './styled/ListItemTile';
 import { BLACK } from '../constants/colors';
-import {getMeterTypeDetails, setLineNum} from '../actions';
+import {getMeter, getMeterTypeDetails, getStanzaMeterDetails, setLineNum} from '../actions';
 
 import Poem from '../utils/Poem';
 import Stanza from '../utils/Stanza';
@@ -30,7 +30,9 @@ const Scansion = props => {
 
   const submitMeterType = e => {
     e.preventDefault();
-    getMeterTypeDetails(e.target.dataset.rt);
+    if ('rt' in e.target.dataset) getMeterTypeDetails(e.target.dataset.rt);
+    else if ('rt' in e.target.attributes) getMeterTypeDetails(e.target.attributes.rt.value);
+    else console.log("couldn't find rt in e",e);
     history.push("/meter/type");
   }
 
