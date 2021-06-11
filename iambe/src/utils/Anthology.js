@@ -126,6 +126,7 @@ class Anthology {
       'oc148':0,
       'ocaaa':0,
       'djuan':0,
+      'quat2':0,
       'cpmp3':0,
       'raven':0,
       'shalo':0,

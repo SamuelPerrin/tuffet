@@ -445,6 +445,7 @@ class Stanza {
       const fiveseven = new Rhyme(stan[4], stan[6]).getScore();
       const fiveeight = new Rhyme(stan[4], stan[7]).getScore();
       const sixseven = new Rhyme(stan[5], stan[6]).getScore();
+      const sixeight = new Rhyme(stan[5], stan[7]).getScore();
       const seveneight = new Rhyme(stan[6], stan[7]).getScore();
 
       const possibles = [
@@ -454,6 +455,7 @@ class Stanza {
         {rs:'oc148', pairs:['onetwo', 'foureight', 'fivesix']},
         {rs:'ocaaa', pairs:['onetwo', 'onethree', 'twothree', 'foureight', 'fivesix', 'fiveseven', 'sixseven']},
         {rs:'djuan', pairs:['onethree','onefive','twofour','twosix','threefive','foursix','seveneight']},
+        {rs:'quat2', pairs:['twofour','sixeight']}
       ];
 
       const allScores = {
@@ -471,6 +473,7 @@ class Stanza {
         'fiveseven':fiveseven,
         'fiveeight':fiveeight,
         'sixseven':sixseven,
+        'sixeight':sixeight,
         'seveneight':seveneight,
       };
 
@@ -826,6 +829,8 @@ class Stanza {
           return makeRhymes([[0, 1], [1, 2], [3, 7], [4, 5], [5, 6]]);
         case 'djuan':
           return makeRhymes([[0, 2], [1, 3], [2, 4], [3, 5], [6, 7]]);
+        case 'quat2':
+          return makeRhymes([[1, 3], [5, 7]]);
         default:
           return rhymes;
       }

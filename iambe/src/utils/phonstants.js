@@ -216,6 +216,7 @@ export const RHYME_SCHEMES = {
   'oc148':'AABCDDEC',
   'ocaaa':'AAABCCCB',
   'djuan':'ottava rima (ABABABCC)',
+  'quat2':'ABCBDEFE',
   'cpmp3':'AABCCBDDB',
   'raven':'AABCCCBBB',
   'shalo':'AAAABCCCB',
