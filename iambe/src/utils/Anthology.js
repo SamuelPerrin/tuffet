@@ -199,13 +199,14 @@ class Anthology {
       'common hymn, split':0,
       'short hymn, split':0,
       'limerick':0,
-      'raven':0,
       'common particular':0,
+      'common hymn, doubled':0,
+      'raven':0,
       'Lady of Shalott':0,
       'N/A':0
       };
 
-      stanzaMeters.forEach(meter => counts[meter] += 1);
+      stanzaMeters.forEach(meter => counts[meter] = meter in counts ? counts[meter] + 1 : 1);
       return counts;
   } 
 }
