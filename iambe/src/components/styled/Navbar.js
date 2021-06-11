@@ -13,6 +13,7 @@ const NavWrapper = styled.nav`
   width:100%;
   position:fixed;
   top:0;
+  z-index:10;
 
   .logo {
     color: ${props => props.theme.white};
