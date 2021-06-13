@@ -1,6 +1,6 @@
 import React, {useEffect} from 'react';
 import {connect} from 'react-redux';
-import {Link} from 'react-router-dom';
+import {Link, useHistory} from 'react-router-dom';
 
 import Poem from '../utils/Poem';
 import Stanza from '../utils/Stanza';
@@ -10,22 +10,29 @@ import Container from './styled/Container';
 import Section from './styled/Section';
 import {BlueSpan, RedSpan} from './styled/Spans';
 import RhymedStanza from './styled/RhymedStanza';
+import ButtonRow from './styled/ButtonRow';
+import Button from './styled/Button';
+
+import {crement} from '../actions';
 
 import {RHYME_SCHEMES} from '../utils/phonstants';
 
 const RhymeScheme = props => {
-  const {poems, rhymes, stanzaNum} = props;
+  const {poems, rhymes, stanzaNum, crement} = props;
+  const history = useHistory();
 
   const stanzaRhymeList = [];
   rhymes.forEach(poem => poem.forEach(stanza => stanzaRhymeList.push(stanza)));
-
   const stanzaList = [];
   poems.forEach(poem => new Poem(poem).getStanzas().forEach(stanza => stanzaList.push(stanza)));
-
   const stanza = new Stanza(stanzaList[stanzaNum]);
+
+  const submitCrement = dir => crement(dir,'stanzaNum');
+  const goBack = () => history.push('/rhyme');
   
   useEffect(() => {
     window.scrollTo(0,0);
+    console.log("stanzaNum",stanzaNum,"stanzaNum == 0",stanzaNum == 0)
   }, []);
 
   return (
@@ -42,6 +49,11 @@ const RhymeScheme = props => {
           <br/>
           <p>This stanza's rhyme scheme is: <BlueSpan>{RHYME_SCHEMES[stanza.getRhymeScheme()]}</BlueSpan>.</p>
         </Section>
+        <ButtonRow>
+          {stanzaNum != 0 && <Button onClick={() => submitCrement('de')}>&lt; Last stanza</Button>}
+          <Button onClick={goBack}>Back to Rhymes</Button>
+          {stanzaNum != stanzaList.length - 1 && <Button onClick={() => submitCrement('in')}>Next stanza &gt;</Button>}
+        </ButtonRow>
       </Container>
     </div>
   )
@@ -56,4 +68,4 @@ const mapStateToProps = state => {
   }
 }
 
-export default connect(mapStateToProps, {})(RhymeScheme)
+export default connect(mapStateToProps, {crement})(RhymeScheme)

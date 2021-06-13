@@ -63,6 +63,26 @@ const reducer = (state=initialState, action) => {
         ...state,
         lineNum: action.payload.lineNum,
       }
+    case actions.INCREMENT_LINE_NUM:
+      return {
+        ...state,
+        lineNum: parseInt(state.lineNum) + 1,
+      }
+    case actions.DECREMENT_LINE_NUM:
+      return {
+        ...state,
+        lineNum: parseInt(state.lineNum) - 1,
+      }
+    case actions.INCREMENT_STANZA_NUM:
+      return {
+        ...state,
+        stanzaNum: parseInt(state.stanzaNum) + 1,
+      }
+    case actions.DECREMENT_STANZA_NUM:
+      return {
+        ...state,
+        stanzaNum: parseInt(state.stanzaNum) - 1,
+      }
     default:
       return state
   }

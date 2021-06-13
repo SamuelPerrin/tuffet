@@ -37,6 +37,7 @@ const RhymedStanza = props => {
           .getBoundingClientRect().bottom;
         if (firstBottom > 140) offset.current -= 4*((firstBottom - 140));
         else if (firstBottom === 124) offset.current = -64;
+        else if (firstBottom === 100) offset.current = 40;
         // console.log("firstBottom:",firstBottom);
       }
       return {

@@ -5,27 +5,35 @@ import {Link, useHistory} from 'react-router-dom';
 import Breadcrumbs from './styled/Breadcrumbs';
 import Container from './styled/Container';
 import Section from './styled/Section';
-import {YellowSpan} from './styled/Spans';
+import {YellowSpan, RedSpan} from './styled/Spans';
 import ScannedLine from './styled/ScannedLine';
+import ButtonRow from './styled/ButtonRow';
 import Button from './styled/Button';
+
+import {crement} from '../actions';
 
 import Poem from '../utils/Poem';
 import Stanza from '../utils/Stanza';
 import Line from '../utils/Line';
 
 const MeterLine = props => {
-  const {poems, stanzaNum, lineNum} = props;
+  const {poems, stanzaNum, lineNum, crement} = props;
   const history = useHistory();
 
   const stanzaList = [];
   poems.forEach(poem => new Poem(poem).getStanzas().forEach(stanza => stanzaList.push(stanza)));
   const stanza = new Stanza(stanzaList[stanzaNum]);
-  const line = stanza.getLines()[lineNum];
-  const marks = new Line(line).getMarkString();
+  const line = new Line(stanza.getLines()[lineNum]);
+  const marks = line.getMarkString();
+  const varList = line.getVariationList();
 
-  const goBack = e => {
-    e.preventDefault();
-    history.push('/meter/scansion')
+  const goBack = () => {
+    history.push('/meter/scansion');
+  }
+
+  const submitCrement = direction => {
+    crement(direction, 'lineNum');
+    history.push('/meter/line');
   }
 
   useEffect(() => {
@@ -44,9 +52,24 @@ const MeterLine = props => {
         <Section>
           <h3><YellowSpan>Scansion</YellowSpan></h3>
           <p>This line can be scanned as follows:</p>
-          <ScannedLine marks={marks} line={line} />
-          <Button onClick={goBack}>Back to stanza</Button>
+          <ScannedLine marks={marks} line={line.text} />
         </Section>
+        {!!varList.length &&
+          <Section>
+            <h3><RedSpan>Variations</RedSpan></h3>
+            <p>This line has {varList.length.toString()} metrical variation{varList.length === 1 ? '' : 's'}:</p>
+            <ul>
+              {varList.map(vari => (
+                <li>There's {vari.varType} in foot {vari.foot}.</li>
+                ))}
+            </ul>
+          </Section>
+        }
+        <ButtonRow>
+          {lineNum != 0 && <Button onClick={() => submitCrement('de')}>&lt; Last line</Button>}
+          <Button onClick={goBack}>Back to stanza</Button>
+          {lineNum != stanza.getLines().length - 1 && <Button onClick={() => submitCrement('in')}>Next line &gt;</Button>}
+        </ButtonRow>
       </Container>
     </div>
   )
@@ -62,4 +85,4 @@ const mapStateToProps = state => {
   }
 }
 
-export default connect(mapStateToProps, {})(MeterLine)
+export default connect(mapStateToProps, {crement})(MeterLine)

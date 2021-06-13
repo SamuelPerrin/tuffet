@@ -8,15 +8,18 @@ import Section from './styled/Section';
 import {YellowSpan, RedSpan} from './styled/Spans';
 import ScannedStanza from './styled/ScannedStanza';
 import ListItemTile from './styled/ListItemTile';
+import ButtonRow from './styled/ButtonRow';
+import Button from './styled/Button';
+
 import { BLACK } from '../constants/colors';
-import {getMeterTypeDetails, getStanzaMeterDetails, setLineNum} from '../actions';
+import {getMeterTypeDetails, getStanzaMeterDetails, setLineNum, crement} from '../actions';
 
 import Poem from '../utils/Poem';
 import Stanza from '../utils/Stanza';
 import Line from '../utils/Line';
 
 const Scansion = props => {
-  const {poems, stanzaNum, getMeterTypeDetails, getStanzaMeterDetails, setLineNum} = props;
+  const {poems, stanzaNum, getMeterTypeDetails, getStanzaMeterDetails, setLineNum, crement} = props;
   const history = useHistory();
 
   const stanzaList = [];
@@ -49,6 +52,14 @@ const Scansion = props => {
     e.preventDefault();
     setLineNum(e.target.id);
     history.push("/meter/line");
+  }
+
+  const goBack = () => {
+    history.push('/meter/');
+  }
+
+  const submitCrement = dir => {
+    crement(dir, 'stanzaNum');
   }
 
   useEffect(() => {
@@ -93,6 +104,11 @@ const Scansion = props => {
                 </ListItemTile>))}
           </ul>
         </Section>
+        <ButtonRow>
+          {stanzaNum != 0 && <Button onClick={() => submitCrement('de')}>&lt; Last stanza</Button>}
+          <Button onClick={goBack}>Back to Meter</Button>
+          {stanzaNum+1 != stanzaList.length && <Button onClick={() => submitCrement('in')}>Next stanza &gt;</Button>}
+        </ButtonRow>
       </Container>
     </div>
   )
@@ -107,4 +123,4 @@ const mapStateToProps = state => {
   }
 }
 
-export default connect(mapStateToProps, {getMeterTypeDetails, getStanzaMeterDetails, setLineNum})(Scansion)
+export default connect(mapStateToProps, {getMeterTypeDetails, getStanzaMeterDetails, setLineNum, crement})(Scansion)
