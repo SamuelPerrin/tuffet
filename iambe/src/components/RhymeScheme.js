@@ -32,7 +32,6 @@ const RhymeScheme = props => {
   
   useEffect(() => {
     window.scrollTo(0,0);
-    console.log("stanzaNum",stanzaNum,"stanzaNum == 0",stanzaNum == 0)
   }, []);
 
   return (
