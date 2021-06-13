@@ -577,7 +577,7 @@ class Line {
      */
     
     // console.log("in equalizeVowels with wrd",wrd,"sylCount",sylCount,"vowCount",vowCount,"stressList",stressList)
-    const triphs = ['eau', 'owe'];
+    const triphs = ['eau', 'owe','iew'];
     let word = wrd.replace("'","").toLowerCase();
     word = word.replace("’","");
     let diphCount = 0;
@@ -596,6 +596,7 @@ class Line {
     else if (word.includes('prayer') && stressList.length === 1) return {sylCount:1, vowCount:1, diphCount:0, toRemove:[3,4]};
     else if (word.includes('ower') && stressList.length === 1) return {sylCount:1, vowCount:1, diphCount:0, toRemove:[word.indexOf('er')]};
     else if (wrd.includes("e'e") && stressList.length === 1) return {sylCount:1, vowCount:1, diphCount:0, toRemove:[wrd.indexOf("e'e")+2]};
+    else if (wrd.includes("o'e") && stressList.length === 1) return {sylCount:1, vowCount:1, diphCount:0, toRemove:[wrd.indexOf("o'e")+2]};
 
     if (word[0].toLowerCase() === 'y') toRemove.push(0);
 
@@ -782,7 +783,7 @@ class Line {
       }
     }
 
-    // if (this.text.includes("succeed")) console.log("leaving equalizeVowels with",word,"sylCount",sylCount,"diphCount",diphCount,"silentEs",silentEs,"toRemove",toRemove)
+    // if (this.text.includes("beguiles")) console.log("leaving equalizeVowels with",word,"sylCount",sylCount,"diphCount",diphCount,"silentEs",silentEs,"toRemove",toRemove);
 
     return {sylCount, vowCount, diphCount, silentEs, toRemove};
   }
@@ -984,9 +985,7 @@ class Line {
     })
     let finalMarkList = markList.join('').split('');
 
-    punctPos.forEach(punct => {
-      finalMarkList.splice(punct, 0, nbsp);
-    })
+    punctPos.forEach(punct => finalMarkList.splice(punct, 0, nbsp));
 
     const marks = finalMarkList.join(``);
 

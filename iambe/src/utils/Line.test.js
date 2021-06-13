@@ -127,6 +127,14 @@ test('getLinesVowels identifies pronounced vowels', () => {
   expect(line[7].posList).toStrictEqual([1,5]);
 })
 
+test('getLinesVowels identifies vowels in this line', () => {
+  const line = new Line(`And view the Landscape o'er"`).getLinesVowels();
+  expect(line[0].word).toBe('And');
+  expect(line[1].posList).toStrictEqual([1]);
+  expect(line[3].posList).toStrictEqual([1,6]);
+  expect(line[4].posList).toStrictEqual([0]);
+})
+
 test('getMarkString identifies stresses in a sample line', () => {
   const sonnet30 = new Line("And moan th' expense of many a vanish'd sight;");
   expect(sonnet30.getMarkString()).toBe('×    /       ×  /    ×   /   ×  / ×      /     ');
@@ -135,9 +143,9 @@ test('getMarkString identifies stresses in a sample line', () => {
 })
 
 test('getMarkString identifies stresses in this line', () => {
-  const d = new Line(`By those who ne'er succeed.`);
-  expect(d.getMeter().feet.flat()).toStrictEqual([3, 2, 2, 2, 4, 1]);
-  const neer = d.equalizeVowels("ne'er",1,2,[2]);
-  expect(neer.toRemove).toStrictEqual([3]);
-  expect(d.getMarkString()).toBe(' ×   /     ×  /     ×  /    ');
+  const d = new Line(`And view the Landscape o'er"`);
+  expect(d.getMeter().feet.flat()).toStrictEqual([2, 2, 3, 1, 2, 2]);
+  const oer = d.equalizeVowels("o'er",1,2,[2]);
+  expect(oer.toRemove).toStrictEqual([2]);
+  expect(d.getMarkString()).toBe('×    /     ×  /    ×   /     ');
 })
