@@ -1025,6 +1025,10 @@ class Line {
             foot: i+1,
           })
         }
+        else if (foot === 'A') varList.push({
+          varType: 'anapestic substitution',
+          foot: i+1,
+        })
       })
     }
 

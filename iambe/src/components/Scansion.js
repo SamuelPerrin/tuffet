@@ -44,7 +44,7 @@ const Scansion = props => {
     getStanzaMeterDetails(e.target.innerHTML);
     // if ('rt' in e.target.dataset) getStanzaMeterDetails(e.target.dataset.rt);
     // else if ('rt' in e.target.attributes) getStanzaMeterDetails(e.target.attributes.rt.value);
-    console.log("couldn't find rt in e",e);
+    // console.log("couldn't find rt in e",e);
     history.push("/meter/stanza");
   }
 
@@ -85,7 +85,8 @@ const Scansion = props => {
               style={{cursor:'pointer'}}
             >
               {stanza.getMeter()}
-            </RedSpan>.</p>
+            </RedSpan>.
+          </p>
         </Section>
         <Section>
           <h3><YellowSpan>Lines by Meter</YellowSpan></h3>
