@@ -8,8 +8,9 @@ import Stanza from '../utils/Stanza';
 import Breadcrumbs from './styled/Breadcrumbs';
 import Container from './styled/Container';
 import Section from './styled/Section';
-import {BlueSpan, RedSpan} from './styled/Spans';
+import {BlueSpan, RedSpan, YellowSpan} from './styled/Spans';
 import RhymedStanza from './styled/RhymedStanza';
+import Table from './styled/Table';
 import ButtonRow from './styled/ButtonRow';
 import Button from './styled/Button';
 
@@ -26,6 +27,7 @@ const RhymeScheme = props => {
   const stanzaList = [];
   poems.forEach(poem => new Poem(poem).getStanzas().forEach(stanza => stanzaList.push(stanza)));
   const stanza = new Stanza(stanzaList[stanzaNum]);
+  const stanzaRhymes = stanza.getRhymes();
 
   const submitCrement = dir => crement(dir,'stanzaNum');
   const goBack = () => history.push('/rhyme');
@@ -48,10 +50,49 @@ const RhymeScheme = props => {
           <br/>
           <p>This stanza's rhyme scheme is: <BlueSpan>{RHYME_SCHEMES[stanza.getRhymeScheme()]}</BlueSpan>.</p>
         </Section>
+        <Section>
+          <h3><YellowSpan>Rhymes</YellowSpan></h3>
+          <Table maxWidth={'1200px'}>
+            <caption>This stanza has {stanzaRhymes.length} rhyme{stanzaRhymes.length === 1 ? '' : 's'}:</caption>
+            <thead>
+              <tr>
+                <th>Word 1</th>
+                <th>Word 2</th>
+                <th>Rhyme Type</th>
+              </tr>
+            </thead>
+            <tbody>
+              {stanzaRhymes.map(rhyme => (
+                <tr key={rhyme.lines[0]}>
+                  <td>{rhyme.words[0]}</td>
+                  <td>{rhyme.words[1]}</td>
+                  <td>{rhyme.rt}</td>
+                </tr>
+              ))}
+            </tbody>
+          </Table>
+        </Section>
         <ButtonRow>
-          {stanzaNum != 0 && <Button onClick={() => submitCrement('de')}>&lt; Last stanza</Button>}
-          <Button onClick={goBack}>Back to Rhymes</Button>
-          {stanzaNum != stanzaList.length - 1 && <Button onClick={() => submitCrement('in')}>Next stanza &gt;</Button>}
+          {stanzaNum != 0 &&
+          <Button
+            size='small'
+            onClick={() => submitCrement('de')}
+          >
+            ᐊ
+          </Button>}
+          <Button
+            size='small'
+            onClick={goBack}
+          >
+            Back to Rhymes
+          </Button>
+          {stanzaNum != stanzaList.length - 1 &&
+          <Button
+            size='small'
+            onClick={() => submitCrement('in')}
+          >
+            ᐅ
+          </Button>}
         </ButtonRow>
       </Container>
     </div>

@@ -43,10 +43,10 @@ const MeterLine = props => {
   return (
     <div>
       <Breadcrumbs>
-        <Link to='/'>Home</Link>
-        <Link to='/meter'>Meter</Link>
-        <Link to='/meter/scansion'>Scansion</Link>
-        <Link to='/meter/line' className='current'>Line</Link>
+        <Link to='/' key="Home">Home</Link>
+        <Link to='/meter' key="Meter">Meter</Link>
+        <Link to='/meter/scansion' key="Scansion">Scansion</Link>
+        <Link to='/meter/line' className='current' key="Line">Line</Link>
       </Breadcrumbs>
       <Container>
         <Section>
@@ -66,9 +66,26 @@ const MeterLine = props => {
           </Section>
         }
         <ButtonRow>
-          {lineNum != 0 && <Button onClick={() => submitCrement('de')}>&lt; Last line</Button>}
-          <Button onClick={goBack}>Back to stanza</Button>
-          {lineNum != stanza.getLines().length - 1 && <Button onClick={() => submitCrement('in')}>Next line &gt;</Button>}
+          {lineNum != 0 &&
+          <Button
+            size='small'
+            onClick={() => submitCrement('de')}
+          >
+            ᐊ
+          </Button>}
+          <Button
+            size='small'
+            onClick={goBack}
+          >
+            Back to stanza
+          </Button>
+          {lineNum != stanza.getLines().length - 1 && 
+          <Button
+            size='small'
+            onClick={() => submitCrement('in')}
+          >
+            ᐅ
+          </Button>}
         </ButtonRow>
       </Container>
     </div>

@@ -105,9 +105,26 @@ const Scansion = props => {
           </ul>
         </Section>
         <ButtonRow>
-          {stanzaNum != 0 && <Button onClick={() => submitCrement('de')}>&lt; Last stanza</Button>}
-          <Button onClick={goBack}>Back to Meter</Button>
-          {stanzaNum+1 != stanzaList.length && <Button onClick={() => submitCrement('in')}>Next stanza &gt;</Button>}
+          {stanzaNum != 0 && 
+          <Button
+          size='small'
+            onClick={() => submitCrement('de')}
+          >
+            ᐊ
+          </Button>}
+          <Button
+            size='small'
+            onClick={goBack}
+          >
+            Back to Meter
+          </Button>
+          {stanzaNum+1 != stanzaList.length && 
+          <Button
+            size='small'
+            onClick={() => submitCrement('in')}
+          >
+            ᐅ
+          </Button>}
         </ButtonRow>
       </Container>
     </div>
