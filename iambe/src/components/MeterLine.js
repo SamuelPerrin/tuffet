@@ -90,7 +90,7 @@ const MeterLine = props => {
             ᐊ
           </Button>}
           <Button
-            size='small'
+            // size='small'
             onClick={goBack}
           >
             Back to stanza

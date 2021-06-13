@@ -22,7 +22,6 @@ const MeterStanza = props => {
   let stanzaList = [];
   poems.forEach(poem => new Poem(poem).getStanzas().forEach(stanza => stanzaList.push(new Stanza(stanza))))
   
-  console.log(`stanzaList`, stanzaList);
   stanzaList = stanzaList.filter(stanza => stanza.getMeter() === stanzaType);
 
   return (

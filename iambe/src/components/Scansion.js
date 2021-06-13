@@ -114,7 +114,7 @@ const Scansion = props => {
             ᐊ
           </Button>}
           <Button
-            size='small'
+            // size='small'
             onClick={goBack}
           >
             Back to Meter
