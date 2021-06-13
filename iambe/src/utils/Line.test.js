@@ -93,7 +93,7 @@ test('getMeter identifies long iambic lines', () => {
 })
 
 test('getMeter identifies this line', () => {
-  const line = new Line("Mutt'ring his wayward fancies he would rove,").getMeter();
+  const line = new Line("The Mountains straight reply–").getMeter();
   // expect(line.feet).toStrictEqual([[2,3], [2, 2], [3, 1], 4]);
   // expect(line.foots).toStrictEqual(['T','U','I','unstr']);
   // expect(line.label.catalexis).toBe(true);
@@ -135,9 +135,9 @@ test('getMarkString identifies stresses in a sample line', () => {
 })
 
 test('getMarkString identifies stresses in this line', () => {
-  const kipling = new Line(`Our Loved Egyptian night?"`);
-  expect(kipling.getMeter().feet.flat()).toStrictEqual([3, 2, 4, 1, 4, 2]);
-  // const egyptian = kipling.equalizeVowels("Egyptian",3,4,[4,1,4]);
-  // expect(egyptian.toRemove).toStrictEqual([6]);
-  expect(kipling.getMarkString()).toBe('×    /    × /  ×    /     ');
+  const d = new Line(`The Mountains straight reply–`);
+  expect(d.getMeter().feet.flat()).toStrictEqual([3, 1, 4, 2, 4, 1]);
+  const mountains = d.equalizeVowels("Mountains",2,4,[1,4]);
+  expect(mountains.diphCount).toStrictEqual(2);
+  // expect(d.getMarkString()).toBe('  ×  /   ×       /      ×  /  ');
 })
