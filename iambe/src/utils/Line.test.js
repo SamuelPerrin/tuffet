@@ -93,7 +93,7 @@ test('getMeter identifies long iambic lines', () => {
 })
 
 test('getMeter identifies this line', () => {
-  const line = new Line("The Mountains straight reply–").getMeter();
+  const line = new Line("By those who ne'er succeed.").getMeter();
   // expect(line.feet).toStrictEqual([[2,3], [2, 2], [3, 1], 4]);
   // expect(line.foots).toStrictEqual(['T','U','I','unstr']);
   // expect(line.label.catalexis).toBe(true);
@@ -135,9 +135,9 @@ test('getMarkString identifies stresses in a sample line', () => {
 })
 
 test('getMarkString identifies stresses in this line', () => {
-  const d = new Line(`The Mountains straight reply–`);
-  expect(d.getMeter().feet.flat()).toStrictEqual([3, 1, 4, 2, 4, 1]);
-  const mountains = d.equalizeVowels("Mountains",2,4,[1,4]);
-  expect(mountains.diphCount).toStrictEqual(2);
-  // expect(d.getMarkString()).toBe('  ×  /   ×       /      ×  /  ');
+  const d = new Line(`By those who ne'er succeed.`);
+  expect(d.getMeter().feet.flat()).toStrictEqual([3, 2, 2, 2, 4, 1]);
+  const neer = d.equalizeVowels("ne'er",1,2,[2]);
+  expect(neer.toRemove).toStrictEqual([3]);
+  expect(d.getMarkString()).toBe(' ×   /     ×  /     ×  /    ');
 })

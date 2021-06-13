@@ -595,6 +595,7 @@ class Line {
     else if (word.slice(0,3) === 'eye') return {sylCount:1, vowCount:1, diphCount:0, toRemove:[1,2]};
     else if (word.includes('prayer') && stressList.length === 1) return {sylCount:1, vowCount:1, diphCount:0, toRemove:[3,4]};
     else if (word.includes('ower') && stressList.length === 1) return {sylCount:1, vowCount:1, diphCount:0, toRemove:[word.indexOf('er')]};
+    else if (wrd.includes("e'e") && stressList.length === 1) return {sylCount:1, vowCount:1, diphCount:0, toRemove:[wrd.indexOf("e'e")+2]};
 
     if (word[0].toLowerCase() === 'y') toRemove.push(0);
 
@@ -781,7 +782,7 @@ class Line {
       }
     }
 
-    // if (this.text.includes("Mountains")) console.log("leaving equalizeVowels with",word,"sylCount",sylCount,"diphCount",diphCount,"silentEs",silentEs,"toRemove",toRemove)
+    // if (this.text.includes("succeed")) console.log("leaving equalizeVowels with",word,"sylCount",sylCount,"diphCount",diphCount,"silentEs",silentEs,"toRemove",toRemove)
 
     return {sylCount, vowCount, diphCount, silentEs, toRemove};
   }
