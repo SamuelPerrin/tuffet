@@ -41,7 +41,7 @@ const MeterStanza = props => {
         <Section>
           <h3><RedSpan>Meter: {stanzaType}</RedSpan></h3>
           <Table maxWidth='1200px'>
-            <caption>This sample has {stanzaList.length} instance{stanzaList.length === 1 ? '' : 's'} of {stanzaType}:</caption>
+            <caption>This sample has {stanzaList.length} stanza{stanzaList.length === 1 ? '' : 's'} of {stanzaType}:</caption>
             <thead>
               <tr>
                 <th>Stanza's 1st Line</th>
