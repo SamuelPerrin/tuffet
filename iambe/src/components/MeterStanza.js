@@ -1,12 +1,13 @@
 import React, {useEffect} from 'react';
 import { connect } from 'react-redux';
-import {Link} from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 
 import Breadcrumbs from './styled/Breadcrumbs';
 import Container from './styled/Container';
 import Section from './styled/Section';
 import {YellowSpan, RedSpan} from './styled/Spans';
 import Table from './styled/Table';
+import Button from './styled/Button';
 
 import Poem from '../utils/Poem';
 import Stanza from '../utils/Stanza';
@@ -14,10 +15,15 @@ import { STANZA_METER_DESCRIPTIONS } from '../utils/phonstants';
 
 const MeterStanza = props => {
   const {stanzaType, poems} = props;
+  const history = useHistory();
 
   useEffect(() => {
     window.scrollTo(0,0);
   }, []);
+
+  const goBack = () => {
+    history.push("/meter");
+  }
 
   let stanzaList = [];
   poems.forEach(poem => new Poem(poem).getStanzas().forEach(stanza => stanzaList.push(new Stanza(stanza))))
@@ -56,6 +62,7 @@ const MeterStanza = props => {
           <h3><YellowSpan>What is {stanzaType}?</YellowSpan></h3>
           {STANZA_METER_DESCRIPTIONS[stanzaType]}
         </Section>
+        <Button onClick={goBack}>Back to Meter</Button>
       </Container>
     </div>
   )

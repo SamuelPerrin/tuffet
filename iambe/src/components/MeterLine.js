@@ -93,7 +93,7 @@ const MeterLine = props => {
             // size='small'
             onClick={goBack}
           >
-            Back to stanza
+            Back to Stanza
           </Button>
           {lineNum != stanza.getLines().length - 1 && 
           <Button
