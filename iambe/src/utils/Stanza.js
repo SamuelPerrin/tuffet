@@ -916,7 +916,7 @@ class Stanza {
     }
     else if (totalLines === 6) {
       if (counts.iambic4false === 4 && counts.iambic3false === 2) guess = 'common particular';
-      else if (counts.trochaic8false + counts.trochaic8true > 2) guess = 'raven';
+      // else if (counts.trochaic8false + counts.trochaic8true > 2) guess = 'raven';
     }
     else if (totalLines === 8) {
       if ((counts.iambic4false === 4 || counts.iambic4true === 4) && counts.iambic3false === 4) guess = 'common hymn, doubled';
