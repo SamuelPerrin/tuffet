@@ -395,34 +395,39 @@ export const LINE_METER_DESCRIPTIONS = {
 };
 export const STANZA_METER_DESCRIPTIONS = {
   'iambic pentameter': <div className='paragraph'>
-    <p><strong>Iambic pentameter</strong> consists of five metrical feet with rising rhythm. When iambic pentameter is unrhymed, it is called <strong>blank meter</strong>. When it is rhymed in couplets, it is called <strong>heroic couplets</strong>.</p>
+    <p><strong>Iambic pentameter</strong> consists of five metrical feet with ten syllables with rising rhythm. In its most standard form, it consists of five iambs (da Dum da Dum da Dum da Dum da Dum), but several variations are also common, including an eleventh unstressed syllable. Iambic pentameter is probably the most important poetic meter in the history of English poetry. Everyone from Chaucer to Shakespeare and from Milton to Wordsworth wrote much of their verse in this meter. It is highly flexible, supporting lyrical and narrative verse, sonnet and epic.</p>
+    <p>The English pentameter is likely a descendant of the Italian hendecasyllable, a line of eleven syllables used by Dante and Petrarch. Chaucer adapted this line to English, which doesn't have as many weak endings as Italian, resulting in a line of ten syllables.</p>
+    <p>When iambic pentameter is unrhymed, it is called <strong>blank meter</strong>. When it is rhymed in couplets, it is called <strong>heroic couplets</strong>. Iambic pentameter is the meter normally used in the sonnet, a rhymed stanza of fourteen lines.</p>
   </div>,
   'alexandrines': <div className='paragraph'>
-    <p><strong></strong></p>
+    <p>In English verse, <strong>alexandrine</strong> is the name given to iambic hexameter, which consists of six metrical feet with twelve syllables in rising rhythm (da Dum da Dum da Dum da Dum da Dum da Dum), often with caesura after the sixth syllable. The most common stanza form for alexandrines is rhymed couplets. This form comes from the medieval French form of the same name.</p>
   </div>,
   'fourteeners': <div className='paragraph'>
-    <p><strong></strong></p>
+    <p><strong>Fourteeners</strong> are couplets of (usually rhymed) iambic heptameter, which consists of seven metrical feet with fourteen syllables in rising rhythm (da Dum da Dum da Dum da Dum da Dum da Dum da Dum), often with caesura after the eighth syllable. When divided at the their caesura, two rhymed fourteeners make a common meter quatrain.</p>
   </div>,
   'common hymn': <div className='paragraph'>
-    <p><strong>Common hymn</strong>, sometimes called <strong>common meter</strong>, is a quatrain in which the first and third lines are iambic tetrameter and the second and fourth lines are iambic trimeter.</p>
+    <p>The <strong>common hymn</strong> (8.6.8.6), sometimes called <strong>common meter</strong>, is a quatrain in which the first and third lines are iambic tetrameter and the second and fourth lines are iambic trimeter. Common meter is familiar from Christian hymns like John Newton’s “Amazing Grace”, Isaac Watts’s “Joy to the World”, and the Christmas carol “O Little Town of Bethlehem”. It was also the favorite form of Emily Dickinson. When a common meter quatrain is collapsed down to a rhyming couplet with fourteen syllables in each line, the resulting verse form is called fourteeners.</p>
+    <p>Common meter is related to the English ballad, which also features alternating lines with four and three stressed syllables. The ballad is more flexible than common meter proper, allowing for headless lines, anapestic substitution, and the like.</p>
   </div>,
   'long hymn': <div className='paragraph'>
-    <p><strong></strong></p>
+    <p><strong>Long meter</strong> (8.8.8.8) is a quatrain of iambic tetrameter, in which each line has eight syllables arranged in four metrical feet with rising rhythm (da Dum da Dum da Dum da Dum). Long meter's name is derived from the fact that its second and fourth lines are longer than they would be in common meter. Like common meter and short meter, long meter was popular for hymns, yielding classics like Isaac Watts's "When I Survey the Wondrous Cross". It is also used throughout Alfred Lord Tennyson's book-length poem, <em>In Memoriam A.H.H.</em>.</p>
   </div>,
   'short hymn': <div className='paragraph'>
-    <p><strong></strong></p>
+    <p><strong>Short meter</strong> (6.6.8.6) is a quatrain in of iambic trimeter in which the third line is iambic tetrameter. Short meter is short as compared to common meter, in which the first line is one foot longer. Like common meter and long meter, short meter was a popular hymn meter, used in such hymns as "Blest Be the Tie that Binds".</p>
+    <p>When short meter is collapsed into a rhyming couplet with twelve syllables in the first line and fourteen in the second, it is known as <em>poulter's measure</em>, since a poulter—who sold eggs—sometimes gave twelve in a dozen and sometimes fourteen (compare the term <em>baker's dozen</em>, which has a similar origin).</p>
   </div>,
   '8s&5s': <div className='paragraph'>
-    <p><strong></strong></p>
+    <p><strong>Eights and Fives</strong> (8.5.8.5) is a quatrain alternating lines of trochaic tetrameter (with eight syllables) and trochaic trimeter catalectic (with five). It can be thought of as the trochaic equivalent of the iambic common meter. It is used in some hymns and is the favorite trochaic meter of Emily Dickinson.</p>
   </div>,
   '8s&7s': <div className='paragraph'>
-    <p><strong></strong></p>
+    <p><strong>Eights and Sevens</strong> (8.7.8.7) is a quatrain alternating lines of trochaic tetrameter (with eight syllables) and trochaic tetrameter catalectic (with seven). It was used primarily as a hymn meter, producing "Come Thou Fount of Every Blessing" and Charles Wesley's "Loves Divine, All Loves Excelling".</p>
   </div>,
   '6s&5s':<div className='paragraph'>
-    <p><strong></strong></p>
+    <p><strong>Sixes and Fives</strong> (6.5.6.5) is a quatrain alternating lines of trochaic trimeter (with six syllables) and trochaic trimeter catalectic (with five). It is sometimes used for hymns, including "Onward, Christian Soldiers".</p>
   </div>,
   'ballad':<div className='paragraph'>
-    <p><strong></strong></p>
+    <p><strong>Ballad meter</strong> is a quatrain alternating lines with four beats and three beats. Ballad meter closely resembles common meter, which alternates iambic lines with eight syllables and six syllables. Unlike common meter, which counts stressed and unstressed syllables, ballad meter counts only stressed syllables&mdash;it is accentual rather than accentual-syllabic. Thus, ballad meter is more flexible than common meter, allowing variations like headless lines and anapestic substitution.</p>
+    <p>Ballad meter has had hundreds of years of success in popular culture, generating everything from "The House of the Rising Sun" and "The Yellow Rose of Texas" to the theme songs for <em>Gilligan's Island</em> and the <em>Pokemon</em> anime series. There is also a tradition of ballad among writers of art-verse, including Samuel Taylor Coleridge's "Rime of the Ancient Mariner".</p>
   </div>,
   'common hymn, split': <div className='paragraph'>
     <p><strong></strong></p>
@@ -434,16 +439,16 @@ export const STANZA_METER_DESCRIPTIONS = {
     <p><strong></strong></p>
   </div>,
   'common particular': <div className='paragraph'>
-    <p><strong></strong></p>
+    <p><strong>Common particular meter</strong> (8.8.6.8.8.6) is a metrical variant of common meter that doubles the tetrameters to produce a sestet in which the first, second, fourth, and fifth lines are iambic tetrameter and the third and sixth lines are iambic trimeter. Stanzas of common particular meter often use the rhyme scheme AABCCB.</p>
   </div>,
   'common hymn, doubled': <div className='paragraph'>
-    <p><strong></strong></p>
+    <p><strong>Common meter double</strong>(8.6.8.6.8.6.8.6) is an eight-line stanza that doubles the pattern of common meter, alternating lines of iambic tetrameter and iambic trimeter. Common meter double is a popular hymn meter, producing such songs as "It Came Upon the Midnight Clear" and "America the Beautiful."</p>
   </div>,
   'raven': <div className='paragraph'>
-    <p><strong></strong></p>
+    <p>This stanza is the same as the one used in Edgar Allan Poe's <strong>The Raven</strong>.</p>
   </div>,
   'Lady of Shalott': <div className='paragraph'>
-    <p><strong></strong></p>
+    <p>This stanza is the same as the one used in Alfred Lord Tennyson's <strong>The Lady of Shalott</strong>.</p>
   </div>,
 };
 export const NONICTUS = '×';
