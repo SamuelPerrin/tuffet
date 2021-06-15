@@ -363,25 +363,27 @@ export const METER_NAMES = {
 };
 export const LINE_METER_DESCRIPTIONS = {
   'iambic trimeter': <div className='paragraph'>
-    <p><strong>Iambic trimeter</strong> consists of three metrical feet with rising rhythm.</p>
+    <p><strong>Iambic trimeter</strong> consists of six syllables arranged in three metrical feet with rising rhythm. The most standard form of iambic trimeter is three iambs (da Dum da Dum da Dum), but there is sometimes trochaic inversion in the first foot. Stanzas rarely consist entirely of iambic trimeter, but it does play an important role in hymn meters like <em>common meter</em> and <em>short meter</em>.</p>
   </div>,
   'iambic trimeter catalectic': <div className='paragraph'>
     <p><strong></strong></p>
   </div>,
   'iambic tetrameter': <div className='paragraph'>
-    <p><strong>Iambic tetrameter</strong> consists of four metrical feet with rising rhythm.</p>
+    <p><strong>Iambic tetrameter</strong> consists of eight syllables arranged in four metrical feet with rising rhythm. The most standard form of iambic trimeter is four iambs (da Dum da Dum da Dum da Dum), but it isn't uncommon to see trochaic inversion in the first foot. A quatrain of iambic tetrameter is called <em>long meter</em> and is a common meter for hymns, as in "When I Survey the Wondrous Cross". Iambic tetrameter is also used in other hymn meters like <em>common meter</em> and <em>short meter</em>.</p>
   </div>,
   'iambic tetrameter catalectic': <div className='paragraph'>
     <p><strong></strong></p>
   </div>,
   'iambic pentameter': <div className='paragraph'>
-  <p><strong>Iambic pentameter</strong> consists of five metrical feet with rising rhythm.</p>
-</div>,
+    <p><strong>Iambic pentameter</strong> consists of ten syllables arranged in five metrical feet with rising rhythm. The most standard form of iambic pentameter is five iambs (da Dum da Dum da Dum da Dum), but there are several common variations, including adding an unstressed eleventh syllable after the last iamb and substituting a trochee for one of more of the first four iambs. Iambic pentameter is probably the most important poetic meter in the history of English poetry. Everyone from Chaucer to Shakespeare and from Milton to Wordsworth wrote much of their verse in this meter. It is highly flexible, supporting lyrical and narrative verse, sonnet and epic.</p>
+    <p>The English pentameter is likely a descendant of the Italian hendecasyllable, a line of eleven syllables used by Dante and Petrarch. Chaucer adapted this line to English, which doesn't have as many weak endings as Italian, resulting in a line of ten syllables.</p>
+    <p>When iambic pentameter is unrhymed, it is called <strong>blank meter</strong>. When it is rhymed in couplets, it is called <strong>heroic couplets</strong>. Iambic pentameter is the meter normally used in the sonnet, a rhymed stanza of fourteen lines.</p>
+  </div>,
   'iambic pentameter catalectic': <div className='paragraph'>
     <p><strong></strong></p>
   </div>,
   'iambic hexameter': <div className='paragraph'>
-    <p><strong></strong></p>
+    <p><strong>Iambic hexameter</strong> consists of twelve syllables arranged in six metrical feet with rising rhythm. The most standard form of iambic hexameter is six iambs (da Dum da Dum da Dum da Dum da Dum) with a caesura after the third foot, but variations are common, including trochaic substitution and an unstressed thirteenth syllable. Stanzas rarely consist of solely iambic hexameters outside of the tradition of alexandrines (rhymed hexameter couplets) inherited from the medieval French tradition. Iambic hexameter sometimes appears as the last line of pentameter stanzas, such as the <em>Spenserian</em> and some <em>heroic couplets</em>. It also appears as the first line of <em>poulter's measure</em>.</p>
   </div>,
   'iambic hexameter catalectic': <div className='paragraph'>
     <p><strong></strong></p>
