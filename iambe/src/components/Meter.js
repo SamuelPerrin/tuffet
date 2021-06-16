@@ -94,7 +94,9 @@ const Meter = props => {
             <div>
               {Object.entries(stanzaMeterCounts)
                 .reduce((a,b) => a+b[1], 0) > 1 ?
-                <p>The most common meters in this sample are:</p> :
+                  Object.entries(stanzaMeterCounts).filter(a => a[1] > 0).length === 1 ? 
+                  <p>The only meter in this sample is:</p> :
+                  <p>The most common meters in this sample are:</p> :
                 <p>This stanza's meter is:</p>}
               <ul>
                 {stanzaMeterCounts && counts.map((entry,i) => (
