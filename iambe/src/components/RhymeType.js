@@ -9,7 +9,8 @@ import {YellowSpan, RedSpan} from './styled/Spans';
 import Table from './styled/Table';
 import Button from './styled/Button';
 
-import { RHYME_TYPES, RHYME_TYPE_DESCRIPTIONS } from '../utils/phonstants';
+import { RHYME_TYPES } from '../utils/phonstants';
+import { RHYME_TYPE_DESCRIPTIONS } from '../utils/descriptions';
 
 const RhymeType = props => {
   const {rhymes, rt, rhymeTypeCounts} = props;

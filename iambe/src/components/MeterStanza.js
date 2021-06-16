@@ -11,7 +11,7 @@ import Button from './styled/Button';
 
 import Poem from '../utils/Poem';
 import Stanza from '../utils/Stanza';
-import { STANZA_METER_DESCRIPTIONS } from '../utils/phonstants';
+import { STANZA_METER_DESCRIPTIONS } from '../utils/descriptions';
 
 const MeterStanza = props => {
   const {stanzaType, poems} = props;

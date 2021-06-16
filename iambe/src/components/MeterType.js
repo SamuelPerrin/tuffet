@@ -12,7 +12,7 @@ import Button from './styled/Button';
 import Poem from '../utils/Poem';
 import Stanza from '../utils/Stanza';
 import Line from '../utils/Line';
-import { LINE_METER_DESCRIPTIONS } from '../utils/phonstants';
+import { LINE_METER_DESCRIPTIONS } from '../utils/descriptions';
 
 const MeterType = props => {
   const {mt, stanzaNum, poems} = props;
