@@ -1,16 +1,23 @@
 import React, {useEffect} from 'react';
 import {connect} from 'react-redux';
-import {Link} from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 
 import Breadcrumbs from './styled/Breadcrumbs';
 import Container from './styled/Container';
 import Section from './styled/Section';
 import {YellowSpan, RedSpan} from './styled/Spans';
 import Table from './styled/Table';
-import { RHYME_TYPES, RHYME_TYPE_DESCRIPTIONS } from '../utils/phonstants';
+import Button from './styled/Button';
+
+import { RHYME_TYPES } from '../utils/phonstants';
+import { RHYME_TYPE_DESCRIPTIONS } from '../utils/descriptions';
 
 const RhymeType = props => {
   const {rhymes, rt, rhymeTypeCounts} = props;
+  const history = useHistory();
+
+  const goBack = () => history.push('/rhyme')
+
   const rhymeList = [];
   rhymes.forEach(poem => poem.forEach(stanza => stanza.forEach(rhyme => rhymeList.push(rhyme))));
 
@@ -54,6 +61,7 @@ const RhymeType = props => {
           <h3><RedSpan>What is {RHYME_TYPES[rt]}?</RedSpan></h3>
             {RHYME_TYPE_DESCRIPTIONS[rt]}
         </Section>
+        <Button onClick={goBack}>Back to Rhymes</Button>
       </Container>
     </div>
   )

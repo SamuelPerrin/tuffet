@@ -20,7 +20,22 @@ const ButtonWrapper = styled.button`
   }};
 
   font-size: ${props => props.theme.fontSize};
-  width: ${props => props.theme.buttonWidth};
+  width: ${props => {
+    switch(props.size) {
+      case 'small':
+        return 'auto';
+      default:
+        return props.theme.buttonWidth
+    }
+  }};
+  padding: ${props => {
+    switch(props.size) {
+      case 'small':
+        return '0.5rem 2rem';
+      default:
+        return 'auto';
+    }
+  }};
   max-width: 18rem;
   height: ${props => props.theme.buttonHeight};
   margin: ${props => props.theme.space};

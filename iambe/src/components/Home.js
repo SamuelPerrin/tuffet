@@ -51,8 +51,8 @@ const Home = props => {
       <Section>
         <h3>Try it!</h3>
         <ButtonRow>
-          <Button onClick={() => submitSample(samples.STITCH)}>A stitch in time</Button>
-          <Button onClick={() => submitSample(samples.GRACE)}>Amazing grace</Button>
+          <Button onClick={() => submitSample(samples.STITCH)}>Stitch in Time</Button>
+          <Button onClick={() => submitSample(samples.GRACE)}>Amazing Grace</Button>
           <Button onClick={() => submitSample(samples.SONNET116)}>Sonnet 116</Button>
         </ButtonRow>
         <form style={{width:'100%', display:'flex', flexFlow:'column nowrap', alignItems:'center', justifyContent:'center'}}>

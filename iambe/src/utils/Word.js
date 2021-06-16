@@ -259,6 +259,11 @@ class Word {
     pron = checkPrefix(this.word, 'un', 'AH2 N');
     if (pron !== null) return pron
 
+    // check if word can be pronounced with any apostrophes changed to e
+    if (this.word.includes("'")) {
+      if (this.word.replace("'",'e') in lexicon) return lexicon[this.word.replace("'",'e')];
+    }
+
     // try switching apostrophes if necessary
     if (this.word.includes("’")) {
       this.word = this.word.replace("’","'");

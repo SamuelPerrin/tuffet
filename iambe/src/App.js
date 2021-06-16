@@ -11,6 +11,7 @@ import Meter from './components/Meter';
 import RhymeScheme from './components/RhymeScheme';
 import RhymeType from './components/RhymeType';
 import Scansion from './components/Scansion';
+import MeterStanza from './components/MeterStanza';
 import MeterType from './components/MeterType';
 import MeterLine from './components/MeterLine';
 
@@ -29,6 +30,7 @@ function App() {
           <Route exact path="/rhyme/scheme" component={RhymeScheme}/>
           <Route exact path="/rhyme/type" component={RhymeType} />
           <Route exact path="/meter/scansion" component={Scansion} />
+          <Route exact path="/meter/stanza" component={MeterStanza} />
           <Route exact path="/meter/type" component={MeterType} />
           <Route exact path="/meter/line" component={MeterLine} />
         </Switch>

@@ -10,6 +10,7 @@ const initialState = {
   stanzaMeters: null,
   stanzaMeterCounts: null,
   mt: null,
+  stanzaType: null,
   lineNum: null,
 }
 
@@ -52,10 +53,35 @@ const reducer = (state=initialState, action) => {
         ...state,
         mt: action.payload.mt,
       }
+    case actions.GET_STANZA_METER_DETAILS:
+      return {
+        ...state,
+        stanzaType: action.payload.stanzaType,
+      }
     case actions.SET_LINE_NUM:
       return {
         ...state,
         lineNum: action.payload.lineNum,
+      }
+    case actions.INCREMENT_LINE_NUM:
+      return {
+        ...state,
+        lineNum: parseInt(state.lineNum) + 1,
+      }
+    case actions.DECREMENT_LINE_NUM:
+      return {
+        ...state,
+        lineNum: parseInt(state.lineNum) - 1,
+      }
+    case actions.INCREMENT_STANZA_NUM:
+      return {
+        ...state,
+        stanzaNum: parseInt(state.stanzaNum) + 1,
+      }
+    case actions.DECREMENT_STANZA_NUM:
+      return {
+        ...state,
+        stanzaNum: parseInt(state.stanzaNum) - 1,
       }
     default:
       return state

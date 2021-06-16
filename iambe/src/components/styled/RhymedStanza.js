@@ -1,6 +1,8 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useState, useRef} from 'react';
+import {connect} from 'react-redux';
 import styled from 'styled-components';
 
+import Poem from '../../utils/Poem';
 import Stanza from '../../utils/Stanza';
 import {COLOR_SEQUENCE} from '../../constants/colors';
 
@@ -21,35 +23,54 @@ const FlexRow = styled.div`
 `
 
 const RhymedStanza = props => {
-  const {stanza} = props; // stanza should be a list of strings
+  const {stanzaNum, poems} = props;
+  const stanzaList = poems.map(poem => new Poem(poem).getStanzas()).flat();
+  const [stanza, setStanza] = useState(stanzaList[stanzaNum].split('\n')); // stanza should be an array of strings
+  const [stanzaRhymes, setStanzaRhymes] = useState(new Stanza(stanza.join('\n')).getRhymes());
   const [rhymePairs, setRhymePairs] = useState([]);
-  const stanzaRhymes = new Stanza(stanza.join('\n')).getRhymes();
-  const offset = 20; // controls alignment of arcs with verses
+  // console.log("at top: stanzaList",stanzaList);
+  
+  useEffect(() => {
+    // console.log("in stanza effect hook, I have stanzaNum", stanzaNum);
+    setStanza(stanzaList[stanzaNum].split('\n'));
+  }, [stanzaNum])
+  
+  useEffect(() => {
+    // console.log("in stanzaRhymes effect hook, I have stanza",stanza);
+    setStanzaRhymes(new Stanza(stanza.join('\n')).getRhymes());
+  },[stanza])
+
+  // console.log("after two hooks: stanza", stanza, "stanzaNum", stanzaNum);
+  let offset = useRef(80);
+  // let offset = 80; // controls alignment of arcs with verses
   const breadthScalar = 0.75; // affects breadth of arcs
   const heightScalar = 0.8; // affects alignment of arcs with verses
 
   useEffect(() => {
-    setRhymePairs(stanzaRhymes.map(rhyme => {
-      return {
-        1: Array.from(document.querySelectorAll('span'))
+    setRhymePairs(stanzaRhymes.map((rhyme,i) => {
+      if (i === 0) {
+        const firstBottom = Array.from(document.querySelectorAll('span.rhymedLine'))
           .filter(x => x.innerHTML === rhyme.lines[0])[0]
-          .getBoundingClientRect().bottom - offset,
-        2: Array.from(document.querySelectorAll('span'))
+          .getBoundingClientRect().bottom;
+        if (firstBottom === 140) offset.current = 80;
+        else if (firstBottom === 100) offset.current = 40;
+        else if (firstBottom === 124) offset.current = -64;
+        else if (firstBottom === 164) offset.current = -16;
+        else if (firstBottom === 188) offset.current = -96; //for first rhyme in 2 or 3, I was using offset.current -= 4*((firstBottom - 140));
+        else if (firstBottom === 212) offset.current = -200;
+        // console.log("firstBottom:",firstBottom);
+        // console.log("offset.current",offset.current);
+      }
+      return {
+        1: Array.from(document.querySelectorAll('span.rhymedLine'))
+          .filter(x => x.innerHTML === rhyme.lines[0])[0]
+          .getBoundingClientRect().bottom - offset.current,
+        2: Array.from(document.querySelectorAll('span.rhymedLine'))
           .filter(x => x.innerHTML === rhyme.lines[1])[0]
-          .getBoundingClientRect().bottom - offset,
+          .getBoundingClientRect().bottom - offset.current,
       }
     }));
-    console.log(`stanzaRhymes:`, stanzaRhymes);
-    console.log(`rhymePairs:`, stanzaRhymes.map(rhyme => {
-      return {
-        1: Array.from(document.querySelectorAll('span'))
-          .filter(x => x.innerHTML === rhyme.lines[0])[0]
-          .getBoundingClientRect().bottom - offset,
-        2: Array.from(document.querySelectorAll('span'))
-          .filter(x => x.innerHTML === rhyme.lines[1])[0]
-          .getBoundingClientRect().bottom - offset,
-      }}));
-  }, []);
+  }, [stanzaRhymes]);
 
   const seenLines = {};
   let colorsUsed = -1;
@@ -57,32 +78,44 @@ const RhymedStanza = props => {
   return (
     <FlexRow>
       <div style={{marginLeft:'0.3rem'}}>
-        {stanza.map(line => <StyledLine>{line}</StyledLine>)}
+        {stanza.map(line => <StyledLine className='rhymedLine'>{line}</StyledLine>)}
       </div>
       <StyledSVG>
         <g fill={'none'} strokeWidth={3}>
+          {/* {console.log("in render: rhymePairs",rhymePairs);} */}
           {rhymePairs.map((pair, i) => {
-            if (stanzaRhymes[i].lines[0] in seenLines) {
-              seenLines[stanzaRhymes[i].lines[1]] = seenLines[stanzaRhymes[i].lines[0]]
-            } else {
-              colorsUsed += 1;
-              seenLines[stanzaRhymes[i].lines[1]] = COLOR_SEQUENCE[colorsUsed % COLOR_SEQUENCE.length];
-            } console.log(`y1: ${pair[1]} - ${rhymePairs[0][1]} * ${heightScalar} = ${pair[1] - rhymePairs[0][1] * heightScalar}`)
-            
-            return (
-            <path 
-              d = {`M ${0},${pair[1] - rhymePairs[0][1] * heightScalar}
-                    C ${breadthScalar * (pair[2] - pair[1])},${pair[1] - rhymePairs[0][1] * heightScalar}
-                    ${breadthScalar * (pair[2] - pair[1])},${pair[2] - rhymePairs[0][1] * heightScalar}
-                    ${0},${pair[2] - rhymePairs[0][1] * heightScalar}`}
-              stroke={stanzaRhymes[i].lines[0] in seenLines ? seenLines[stanzaRhymes[i].lines[0]] : COLOR_SEQUENCE[colorsUsed % COLOR_SEQUENCE.length]}
-              key={stanzaRhymes[i].lines[0]}
-            />
-          )})}
+            if (stanzaRhymes.length > i) {
+              // console.log("in render: stanzaRhymes",stanzaRhymes,"stanzaRhymes[i]",stanzaRhymes[i]);
+              if (stanzaRhymes.length > i && stanzaRhymes[i].lines[0] in seenLines) {
+                seenLines[stanzaRhymes[i].lines[1]] = seenLines[stanzaRhymes[i].lines[0]]
+              } else if (stanzaRhymes.length > i) {
+                colorsUsed += 1;
+                seenLines[stanzaRhymes[i].lines[1]] = COLOR_SEQUENCE[colorsUsed % COLOR_SEQUENCE.length];
+              }
+              
+              return (
+              <path 
+                d = {`M ${0},${pair[1] - rhymePairs[0][1] * heightScalar}
+                      C ${breadthScalar * (pair[2] - pair[1])},${pair[1] - rhymePairs[0][1] * heightScalar}
+                      ${breadthScalar * (pair[2] - pair[1])},${pair[2] - rhymePairs[0][1] * heightScalar}
+                      ${0},${pair[2] - rhymePairs[0][1] * heightScalar}`}
+                stroke={stanzaRhymes[i].lines[0] in seenLines ? seenLines[stanzaRhymes[i].lines[0]] : COLOR_SEQUENCE[colorsUsed % COLOR_SEQUENCE.length]}
+                key={stanzaRhymes[i].lines[0]}
+              />)
+            }
+          })}
         </g>
       </StyledSVG>
     </FlexRow>
   )
 }
 
-export default RhymedStanza;
+const mapStateToProps = state => {
+  return {
+    ...state,
+    poems: state.poems,
+    stanzaNum: state.stanzaNum,
+  }
+}
+
+export default connect(mapStateToProps, {})(RhymedStanza);

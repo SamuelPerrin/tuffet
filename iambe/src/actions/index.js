@@ -6,7 +6,12 @@ export const GET_RHYME_TYPE_DETAILS = 'GET_RHYME_TYPE_DETAILS';
 export const GET_METER = 'GET_METER';
 export const GET_LINE_METER_DETAILS = 'GET_LINE_METER_DETAILS';
 export const GET_METER_TYPE_DETAILS = 'GET_METER_TYPE_DETAILS';
+export const GET_STANZA_METER_DETAILS = 'GET_STANZA_METER_DETAILS';
 export const SET_LINE_NUM = 'SET_LINE_NUM';
+export const INCREMENT_LINE_NUM = 'INCREMENT_LINE_NUM';
+export const DECREMENT_LINE_NUM = 'DECREMENT_LINE_NUM';
+export const INCREMENT_STANZA_NUM = 'INCREMENT_STANZA_NUM';
+export const DECREMENT_STANZA_NUM = 'DECREMENT_STANZA_NUM';
 
 export const getRhymes = poetry => {
   const anth = new Anthology(poetry);
@@ -35,4 +40,13 @@ export const getLineMeterDetails = num => ({type:GET_LINE_METER_DETAILS, payload
 
 export const getMeterTypeDetails = meterType => ({type:GET_METER_TYPE_DETAILS, payload:{mt: meterType}});
 
+export const getStanzaMeterDetails = stanzaType => ({type:GET_STANZA_METER_DETAILS, payload:{stanzaType: stanzaType}});
+
 export const setLineNum = num => ({type:SET_LINE_NUM, payload:{lineNum: num}});
+
+export const crement = (direction, toCrement) => {
+  if (direction === 'in' && toCrement === 'lineNum') return {type:INCREMENT_LINE_NUM, payload:{}};
+  else if (direction === 'de' && toCrement === 'lineNum') return {type:DECREMENT_LINE_NUM, payload:{}};
+  else if (direction === 'in' && toCrement === 'stanzaNum') return {type:INCREMENT_STANZA_NUM, payload:{}};
+  else if (direction === 'de' && toCrement === 'stanzaNum') return {type:DECREMENT_STANZA_NUM, payload:{}};
+}

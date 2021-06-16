@@ -4,6 +4,7 @@ import Word from './Word';
 class Line {
   // a string that represents a line of verse
   constructor(text) {
+    // console.log("in constructor for Line with",text);
     this.text = text.trim();
   }
 
@@ -199,6 +200,7 @@ class Line {
       else if (equiv(foots.slice(-2), ['T','unstr'])) changeFeet(['T','unstr'], ['D']);
     } else if (foots.slice(-1)[0] === 'str') { // weird lines ending in 'str'
       if (equiv(foots.slice(-3), ['I','A','str'])) changeFeet(['I','A','str'], ['I','I','I']);
+      else if (equiv(foots.slice(-3), ['U','A','str'])) changeFeet(['U','A','str'], ['U','I','I']);
       else if (equiv(foots.slice(-3), ['D','I','str']) && feet.slice(-3,-2)[0][2] < feet.slice(-2,-1)[0][0] && feet.slice(-2,-1)[0][1] < feet.slice(-1)[0]) {
         changeFeet(['D','I','str'], ['T','T','T']); 
       }
@@ -239,10 +241,12 @@ class Line {
     }
       // weird lines ending in A, D, U
       else if (equiv(foots.slice(-4), ['I','I','A','A'])) changeFeet(['I','I','A','A'], ['I','I','I','T','I']);
+      else if (equiv(foots.slice(-4), ['D','T','U','A'])) changeFeet(['D','T','U','A'], ['T','I','I','U','I']);
       else if (equiv(foots.slice(-2), ['T','D']) && feet.slice(-1)[0][2] < feet.slice(-1)[0][1]) {
         changeFeet(['T','D'], ['T','T','str']);
         dumpsters()
       }
+      else if (equiv(foots.slice(-3), ['I','D','D'])) changeFeet(['I','D','D'], ['I','T','I','U']);
       else if (equiv(foots.slice(-4), ['U','D','T','U'])) changeFeet(['U','D','T','U'], ['A','A','A']);
       else if (equiv(foots.slice(-4), ['U','D','D','U'])) changeFeet(['U','D','D','U'], ['U','T','I','I','U']);
       else if (equiv(foots.slice(-4), ['I','A','D','U'])) changeFeet(['I','A','D','U'], ['I','I','I','I','U']);
@@ -574,9 +578,9 @@ class Line {
      */
     
     // console.log("in equalizeVowels with wrd",wrd,"sylCount",sylCount,"vowCount",vowCount,"stressList",stressList)
-    const triphs = ['eye', 'eau', 'owe'];
+    const triphs = ['eau', 'owe','iew'];
     let word = wrd.replace("'","").toLowerCase();
-    word = wrd.replace("’","");
+    word = word.replace("’","");
     let diphCount = 0;
     let silentEs = 0;
     let toRemove = [];
@@ -584,10 +588,16 @@ class Line {
     // check for a few problematic words with hard-coded solutions
     if (word === 'bounteous' && stressList.length === 2) return {sylCount:2, vowCount:2, diphCount:0, toRemove:[2,5,7]};
     else if (word === 'beauteous' && stressList.length === 2) return {sylCount:2, vowCount:2, diphCount:0, toRemove:[2,3,5,7]};
+    else if (word === 'aisle' && stressList.length === 1) return {sylCount:1, vowCount:1, diphCount:0, toRemove:[1,4]};
+    else if (word === 'difference' && stressList.length === 2) return {sylCount:2, vowCount:2, diphCount:0, toRemove:[4,9]};
     else if (word === 'antique') return {sylCount:2, vowCount:2, diphCount:0, toRemove:[5,6]};
     else if (word === 'away') return {sylCount:2, vowCount:2, diphCount:1, toRemove:[]};
+    else if (word === 'tongue') return {sylCount:1, vowCount:1, diphCount:0, toRemove:[4,5]};
+    else if (word.slice(0,3) === 'eye') return {sylCount:1, vowCount:1, diphCount:0, toRemove:[1,2]};
     else if (word.includes('prayer') && stressList.length === 1) return {sylCount:1, vowCount:1, diphCount:0, toRemove:[3,4]};
     else if (word.includes('ower') && stressList.length === 1) return {sylCount:1, vowCount:1, diphCount:0, toRemove:[word.indexOf('er')]};
+    else if (wrd.includes("e'e") && stressList.length === 1) return {sylCount:1, vowCount:1, diphCount:0, toRemove:[wrd.indexOf("e'e")+2]};
+    else if (wrd.includes("o'e") && stressList.length === 1) return {sylCount:1, vowCount:1, diphCount:0, toRemove:[wrd.indexOf("o'e")+2]};
 
     if (word[0].toLowerCase() === 'y') toRemove.push(0);
 
@@ -670,8 +680,10 @@ class Line {
             sylCount = eq.sylCount;
             vowCount = eq.vowCount;
             diphCount += eq.diphCount;
+            if (diphCount === 3) diphCount = 2; // it was overcounting diphs in "Mountains"
             silentEs += eq.silentEs;
             toRemove = eq.toRemove;
+            // console.log("leaving diph part with word",word,"and diphCount",diphCount);
           }
         })
       }
@@ -747,10 +759,10 @@ class Line {
           vowCount--;
         }
       
-      if (elided) {
+      if (elided) { // remove the nth vowel, which we think is elided
         let vows = 0;
         let pos = 0;
-        while (vows < elided) {
+        while (vows < elided && pos < word.length) {
           if (word[pos] in phonstants.SHORT_VOWELS) {
             vows++;
           }
@@ -762,7 +774,17 @@ class Line {
       }
     }
 
-    // if (this.text.includes("spirit")) console.log("leaving equalizeVowels with",word,"sylCount",sylCount,"diphCount",diphCount,"silentEs",silentEs,"toRemove",toRemove)
+    // check for interior silentE
+    if (vowCount > sylCount) {
+      const re = /[aeiou][bcdfghjklmnprstvwxyz]e/;
+      const spot = wrd.search(re);
+      if (spot > -1 && !(toRemove.includes(spot + 2))) {
+        vowCount--;
+        toRemove.push(spot + 2);
+      }
+    }
+
+    // if (this.text.includes("beguiles")) console.log("leaving equalizeVowels with",word,"sylCount",sylCount,"diphCount",diphCount,"silentEs",silentEs,"toRemove",toRemove);
 
     return {sylCount, vowCount, diphCount, silentEs, toRemove};
   }
@@ -964,13 +986,54 @@ class Line {
     })
     let finalMarkList = markList.join('').split('');
 
-    punctPos.forEach(punct => {
-      finalMarkList.splice(punct, 0, nbsp);
-    })
+    punctPos.forEach(punct => finalMarkList.splice(punct, 0, nbsp));
 
     const marks = finalMarkList.join(``);
 
     return marks;
+  }
+
+  getVariationList() {
+    /**
+     * Returns an array of objects with data about the metrical variations present in the line (if any)
+     * Each object has the following structure:
+     *   varType: string labelling the type of variation (trochaic inversion, elision, feminine ending, etc)
+     *   foot: int saying which foot contains the variation
+     */
+
+    const varList = [];
+    const meter = this.getMeter();
+
+    if (meter.label.rhythm === 'iambic') {// check for variations in an iambic line
+      meter.foots.forEach((foot,i) => {
+        if (foot === 'T') varList.push({
+          varType: 'trochaic inversion',
+          foot: i+1,
+        })
+        else if (foot === 'P') varList.push({
+          varType: 'pyrrhic substitution',
+          foot: i+1,
+        })
+        else if (foot === 'unstr') {
+          if (new Word(this.getTokens().slice(-1)[0]).getStressList().slice(-1)[0] === 4) {
+            varList.push({
+              varType: 'feminine ending',
+              foot: i+1,
+            })
+          }
+          else varList.push({
+            varType: 'catalexis',
+            foot: i+1,
+          })
+        }
+        else if (foot === 'A') varList.push({
+          varType: 'anapestic substitution',
+          foot: i+1,
+        })
+      })
+    }
+
+    return varList;
   }
 }
 

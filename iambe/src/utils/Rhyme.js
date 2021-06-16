@@ -247,7 +247,9 @@ class Rhyme {
 
     // if (rhymeType === 'N/A') console.log(`no rhyme for ${pron1} and ${pron2}`);
 
-    return rhymeType
+    // console.log("leaving getRhymeType for",term1,"and",term2,"with",rhymeType);
+
+    return rhymeType;
   }
 }
 

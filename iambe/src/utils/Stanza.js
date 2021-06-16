@@ -61,11 +61,11 @@ class Stanza {
           // check if the rhymes in each rhymeScheme in secondPossibles are also in nonzeroes
           // only stanzas that don't result in any non-rhymes will be allowed into thirdPossibles
           const thirdPossibles = secondPossibles.filter(scheme => scheme.pairs.every(pair => nonzeroes.map(item => item[0]).includes(pair)));
-          if (!thirdPossibles.length) {
+          if (!thirdPossibles.length && !recurring) {
             // console.log(`that filtered out all of them: length ${thirdPossibles.length}\nRunning again with nonzeroes instead of rhymes`);
             const new_scores = {};
             nonzeroes.forEach(i => new_scores[i[0]] = i[1]);
-            return this.winnower(rhymeSchemes,new_scores);
+            return this.winnower(rhymeSchemes,new_scores,true);
           }
           else {
             // console.log(`thirdPossibles: ${thirdPossibles.map(x => " | " + x.rs + ": " + x.pairs.toString())}`);
@@ -154,7 +154,7 @@ class Stanza {
         fourthPossibles = output;
       } else if (!!output && output.length === 1) {
         return output[0];
-      }
+      } else if (allScores.twofour > 0) return 'quatr'; // for quatrains that otherwise wouldn't be rhymed
 
       // Perform a few last checks to correct some of winnower's biases
       const schemes = {quatr:false,ababx:false,aabax:false,cpls2:false,aaaax:false};
@@ -445,6 +445,7 @@ class Stanza {
       const fiveseven = new Rhyme(stan[4], stan[6]).getScore();
       const fiveeight = new Rhyme(stan[4], stan[7]).getScore();
       const sixseven = new Rhyme(stan[5], stan[6]).getScore();
+      const sixeight = new Rhyme(stan[5], stan[7]).getScore();
       const seveneight = new Rhyme(stan[6], stan[7]).getScore();
 
       const possibles = [
@@ -454,6 +455,7 @@ class Stanza {
         {rs:'oc148', pairs:['onetwo', 'foureight', 'fivesix']},
         {rs:'ocaaa', pairs:['onetwo', 'onethree', 'twothree', 'foureight', 'fivesix', 'fiveseven', 'sixseven']},
         {rs:'djuan', pairs:['onethree','onefive','twofour','twosix','threefive','foursix','seveneight']},
+        {rs:'quat2', pairs:['twofour','sixeight']}
       ];
 
       const allScores = {
@@ -471,6 +473,7 @@ class Stanza {
         'fiveseven':fiveseven,
         'fiveeight':fiveeight,
         'sixseven':sixseven,
+        'sixeight':sixeight,
         'seveneight':seveneight,
       };
 
@@ -676,7 +679,7 @@ class Stanza {
      * Each returned object has this structure: {lines, words, rt}
      */
 
-    const rs = this.getRhymeScheme()
+    const rs = this.getRhymeScheme();
     const lines = this.getLines();
     const rhymes = [];
 
@@ -739,7 +742,7 @@ class Stanza {
         case 'aabcb':
           return makeRhymes([[0, 1], [2, 4]]);
         case 'splt1':
-          return makeRhymes([2, 4]);
+          return makeRhymes([[2, 4]]);
         case 'splt3':
           return makeRhymes([[1, 4]]);
         case 'aabab':
@@ -826,6 +829,8 @@ class Stanza {
           return makeRhymes([[0, 1], [1, 2], [3, 7], [4, 5], [5, 6]]);
         case 'djuan':
           return makeRhymes([[0, 2], [1, 3], [2, 4], [3, 5], [6, 7]]);
+        case 'quat2':
+          return makeRhymes([[1, 3], [5, 7]]);
         default:
           return rhymes;
       }
@@ -911,7 +916,10 @@ class Stanza {
     }
     else if (totalLines === 6) {
       if (counts.iambic4false === 4 && counts.iambic3false === 2) guess = 'common particular';
-      else if (counts.trochaic8false + counts.trochaic8true > 2) guess = 'raven';
+      // else if (counts.trochaic8false + counts.trochaic8true > 2) guess = 'raven';
+    }
+    else if (totalLines === 8) {
+      if ((counts.iambic4false === 4 || counts.iambic4true === 4) && counts.iambic3false === 4) guess = 'common hymn, doubled';
     }
     else if (totalLines === 9) {
       if (counts.iambic4false === 8 && counts.iambic3false === 1) guess = 'Lady of Shalott';
