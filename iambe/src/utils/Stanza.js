@@ -61,11 +61,11 @@ class Stanza {
           // check if the rhymes in each rhymeScheme in secondPossibles are also in nonzeroes
           // only stanzas that don't result in any non-rhymes will be allowed into thirdPossibles
           const thirdPossibles = secondPossibles.filter(scheme => scheme.pairs.every(pair => nonzeroes.map(item => item[0]).includes(pair)));
-          if (!thirdPossibles.length) {
+          if (!thirdPossibles.length && !recurring) {
             // console.log(`that filtered out all of them: length ${thirdPossibles.length}\nRunning again with nonzeroes instead of rhymes`);
             const new_scores = {};
             nonzeroes.forEach(i => new_scores[i[0]] = i[1]);
-            return this.winnower(rhymeSchemes,new_scores);
+            return this.winnower(rhymeSchemes,new_scores,true);
           }
           else {
             // console.log(`thirdPossibles: ${thirdPossibles.map(x => " | " + x.rs + ": " + x.pairs.toString())}`);
@@ -154,7 +154,7 @@ class Stanza {
         fourthPossibles = output;
       } else if (!!output && output.length === 1) {
         return output[0];
-      }
+      } else if (allScores.twofour > 0) return 'quatr'; // for quatrains that otherwise wouldn't be rhymed
 
       // Perform a few last checks to correct some of winnower's biases
       const schemes = {quatr:false,ababx:false,aabax:false,cpls2:false,aaaax:false};

@@ -200,6 +200,7 @@ class Line {
       else if (equiv(foots.slice(-2), ['T','unstr'])) changeFeet(['T','unstr'], ['D']);
     } else if (foots.slice(-1)[0] === 'str') { // weird lines ending in 'str'
       if (equiv(foots.slice(-3), ['I','A','str'])) changeFeet(['I','A','str'], ['I','I','I']);
+      else if (equiv(foots.slice(-3), ['U','A','str'])) changeFeet(['U','A','str'], ['U','I','I']);
       else if (equiv(foots.slice(-3), ['D','I','str']) && feet.slice(-3,-2)[0][2] < feet.slice(-2,-1)[0][0] && feet.slice(-2,-1)[0][1] < feet.slice(-1)[0]) {
         changeFeet(['D','I','str'], ['T','T','T']); 
       }
