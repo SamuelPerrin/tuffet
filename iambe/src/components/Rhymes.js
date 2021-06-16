@@ -47,6 +47,7 @@ const Rhymes = props => {
   }
 
   const typeCounts = Object.entries(rhymeTypeCounts).filter(x => x[1] > 0).sort((a,b) => b[1] - a[1]);
+  const totalRhymes = Object.keys(rhymeTypeCounts).reduce((a,b) => a + rhymeTypeCounts[b], 0);
 
   const pieData = {
     labels: typeCounts.map(x => x[0]),
@@ -71,7 +72,7 @@ const Rhymes = props => {
 
   let stanzaNum = -1;
 
-  if (Object.keys(rhymeTypeCounts).reduce((a,b) => a + rhymeTypeCounts[b], 0) === 0) {
+  if (totalRhymes === 0) {
     return (
       <div>
         <Breadcrumbs>
@@ -93,8 +94,9 @@ const Rhymes = props => {
         <Link to='/rhyme' className='current'>Rhyme</Link>
       </Breadcrumbs>
       <Container>
-      <Section>
+        <Section>
           <h3><YellowSpan>Rhymes by Type</YellowSpan></h3>
+          <p>There {totalRhymes === 1 ? 'is': 'are'} {totalRhymes} rhyme{totalRhymes === 1 ? '' : 's'} in this sample.</p>
           <p>The most common rhyme-types in this sample are:</p>
           <div style={{
             display:'flex',
