@@ -5475,7 +5475,7 @@ const lexicon = {
 	"muscle": ["M AH1 S AH0 L"],
 	"muse": ["M Y UW1 Z"],
 	"mused": ["M Y UW1 Z D"],
-	"mushroom": ["M AH1 SH R UW2 M"],
+	"mushroom": ["M AH1 SH R UW0 M"],
 	"music": ["M Y UW1 Z IH0 K"],
 	"musical": ["M Y UW1 Z IH0 K AH2 L"],
 	"musician": ["M Y UW0 Z IH1 SH AH0 N"],
