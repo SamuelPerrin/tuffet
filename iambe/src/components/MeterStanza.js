@@ -1,11 +1,11 @@
-import React, {useEffect} from 'react';
+import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
-import { Link, useHistory } from 'react-router-dom';
+import { Link, useHistory, Redirect } from 'react-router-dom';
 
 import Breadcrumbs from './styled/Breadcrumbs';
 import Container from './styled/Container';
 import Section from './styled/Section';
-import {YellowSpan, RedSpan} from './styled/Spans';
+import { YellowSpan, RedSpan } from './styled/Spans';
 import Table from './styled/Table';
 import Button from './styled/Button';
 
@@ -25,12 +25,15 @@ const MeterStanza = props => {
     history.push("/meter");
   }
 
-  let stanzaList = [];
-  poems.forEach(poem => new Poem(poem).getStanzas().forEach(stanza => stanzaList.push(new Stanza(stanza))))
-  
-  stanzaList = stanzaList.filter(stanza => stanza.getMeter() === stanzaType);
+  if (!!poems) {
+    var stanzaList = [];
+    poems.forEach(poem => new Poem(poem).getStanzas().forEach(stanza => stanzaList.push(new Stanza(stanza))))
+    
+    stanzaList = stanzaList.filter(stanza => stanza.getMeter() === stanzaType);
+  }
 
-  return (
+  if (!poems) return <Redirect to='/' />
+  else return (
     <div>
       <Breadcrumbs>
         <Link to='/'>Home</Link>

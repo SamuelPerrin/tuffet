@@ -1,5 +1,6 @@
 import React, {useEffect} from 'react';
-import {connect} from 'react-redux';
+import { connect } from 'react-redux';
+import { Link, useHistory, Redirect } from 'react-router-dom';
 
 import { Pie } from 'react-chartjs-2';
 
@@ -10,9 +11,8 @@ import {YellowSpan} from './styled/Spans';
 import ListItemTile from './styled/ListItemTile';
 import StanzaTile from './styled/StanzaTile';
 import Button from './styled/Button';
-import {Link, useHistory} from 'react-router-dom';
 
-import {getLineMeterDetails, getRhymes, getStanzaMeterDetails } from '../actions';
+import { getLineMeterDetails, getRhymes, getStanzaMeterDetails } from '../actions';
 
 import { COLOR_SEQUENCE } from '../constants/colors';
 import Poem from '../utils/Poem';
@@ -42,9 +42,9 @@ const Meter = props => {
     history.push("/rhyme");
   }
 
-  const counts = Object.entries(stanzaMeterCounts).filter(x => x[1] > 0).sort((a,b) => b[1] - a[1]);
+  const counts = stanzaMeterCounts && Object.entries(stanzaMeterCounts).filter(x => x[1] > 0).sort((a,b) => b[1] - a[1]);
   
-  const pieData = {
+  const pieData = stanzaMeterCounts && {
     labels: counts.map(x => x[0]),
     datasets: [{
       label: "Meter by Stanza",
@@ -71,8 +71,8 @@ const Meter = props => {
     window.scrollTo(0,0);
   }, []);
 
-
-  return (
+  if (!poetry) return <Redirect to='/' />;
+  else return (
     <div>
       <Breadcrumbs>
         <Link to='/' key='Home'>Home</Link>

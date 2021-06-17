@@ -1,6 +1,6 @@
-import React, {useEffect} from 'react';
+import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
-import { Link, useHistory } from 'react-router-dom';
+import { Link, useHistory, Redirect } from 'react-router-dom';
 
 import Breadcrumbs from './styled/Breadcrumbs';
 import Container from './styled/Container';
@@ -26,17 +26,20 @@ const MeterType = props => {
     history.push('/meter/scansion');
   }
 
-  const stanzaList = [];
-  poems.forEach(poem => new Poem(poem).getStanzas().forEach(stanza => stanzaList.push(stanza)));
+  if (!!poems) {
+    var stanzaList = [];
+    poems.forEach(poem => new Poem(poem).getStanzas().forEach(stanza => stanzaList.push(stanza)));
+  
+    var lines = new Stanza(stanzaList[stanzaNum]).getLines();
+    var lineMeterCounts = {}
+    lines.forEach(line => {
+      const meterLabel = new Line(line).getMeterLabelPhrase();
+      lineMeterCounts[meterLabel] = meterLabel in lineMeterCounts ? lineMeterCounts[meterLabel] + 1 : 1;
+    })
+  }
 
-  const lines = new Stanza(stanzaList[stanzaNum]).getLines();
-  const lineMeterCounts = {}
-  lines.forEach(line => {
-    const meterLabel = new Line(line).getMeterLabelPhrase();
-    lineMeterCounts[meterLabel] = meterLabel in lineMeterCounts ? lineMeterCounts[meterLabel] + 1 : 1;
-  })
-
-  return (
+  if (!poems) return <Redirect to='/' />
+  else return (
     <div>
       <Breadcrumbs>
         <Link to='/'>Home</Link>

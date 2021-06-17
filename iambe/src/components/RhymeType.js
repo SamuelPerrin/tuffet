@@ -1,11 +1,11 @@
-import React, {useEffect} from 'react';
-import {connect} from 'react-redux';
-import { Link, useHistory } from 'react-router-dom';
+import React, { useEffect } from 'react';
+import { connect } from 'react-redux';
+import { Link, useHistory, Redirect } from 'react-router-dom';
 
 import Breadcrumbs from './styled/Breadcrumbs';
 import Container from './styled/Container';
 import Section from './styled/Section';
-import {YellowSpan, RedSpan} from './styled/Spans';
+import { YellowSpan, RedSpan } from './styled/Spans';
 import Table from './styled/Table';
 import Button from './styled/Button';
 
@@ -18,14 +18,17 @@ const RhymeType = props => {
 
   const goBack = () => history.push('/rhyme')
 
-  const rhymeList = [];
-  rhymes.forEach(poem => poem.forEach(stanza => stanza.forEach(rhyme => rhymeList.push(rhyme))));
+  if (!!rhymes) {
+    var rhymeList = [];
+    rhymes.forEach(poem => poem.forEach(stanza => stanza.forEach(rhyme => rhymeList.push(rhyme))));
+  }
 
   useEffect(() => {
     window.scrollTo(0,0);
   }, []);
 
-  return (
+  if (!rhymes) return <Redirect to='/' />
+  else return (
     <div>
       <Breadcrumbs>
         <Link to='/'>Home</Link>

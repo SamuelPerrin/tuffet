@@ -1,6 +1,6 @@
-import React, {useEffect} from 'react';
-import {connect} from 'react-redux';
-import {Link, useHistory} from 'react-router-dom';
+import React, { useEffect } from 'react';
+import { connect } from 'react-redux';
+import { Link, useHistory, Redirect } from 'react-router-dom';
 
 import Breadcrumbs from './styled/Breadcrumbs';
 import Container from './styled/Container';
@@ -20,12 +20,14 @@ const MeterLine = props => {
   const {poems, stanzaNum, lineNum, crement, getMeterTypeDetails} = props;
   const history = useHistory();
 
-  const stanzaList = [];
-  poems.forEach(poem => new Poem(poem).getStanzas().forEach(stanza => stanzaList.push(stanza)));
-  const stanza = new Stanza(stanzaList[stanzaNum]);
-  const line = new Line(stanza.getLines()[lineNum]);
-  const marks = line.getMarkString();
-  const varList = line.getVariationList();
+  if (!!poems) {
+    var stanzaList = [];
+    poems.forEach(poem => new Poem(poem).getStanzas().forEach(stanza => stanzaList.push(stanza)));
+    var stanza = new Stanza(stanzaList[stanzaNum]);
+    var line = new Line(stanza.getLines()[lineNum]);
+    var marks = line.getMarkString();
+    var varList = line.getVariationList();
+  }
 
   const goBack = () => {
     history.push('/meter/scansion');
@@ -48,7 +50,8 @@ const MeterLine = props => {
     window.scrollTo(0,0);
   }, []);
 
-  return (
+  if (!poems) return <Redirect to='/' />
+  else return (
     <div>
       <Breadcrumbs>
         <Link to='/' key="Home">Home</Link>

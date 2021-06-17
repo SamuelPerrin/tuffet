@@ -1,6 +1,6 @@
-import React, {useEffect} from 'react';
-import {connect} from 'react-redux';
-import { Link, useHistory } from 'react-router-dom';
+import React, { useEffect } from 'react';
+import { connect } from 'react-redux';
+import { Link, useHistory, Redirect } from 'react-router-dom';
 
 import Breadcrumbs from './styled/Breadcrumbs';
 import { YellowSpan, RedSpan } from './styled/Spans';
@@ -46,10 +46,10 @@ const Rhymes = props => {
     history.push("/meter");
   }
 
-  const typeCounts = Object.entries(rhymeTypeCounts).filter(x => x[1] > 0).sort((a,b) => b[1] - a[1]);
-  const totalRhymes = Object.keys(rhymeTypeCounts).reduce((a,b) => a + rhymeTypeCounts[b], 0);
+  const typeCounts = rhymeTypeCounts && Object.entries(rhymeTypeCounts).filter(x => x[1] > 0).sort((a,b) => b[1] - a[1]);
+  const totalRhymes = rhymeTypeCounts && Object.keys(rhymeTypeCounts).reduce((a,b) => a + rhymeTypeCounts[b], 0);
 
-  const pieData = {
+  const pieData = rhymeTypeCounts && {
     labels: typeCounts.map(x => x[0]),
     datasets: [{
       label: "Rhyme Types",
@@ -71,8 +71,8 @@ const Rhymes = props => {
   };
 
   let stanzaNum = -1;
-
-  if (totalRhymes === 0) {
+  if (!poems) return <Redirect to="/"/>
+  else if (totalRhymes === 0) {
     return (
       <div>
         <Breadcrumbs>
