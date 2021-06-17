@@ -37,7 +37,7 @@ const RhymeType = props => {
       </Breadcrumbs>
       <Container>
         <Section>
-          <h3><YellowSpan>Rhyme Type: {RHYME_TYPES[rt]}</YellowSpan></h3>
+          <h2><YellowSpan>Rhyme Type: {RHYME_TYPES[rt]}</YellowSpan></h2>
           <Table maxWidth={'1200px'}>
             <caption>This selection has {rhymeTypeCounts[rt]} instance{rhymeTypeCounts[rt] === 1 ? '' : 's'} of {RHYME_TYPES[rt]}:</caption>
             <thead>
@@ -61,7 +61,7 @@ const RhymeType = props => {
           </Table>
         </Section>
         <Section>
-          <h3><RedSpan>What is {RHYME_TYPES[rt]}?</RedSpan></h3>
+          <h2><RedSpan>What is {RHYME_TYPES[rt]}?</RedSpan></h2>
             {RHYME_TYPE_DESCRIPTIONS[rt]}
         </Section>
         <Button onClick={goBack}>Back to Rhymes</Button>

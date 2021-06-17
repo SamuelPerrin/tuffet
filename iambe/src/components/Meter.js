@@ -80,7 +80,7 @@ const Meter = props => {
       </Breadcrumbs>
       <Container>
         <Section>
-          <h3><YellowSpan>Stanzas by Meter</YellowSpan></h3>
+          <h2><YellowSpan>Stanzas by Meter</YellowSpan></h2>
           <div style={{
             display:'flex',
             flexFlow:'row wrap',

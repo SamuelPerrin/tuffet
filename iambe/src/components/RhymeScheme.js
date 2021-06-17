@@ -48,13 +48,13 @@ const RhymeScheme = props => {
       </Breadcrumbs>
       <Container>
         <Section>
-          <h3><RedSpan>Rhyme Scheme</RedSpan></h3>
+          <h2><RedSpan>Rhyme Scheme</RedSpan></h2>
           <RhymedStanza stanza={stanza.getLines()}/>
           <br/>
           <p>This stanza's rhyme scheme is: <BlueSpan>{RHYME_SCHEMES[stanza.getRhymeScheme()]}</BlueSpan>.</p>
         </Section>
         <Section>
-          <h3><YellowSpan>Rhymes</YellowSpan></h3>
+          <h2><YellowSpan>Rhymes</YellowSpan></h2>
           <Table maxWidth={'1200px'}>
             <caption>This stanza has {stanzaRhymes.length} rhyme{stanzaRhymes.length === 1 ? '' : 's'}:</caption>
             <thead>

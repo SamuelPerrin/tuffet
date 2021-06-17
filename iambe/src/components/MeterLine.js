@@ -61,7 +61,7 @@ const MeterLine = props => {
       </Breadcrumbs>
       <Container>
         <Section>
-          <h3><YellowSpan>Scansion</YellowSpan></h3>
+          <h2><YellowSpan>Scansion</YellowSpan></h2>
           <p>This line can be scanned as follows:</p>
           <ScannedLine marks={marks} line={line.text} />
           <p style={{marginTop:'1.5rem'}}>This line's meter is:&nbsp;
@@ -75,7 +75,7 @@ const MeterLine = props => {
         </Section>
         {!!varList.length &&
           <Section>
-            <h3><RedSpan>Variations</RedSpan></h3>
+            <h2><RedSpan>Variations</RedSpan></h2>
             <p>This line has {varList.length.toString()} metrical variation{varList.length === 1 ? '' : 's'}:</p>
             <ul>
               {varList.map(vari => (

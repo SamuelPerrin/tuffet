@@ -78,7 +78,7 @@ const Scansion = props => {
       </Breadcrumbs>
       <Container>
         <Section>
-          <h3><RedSpan>Scansion</RedSpan></h3>
+          <h2><RedSpan>Scansion</RedSpan></h2>
           <ScannedStanza stanza={stanza} submitLineNum={submitLineNum} />
           <br/>
           <p>This stanza's meter is:&nbsp;
@@ -91,7 +91,7 @@ const Scansion = props => {
           </p>
         </Section>
         <Section>
-          <h3><YellowSpan>Lines by Meter</YellowSpan></h3>
+          <h2><YellowSpan>Lines by Meter</YellowSpan></h2>
           <p>The most common lines in this stanza are:</p>
           <ul>
             {lineCounts && Object.entries(lineCounts)

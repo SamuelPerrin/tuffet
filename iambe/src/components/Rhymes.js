@@ -81,7 +81,7 @@ const Rhymes = props => {
         </Breadcrumbs>
         <Container>
           <Section>
-            <h3><YellowSpan>Oops!</YellowSpan></h3>
+            <h2><YellowSpan>Oops!</YellowSpan></h2>
             <p>No rhymes found. <Link to='/'>Try again</Link> with a different poem.</p>
           </Section>
         </Container>
@@ -95,7 +95,7 @@ const Rhymes = props => {
       </Breadcrumbs>
       <Container>
         <Section>
-          <h3><YellowSpan>Rhymes by Type</YellowSpan></h3>
+          <h2><YellowSpan>Rhymes by Type</YellowSpan></h2>
           <p>There {totalRhymes === 1 ? 'is': 'are'} {totalRhymes} rhyme{totalRhymes === 1 ? '' : 's'} in this sample.</p>
           <p>The most common rhyme-types in this sample are:</p>
           <div style={{
@@ -121,18 +121,18 @@ const Rhymes = props => {
                 )}
             </ul>
           </div>
-          <Link to="/rhyme/type"><YellowSpan>Read more »</YellowSpan></Link>
+          <Link to="/about/rhymes"><YellowSpan>Read more »</YellowSpan></Link>
         </Section>
         <Section>
-          <h3><RedSpan>Rhyme Schemes</RedSpan></h3>
+          <h2><RedSpan>Rhyme Schemes</RedSpan></h2>
           {Object.entries(rhymeSchemeCounts).reduce((a,b) => a+b[1], 0) > 1 ? <p>The most common rhyme schemes in this sample are:</p> : <p>This stanza's rhyme scheme is:</p>}
           <ol>
             {rhymeSchemeCounts && Object.entries(rhymeSchemeCounts).filter(entry => entry[1] > 0).sort((a,b) => b[1] - a[1]).map(entry => <li key={entry[0]}>{RHYME_SCHEMES[entry[0]]} ({entry[1]} stanza{entry[1] > 1 ? 's' : ''})</li>)}
           </ol>
-          <Link to="/rhyme/scheme"><RedSpan>Read more »</RedSpan></Link>
+          <Link to="/about/rhymes"><RedSpan>Read more »</RedSpan></Link>
           <div style={{border:'1px solid black',borderRadius:'5px',padding:'1rem',marginTop:'1rem'}}>
             {poems.map(poem => new Poem(poem).getStanzas().map(stanza => {
-                stanzaNum++
+                stanzaNum++;
                 return <StanzaTile 
                   onClick={submitRhymeDetail}
                   children={new Stanza(stanza).getLines()} 
