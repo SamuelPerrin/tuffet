@@ -14,6 +14,7 @@ import Scansion from './components/Scansion';
 import MeterStanza from './components/MeterStanza';
 import MeterType from './components/MeterType';
 import MeterLine from './components/MeterLine';
+import AboutRhymes from './components/AboutRhymes';
 
 function App() {
   return (
@@ -33,6 +34,7 @@ function App() {
           <Route exact path="/meter/stanza" component={MeterStanza} />
           <Route exact path="/meter/type" component={MeterType} />
           <Route exact path="/meter/line" component={MeterLine} />
+          <Route exact path="/about/rhymes" component={AboutRhymes} />
         </Switch>
       </div>
     </ThemeProvider>  

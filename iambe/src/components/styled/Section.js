@@ -8,7 +8,7 @@ const Section = styled.section`
   width: 100%;
   margin-bottom: ${props => props.theme.space};
   color: ${props => props.theme.black};
-  h3 {
+  h2 {
     font-size: ${props => props.theme.headerFontSize};
     text-align: left;
   }
