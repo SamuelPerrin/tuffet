@@ -4015,7 +4015,7 @@ const lexicon = {
 	"hazard": ["HH AE1 Z ER0 D"],
 	"haze": ["HH EY1 Z"],
 	"hazel": ["HH EY1 Z AH0 L"],
-	"he": ["HH IY3"],
+	"he": ["HH IY3","HH IY2"],
 	"he'd": ["HH IY1 D"],
 	"he'll": ["HH IY1 L"],
 	"head": ["HH EH1 D"],

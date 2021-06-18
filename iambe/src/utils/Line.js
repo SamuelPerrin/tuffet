@@ -80,6 +80,7 @@ class Line {
         if (foots.length > 1 && foots[1] === 'T')  demerit++;
         if (foots.slice(-1)[0] === 'T')  demerit++;
         if (label.meter === 6) demerit++;
+        if (label.meter === 5 && foots[4] === 'T') demerit += 2;
       } else if (label.rhythm === 'trochaic') {
         demerit++;
         if (foots.includes('D')) demerit++;
