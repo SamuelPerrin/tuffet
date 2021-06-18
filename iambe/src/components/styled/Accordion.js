@@ -14,6 +14,8 @@ const AccordionItemWrapper = styled.div`
     border: none;
     width: 100%;
     color: ${props => props.theme.white};
+    cursor:pointer;
+    }
   }
 
   h3 button.active {

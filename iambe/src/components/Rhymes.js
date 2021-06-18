@@ -71,8 +71,9 @@ const Rhymes = props => {
   };
 
   let stanzaNum = -1;
-  if (!poems) return <Redirect to="/"/>
+  if (!poetry) return <Redirect to="/"/>
   else if (totalRhymes === 0) {
+    console.log('poems',poems);
     return (
       <div>
         <Breadcrumbs>
