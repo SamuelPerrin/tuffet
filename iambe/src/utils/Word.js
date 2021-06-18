@@ -31,20 +31,16 @@ class Word {
     let pron = '';
 
     // Check the lexicon for the pronunciation
-    if (lexicon.hasOwnProperty(this.word)) {
+    if (this.word in lexicon) {
       if (lexicon[this.word].length === 1) {
         pron = rhyme ? lexicon[this.word] : lexicon[this.word][0];
       } else if (rhyme) {
         pron = lexicon[this.word];
       } else {
         // otherwise, if all prons have the same stresses, return first, else return list
-        const stressWords = new Set();
         pron = lexicon[this.word];
-        for (let prawn of pron) {
-          stressWords.add(new Pron(prawn).getStress());
-        }
-        if (stressWords.length === 1) {
-          pron = pron[0];
+        if (pron.map(p => new Pron(p).getStress()).every(st => st === new Pron(pron[0]).getStress())) {
+          pron = pron[0]
         }
       }
     }

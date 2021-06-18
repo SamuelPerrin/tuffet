@@ -37,15 +37,59 @@ class Rhyme {
 
   checkFullness(candidates,which) {
     /*
-     * given a list of prons and a str num representing which of the terms is at issue, returns the pron that makes for the fullest rhyme
+     * Given a list of prons and a str num representing which of the terms is at issue, returns the pron that makes for the fullest rhyme
      * Called by: Rhyme.resolvePron
      */
 
+    // make a list of objects with each pron and its relative fullness
+    const scores = candidates.map(pron => ({pron:pron, score: phonstants.RHYME_FULLNESS[this.getRhymeType(which === 0 ? pron : (null, pron))]}))
+
+    // return the pron that makes the fullest rhyme
+    return scores.sort((a,b) => b.score - a.score)[0].pron;
+  }
+
+  resolvePron(prons) {
+    /**
+     * Given a list of possible pronunciations of one of the Rhyme's lines' terms, returns the pron that makes the fullest rhyme
+     */
+
+    const term1 = new Line(this.line1).getTerm()[0].toLowerCase();
+    const term2 = new Line(this.line2).getTerm()[0].toLowerCase();
+     
+    // decide which line we're dealing with
+    let which;
+    if (new Word(term1).getPron(true)[0] === prons[0]) which = 0; // we're pronouncing line1's term
+    else if (new Word(term2).getPron(true)[0] === prons[0]) which = 1; // we're pronouncing line2's term
+
+    // decide whether all possible prons are metrically equivalent
+    const metricallyEquiv = prons.map(pron => new Pron(pron).getStress()).every(st => st === new Pron(prons[0]).getStress());
+
+    // generate list of candidates
+    const candidates = [];
+    if (metricallyEquiv) prons.forEach(pron => candidates.push(pron));
+    
+    // if not all pronunciations are metrically equivalent, pick only the ones that work with the line's meter
+    else {
+      const lineStresses = new Line( which === 0 ? this.line1 : this.line2).getStress();
+      prons.forEach(pron => {
+        // make an array of pron's stresses as ints
+        const pronStress = new Pron(pron).getStress().split('').map(num => Number(num === '0' ? '4' : num));
+        
+        // if the pron's stresses match the last n stresses of the correct pronunciation of the line, it's a candidate
+        if (lineStresses.slice(-pronStress.length).every((pos,i) => pos === pronStress[i])) candidates.push(pron);
+      })
+    }
+
+    // all remaining candidates are metrically equivalent, so decide which set of vowels makes for the best rhyme with the other term
+    if (candidates.length === 1) return candidates[0];
+    else {
+      return this.checkFullness(candidates, which);
+    }
   }
 
   getScore() {
     /*
-     * returns a number between 0 and 1 that represents the fullness of a rhymetype
+     * Returns a number between 0 and 1 that represents the fullness of a rhymetype
      */
     const rhymeType = this.getRhymeType();
     if (rhymeType in phonstants.RHYME_SCORE) return phonstants.RHYME_SCORE[rhymeType];
@@ -68,7 +112,8 @@ class Rhyme {
     }
     if (pron1 instanceof Array) {
       // *** once resolvePron is written, use it here ***
-      pron1 = pron1[0];
+      if (pron1.length === 1) pron1 = pron1[0];
+      else pron1 = this.resolvePron(pron1);
     }
     const rimes1 = new Pron(pron1).getRimes();
     const nlRime1 = this.numless(rimes1.rime);

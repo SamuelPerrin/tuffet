@@ -339,7 +339,7 @@ class Line {
     let stresses = [];
     for (let word of words) {
       const stress = new Word(word).getStressList();
-      if (stress === 'crux') return this.resolveCrux();
+      if (stress === 'crux') return this.resolveCrux().feet.flat();
       stresses = stresses.concat(stress);
     }
 
