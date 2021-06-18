@@ -217,7 +217,6 @@ class Stanza {
       };
 
       let output = this.winnower(possibles, allScores);
-      console.log("output",output);
       if (!!output && output !== 'N/A') bestGuess = output[0];
       if (!!output && output.length > 1 && output !== 'N/A') {
         fourthPossibles = output;

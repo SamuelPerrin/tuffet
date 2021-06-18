@@ -596,8 +596,8 @@ class Line {
     else if (word.slice(0,3) === 'eye') return {sylCount:1, vowCount:1, diphCount:0, toRemove:[1,2]};
     else if (word.includes('prayer') && stressList.length === 1) return {sylCount:1, vowCount:1, diphCount:0, toRemove:[3,4]};
     else if (word.includes('ower') && stressList.length === 1) return {sylCount:1, vowCount:1, diphCount:0, toRemove:[word.indexOf('er')]};
-    else if (wrd.includes("e'e") && stressList.length === 1) return {sylCount:1, vowCount:1, diphCount:0, toRemove:[wrd.indexOf("e'e")+2]};
-    else if (wrd.includes("o'e") && stressList.length === 1) return {sylCount:1, vowCount:1, diphCount:0, toRemove:[wrd.indexOf("o'e")+2]};
+    else if (wrd.includes("e'e")) return {sylCount:stressList.length, vowCount:stressList.length, diphCount:0, toRemove:[wrd.indexOf("e'e")+2]};
+    else if (wrd.includes("o'e")) return {sylCount:stressList.length, vowCount:stressList.length, diphCount:0, toRemove:[wrd.indexOf("o'e")+2]};
     else if (wrd.includes("itious")) return {sylCount:stressList.length, vowCount:stressList.length, diphCount:0, toRemove:[wrd.indexOf("itious")+2, wrd.indexOf("itious")+4]}
 
     if (word[0].toLowerCase() === 'y') toRemove.push(0);
@@ -673,7 +673,7 @@ class Line {
           }
         })
         Object.keys(phonstants.DIGRAPHS).forEach(digraph => {
-          if (word.includes(digraph)) {
+          if (word.includes(digraph) && digraph[1] !== 'w') { // don't count 'aw' or 'ew' as diphs for this purpose
             diphCount++;
             vowCount--;
             word = word.slice(0, word.indexOf(digraph) + 1) + word.slice(word.indexOf(digraph) + 2);
@@ -860,7 +860,8 @@ class Line {
       }
 
       // remove the second vowel of co-syllabic digraphs from posList
-      while (word.diphCount > 0) {
+      let safetyCount = 0;
+      while (word.diphCount > 0 && safetyCount < 12) {
         let i = 0;
         while (i+1 < posList.length) {
           if (posList[i] + 1 === posList[i+1]) { // adjacent vowels
@@ -875,6 +876,7 @@ class Line {
           }
           i++;
         }
+        safetyCount++;
       }
 
       return {word: word.text, posList: posList}
