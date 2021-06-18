@@ -76,7 +76,7 @@ const RhymeScheme = props => {
           </Table>
         </Section>
         <ButtonRow>
-          {stanzaNum != 0 &&
+          {stanzaNum > 0 &&
           <Button
             size='small'
             onClick={() => submitCrement('de')}
@@ -89,7 +89,7 @@ const RhymeScheme = props => {
           >
             Back to Rhymes
           </Button>
-          {stanzaNum != stanzaList.length - 1 &&
+          {stanzaNum < stanzaList.length - 1 &&
           <Button
             size='small'
             onClick={() => submitCrement('in')}

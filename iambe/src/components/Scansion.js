@@ -66,6 +66,8 @@ const Scansion = props => {
 
   useEffect(() => {
     window.scrollTo(0,0);
+    console.log(stanzaNum);
+    stanzaList && console.log(stanzaList.length);
   }, []);
 
   if (!poems) return <Redirect to='/' />
@@ -109,7 +111,7 @@ const Scansion = props => {
           </ul>
         </Section>
         <ButtonRow>
-          {stanzaNum != 0 && 
+          {stanzaNum > 0 && 
           <Button
           size='small'
             onClick={() => submitCrement('de')}
@@ -122,7 +124,7 @@ const Scansion = props => {
           >
             Back to Meter
           </Button>
-          {stanzaNum+1 != stanzaList.length && 
+          {stanzaNum+1 < stanzaList.length && 
           <Button
             size='small'
             onClick={() => submitCrement('in')}

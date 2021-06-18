@@ -85,7 +85,7 @@ const MeterLine = props => {
           </Section>
         }
         <ButtonRow>
-          {lineNum != 0 &&
+          {lineNum > 0 &&
           <Button
             size='small'
             onClick={() => submitCrement('de')}
@@ -98,7 +98,7 @@ const MeterLine = props => {
           >
             Back to Stanza
           </Button>
-          {lineNum != stanza.getLines().length - 1 && 
+          {lineNum < stanza.getLines().length - 1 && 
           <Button
             size='small'
             onClick={() => submitCrement('in')}
