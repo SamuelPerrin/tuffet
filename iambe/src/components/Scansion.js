@@ -66,8 +66,6 @@ const Scansion = props => {
 
   useEffect(() => {
     window.scrollTo(0,0);
-    console.log(stanzaNum);
-    stanzaList && console.log(stanzaList.length);
   }, []);
 
   if (!poems) return <Redirect to='/' />
