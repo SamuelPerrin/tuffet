@@ -27,7 +27,10 @@ test('getStress handles lines with one possible pronunciation', () => {
   expect(handle.getStress()).toStrictEqual([2,2,1,4,1,4,2,2]);
 })
 
-// test that getStress returns the same thing as resolveCrux when line has mult poss prons
+test('getStress handles a line with multiple possible pronunciations', () => {
+  const line = new Line("With hell below and towering heaven above");
+  expect(line.getStress()).toStrictEqual([3, 2, 4, 1, 2, 1, 4, 2, 4, 1]);
+})
 
 
 test('getMeter identifies a standard pentameter', () => {
@@ -143,9 +146,9 @@ test('getMarkString identifies stresses in a sample line', () => {
 })
 
 test('getMarkString identifies stresses in this line', () => {
-  const d = new Line(`And view the Landscape o'er"`);
-  expect(d.getMeter().feet.flat()).toStrictEqual([2, 2, 3, 1, 2, 2]);
-  const oer = d.equalizeVowels("o'er",1,2,[2]);
-  expect(oer.toRemove).toStrictEqual([2]);
-  expect(d.getMarkString()).toBe('×    /     ×  /    ×   /     ');
+  const d = new Line(`In calmness made, and sees what he foresaw;`);
+  expect(d.getMeter().feet.flat()).toStrictEqual([3, 1, 4, 2, 2, 2, 2, 3, 2, 1]);
+  const oer = d.equalizeVowels("foresaw",2,3,[2, 1]);
+  expect(oer.toRemove).toStrictEqual([3]);
+  // expect(d.getMarkString()).toBe('×    /     ×  /    ×   /     ');
 })

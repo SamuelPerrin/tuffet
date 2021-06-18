@@ -83,7 +83,7 @@ test('getRhymeType identifies diphthong assonance', () => {
 test('getRhymeType identifies promotion diphthong rhymes', () => {
   const justify = new Rhyme("to justify","his ploy");
   const butterfly = new Rhyme("a butterfly","I oversee");
-  const history = new Rhyme("a history","of day");
+  const history = new Rhyme("Compose a history","of day");
   expect(justify.getRhymeType()).toBe("promotion diphthong rhyme"); // diph-diph
   expect(butterfly.getRhymeType()).toBe("promotion diphthong rhyme"); // diph-vow
   expect(history.getRhymeType()).toBe("promotion diphthong rhyme"); // vow-diph
@@ -183,4 +183,17 @@ test('getRhymeType identifies shaken-taken as full rhyme', () => {
 test('getRhymeType identifies weeks-cheeks as full rhyme', () => {
   const cheeks = new Rhyme("Lips and cheeks","Hours and weeks");
   expect(cheeks.getRhymeType()).toBe('full rhyme');
+})
+
+test('checkFullness identifies the pronunciation of live', () => {
+  const live = new Rhyme("We'll do it live","For take number five");
+  const candidates = ["L IH1 V","L AY1 V"];
+  expect(live.checkFullness(candidates,0)).toBe("L AY1 V");
+})
+
+test('resolvePron identifies the pronunciation of live', () => {
+  const lihv = new Rhyme("We'll do it live","For take number five");
+  const layv = new Rhyme("I can only live","With the money you give");
+  expect(lihv.getRhymeType()).toBe('full rhyme');
+  expect(layv.getRhymeType()).toBe('full rhyme');
 })

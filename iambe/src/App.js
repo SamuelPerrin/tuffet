@@ -1,8 +1,8 @@
 import './App.css';
-import {Switch, Route} from 'react-router-dom';
+import { Switch, Route } from 'react-router-dom';
 
-import {ThemeProvider} from 'styled-components';
-import {Theme} from './constants/theme';
+import { ThemeProvider } from 'styled-components';
+import { Theme } from './constants/theme';
 import GlobalStyle from './components/styled/Global';
 import Navbar from './components/styled/Navbar';
 import Home from './components/Home';
@@ -15,6 +15,7 @@ import MeterStanza from './components/MeterStanza';
 import MeterType from './components/MeterType';
 import MeterLine from './components/MeterLine';
 import AboutRhymes from './components/AboutRhymes';
+import AboutMeter from './components/AboutMeter';
 
 function App() {
   return (
@@ -35,6 +36,7 @@ function App() {
           <Route exact path="/meter/type" component={MeterType} />
           <Route exact path="/meter/line" component={MeterLine} />
           <Route exact path="/about/rhymes" component={AboutRhymes} />
+          <Route exact path="/about/meter" component={AboutMeter} />
         </Switch>
       </div>
     </ThemeProvider>  

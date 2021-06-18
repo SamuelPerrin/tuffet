@@ -45,7 +45,7 @@ const Home = props => {
         <ul>
           <li>Visualize <RedSpan><Link to='/about/rhymes'>rhyme schemes</Link></RedSpan>!</li>
           <li>Detect over a dozen kinds of <YellowSpan><Link to='/about/rhymes'>slant rhyme</Link></YellowSpan>!</li>
-          <li>Identify <BlueSpan>meter</BlueSpan> and <BlueSpan>verse form</BlueSpan>!</li>
+          <li>Identify <BlueSpan><Link to='/about/meter'>meter</Link></BlueSpan> and <BlueSpan><Link to='/about/meter'>verse form</Link></BlueSpan>!</li>
         </ul>
       </Section>
       <Section>

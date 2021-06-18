@@ -7,7 +7,7 @@ import { Pie } from 'react-chartjs-2';
 import Breadcrumbs from './styled/Breadcrumbs';
 import Container from './styled/Container';
 import Section from './styled/Section';
-import {YellowSpan} from './styled/Spans';
+import { YellowSpan, RedSpan } from './styled/Spans';
 import ListItemTile from './styled/ListItemTile';
 import StanzaTile from './styled/StanzaTile';
 import Button from './styled/Button';
@@ -114,7 +114,11 @@ const Meter = props => {
             </div>
           </div>
           <Link to="/meter/scansion"><YellowSpan>Read more »</YellowSpan></Link>
-          <div>
+        </Section>
+        <Section>
+          <h2><RedSpan>Meter by Stanza</RedSpan></h2>
+          <p>Select a stanza to learn more about its meter.</p>
+          <div style={{border:'1px solid black',borderRadius:'5px',padding:'1rem',marginTop:'1rem'}}>
             {poems.map(poem => new Poem(poem).getStanzas().map(stanza => {
                   stanzaNum++
                   const thisStanza = new Stanza(stanza)

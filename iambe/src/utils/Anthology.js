@@ -103,6 +103,7 @@ class Anthology {
       'abbab':0,
       'abaab':0,
       'aabba':0,
+      'aaabb':0,
       'compm':0,
       'bcbdb':0,
       'babab':0,

@@ -79,6 +79,7 @@ const Scansion = props => {
       <Container>
         <Section>
           <h2><RedSpan>Scansion</RedSpan></h2>
+          <p>Select a line from this stanza to learn more about its meter.</p>
           <ScannedStanza stanza={stanza} submitLineNum={submitLineNum} />
           <br/>
           <p>This stanza's meter is:&nbsp;
@@ -108,7 +109,7 @@ const Scansion = props => {
           </ul>
         </Section>
         <ButtonRow>
-          {stanzaNum != 0 && 
+          {stanzaNum > 0 && 
           <Button
           size='small'
             onClick={() => submitCrement('de')}
@@ -121,7 +122,7 @@ const Scansion = props => {
           >
             Back to Meter
           </Button>
-          {stanzaNum+1 != stanzaList.length && 
+          {stanzaNum+1 < stanzaList.length && 
           <Button
             size='small'
             onClick={() => submitCrement('in')}

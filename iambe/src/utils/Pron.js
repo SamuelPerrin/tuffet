@@ -12,6 +12,9 @@ class Pron {
   }
 
   getStress() {
+    /**
+     * Returns a string of numerals representing the relative stress of syllables in the word's pronunciation
+     */
     const arabs = ['1','2','3','4','0'];
     let stresses = [];
     for (let char of this.text) {

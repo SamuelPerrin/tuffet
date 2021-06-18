@@ -191,6 +191,7 @@ export const RHYME_SCHEMES = {
   'abbab':'ABBAB',
   'abaab':'ABAAB',
   'aabba':'AABBA',
+  'aaabb':'AAABB',
   'compm':'AABCCB',
   'bcbdb':'ABCBDB',
   'babab':'ABABAB',

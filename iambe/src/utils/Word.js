@@ -31,20 +31,16 @@ class Word {
     let pron = '';
 
     // Check the lexicon for the pronunciation
-    if (lexicon.hasOwnProperty(this.word)) {
+    if (this.word in lexicon) {
       if (lexicon[this.word].length === 1) {
         pron = rhyme ? lexicon[this.word] : lexicon[this.word][0];
       } else if (rhyme) {
         pron = lexicon[this.word];
       } else {
         // otherwise, if all prons have the same stresses, return first, else return list
-        const stressWords = new Set();
         pron = lexicon[this.word];
-        for (let prawn of pron) {
-          stressWords.add(new Pron(prawn).getStress());
-        }
-        if (stressWords.length === 1) {
-          pron = pron[0];
+        if (pron.map(p => new Pron(p).getStress()).every(st => st === new Pron(pron[0]).getStress())) {
+          pron = pron[0]
         }
       }
     }
@@ -182,18 +178,22 @@ class Word {
       return null;
     }
 
-    // check if root + -ing, -less, -ness, or -ly can be pronounced
+    // check if root + -ing, -less, -ness, -ly, or -able can be pronounced
     pron = checkLastStress(this.word, 'ing', " IH3 NG", " IH0 NG");
-    if (pron !== null) return pron
+    if (pron !== null) return pron;
     else {
       pron = checkLastStress(this.word, 'less', " L AH3 S", " L AH0 S");
-      if (pron !== null) return pron
+      if (pron !== null) return pron;
       else {
         pron = checkLastStress(this.word, 'ness', " N AH3 S", " N AH0 S");
-        if (pron !== null) return pron
+        if (pron !== null) return pron;
         else {
           pron = checkLastStress(this.word, 'ly', " L IY3", " L IY0");
-          if (pron !== null) return pron
+          if (pron !== null) return pron;
+          else {
+            pron = checkLastStress(this.word, 'able', " AH3 B AH0 L", " AH0 B AH3 L");
+            if (pron !== null) return pron;
+          }
         }
       }
     }
