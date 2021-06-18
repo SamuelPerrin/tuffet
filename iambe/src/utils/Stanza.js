@@ -868,6 +868,9 @@ class Stanza {
       console.log(`couldn't find ${rs} in Stanza.getRhymes()`);
       return rhymes;
     }
+
+    // for 'irreg' rs (?)
+    return rhymes;
   }
 
   meterForCounts(counts) {

@@ -51,6 +51,8 @@ class Rhyme {
   resolvePron(prons) {
     /**
      * Given a list of possible pronunciations of one of the Rhyme's lines' terms, returns the pron that makes the fullest rhyme
+     * Calls: Line.getTerm, Line.getStress, Word.getPron, Pron.getStress, Rhyme.checkFullness
+     * Called by: Rhyme.getRhymeType
      */
 
     const term1 = new Line(this.line1).getTerm()[0].toLowerCase();
@@ -73,7 +75,11 @@ class Rhyme {
       const lineStresses = new Line( which === 0 ? this.line1 : this.line2).getStress();
       prons.forEach(pron => {
         // make an array of pron's stresses as ints
-        const pronStress = new Pron(pron).getStress().split('').map(num => Number(num === '0' ? '4' : num));
+        let pronStress = new Pron(pron).getStress().split('');
+        pronStress = pronStress.map(num => {
+          if (pronStress.length === 1 && num === '1') return 2;
+          else return Number(num === '0' ? '4' : num);
+        });
         
         // if the pron's stresses match the last n stresses of the correct pronunciation of the line, it's a candidate
         if (lineStresses.slice(-pronStress.length).every((pos,i) => pos === pronStress[i])) candidates.push(pron);
@@ -81,7 +87,9 @@ class Rhyme {
     }
 
     // all remaining candidates are metrically equivalent, so decide which set of vowels makes for the best rhyme with the other term
-    if (candidates.length === 1) return candidates[0];
+    if (candidates.length === 1) {
+      return candidates[0];
+    }
     else {
       return this.checkFullness(candidates, which);
     }
@@ -125,14 +133,15 @@ class Rhyme {
       pron2 = new Word(term2).getPron(true);
     }
     if (pron2 instanceof Array) {
-      pron2 = pron2[0];
+      if (pron2.length === 1) pron2 = pron2[0];
+      else pron2 = this.resolvePron(pron2);
     }
     const rimes2 = new Pron(pron2).getRimes();
     const nlRime2 = this.numless(rimes2.rime);
     const nlLastRime2 = this.numless(rimes2.lastRime);
 
     let rhymeType = 'N/A';
-
+    console.log("in getRhymeType, working with pron1",pron1,"and pron2",pron2);
     // check for full, ident, homo rhymes
     if (rimes1.rime === rimes2.rime) {
       if (pron1 !== pron2) rhymeType = 'full rhyme';
