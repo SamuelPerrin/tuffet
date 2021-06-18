@@ -50,7 +50,11 @@ const GlobalStyle = createGlobalStyle`
     a:not([class]) {
     text-decoration:none;
     }
-    /* A elements don't turn purple once they've been visited*/
+    /* A elements don't start out as blue */
+    a:link {
+        color: inherit;
+    }
+    /* A elements don't turn purple once they've been visited */
     a:visited {
         color:inherit;
     }
