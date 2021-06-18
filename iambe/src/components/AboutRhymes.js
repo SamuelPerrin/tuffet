@@ -14,7 +14,8 @@ const AboutRhymes = () => {
     <div>
       <Breadcrumbs>
           <Link to='/'>Home</Link>
-          <Link to='/rhyme' className='current'>Rhyme</Link>
+          <Link to='/rhyme'>Rhyme</Link>
+          <Link to='/about/rhymes' className='current'>About</Link>
         </Breadcrumbs>
       <Container>
         <Section>
