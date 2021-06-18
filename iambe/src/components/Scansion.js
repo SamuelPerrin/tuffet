@@ -1,18 +1,18 @@
-import React, {useEffect} from 'react';
-import {connect} from 'react-redux';
-import {Link, useHistory} from 'react-router-dom';
+import React, { useEffect } from 'react';
+import { connect } from 'react-redux';
+import { Link, useHistory, Redirect } from 'react-router-dom';
 
 import Breadcrumbs from './styled/Breadcrumbs';
 import Container from './styled/Container';
 import Section from './styled/Section';
-import {YellowSpan, RedSpan} from './styled/Spans';
+import { YellowSpan, RedSpan } from './styled/Spans';
 import ScannedStanza from './styled/ScannedStanza';
 import ListItemTile from './styled/ListItemTile';
 import ButtonRow from './styled/ButtonRow';
 import Button from './styled/Button';
 
 import { BLACK } from '../constants/colors';
-import {getMeterTypeDetails, getStanzaMeterDetails, setLineNum, crement} from '../actions';
+import { getMeterTypeDetails, getStanzaMeterDetails, setLineNum, crement } from '../actions';
 
 import Poem from '../utils/Poem';
 import Stanza from '../utils/Stanza';
@@ -22,14 +22,16 @@ const Scansion = props => {
   const {poems, stanzaNum, getMeterTypeDetails, getStanzaMeterDetails, setLineNum, crement} = props;
   const history = useHistory();
 
-  const stanzaList = [];
-  poems.forEach(poem => new Poem(poem).getStanzas().forEach(stanza => stanzaList.push(stanza)));
-  const stanza = new Stanza(stanzaList[stanzaNum]);
-  const lineCounts = {};
-  stanza.getLines().forEach(line => {
-    const lineMeter = new Line(line).getMeterLabelPhrase();
-    lineCounts[lineMeter] = lineMeter in lineCounts ? lineCounts[lineMeter] + 1 : 1;
-  })
+  if (!!poems) {
+    var stanzaList = [];
+    poems.forEach(poem => new Poem(poem).getStanzas().forEach(stanza => stanzaList.push(stanza)));
+    var stanza = new Stanza(stanzaList[stanzaNum]);
+    var lineCounts = {};
+    stanza.getLines().forEach(line => {
+      const lineMeter = new Line(line).getMeterLabelPhrase();
+      lineCounts[lineMeter] = lineMeter in lineCounts ? lineCounts[lineMeter] + 1 : 1;
+    })
+  }
 
   const submitMeterType = e => {
     e.preventDefault();
@@ -66,8 +68,8 @@ const Scansion = props => {
     window.scrollTo(0,0);
   }, []);
 
-
-  return (
+  if (!poems) return <Redirect to='/' />
+  else return (
     <div>
       <Breadcrumbs>
         <Link to='/'>Home</Link>
@@ -76,7 +78,7 @@ const Scansion = props => {
       </Breadcrumbs>
       <Container>
         <Section>
-          <h3><RedSpan>Scansion</RedSpan></h3>
+          <h2><RedSpan>Scansion</RedSpan></h2>
           <ScannedStanza stanza={stanza} submitLineNum={submitLineNum} />
           <br/>
           <p>This stanza's meter is:&nbsp;
@@ -89,7 +91,7 @@ const Scansion = props => {
           </p>
         </Section>
         <Section>
-          <h3><YellowSpan>Lines by Meter</YellowSpan></h3>
+          <h2><YellowSpan>Lines by Meter</YellowSpan></h2>
           <p>The most common lines in this stanza are:</p>
           <ul>
             {lineCounts && Object.entries(lineCounts)

@@ -1,6 +1,6 @@
-import React, {useEffect} from 'react';
+import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
-import { Link, useHistory } from 'react-router-dom';
+import { Link, useHistory, Redirect } from 'react-router-dom';
 
 import Breadcrumbs from './styled/Breadcrumbs';
 import Container from './styled/Container';
@@ -26,17 +26,20 @@ const MeterType = props => {
     history.push('/meter/scansion');
   }
 
-  const stanzaList = [];
-  poems.forEach(poem => new Poem(poem).getStanzas().forEach(stanza => stanzaList.push(stanza)));
+  if (!!poems) {
+    var stanzaList = [];
+    poems.forEach(poem => new Poem(poem).getStanzas().forEach(stanza => stanzaList.push(stanza)));
+  
+    var lines = new Stanza(stanzaList[stanzaNum]).getLines();
+    var lineMeterCounts = {}
+    lines.forEach(line => {
+      const meterLabel = new Line(line).getMeterLabelPhrase();
+      lineMeterCounts[meterLabel] = meterLabel in lineMeterCounts ? lineMeterCounts[meterLabel] + 1 : 1;
+    })
+  }
 
-  const lines = new Stanza(stanzaList[stanzaNum]).getLines();
-  const lineMeterCounts = {}
-  lines.forEach(line => {
-    const meterLabel = new Line(line).getMeterLabelPhrase();
-    lineMeterCounts[meterLabel] = meterLabel in lineMeterCounts ? lineMeterCounts[meterLabel] + 1 : 1;
-  })
-
-  return (
+  if (!poems) return <Redirect to='/' />
+  else return (
     <div>
       <Breadcrumbs>
         <Link to='/'>Home</Link>
@@ -46,7 +49,7 @@ const MeterType = props => {
       </Breadcrumbs>
       <Container>
         <Section>
-          <h3><RedSpan>Meter: {mt}</RedSpan></h3>
+          <h2><RedSpan>Meter: {mt}</RedSpan></h2>
           <Table maxWidth='1200px'>
             <caption>This stanza has {lineMeterCounts[mt]} instance{lineMeterCounts[mt] === 1 ? '' : 's'} of {mt}:</caption>
             <thead>
@@ -66,7 +69,7 @@ const MeterType = props => {
           </Table>
         </Section>
         <Section>
-          <h3><YellowSpan>What is {mt}?</YellowSpan></h3>
+          <h2><YellowSpan>What is {mt}?</YellowSpan></h2>
           {LINE_METER_DESCRIPTIONS[mt]}
         </Section>
         <Button onClick={goBack}>Back to Stanza</Button>

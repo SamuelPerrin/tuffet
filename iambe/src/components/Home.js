@@ -1,13 +1,13 @@
-import React, {useState} from 'react';
-import {connect} from 'react-redux';
-import {useHistory} from 'react-router-dom';
+import React, { useState } from 'react';
+import { connect } from 'react-redux';
+import { Link, useHistory } from 'react-router-dom';
 
 import Section from './styled/Section';
-import {YellowSpan, RedSpan, BlueSpan} from './styled/Spans';
+import { YellowSpan, RedSpan, BlueSpan } from './styled/Spans';
 import ButtonRow from './styled/ButtonRow';
 import TextArea from './styled/TextArea';
 import Button from './styled/Button';
-import {getRhymes, getMeter} from '../actions';
+import { getRhymes, getMeter } from '../actions';
 
 import * as samples from '../constants/samples';
 
@@ -43,20 +43,20 @@ const Home = props => {
       <Section style={{marginTop:'3rem'}}>
         <h3>Poetry is easier than ever with Tuffet!</h3>
         <ul>
-          <li>Visualize <RedSpan>rhyme schemes</RedSpan>!</li>
-          <li>Detect over a dozen kinds of <YellowSpan>slant rhyme</YellowSpan>!</li>
+          <li>Visualize <RedSpan><Link to='/about/rhymes'>rhyme schemes</Link></RedSpan>!</li>
+          <li>Detect over a dozen kinds of <YellowSpan><Link to='/about/rhymes'>slant rhyme</Link></YellowSpan>!</li>
           <li>Identify <BlueSpan>meter</BlueSpan> and <BlueSpan>verse form</BlueSpan>!</li>
         </ul>
       </Section>
       <Section>
-        <h3>Try it!</h3>
+        <h3>Try it with one of these samples!</h3>
         <ButtonRow>
           <Button onClick={() => submitSample(samples.STITCH)}>Stitch in Time</Button>
           <Button onClick={() => submitSample(samples.GRACE)}>Amazing Grace</Button>
           <Button onClick={() => submitSample(samples.SONNET116)}>Sonnet 116</Button>
         </ButtonRow>
         <form style={{width:'100%', display:'flex', flexFlow:'column nowrap', alignItems:'center', justifyContent:'center'}}>
-          <h3>Enter a poem:</h3>
+          <h3>Or enter some poetry of your own:</h3>
           <TextArea value={poem} onChange={handleChange} placeholder="Enter a poem..." />
           <ButtonRow>
             <Button onClick={submitRhymes}>Get Rhymes</Button>

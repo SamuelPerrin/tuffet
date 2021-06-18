@@ -50,6 +50,10 @@ const GlobalStyle = createGlobalStyle`
     a:not([class]) {
     text-decoration:none;
     }
+    /* A elements don't turn purple once they've been visited*/
+    a:visited {
+        color:inherit;
+    }
     /* Make images easier to work with */
     img {
     max-width: 100%;

@@ -1,6 +1,6 @@
-import React, {useEffect} from 'react';
-import {connect} from 'react-redux';
-import {Link, useHistory} from 'react-router-dom';
+import React, { useEffect } from 'react';
+import { connect } from 'react-redux';
+import { Link, useHistory, Redirect } from 'react-router-dom';
 
 import Poem from '../utils/Poem';
 import Stanza from '../utils/Stanza';
@@ -8,13 +8,13 @@ import Stanza from '../utils/Stanza';
 import Breadcrumbs from './styled/Breadcrumbs';
 import Container from './styled/Container';
 import Section from './styled/Section';
-import {BlueSpan, RedSpan, YellowSpan} from './styled/Spans';
+import { BlueSpan, RedSpan, YellowSpan } from './styled/Spans';
 import RhymedStanza from './styled/RhymedStanza';
 import Table from './styled/Table';
 import ButtonRow from './styled/ButtonRow';
 import Button from './styled/Button';
 
-import {crement} from '../actions';
+import { crement } from '../actions';
 
 import { RHYME_TYPES, RHYME_SCHEMES } from '../utils/phonstants';
 
@@ -22,12 +22,14 @@ const RhymeScheme = props => {
   const {poems, rhymes, stanzaNum, crement} = props;
   const history = useHistory();
 
-  const stanzaRhymeList = [];
-  rhymes.forEach(poem => poem.forEach(stanza => stanzaRhymeList.push(stanza)));
-  const stanzaList = [];
-  poems.forEach(poem => new Poem(poem).getStanzas().forEach(stanza => stanzaList.push(stanza)));
-  const stanza = new Stanza(stanzaList[stanzaNum]);
-  const stanzaRhymes = stanza.getRhymes();
+  if (!!poems) {
+    var stanzaRhymeList = [];
+    rhymes.forEach(poem => poem.forEach(stanza => stanzaRhymeList.push(stanza)));
+    var stanzaList = [];
+    poems.forEach(poem => new Poem(poem).getStanzas().forEach(stanza => stanzaList.push(stanza)));
+    var stanza = new Stanza(stanzaList[stanzaNum]);
+    var stanzaRhymes = stanza.getRhymes();
+  }
 
   const submitCrement = dir => crement(dir,'stanzaNum');
   const goBack = () => history.push('/rhyme');
@@ -36,7 +38,8 @@ const RhymeScheme = props => {
     window.scrollTo(0,0);
   }, []);
 
-  return (
+  if (!poems) return <Redirect to='/' />
+  else return (
     <div>
       <Breadcrumbs>
         <Link to='/'>Home</Link>
@@ -45,13 +48,13 @@ const RhymeScheme = props => {
       </Breadcrumbs>
       <Container>
         <Section>
-          <h3><RedSpan>Rhyme Scheme</RedSpan></h3>
+          <h2><RedSpan>Rhyme Scheme</RedSpan></h2>
           <RhymedStanza stanza={stanza.getLines()}/>
           <br/>
           <p>This stanza's rhyme scheme is: <BlueSpan>{RHYME_SCHEMES[stanza.getRhymeScheme()]}</BlueSpan>.</p>
         </Section>
         <Section>
-          <h3><YellowSpan>Rhymes</YellowSpan></h3>
+          <h2><YellowSpan>Rhymes</YellowSpan></h2>
           <Table maxWidth={'1200px'}>
             <caption>This stanza has {stanzaRhymes.length} rhyme{stanzaRhymes.length === 1 ? '' : 's'}:</caption>
             <thead>
