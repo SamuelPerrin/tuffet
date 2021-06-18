@@ -199,6 +199,7 @@ class Stanza {
         {rs:'abbab', pairs:['onefour', 'twothree', 'twofive', 'threefive']},
         {rs:'abaab', pairs:['onethree', 'onefour', 'twofive', 'threefour']},
         {rs:'aabba', pairs:['onetwo','onefive','twofive','threefour']},
+        {rs:'aaabb', pairs:['onetwo','onethree','twothree','fourfive']},
       ];
       let fourthPossibles = [];
 
@@ -216,8 +217,9 @@ class Stanza {
       };
 
       let output = this.winnower(possibles, allScores);
-      if (!!output) bestGuess = output[0];
-      if (!!output && output.length > 1) {
+      console.log("output",output);
+      if (!!output && output !== 'N/A') bestGuess = output[0];
+      if (!!output && output.length > 1 && output !== 'N/A') {
         fourthPossibles = output;
       } else if (!!output && output.length === 1) {
         return output[0];
@@ -235,8 +237,11 @@ class Stanza {
         ababb:false,
         abbab:false,
         aabbc:false,
-        aabba:false
+        aabba:false,
+        aaabb:false,
       };
+
+      console.log("fourthPossibles",fourthPossibles);
       fourthPossibles.forEach(scheme => {schemes[scheme[0]] = true});
 
       if (schemes.splt1) {

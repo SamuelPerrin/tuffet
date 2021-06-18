@@ -141,7 +141,7 @@ class Rhyme {
     const nlLastRime2 = this.numless(rimes2.lastRime);
 
     let rhymeType = 'N/A';
-    console.log("in getRhymeType, working with pron1",pron1,"and pron2",pron2);
+
     // check for full, ident, homo rhymes
     if (rimes1.rime === rimes2.rime) {
       if (pron1 !== pron2) rhymeType = 'full rhyme';
