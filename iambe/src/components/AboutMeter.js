@@ -25,7 +25,7 @@ const AboutMeter = () => {
         <Section>
           <h2><RedSpan>About: Meter</RedSpan></h2>
           <div className='paragraph'>
-            <p>Tuffet identifies a the meter of a line of poetry using an algorithm that pronounces each of the line's words and compares each syllable's stress relative to those around it. It compiles the data for several such lines to identify metrical patterns at the level of the stanza.</p>
+            <p>Tuffet identifies the meter of a line of poetry using an algorithm that pronounces each of the line's words and determines each syllable's stress relative to those around it. It compiles the data for several such lines to identify metrical patterns at the level of the stanza.</p>
             <p>The dictionary that Tuffet uses to identify pronunciations isn't perfect, and the algorithm has biases embedded in it about what sort of metrical patterns it should look for. As a result, you will probably disagree with some of Tuffet's scansion at the level of syllables and even whole lines. At the level of stanza, it is more cautious and perhaps more often correct.</p>
           </div>
         </Section>
