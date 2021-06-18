@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { Link, useHistory, Redirect } from 'react-router-dom';
 
 import Breadcrumbs from './styled/Breadcrumbs';
-import { YellowSpan, RedSpan } from './styled/Spans';
+import { YellowSpan, RedSpan, BlueSpan } from './styled/Spans';
 import Container from './styled/Container';
 import Section from './styled/Section';
 import StanzaTile from './styled/StanzaTile';
@@ -98,7 +98,7 @@ const Rhymes = props => {
         <Section>
           <h2><YellowSpan>Rhymes by Type</YellowSpan></h2>
           <p>There {totalRhymes === 1 ? 'is': 'are'} {totalRhymes} rhyme{totalRhymes === 1 ? '' : 's'} in this sample.</p>
-          <p>The most common rhyme-types in this sample are:</p>
+          <p>The most common rhyme-types are:</p>
           <div style={{
             display:'flex',
             flexFlow:'row wrap',
@@ -131,6 +131,10 @@ const Rhymes = props => {
             {rhymeSchemeCounts && Object.entries(rhymeSchemeCounts).filter(entry => entry[1] > 0).sort((a,b) => b[1] - a[1]).map(entry => <li key={entry[0]}>{RHYME_SCHEMES[entry[0]]} ({entry[1]} stanza{entry[1] > 1 ? 's' : ''})</li>)}
           </ol>
           <Link to="/about/rhymes"><RedSpan>Read more »</RedSpan></Link>
+        </Section>
+        <Section>
+          <h2><BlueSpan>Rhyme Scheme by Stanza</BlueSpan></h2>
+          <p>Select a stanza to learn more about its rhymes.</p>
           <div style={{border:'1px solid black',borderRadius:'5px',padding:'1rem',marginTop:'1rem'}}>
             {poems.map(poem => new Poem(poem).getStanzas().map(stanza => {
                 stanzaNum++;

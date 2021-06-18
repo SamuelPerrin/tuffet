@@ -7,7 +7,7 @@ const ScannedStanza = props => {
   const lines = stanza.getLines();
 
   return (
-    <div>
+    <div style={{border:'1px solid black',borderRadius:'5px',padding:'1rem',marginTop:'1rem'}}>
       {lines.map((line, i) => <LineTile key={line} rt={i} onClick={submitLineNum}>{line}</LineTile>)}
     </div>
   )

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
 import Breadcrumbs from './styled/Breadcrumbs';
@@ -10,13 +10,17 @@ import Accordion from './styled/Accordion';
 import { RHYME_TYPE_DESCRIPTIONS } from '../utils/descriptions';
 
 const AboutRhymes = () => {
+  useEffect(() => {
+    window.scrollTo(0,0);
+  }, []);
+
   return (
     <div>
       <Breadcrumbs>
-          <Link to='/'>Home</Link>
-          <Link to='/rhyme'>Rhyme</Link>
-          <Link to='/about/rhymes' className='current'>About</Link>
-        </Breadcrumbs>
+        <Link to='/'>Home</Link>
+        <Link to='/rhyme'>Rhyme</Link>
+        <Link to='/about/rhymes' className='current'>About</Link>
+      </Breadcrumbs>
       <Container>
         <Section>
           <h2><RedSpan>About: Rhymes</RedSpan></h2>
