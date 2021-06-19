@@ -441,6 +441,7 @@ class Stanza {
       const twothree = new Rhyme(stan[1], stan[2]).getScore();
       const twofour = new Rhyme(stan[1], stan[3]).getScore();
       const twosix = new Rhyme(stan[1], stan[5]).getScore();
+      const threefour = new Rhyme(stan[2], stan[3]).getScore();
       const threefive = new Rhyme(stan[2], stan[4]).getScore();
       const fourfive = new Rhyme(stan[3], stan[4]).getScore();
       const foursix = new Rhyme(stan[3], stan[5]).getScore();
@@ -459,7 +460,8 @@ class Stanza {
         {rs:'oc148', pairs:['onetwo', 'foureight', 'fivesix']},
         {rs:'ocaaa', pairs:['onetwo', 'onethree', 'twothree', 'foureight', 'fivesix', 'fiveseven', 'sixseven']},
         {rs:'djuan', pairs:['onethree','onefive','twofour','twosix','threefive','foursix','seveneight']},
-        {rs:'quat2', pairs:['twofour','sixeight']}
+        {rs:'quat2', pairs:['twofour','sixeight']},
+        {rs:'cpls4', pairs:['onetwo','threefour','fivesix','seveneight']},
       ];
 
       const allScores = {
@@ -469,6 +471,7 @@ class Stanza {
         'twothree':twothree,
         'twofour':twofour,
         'twosix':twosix,
+        'threefour':threefour,
         'threefive':threefive,
         'fourfive':fourfive,
         'foursix':foursix,
@@ -491,7 +494,7 @@ class Stanza {
       }
 
       // Perform a few last checks to correct some of winnower's biases
-      const schemes = { oct48:false, oct24:false, oc458:false, oc148:false, ocaaa:false };
+      const schemes = { oct48:false, oct24:false, oc458:false, oc148:false, ocaaa:false, cpls4:false };
       fourthPossibles.forEach(scheme => {schemes[scheme[0]] = true});
 
       if (schemes.oct48) {
@@ -585,6 +588,53 @@ class Stanza {
 
       return bestGuess;
     }
+    else if (stan.length === 10) {
+      const onetwo = new Rhyme(stan[0], stan[1]).getScore();
+      const onethree = new Rhyme(stan[0], stan[2]).getScore();
+      const twofour = new Rhyme(stan[1], stan[3]).getScore();
+      const threefour = new Rhyme(stan[2], stan[3]).getScore();
+      const fivesix = new Rhyme(stan[4], stan[5]).getScore();
+      const fiveeight = new Rhyme(stan[4], stan[7]).getScore();
+      const fivenine = new Rhyme(stan[4], stan[8]).getScore();
+      const sixeight = new Rhyme(stan[5], stan[7]).getScore();
+      const sixnine = new Rhyme(stan[5], stan[8]).getScore();
+      const seveneight = new Rhyme(stan[6], stan[7]).getScore();
+      const seventen = new Rhyme(stan[6], stan[9]).getScore();
+      const nineten = new Rhyme(stan[8], stan[9]).getScore();
+
+      const possibles = [
+        {rs:'odeke', pairs:['onethree', 'twofour','fivenine','sixeight','seventen']},
+        {rs:'odeng', pairs:['onethree','twofour','fiveeight','sixnine','seventen']},
+        {rs:'cpls5', pairs:['onetwo','threefour','fivesix','seveneight','nineten']},
+      ];
+
+      const allScores = {
+        'onetwo':onetwo,
+        'onethree':onethree,
+        'twofour':twofour,
+        'threefour':threefour,
+        'fivesix':fivesix,
+        'fiveeight':fiveeight,
+        'fivenine':fivenine,
+        'sixeight':sixeight,
+        'sixnine':sixnine,
+        'seveneight':seveneight,
+        'seventen':seventen,
+        'nineten':nineten,
+      };
+
+      let fourthPossibles = [];
+      let output = this.winnower(possibles, allScores);
+      if (!!output) bestGuess = output[0];
+      if (!!output && output.length > 1) {
+        fourthPossibles = output;
+        bestGuess = fourthPossibles[0][0]
+      } else if (!!output && output.length === 1) {
+        return output[0];
+      }
+
+      return bestGuess;
+    }
     else if (stan.length === 14) {
       const onethree = new Rhyme(stan[0], stan[2]).getScore();
       const onefour = new Rhyme(stan[0], stan[3]).getScore();
@@ -592,24 +642,36 @@ class Stanza {
       const oneeight = new Rhyme(stan[0], stan[7]).getScore();
       const twothree = new Rhyme(stan[1], stan[2]).getScore();
       const twofour = new Rhyme(stan[1], stan[3]).getScore();
+      const twofive = new Rhyme(stan[1], stan[4]).getScore();
       const twosix = new Rhyme(stan[1], stan[5]).getScore();
       const twoseven = new Rhyme(stan[1], stan[6]).getScore();
+      const twonine = new Rhyme(stan[1], stan[8]).getScore();
       const threesix = new Rhyme(stan[2], stan[5]).getScore();
       const threeseven = new Rhyme(stan[2], stan[6]).getScore();
+      const threeten = new Rhyme(stan[2], stan[9]).getScore();
       const fourfive = new Rhyme(stan[3], stan[4]).getScore();
       const foureight = new Rhyme(stan[3], stan[7]).getScore();
+      const fournine = new Rhyme(stan[3], stan[8]).getScore();
       const fiveseven = new Rhyme(stan[4], stan[6]).getScore();
       const fiveeight = new Rhyme(stan[4], stan[7]).getScore();
+      const fivenine = new Rhyme(stan[4], stan[8]).getScore();
+      const fiveten = new Rhyme(stan[4], stan[9]).getScore();
       const sixseven = new Rhyme(stan[5], stan[6]).getScore();
       const sixeight = new Rhyme(stan[5], stan[7]).getScore();
+      const sixeleven = new Rhyme(stan[5], stan[10]).getScore();
+      const seventen = new Rhyme(stan[6], stan[9]).getScore();
+      const nineten = new Rhyme(stan[8], stan[9]).getScore();
       const nineeleven = new Rhyme(stan[8], stan[10]).getScore();
       const ninetwelve = new Rhyme(stan[8], stan[11]).getScore();
       const ninethirteen = new Rhyme(stan[8], stan[12]).getScore();
+      const ninefourteen = new Rhyme(stan[8], stan[13]).getScore();
+      const teneleven = new Rhyme(stan[9], stan[10]).getScore();
       const tentwelve = new Rhyme(stan[9], stan[11]).getScore();
       const tenthirteen = new Rhyme(stan[9], stan[12]).getScore();
       const tenfourteen = new Rhyme(stan[9], stan[13]).getScore();
       const eleventhirteen = new Rhyme(stan[10], stan[12]).getScore();
       const elevenfourteen = new Rhyme(stan[10], stan[13]).getScore();
+      const twelvethirteen = new Rhyme(stan[11], stan[12]).getScore();
       const twelvefourteen = new Rhyme(stan[11], stan[13]).getScore();
       const thirteenfourteen = new Rhyme(stan[12], stan[13]).getScore();
 
@@ -617,6 +679,17 @@ class Stanza {
         {rs:'sonit', pairs:['onefour', 'onefive','oneeight','twothree','twosix','twoseven','threesix','threeseven','fourfive','foureight','fiveeight','sixseven','nineeleven','ninethirteen','tentwelve','tenfourteen','eleventhirteen','twelvefourteen']},
         {rs:'sonsh', pairs:['onethree','twofour','fiveseven','sixeight','nineeleven','tentwelve','thirteenfourteen']},
         {rs:'sonpe', pairs:['onefour','onefive','oneeight','twothree','twosix','threefourtwoseven','threesix','threeseven','fourfive','foureight','fiveeight','sixseven','ninetwelve','tenthirteen','elevenfourteen']},
+        {rs:'stozy', pairs:['onethree','onefive','twofour','sixeight','seventen','nineeleven','ninethirteen','eleventhirteen','twelvefourteen']},
+        {rs:'sonfr', pairs:['onefour','oneeight','twofive','twonine','threeseven','threeten','foureight','fivenine','sixeleven','seventen','eleventhirteen','twelvefourteen']},
+        {rs:'sone1', pairs:['onethree','twofour','fiveseven','sixeight','nineten','ninetwelve','tentwelve','eleventhirteen','elevenfourteen','thirteenfourteen']},
+        {rs:'sone2', pairs:['onethree','twofour','twonine','fournine','fiveseven','fiveten','seventen','sixeight','eleventhirteen','twelvefourteen']},
+        {rs:'sone3', pairs:['onethree','twofour','fiveseven','sixeight','nineeleven','tenfourteen','twelvethirteen']},
+        {rs:'soni1', pairs:['onefour', 'onefive','oneeight','twothree','twosix','twoseven','threesix','threeseven','fourfive','foureight','fiveeight','sixseven','ninetwelve','ninefourteen','teneleven','tenthirteen','eleventhirteen','twelvefourteen']},
+        {rs:'soni2', pairs:['onefour', 'onefive','oneeight','twothree','twosix','twoseven','threesix','threeseven','fourfive','foureight','fiveeight','sixseven','nineeleven','ninefourteen','tentwelve','tenthirteen','elevenfourteen','twelvethirteen']},
+        {rs:'soni3', pairs:['onefour', 'onefive','oneeight','twothree','twosix','twoseven','threesix','threeseven','fourfive','foureight','fiveeight','sixseven','ninethirteen','tentwelve','elevenfourteen']},
+        {rs:'soni4', pairs:['onefour', 'onefive','oneeight','twothree','twosix','twoseven','threesix','threeseven','fourfive','foureight','fiveeight','sixseven','nineeleven','tenthirteen','twelvefourteen']},
+        {rs:'soni5', pairs:['onefour', 'onefive','oneeight','twothree','twosix','twoseven','threesix','threeseven','fourfive','foureight','fiveeight','sixseven','ninefourteen','tentwelve','eleventhirteen']},
+        {rs:'soni6', pairs:['onefour', 'onefive','oneeight','twothree','twosix','twoseven','threesix','threeseven','fourfive','foureight','fiveeight','sixseven','nineeleven','tentwelve','thirteenfourteen']},
       ];
 
       const allScores = {
@@ -626,24 +699,36 @@ class Stanza {
         'oneeight':oneeight,
         'twothree':twothree,
         'twofour':twofour,
+        'twofive':twofive,
         'twosix':twosix,
         'twoseven':twoseven,
+        'twonine':twonine,
         'threesix':threesix,
         'threeseven':threeseven,
+        'threeten':threeten,
         'fourfive':fourfive,
         'foureight':foureight,
+        'fournine':fournine,
         'fiveseven':fiveseven,
         'fiveeight':fiveeight,
+        'fivenine':fivenine,
+        'fiveten':fiveten,
         'sixseven':sixseven,
         'sixeight':sixeight,
+        'sixeleven':sixeleven,
+        'seventen':seventen,
+        'nineten':nineten,
         'nineeleven':nineeleven,
         'ninetwelve':ninetwelve,
         'ninethirteen':ninethirteen,
+        'ninefourteen':ninefourteen,
+        'teneleven':teneleven,
         'tentwelve':tentwelve,
         'tenthirteen':tenthirteen,
         'tenfourteen':tenfourteen,
         'eleventhirteen':eleventhirteen,
         'elevenfourteen':elevenfourteen,
+        'twelvethirteen':twelvethirteen,
         'twelvefourteen':twelvefourteen,
         'thirteenfourteen':thirteenfourteen
       };
@@ -835,6 +920,8 @@ class Stanza {
           return makeRhymes([[0, 2], [1, 3], [2, 4], [3, 5], [6, 7]]);
         case 'quat2':
           return makeRhymes([[1, 3], [5, 7]]);
+        case 'cpls4':
+          return makeRhymes([[0, 1], [2, 3], [4, 5], [6, 7]]);
         default:
           return rhymes;
       }
@@ -853,6 +940,18 @@ class Stanza {
           return rhymes;
       }
     }
+    else if (lines.length === 10) {
+      switch (rs) {
+        case 'odeke':
+          return makeRhymes([[0, 2], [1, 3], [4, 8], [5, 7], [6, 9]]);
+        case 'odeng':
+          return makeRhymes([[0, 2], [1, 3], [4, 7], [5, 8], [6, 9]]);
+        case 'cpls5':
+          return makeRhymes([[0, 1], [2, 3], [4, 5], [6, 7], [8, 9]]);
+        default:
+          return rhymes;
+      }
+    }
     else if (lines.length === 14) {
       switch (rs) {
         case 'sonit':
@@ -861,6 +960,28 @@ class Stanza {
           return makeRhymes([[0, 2], [1, 3], [4, 6], [5, 7], [8, 10], [9, 11], [12, 13]]);
         case 'sonpe':
           return makeRhymes([[0, 3], [1, 2], [2, 5], [3, 4], [4, 7], [5, 6], [8, 11], [9, 12], [10, 13]]);
+        case 'stozy':
+          return makeRhymes([[0, 2], [1, 3], [2, 4], [5, 7], [6, 9], [8, 10], [10, 12], [11, 13]]);
+        case 'sonfr':
+          return makeRhymes([[0, 3], [1, 4], [2, 6], [3, 7], [4, 8], [5, 10], [6, 9], [10, 12], [11, 13]]);
+        case 'sone1':
+          return makeRhymes([[0, 2], [1, 3], [4, 6], [5, 7], [8, 9], [9, 11], [10, 12], [12, 13]]);
+        case 'sone2':
+          return makeRhymes([[0, 2], [1, 3], [3, 8], [4, 6], [5, 7], [6, 9], [10, 12], [11, 13]]);
+        case 'sone3':
+          return makeRhymes([[0, 2], [1, 3], [4, 6], [5, 7], [8, 10], [9, 13], [11, 12]]);
+        case 'soni1':
+          return makeRhymes([[0, 3], [1, 2], [2, 5], [3, 4], [4, 7], [5, 6], [8, 11], [9, 10], [10, 12], [11, 13]]);
+        case 'soni2':
+          return makeRhymes([[0, 3], [1, 2], [2, 5], [3, 4], [4, 7], [5, 6], [8, 10], [9, 11], [10, 13], [11, 12]]);
+        case 'soni3':
+          return makeRhymes([[0, 3], [1, 2], [2, 5], [3, 4], [4, 7], [5, 6], [8, 12], [9, 11], [10, 13]]);
+        case 'soni4':
+          return makeRhymes([[0, 3], [1, 2], [2, 5], [3, 4], [4, 7], [5, 6], [8, 10], [9, 12], [11, 13]]);
+        case 'soni5':
+          return makeRhymes([[0, 3], [1, 2], [2, 5], [3, 4], [4, 7], [5, 6], [8, 13], [9, 11], [10, 12]]);
+        case 'soni6':
+          return makeRhymes([[0, 3], [1, 2], [2, 5], [3, 4], [4, 7], [5, 6], [8, 10], [9, 11], [12, 13]]);
         default:
           return rhymes;
       }
