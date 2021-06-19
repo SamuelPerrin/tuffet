@@ -136,6 +136,7 @@ class Anthology {
       'odeke':0,
       'odeng':0,
       'cpls5':0,
+      'odek2':0,
       'sonit':0,
       'sonsh':0,
       'sonpe':0,

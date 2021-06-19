@@ -598,13 +598,16 @@ class Stanza {
       const fivenine = new Rhyme(stan[4], stan[8]).getScore();
       const sixeight = new Rhyme(stan[5], stan[7]).getScore();
       const sixnine = new Rhyme(stan[5], stan[8]).getScore();
+      const sixten = new Rhyme(stan[5], stan[9]).getScore();
       const seveneight = new Rhyme(stan[6], stan[7]).getScore();
+      const sevennine = new Rhyme(stan[6], stan[8]).getScore();
       const seventen = new Rhyme(stan[6], stan[9]).getScore();
       const nineten = new Rhyme(stan[8], stan[9]).getScore();
 
       const possibles = [
-        {rs:'odeke', pairs:['onethree', 'twofour','fivenine','sixeight','seventen']},
+        {rs:'odeke', pairs:['onethree','twofour','fivenine','sixeight','seventen']},
         {rs:'odeng', pairs:['onethree','twofour','fiveeight','sixnine','seventen']},
+        {rs:'odek2', pairs:['onethree','twofour','fiveeight','sixten','sevennine']},
         {rs:'cpls5', pairs:['onetwo','threefour','fivesix','seveneight','nineten']},
       ];
 
@@ -618,7 +621,9 @@ class Stanza {
         'fivenine':fivenine,
         'sixeight':sixeight,
         'sixnine':sixnine,
+        'sixten':sixten,
         'seveneight':seveneight,
+        'sevennine':sevennine,
         'seventen':seventen,
         'nineten':nineten,
       };
@@ -948,6 +953,8 @@ class Stanza {
           return makeRhymes([[0, 2], [1, 3], [4, 7], [5, 8], [6, 9]]);
         case 'cpls5':
           return makeRhymes([[0, 1], [2, 3], [4, 5], [6, 7], [8, 9]]);
+        case 'odek2':
+          return makeRhymes([[0, 2], [1, 3], [4, 7], [5, 9], [6, 8]]);
         default:
           return rhymes;
       }
