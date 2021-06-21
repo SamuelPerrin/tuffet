@@ -13,10 +13,10 @@ const StyledMenu = styled.div`
    transform: translateX(-50%);
    background: ${props => props.theme.pale};
    margin-top: 1.5rem;
-   /* padding: 1.625rem; */
    border-radius: 5px;
    border: 1px solid ${props => props.theme.black};
    color: ${props => props.theme.black};
+   font-weight:normal;
 
   &.closed {
     visibility:hidden;
@@ -35,7 +35,7 @@ const StyledMenu = styled.div`
     cursor:pointer;
 
     &:hover {
-      border:1px solid black;
+      background-color: ${props => props.theme.darkPale};
     }
 
     div.open {
@@ -51,8 +51,12 @@ const StyledMenu = styled.div`
     }
 
     &.sub-item {
-      background: ${props => props.theme.purple};
-      color: ${props => props.theme.white};
+      background: ${props => props.theme.pale};
+      font-weight:normal;
+
+      &:hover {
+        background: ${props => props.theme.darkPale};
+      }
     }
 
     &.super-item{
@@ -99,7 +103,7 @@ const NavMenu = props => {
             {isAboutOpen ? '–' : '+'}
           </span>
         </div>
-        <div className={isAboutOpen ? 'open' : 'closed'}>
+        <div className={isMenuOpen && isAboutOpen ? 'open' : 'closed'}>
           <span onClick={() => goToURI('/about')} className='menu-item sub-item'>About Tuffet</span>
           <span onClick={() => goToURI('/about/rhymes')} className='menu-item sub-item'>About Rhyme</span>
           <span onClick={() => goToURI('/about/meter')} className='menu-item sub-item'>About Meter</span>
