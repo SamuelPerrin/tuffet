@@ -40,7 +40,7 @@ const Home = props => {
 
   return (
     <div>
-      <Section style={{marginTop:'3rem'}}>
+      <Section style={{marginTop:'1rem'}}>
         <h3>Poetry is easier than ever with Tuffet!</h3>
         <ul>
           <li>Visualize <RedSpan><Link to='/about/rhymes'>rhyme schemes</Link></RedSpan>!</li>

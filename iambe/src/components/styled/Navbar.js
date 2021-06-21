@@ -1,17 +1,22 @@
 import React from 'react';
-import {Link} from 'react-router-dom';
+import { connect } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
+
+import Hamburger from './Hamburger';
+import { toggleMenu, closeAboutSubMenu } from '../../actions';
 
 const NavWrapper = styled.nav`
   display: flex;
   flex-flow: row nowrap;
-  justify-content: flex-start;
+  justify-content: space-between;
   align-items: center;
   background-color: ${props => props.theme.blue};
   color: ${props => props.theme.white};
   font-size: ${props => props.theme.headerFontSize};
   width:100%;
-  position:fixed;
+  max-height:2.5rem;
+  position:relative;
   top:0;
   z-index:10;
 
@@ -24,10 +29,31 @@ const NavWrapper = styled.nav`
   }
 `;
 
-export default function Navbar (props) {
+const Navbar = props => {
+  const { isMenuOpen, toggleMenu, closeAboutSubMenu } = props;
+  const history = useHistory();
+
+  const goHome = () => {
+    if (isMenuOpen) {
+      toggleMenu();
+      closeAboutSubMenu();
+    }
+    history.push('/');
+  }
+
   return(
     <NavWrapper>
-      <Link to='/' className='logo'>Tuffet</Link>
+      <span onClick={goHome} className='logo'>Tuffet</span>
+      <Hamburger />
     </NavWrapper>
   )
 }
+
+const mapStateToProps = state => {
+  return {
+    ...state,
+    isMenuOpen: state.isMenuOpen,
+  }
+}
+
+export default connect(mapStateToProps, { toggleMenu, closeAboutSubMenu })(Navbar);

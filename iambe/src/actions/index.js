@@ -12,6 +12,9 @@ export const INCREMENT_LINE_NUM = 'INCREMENT_LINE_NUM';
 export const DECREMENT_LINE_NUM = 'DECREMENT_LINE_NUM';
 export const INCREMENT_STANZA_NUM = 'INCREMENT_STANZA_NUM';
 export const DECREMENT_STANZA_NUM = 'DECREMENT_STANZA_NUM';
+export const TOGGLE_MENU = 'TOGGLE_MENU';
+export const TOGGLE_ABOUT_MENU = 'TOGGLE_ABOUT_MENU';
+export const CLOSE_ABOUT_MENU = 'CLOSE_ABOUT_MENU';
 
 export const getRhymes = poetry => {
   const anth = new Anthology(poetry);
@@ -50,3 +53,9 @@ export const crement = (direction, toCrement) => {
   else if (direction === 'in' && toCrement === 'stanzaNum') return {type:INCREMENT_STANZA_NUM, payload:{}};
   else if (direction === 'de' && toCrement === 'stanzaNum') return {type:DECREMENT_STANZA_NUM, payload:{}};
 }
+
+export const toggleMenu = () => ({type:TOGGLE_MENU});
+
+export const toggleAboutSubMenu = () => ({type:TOGGLE_ABOUT_MENU});
+
+export const closeAboutSubMenu = () => ({type:CLOSE_ABOUT_MENU})

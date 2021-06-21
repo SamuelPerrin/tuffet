@@ -599,7 +599,9 @@ class Line {
     else if (word.includes('ower') && stressList.length === 1) return {sylCount:1, vowCount:1, diphCount:0, toRemove:[word.indexOf('er')]};
     else if (wrd.includes("e'e")) return {sylCount:stressList.length, vowCount:stressList.length, diphCount:0, toRemove:[wrd.indexOf("e'e")+2]};
     else if (wrd.includes("o'e")) return {sylCount:stressList.length, vowCount:stressList.length, diphCount:0, toRemove:[wrd.indexOf("o'e")+2]};
-    else if (wrd.includes("itious")) return {sylCount:stressList.length, vowCount:stressList.length, diphCount:0, toRemove:[wrd.indexOf("itious")+2, wrd.indexOf("itious")+4]}
+    else if (word.includes("itious")) return {sylCount:stressList.length, vowCount:stressList.length, diphCount:0, toRemove:[wrd.indexOf("itious")+2, wrd.indexOf("itious")+4]}
+    else if (word.slice(0,6) === 'toward' && stressList.length === 1) return {sylCount:1, vowCount:1, diphCount:0, toRemove:[3]};
+    else if (word.slice(0,6) === 'heaven' && stressList.length === 1) return {sylCount:1, vowCount:1, diphCount:0, toRemove:[2,4]};
 
     if (word[0].toLowerCase() === 'y') toRemove.push(0);
 

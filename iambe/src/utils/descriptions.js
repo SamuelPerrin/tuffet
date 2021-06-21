@@ -6,12 +6,6 @@ export const STANZA_METER_DESCRIPTIONS = {
     <p>The English pentameter is likely a descendant of the Italian hendecasyllable, a line of eleven syllables used by Dante and Petrarch. Chaucer adapted this line to English, which doesn't have as many weak endings as Italian, resulting in a line of ten syllables.</p>
     <p>When iambic pentameter is unrhymed, it is called <strong>blank meter</strong>. When it is rhymed in couplets, it is called <strong>heroic couplets</strong>. Iambic pentameter is the meter normally used in the sonnet, a rhymed stanza of fourteen lines.</p>
   </div>,
-  'alexandrines': <div className='paragraph'>
-    <p>In English verse, <strong>alexandrine</strong> is the name given to iambic hexameter, which consists of six metrical feet with twelve syllables in rising rhythm (da Dum da Dum da Dum da Dum da Dum da Dum), often with caesura after the sixth syllable. The most common stanza form for alexandrines is rhymed couplets. This form comes from the medieval French form of the same name.</p>
-  </div>,
-  'fourteeners': <div className='paragraph'>
-    <p><strong>Fourteeners</strong> are couplets of (usually rhymed) iambic heptameter, which consists of seven metrical feet with fourteen syllables in rising rhythm (da Dum da Dum da Dum da Dum da Dum da Dum da Dum), often with caesura after the eighth syllable. When divided at the their caesura, two rhymed fourteeners make a common meter quatrain.</p>
-  </div>,
   'common hymn': <div className='paragraph'>
     <p>The <strong>common hymn</strong> (8.6.8.6), sometimes called <strong>common meter</strong>, is a quatrain in which the first and third lines are iambic tetrameter and the second and fourth lines are iambic trimeter. Common meter is familiar from Christian hymns like John Newton’s “Amazing Grace”, Isaac Watts’s “Joy to the World”, and the Christmas carol “O Little Town of Bethlehem”. It was also the favorite form of Emily Dickinson. When a common meter quatrain is collapsed down to a rhyming couplet with fourteen syllables in each line, the resulting verse form is called fourteeners.</p>
     <p>Common meter is related to the English ballad, which also features alternating lines with four and three stressed syllables. The ballad is more flexible than common meter proper, allowing for headless lines, anapestic substitution, and the like.</p>
@@ -23,40 +17,46 @@ export const STANZA_METER_DESCRIPTIONS = {
     <p><strong>Short meter</strong> (6.6.8.6) is a quatrain in of iambic trimeter in which the third line is iambic tetrameter. Short meter is short as compared to common meter, in which the first line is one foot longer. Like common meter and long meter, short meter was a popular hymn meter, used in such hymns as "Blest Be the Tie that Binds".</p>
     <p>When short meter is collapsed into a rhyming couplet with twelve syllables in the first line and fourteen in the second, it is known as <em>poulter's measure</em>, since a poulter—who sold eggs—sometimes gave twelve in a dozen and sometimes fourteen (compare the term <em>baker's dozen</em>, which has a similar origin).</p>
   </div>,
-  '8s&5s': <div className='paragraph'>
-    <p><strong>Eights and Fives</strong> (8.5.8.5) is a quatrain alternating lines of trochaic tetrameter (with eight syllables) and trochaic trimeter catalectic (with five). It can be thought of as the trochaic equivalent of the iambic common meter. It is used in some hymns and is the favorite trochaic meter of Emily Dickinson.</p>
-  </div>,
-  '8s&7s': <div className='paragraph'>
-    <p><strong>Eights and Sevens</strong> (8.7.8.7) is a quatrain alternating lines of trochaic tetrameter (with eight syllables) and trochaic tetrameter catalectic (with seven). It was used primarily as a hymn meter, producing "Come Thou Fount of Every Blessing" and Charles Wesley's "Loves Divine, All Loves Excelling".</p>
-  </div>,
-  '6s&5s':<div className='paragraph'>
-    <p><strong>Sixes and Fives</strong> (6.5.6.5) is a quatrain alternating lines of trochaic trimeter (with six syllables) and trochaic trimeter catalectic (with five). It is sometimes used for hymns, including "Onward, Christian Soldiers".</p>
-  </div>,
   'ballad':<div className='paragraph'>
     <p><strong>Ballad meter</strong> is a quatrain alternating lines with four beats and three beats. Ballad meter closely resembles common meter, which alternates iambic lines with eight syllables and six syllables. Unlike common meter, which counts stressed and unstressed syllables, ballad meter counts only stressed syllables&mdash;it is accentual rather than accentual-syllabic. Thus, ballad meter is more flexible than common meter, allowing variations like headless lines and anapestic substitution.</p>
     <p>Ballad meter has had hundreds of years of success in popular culture, generating everything from "The House of the Rising Sun" and "The Yellow Rose of Texas" to the theme songs for <em>Gilligan's Island</em> and the <em>Pokemon</em> anime series. There is also a tradition of ballad among writers of art-verse, including Samuel Taylor Coleridge's "Rime of the Ancient Mariner".</p>
   </div>,
-  'common hymn, split': <div className='paragraph'>
-    <p><strong></strong></p>
-  </div>,
-  'short hymn, split': <div className='paragraph'>
-    <p><strong></strong></p>
-  </div>,
-  'limerick': <div className='paragraph'>
-    <p><strong></strong></p>
+  'common hymn, doubled': <div className='paragraph'>
+    <p><strong>Common meter double</strong> (8.6.8.6.8.6.8.6) is an eight-line stanza that doubles the pattern of common meter, alternating lines of iambic tetrameter and iambic trimeter. Common meter double is a popular hymn meter, producing such songs as "It Came Upon the Midnight Clear" and "America the Beautiful."</p>
   </div>,
   'common particular': <div className='paragraph'>
     <p><strong>Common particular meter</strong> (8.8.6.8.8.6) is a metrical variant of common meter that doubles the tetrameters to produce a sestet in which the first, second, fourth, and fifth lines are iambic tetrameter and the third and sixth lines are iambic trimeter. Stanzas of common particular meter often use the rhyme scheme AABCCB.</p>
   </div>,
-  'common hymn, doubled': <div className='paragraph'>
-    <p><strong>Common meter double</strong>(8.6.8.6.8.6.8.6) is an eight-line stanza that doubles the pattern of common meter, alternating lines of iambic tetrameter and iambic trimeter. Common meter double is a popular hymn meter, producing such songs as "It Came Upon the Midnight Clear" and "America the Beautiful."</p>
+  'common hymn, split': <div className='paragraph'>
+    <p>When a quatrain of common meter has one of its tetrameters split into two lines of dimeter, the result is <strong>common hymn, split</strong> (4.4.6.8.6 or 8.6.4.4.6), a stanza of five lines that sounds the same as a common meter quatrain.</p>
   </div>,
-  'raven': <div className='paragraph'>
-    <p>This stanza is the same as the one used in Edgar Allan Poe's <strong>The Raven</strong>.</p>
+  'short hymn, split': <div className='paragraph'>
+    <p>When a quatrain of short meter (6.6.8.6) has its tetrameter split into two lines of dimeter, the result is <strong>short hymn, split</strong> (6.6.4.4.6), a stanza of five lines that sounds the same as a short meter quatrain.</p>
   </div>,
-  'Lady of Shalott': <div className='paragraph'>
-    <p>This stanza is the same as the one used in Alfred Lord Tennyson's <strong>The Lady of Shalott</strong>.</p>
+  'limerick': <div className='paragraph'>
+    <p>The <strong>limerick</strong> is a rhymed stanza of five-lines popular with writers of light verse. Metrically, limericks feature trimeter in lines 1, 2, and 5 and dimeter in lines 3 and 4. The rhythm of the lines in a limerick tends to be rising, though it is often acephalous (lacking the first unstressed syllable). Anapestic substitution is common, and lines often feature feminine endings.</p>
   </div>,
+  'alexandrines': <div className='paragraph'>
+    <p>In English verse, <strong>alexandrine</strong> is the name given to iambic hexameter, which consists of six metrical feet with twelve syllables in rising rhythm (da Dum da Dum da Dum da Dum da Dum da Dum), often with caesura after the sixth syllable. The most common stanza form for alexandrines is rhymed couplets. This form comes from the medieval French form of the same name.</p>
+  </div>,
+  'fourteeners': <div className='paragraph'>
+    <p><strong>Fourteeners</strong> are couplets of (usually rhymed) iambic heptameter, which consists of seven metrical feet with fourteen syllables in rising rhythm (da Dum da Dum da Dum da Dum da Dum da Dum da Dum), often with caesura after the eighth syllable. When divided at the caesura, two rhymed fourteeners make a common meter quatrain.</p>
+  </div>,
+  'eights & fives': <div className='paragraph'>
+    <p><strong>Eights and Fives</strong> (8.5.8.5) is a quatrain alternating lines of trochaic tetrameter (with eight syllables) and trochaic trimeter catalectic (with five). It can be thought of as the trochaic equivalent of the iambic common meter. It is used in some hymns and is the favorite trochaic meter of Emily Dickinson.</p>
+  </div>,
+  'eights & sevens': <div className='paragraph'>
+    <p><strong>Eights and Sevens</strong> (8.7.8.7) is a quatrain alternating lines of trochaic tetrameter (with eight syllables) and trochaic tetrameter catalectic (with seven). It was used primarily as a hymn meter, producing "Come Thou Fount of Every Blessing" and Charles Wesley's "Loves Divine, All Loves Excelling".</p>
+  </div>,
+  'sixes & fives':<div className='paragraph'>
+    <p><strong>Sixes and Fives</strong> (6.5.6.5) is a quatrain alternating lines of trochaic trimeter (with six syllables) and trochaic trimeter catalectic (with five). It is sometimes used for hymns, including "Onward, Christian Soldiers".</p>
+  </div>,
+  // 'raven': <div className='paragraph'>
+  //   <p>This stanza is the same as the one used in Edgar Allan Poe's <strong>The Raven</strong>.</p>
+  // </div>,
+  // 'Lady of Shalott': <div className='paragraph'>
+  //   <p>This stanza is the same as the one used in Alfred Lord Tennyson's <strong>The Lady of Shalott</strong>.</p>
+  // </div>,
 };
 export const LINE_METER_DESCRIPTIONS = {
   'iambic trimeter': <div className='paragraph'>
@@ -148,6 +148,7 @@ export const RHYME_TYPE_DESCRIPTIONS = {
   </div>,
   'full consonance':<div className={'paragraph'}>
     <p><strong>Consonantal rhymes</strong> are rhymes in which the sound resemblance between two words is limited to their consonants (especially consonants coming after the last stressed vowel). For instance, in consonantal rhymes like <i>winds</i>&ndash;<i>stands</i> and <i>light</i>&ndash;<i>forgot</i>, the vowel sounds are different, but the final consonant sounds are identical. Sometimes called <strong>suspended rhyme</strong> or <strong>consonance</strong>, consonantal rhyme has a long history in English poetry. In the work of the hymnist Isaac Watts, for example, consonantal rhymes constitute about one-fourth of all rhymes. Consonance differs from alliteration, in which the matching consonants come at the beginning of the word, rather than at the end.</p>
+    <p>Some rhymes that Tuffet identifies as consonance would have sounded to their author like full rhymes. English vowel sounds are always on the move, and different poets have different regional accents. Tuffet uses standard modern English pronunciations, but this results in historical rhymes like <em>move&ndash;love</em> or <em>wind&ndash;find</em> being labeled as consonance.</p>
   </div>,
   'promotion consonance':<div className={'paragraph'}>
     <p>Rhymes that combine the metrical pattern of promotion rhyme with the consonant-matching of consonantal rhyme can be called <strong>promotion consonance</strong>. In such pairings, consonants at the end of words with final stress are made to rhyme with consonants in the stress-promoted last syllable of words with antepenultimate stress. For instance, in the promotion consonance rhyme <i>south</i>&ndash;<i>Nazareth</i>, the [θ] in <i>south</i> rhymes with the [θ] in the stress-promoted last syllable of <i>Nazareth</i>, even though the vowels do not match.</p>
@@ -183,3 +184,19 @@ export const RHYME_TYPE_DESCRIPTIONS = {
   </div>,
   // 'N/A':'nonrhyme',
 };
+export const FAQs = {
+  'How does it work?':<div className='paragraph'>
+    <p>To analyze a stanza's rhyme, Tuffet looks up the pronunciation of the last word of every line in a dictionary (using an algorithm to guess the pronunciation of terms that aren't in its dictionary). It also has an algorithm for deciding which pronunciation is being used when the same spelling can be pronounced multiple ways, like <em>live</em> rhyming with either <em>give</em> or <em>five</em>. By comparing the pronunciation of words, Tuffet is able to determine whether and how words rhyme.</p>
+    <p>Analyzing a line's meter is harder because every word must be pronounced. Some words can be pronounced in multiple ways, like the noun <em>object</em> with stress in the first syllable and the verb <em>object</em> with stress in the second syllable, or <em>wondering</em> pronounced with three syllables or (as it is sometimes pronounced in poetry) with just two syllables. Tuffet accounts for this, selecting the pronunciation that (in its view, at least) makes for the most metrical line.</p>
+  </div>,
+  'Why did Tuffet analyze this rhyme wrong?':<div className='paragraph'>
+    <p>If you disagree with Tuffet's analysis of a rhyme, it's probably because Tuffet mispronounced one or both of the words. This is a result of Tuffet having a limited vocabulary and an imperfect algorithm for guessing the pronunciation of unfamiliar words.</p>
+    <p>Another possibility is that Tuffet didn't recognize the rhyme scheme of the stanza.</p>
+  </div>,
+  'Does Tuffet work for languages other than English?':<div className='paragraph'>
+    <p>Not right now.</p>
+  </div>,
+  'How should I format poetry before using Tuffet?':<div className='paragraph'>
+    <p>Leave at least one blank line between stanzas. Within a stanza, there should not be any blank lines.</p>
+  </div>,
+}

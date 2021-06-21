@@ -1,10 +1,11 @@
-import {BLACK, WHITE, PALE, BLUE, RED, YELLOW, GREEN, CYAN, PURPLE, GRAY} from './colors'
+import {BLACK, WHITE, PALE, BLUE, RED, YELLOW, GREEN, CYAN, PURPLE, GRAY, DARK_PALE} from './colors'
 
 export const Theme = {
   // colors
   black: BLACK,
   white: WHITE,
   pale: PALE,
+  darkPale: DARK_PALE,
   blue: BLUE,
   red: RED,
   yellow: YELLOW,
