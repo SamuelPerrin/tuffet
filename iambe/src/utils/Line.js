@@ -664,6 +664,7 @@ class Line {
         triphs.forEach(triph => {
           if (word.includes(triph)) {
             vowCount -= 2;
+            const triphStarts = word.indexOf(triph);
             word = word.slice(0,word.indexOf(triph) + 1) + word.slice(word.indexOf(triph) + 3);
             const equalized = this.equalizeVowels(word, sylCount, vowCount, stressList);
             sylCount = equalized.sylCount;
@@ -671,8 +672,8 @@ class Line {
             diphCount += equalized.diphCount;
             silentEs += equalized.silentEs;
             toRemove = equalized.toRemove;
-            toRemove.push(word.indexOf(triph) + 3);
-            toRemove.push(word.indexOf(triph) + 4);
+            toRemove.push(triphStarts + 1);
+            toRemove.push(triphStarts + 2);
           }
         })
         Object.keys(phonstants.DIGRAPHS).forEach(digraph => {

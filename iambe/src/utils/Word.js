@@ -178,7 +178,7 @@ class Word {
       return null;
     }
 
-    // check if root + -ing, -less, -ness, -ly, -able, or -ful can be pronounced
+    // check if root + -ing, -less, -ness, -ly, -able, -ful, or -ment can be pronounced
     pron = checkLastStress(this.word, 'ing', " IH3 NG", " IH0 NG");
     if (pron !== null) return pron;
     else {
@@ -196,6 +196,10 @@ class Word {
             else {
               pron = checkLastStress(this.word, 'ful', " F AH3 L", " F AH0 L");
               if (pron !== null) return pron;
+              else {
+                pron = checkLastStress(this.word, 'ment', " M AH3 N T", " M AH0 N T");
+                if (pron !== null) return pron;
+              }
             }
           }
         }
