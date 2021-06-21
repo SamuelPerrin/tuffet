@@ -74,6 +74,19 @@ const GlobalStyle = createGlobalStyle`
     select {
     font: inherit;
     }
+
+    /* Hide for large or small screens */
+    .hide-for-desktop {
+        @media (min-width:800px) {
+            display:none;
+        }
+    }
+    .hide-for-mobile {
+        @media (max-width:800px) {
+            display:none
+        }
+    }
+
     /* Remove all animations and transitions for people that prefer not to see them */
     @media (prefers-reduced-motion: reduce) {
     * {

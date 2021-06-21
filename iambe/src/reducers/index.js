@@ -12,6 +12,7 @@ const initialState = {
   mt: null,
   stanzaType: null,
   lineNum: null,
+  isMenuOpen: false,
 }
 
 const reducer = (state=initialState, action) => {
@@ -82,6 +83,11 @@ const reducer = (state=initialState, action) => {
       return {
         ...state,
         stanzaNum: parseInt(state.stanzaNum) - 1,
+      }
+    case actions.TOGGLE_MENU:
+      return {
+        ...state,
+        isMenuOpen: !state.isMenuOpen,
       }
     default:
       return state

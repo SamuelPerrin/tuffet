@@ -6,7 +6,7 @@ const BreadcrumbWrapper = styled.nav`
   flex-flow: row wrap;
   justify-content:flex-start;
   margin: ${props => props.theme.space};
-  margin-top: 2.5rem;
+  margin-top: 0.5rem;
   color: ${props => props.theme.purple};
 
   .current {
