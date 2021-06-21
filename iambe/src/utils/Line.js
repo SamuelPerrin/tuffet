@@ -110,6 +110,8 @@ class Line {
     // Return the possibility with the fewest demerits
     demerits.sort((a, b) => a[1] - b[1])
     
+    // console.log("demerits for",this.text,demerits);
+    
     return demerits[0][0];
   }
 
@@ -173,7 +175,7 @@ class Line {
     }
     
     if (foots.slice(-1)[0] === 'I') { // weird lines ending in 'I'
-      if (equiv(foots.slice(-2), ['A','I']) && feet.slice(-2,-1)[0][0] <= feet.slice(-2,-1)[0][1]) {
+      if (equiv(foots.slice(-2), ['A','I']) && feet.slice(-2,-1)[0][0] < feet.slice(-2,-1)[0][1]) {
         changeFeet(['A','I'],['T','T','str']);
         dumpsters();
       } else if (equiv(foots.slice(-4), ['I','A','D','I']) && feet.slice(-3,-2)[0][0] > feet.slice(-3,-2)[0][1]) {
@@ -201,6 +203,7 @@ class Line {
       else if (equiv(foots.slice(-2), ['T','unstr'])) changeFeet(['T','unstr'], ['D']);
     } else if (foots.slice(-1)[0] === 'str') { // weird lines ending in 'str'
       if (equiv(foots.slice(-3), ['I','A','str'])) changeFeet(['I','A','str'], ['I','I','I']);
+      else if (equiv(foots.slice(-5), ['I','A','I','U','str'])) changeFeet(['I','A','I','U','str'], ['I','I','T','U','U']);
       else if (equiv(foots.slice(-3), ['U','A','str'])) changeFeet(['U','A','str'], ['U','I','I']);
       else if (equiv(foots.slice(-3), ['D','I','str']) && feet.slice(-3,-2)[0][2] < feet.slice(-2,-1)[0][0] && feet.slice(-2,-1)[0][1] < feet.slice(-1)[0]) {
         changeFeet(['D','I','str'], ['T','T','T']); 
@@ -251,6 +254,7 @@ class Line {
       else if (equiv(foots.slice(-4), ['U','D','T','U'])) changeFeet(['U','D','T','U'], ['A','A','A']);
       else if (equiv(foots.slice(-4), ['U','D','D','U'])) changeFeet(['U','D','D','U'], ['U','T','I','I','U']);
       else if (equiv(foots.slice(-4), ['I','A','D','U'])) changeFeet(['I','A','D','U'], ['I','I','I','I','U']);
+      else if (equiv(foots.slice(-4), ['D','T','A','U'])) changeFeet(['D','T','A','U'], ['T','I','I','I','U']);
 
     return [foots, feet];
   }
@@ -560,7 +564,7 @@ class Line {
       }
     }
 
-    // if (this.text.includes("")) console.log(foots, feet)
+    // if (this.text.includes("eminent")) console.log(foots, feet)
 
     return {feet, foots, label};
   }
@@ -602,6 +606,7 @@ class Line {
     else if (word.includes("itious")) return {sylCount:stressList.length, vowCount:stressList.length, diphCount:0, toRemove:[wrd.indexOf("itious")+2, wrd.indexOf("itious")+4]}
     else if (word.slice(0,6) === 'toward' && stressList.length === 1) return {sylCount:1, vowCount:1, diphCount:0, toRemove:[3]};
     else if (word.slice(0,6) === 'heaven' && stressList.length === 1) return {sylCount:1, vowCount:1, diphCount:0, toRemove:[2,4]};
+    else if (word.slice(-5) === 'esque') return {sylCount:stressList.length, vowCount:stressList.length, diphCount:0, toRemove:[wrd.indexOf("esque")+3, wrd.indexOf("esque")+4]}
 
     if (word[0].toLowerCase() === 'y') toRemove.push(0);
 
@@ -776,6 +781,7 @@ class Line {
 
         pos--;
         toRemove.push(pos);
+        vowCount--;
       }
     }
 
@@ -789,7 +795,7 @@ class Line {
       }
     }
 
-    // if (this.text.includes("beguiles")) console.log("leaving equalizeVowels with",word,"sylCount",sylCount,"diphCount",diphCount,"silentEs",silentEs,"toRemove",toRemove);
+    // if (this.text.includes("eminent")) console.log("leaving equalizeVowels with",word,"sylCount",sylCount,"diphCount",diphCount,"silentEs",silentEs,"toRemove",toRemove);
 
     return {sylCount, vowCount, diphCount, silentEs, toRemove};
   }
