@@ -83,7 +83,7 @@ const Rhymes = props => {
         <Container>
           <Section>
             <h2><YellowSpan>Oops!</YellowSpan></h2>
-            <p>No rhymes found. If there are rhymes in this stanza, <Link to='/'>try again</Link> with it broken into shorter stanzas.</p>
+            <p>No rhymes found. If there are rhymes in this stanza, <Link to='/' style={{color:'#3887D6'}}>try again</Link> with it broken into shorter stanzas.</p>
           </Section>
         </Container>
       </div>

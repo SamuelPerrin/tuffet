@@ -13,6 +13,7 @@ const initialState = {
   stanzaType: null,
   lineNum: null,
   isMenuOpen: false,
+  isAboutOpen: false,
 }
 
 const reducer = (state=initialState, action) => {
@@ -89,9 +90,19 @@ const reducer = (state=initialState, action) => {
         ...state,
         isMenuOpen: !state.isMenuOpen,
       }
+    case actions.CLOSE_ABOUT_MENU:
+      return {
+        ...state,
+        isAboutOpen: false,
+      }
+    case actions.TOGGLE_ABOUT_MENU:
+      return {
+        ...state,
+        isAboutOpen: !state.isAboutOpen,
+      }
     default:
       return state
   }
 }
 
-export default reducer
+export default reducer;
