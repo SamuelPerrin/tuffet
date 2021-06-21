@@ -94,6 +94,7 @@ class Line {
         if (foots.includes('D')) demerit++;
         if (foots.includes('T')) demerit++;
         if (foots.includes('D') && foots.includes('T')) demerit++;
+        if (foots.slice(-1)[0] === 'unstr') demerit++;
       } else if (label.rhythm === 'dactylic') {
         demerit++;
         if (foots.includes('A')) demerit++;
