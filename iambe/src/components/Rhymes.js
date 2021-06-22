@@ -117,7 +117,7 @@ const Rhymes = props => {
                     rt={entry[0]}
                     bulletColor={COLOR_SEQUENCE[i % COLOR_SEQUENCE.length]}
                   >
-                      {RHYME_TYPES[entry[0]]} ({entry[1]} rhyme{entry[1] > 0 ? 's' : ''})
+                    {RHYME_TYPES[entry[0]]} ({entry[1]} rhyme{entry[1] > 0 ? 's' : ''})
                   </ListItemTile>
                 )}
             </ul>

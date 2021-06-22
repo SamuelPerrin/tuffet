@@ -565,7 +565,7 @@ class Line {
       }
     }
 
-    // if (this.text.includes("eminent")) console.log(foots, feet)
+    if (this.text.includes("various")) console.log(foots, feet)
 
     return {feet, foots, label};
   }
@@ -655,6 +655,10 @@ class Line {
             silentEs += eq.silentEs;
             toRemove = eq.toRemove;
           }
+        }
+        if (word.slice(-3) === 'yre') {
+          silentEs++;
+          vowCount--;
         }
       } else if (word.slice(-3) === 'ies' || word.slice(-3) === 'ied') {
         silentEs++;
@@ -796,7 +800,7 @@ class Line {
       }
     }
 
-    // if (this.text.includes("eminent")) console.log("leaving equalizeVowels with",word,"sylCount",sylCount,"diphCount",diphCount,"silentEs",silentEs,"toRemove",toRemove);
+    // if (this.text.includes("lyre")) console.log("leaving equalizeVowels with",word,"sylCount",sylCount,"diphCount",diphCount,"silentEs",silentEs,"toRemove",toRemove);
 
     return {sylCount, vowCount, diphCount, silentEs, toRemove};
   }

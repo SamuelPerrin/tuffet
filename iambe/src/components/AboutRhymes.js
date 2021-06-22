@@ -26,7 +26,7 @@ const AboutRhymes = () => {
           <h2><RedSpan>About: Rhymes</RedSpan></h2>
           <div className='paragraph'>
             <p>Tuffet identifies rhymes using an algorithm that automatically identifies the rhyme scheme of each stanza you enter. It can distinguish dozens of kinds of slant rhyme and creates data visualizations of their relative frequency.</p>
-            <p>The dictionary that Tuffet uses to identify rhymes isn't perfect, and its algorithm sometimes makes mistakes. In general, it does better with shorter stanzas than with long ones. At this time, it doesn't look for <strong>internal rhyme</strong> like <em>While I nodded, nearly napping, suddenly there came a tapping</em> or for <strong>mosaic rhyme</strong> like <em>Shakespeare&ndash;lake's pier</em>, instead focusing on end rhyme between single words. It also cannot identify rhymes that cross stanza-breaks.</p>
+            <p>The dictionary that Tuffet uses to identify rhymes isn't perfect, and its algorithm sometimes makes mistakes. In general, it does better with shorter stanzas than with long ones. At this time, it doesn't look for <strong>internal rhyme</strong> like <em>While I nodded, nearly napping, suddenly there came a tapping</em> or for <strong>mosaic rhyme</strong> like <em>Shakespeare&ndash;lake's pier</em>, instead focusing on end rhyme between single words. It also cannot identify rhymes that cross stanza-breaks, so it is not well suited to terza rima.</p>
           </div>
         </Section>
         <Section>
