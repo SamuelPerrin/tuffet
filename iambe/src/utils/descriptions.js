@@ -200,3 +200,11 @@ export const FAQs = {
     <p>Leave at least one blank line between stanzas. Within a stanza, there should not be any blank lines.</p>
   </div>,
 }
+
+export const VARIATION_DESCRIPTIONS = {
+  'trochaic inversion':"A trochee (/\xa0×) in place of an iamb (×\xa0/)",
+  'pyrrhic substitution':"A pyrrhic foot (× ×) in place of an iamb (× /)",
+  'anapestic substitution':"An anapest (× × /) in place of an iamb (× /)",
+  'feminine ending':"A line that ends with an extra unstressed syllable",
+  'catalexis':"",
+}

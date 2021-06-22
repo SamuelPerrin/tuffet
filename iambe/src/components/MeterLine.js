@@ -9,12 +9,14 @@ import {BlueSpan, YellowSpan, RedSpan} from './styled/Spans';
 import ScannedLine from './styled/ScannedLine';
 import ButtonRow from './styled/ButtonRow';
 import Button from './styled/Button';
+import HoverCard from './styled/HoverCard';
 
-import {crement, getMeter, getMeterTypeDetails} from '../actions';
+import {crement, getMeterTypeDetails} from '../actions';
 
 import Poem from '../utils/Poem';
 import Stanza from '../utils/Stanza';
 import Line from '../utils/Line';
+import { VARIATION_DESCRIPTIONS } from '../utils/descriptions';
 
 const MeterLine = props => {
   const {poems, stanzaNum, lineNum, crement, getMeterTypeDetails} = props;
@@ -79,7 +81,9 @@ const MeterLine = props => {
             <p>This line has {varList.length.toString()} metrical variation{varList.length === 1 ? '' : 's'}:</p>
             <ul>
               {varList.map(vari => (
-                <li key={vari.foot}>There's {vari.varType} in foot {vari.foot}.</li>
+                <li key={vari.foot}>
+                  There's <HoverCard hoverText={VARIATION_DESCRIPTIONS[vari.varType]}><YellowSpan>{vari.varType}</YellowSpan></HoverCard> in foot {vari.foot}.
+                </li>
                 ))}
             </ul>
           </Section>
