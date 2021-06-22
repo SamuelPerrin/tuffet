@@ -32,7 +32,16 @@ const AboutRhymes = () => {
         <Section>
           <h2><YellowSpan>Tuffet's Rhyme Types</YellowSpan></h2>
           <p>Below is a list of all the kinds of rhyme that Tuffet can identify, with a description of each.</p>
-          <Accordion data={Object.entries(RHYME_TYPE_DESCRIPTIONS).map(x => [x[0].slice(0,1).toUpperCase() + x[0].slice(1),x[1]])}/>
+          <Accordion
+            data={
+              Object
+                .entries(RHYME_TYPE_DESCRIPTIONS)
+                .map(x => [
+                  x[0].slice(0,1).toUpperCase() + x[0].slice(1),
+                  x[1]
+                ])
+              }
+          />
         </Section>
       </Container>
     </div>

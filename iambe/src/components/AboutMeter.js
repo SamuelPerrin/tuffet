@@ -32,7 +32,16 @@ const AboutMeter = () => {
         <Section>
           <h2><YellowSpan>Tuffet's Stanzaic Meters</YellowSpan></h2>
           <p>Below is a list of all the types of stanzaic meter that Tuffet can identify, with a description of each.</p>
-          <Accordion data={Object.entries(STANZA_METER_DESCRIPTIONS).map(x => [x[0].slice(0,1).toUpperCase() + x[0].slice(1),x[1]])} />
+          <Accordion
+            data={
+              Object
+              .entries(STANZA_METER_DESCRIPTIONS)
+              .map(x => [
+                x[0].slice(0,1).toUpperCase() + x[0].slice(1),
+                x[1]
+              ])
+            }
+          />
         </Section>
       </Container>
     </div>

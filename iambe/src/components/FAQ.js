@@ -18,7 +18,7 @@ const FAQ = () => {
     <div>
       <Breadcrumbs>
         <Link to='/'>Home</Link>
-        <Link to='/about/' className='current'>About</Link>
+        <Link to='/about' className='current'>About</Link>
       </Breadcrumbs>
       <Container>
         <Section>
