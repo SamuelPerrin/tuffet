@@ -39,7 +39,9 @@ const RhymeType = props => {
         <Section>
           <h2><YellowSpan>Rhyme Type: {RHYME_TYPES[rt]}</YellowSpan></h2>
           <Table maxWidth={'1200px'}>
-            <caption>This selection has {rhymeTypeCounts[rt]} instance{rhymeTypeCounts[rt] === 1 ? '' : 's'} of {RHYME_TYPES[rt]}:</caption>
+            <caption style={{textAlign:'center'}}>
+              This selection has {rhymeTypeCounts[rt]} instance{rhymeTypeCounts[rt] === 1 ? '' : 's'} of {RHYME_TYPES[rt]}:
+            </caption>
             <thead>
               <tr>
                 <th>Word 1</th>

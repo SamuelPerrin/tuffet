@@ -51,7 +51,9 @@ const MeterType = props => {
         <Section>
           <h2><RedSpan>Meter: {mt}</RedSpan></h2>
           <Table maxWidth='1200px'>
-            <caption>This stanza has {lineMeterCounts[mt]} instance{lineMeterCounts[mt] === 1 ? '' : 's'} of {mt}:</caption>
+            <caption style={{textAlign:'center'}}>
+              This stanza has {lineMeterCounts[mt]} instance{lineMeterCounts[mt] === 1 ? '' : 's'} of {mt}:
+            </caption>
             <thead>
               <tr>
                 <th>Line</th>
