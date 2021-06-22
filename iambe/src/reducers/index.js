@@ -14,6 +14,7 @@ const initialState = {
   lineNum: null,
   isMenuOpen: false,
   isAboutOpen: false,
+  isSampleOpen: false,
 }
 
 const reducer = (state=initialState, action) => {
@@ -99,6 +100,16 @@ const reducer = (state=initialState, action) => {
       return {
         ...state,
         isAboutOpen: !state.isAboutOpen,
+      }
+    case actions.CLOSE_SAMPLE_MENU:
+      return {
+        ...state,
+        isSampleOpen: false,
+      }
+    case actions.TOGGLE_SAMPLE_MENU:
+      return {
+        ...state,
+        isSampleOpen: !state.isSampleOpen,
       }
     default:
       return state

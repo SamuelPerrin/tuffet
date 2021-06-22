@@ -11,10 +11,10 @@ import { getRhymes, getMeter } from '../actions';
 
 import * as samples from '../constants/samples';
 
-const initialValue = ""
 
 const Home = props => {
-  const [poem, setPoem] = useState(initialValue);
+  const { poetry, getRhymes, getMeter } = props;
+  const [poem, setPoem] = useState(poetry ? poetry: "");
   let history = useHistory();
 
   const handleChange = e => {
@@ -23,18 +23,18 @@ const Home = props => {
 
   const submitRhymes = e => {
     e.preventDefault();
-    props.getRhymes(poem);
+    getRhymes(poem);
     history.push('/rhyme');
   }
 
   const submitMeter = e => {
     e.preventDefault();
-    props.getMeter(poem);
+    getMeter(poem);
     history.push('/meter');
   }
 
   const submitSample = sample => {
-    props.getRhymes(sample);
+    getRhymes(sample);
     history.push('/rhyme');
   };
 

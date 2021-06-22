@@ -43,7 +43,7 @@ const Navbar = props => {
 
   return(
     <NavWrapper>
-      <span onClick={goHome} className='logo'>Tuffet</span>
+      <span onClick={goHome} className='logo' style={{cursor:'pointer'}}>Tuffet</span>
       <Hamburger />
     </NavWrapper>
   )

@@ -17,6 +17,7 @@ import MeterLine from './components/MeterLine';
 import AboutRhymes from './components/AboutRhymes';
 import AboutMeter from './components/AboutMeter';
 import FAQs from './components/FAQ';
+import Samples from './components/Samples';
 
 function App() {
   return (
@@ -39,6 +40,7 @@ function App() {
           <Route exact path="/about" component={FAQs} />
           <Route exact path="/about/rhymes" component={AboutRhymes} />
           <Route exact path="/about/meter" component={AboutMeter} />
+          <Route exact path="/samples" component={Samples} />
         </Switch>
       </div>
     </ThemeProvider>  

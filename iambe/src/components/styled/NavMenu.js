@@ -3,7 +3,8 @@ import { connect } from 'react-redux';
 import styled from 'styled-components';
 import { useHistory } from 'react-router-dom';
 
-import { getRhymes, getMeter, toggleMenu, toggleAboutSubMenu, closeAboutSubMenu } from '../../actions';
+import { getRhymes, getMeter, toggleMenu, toggleAboutSubMenu, closeAboutSubMenu, toggleSampleMenu, closeSampleMenu } from '../../actions';
+import {POPE, KEATS, DICKINSON} from '../../constants/samples';
 
 const StyledMenu = styled.div`
   position: absolute;
@@ -68,13 +69,14 @@ const StyledMenu = styled.div`
 `
 
 const NavMenu = props => {
-  const { poetry, isMenuOpen, isAboutOpen, getRhymes, getMeter, toggleMenu, toggleAboutSubMenu, closeAboutSubMenu } = props;
+  const { poetry, isMenuOpen, isAboutOpen, isSampleOpen, getRhymes, getMeter, toggleMenu, toggleAboutSubMenu, closeAboutSubMenu, toggleSampleMenu, closeSampleMenu } = props;
   const history = useHistory();
 
   const switchMenu = e => {
     e && e.preventDefault();
     toggleMenu();
     if (!isMenuOpen && isAboutOpen) closeAboutSubMenu();
+    if (!isMenuOpen && isSampleOpen) closeSampleMenu();
   }
 
   const goToURI = (uri) => {
@@ -82,9 +84,9 @@ const NavMenu = props => {
     history.push(uri);
   }
 
-  const goToRhymes = () => {
+  const goToRhymes = (sample) => {
     switchMenu();
-    getRhymes(poetry);
+    getRhymes(sample ? sample : poetry);
     history.push('/rhyme');
   }
 
@@ -109,6 +111,19 @@ const NavMenu = props => {
           <span onClick={() => goToURI('/about/meter')} className='menu-item sub-item'>About Meter</span>
         </div>
       </span>
+      <span className='menu-item super-item' onClick={() => toggleSampleMenu()}>
+        <div style={{display:'flex', justifyContent:'space-between'}}>
+          <span onClick={() => goToURI('/samples')}>Samples</span>
+          <span className='symbol'>
+            {isSampleOpen ? '–' : '+'}
+          </span>
+        </div>
+        <div className={isMenuOpen && isSampleOpen ? 'open' : 'closed'}>
+          <span onClick={() => goToRhymes(POPE)} className='menu-item sub-item'>Pope</span>
+          <span onClick={() => goToRhymes(KEATS)} className='menu-item sub-item'>Keats</span>
+          <span onClick={() => goToRhymes(DICKINSON)} className='menu-item sub-item'>Dickinson</span>
+        </div>
+      </span>
       {poetry && <span onClick={goToRhymes} className='menu-item'>Rhyme</span>}
       {poetry && <span onClick={goToMeter} className='menu-item'>Meter</span>}
     </StyledMenu>
@@ -120,7 +135,8 @@ const mapStateToProps = state => {
     poetry: state.poetry,
     isMenuOpen: state.isMenuOpen,
     isAboutOpen: state.isAboutOpen,
+    isSampleOpen: state.isSampleOpen,
   }
 }
 
-export default connect(mapStateToProps, { getRhymes, getMeter, toggleMenu, toggleAboutSubMenu, closeAboutSubMenu })(NavMenu);
+export default connect(mapStateToProps, { getRhymes, getMeter, toggleMenu, toggleAboutSubMenu, closeAboutSubMenu, toggleSampleMenu, closeSampleMenu })(NavMenu);

@@ -15,6 +15,8 @@ export const DECREMENT_STANZA_NUM = 'DECREMENT_STANZA_NUM';
 export const TOGGLE_MENU = 'TOGGLE_MENU';
 export const TOGGLE_ABOUT_MENU = 'TOGGLE_ABOUT_MENU';
 export const CLOSE_ABOUT_MENU = 'CLOSE_ABOUT_MENU';
+export const TOGGLE_SAMPLE_MENU = 'TOGGLE_SAMPLE_MENU';
+export const CLOSE_SAMPLE_MENU = 'CLOSE_SAMPLE_MENU';
 
 export const getRhymes = poetry => {
   const anth = new Anthology(poetry);
@@ -58,4 +60,8 @@ export const toggleMenu = () => ({type:TOGGLE_MENU});
 
 export const toggleAboutSubMenu = () => ({type:TOGGLE_ABOUT_MENU});
 
-export const closeAboutSubMenu = () => ({type:CLOSE_ABOUT_MENU})
+export const closeAboutSubMenu = () => ({type:CLOSE_ABOUT_MENU});
+
+export const toggleSampleMenu = () => ({type:TOGGLE_SAMPLE_MENU});
+
+export const closeSampleMenu = () => ({type:CLOSE_SAMPLE_MENU})
