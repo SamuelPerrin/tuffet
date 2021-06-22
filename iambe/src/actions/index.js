@@ -64,4 +64,4 @@ export const closeAboutSubMenu = () => ({type:CLOSE_ABOUT_MENU});
 
 export const toggleSampleMenu = () => ({type:TOGGLE_SAMPLE_MENU});
 
-export const closeSampleMenu = () => ({type:CLOSE_SAMPLE_MENU})
+export const closeSampleMenu = () => ({type:CLOSE_SAMPLE_MENU});

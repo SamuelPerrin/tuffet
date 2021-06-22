@@ -79,7 +79,9 @@ const Scansion = props => {
       <Container>
         <Section>
           <h2><RedSpan>Scansion</RedSpan></h2>
-          <p>Select a line from this stanza to learn more about its meter.</p>
+          <div className='paragraph'>
+            <p>Select a line from this stanza to learn more about its meter.</p>
+          </div>
           <ScannedStanza stanza={stanza} submitLineNum={submitLineNum} />
           <br/>
           <p>This stanza's meter is:&nbsp;

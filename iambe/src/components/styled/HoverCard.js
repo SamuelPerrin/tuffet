@@ -7,6 +7,7 @@ const HoverCardWrapper = styled.div`
   .tooltiptext {
     visibility: hidden;
     max-width: 100%;
+    min-width:6rem;
     background-color: ${props => props.theme.blue};
     color: ${props => props.theme.white};
     /* text-align: center; */

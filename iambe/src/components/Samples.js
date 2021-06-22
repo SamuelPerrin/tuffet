@@ -47,7 +47,7 @@ const Samples = props => {
                 .entries(all_samples)
                 .map(x => [
                   x[0] + ": " + x[1].title,
-                  (<div>
+                  (<div key={x[0]}>
                     {x[1].sample}
                     <ButtonRow>
                       <Button

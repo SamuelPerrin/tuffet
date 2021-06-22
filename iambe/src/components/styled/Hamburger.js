@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
 
-import { closeAboutSubMenu, toggleMenu } from '../../actions';
+import { closeAboutSubMenu, toggleMenu, closeSampleMenu } from '../../actions';
 import NavMenu from './NavMenu';
 
 const StyledHamburger = styled.button`
@@ -58,12 +58,15 @@ const StyledHamburger = styled.button`
 `
 
 const Hamburger = props => {
-  const { isMenuOpen, toggleMenu, closeAboutSubMenu } = props;
+  const { isMenuOpen, toggleMenu, closeAboutSubMenu, closeSampleMenu } = props;
 
   const switchMenu = e => {
     e && e.preventDefault();
     toggleMenu();
-    if (!isMenuOpen) closeAboutSubMenu();
+    if (!isMenuOpen) {
+      closeSampleMenu();
+      closeAboutSubMenu();
+    }
   }
   
   return (
@@ -85,4 +88,4 @@ const mapStateToProps = state => {
   }
 }
 
-export default connect(mapStateToProps, { toggleMenu, closeAboutSubMenu })(Hamburger)
+export default connect(mapStateToProps, { toggleMenu, closeAboutSubMenu, closeSampleMenu })(Hamburger)

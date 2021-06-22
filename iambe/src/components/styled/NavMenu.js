@@ -75,8 +75,8 @@ const NavMenu = props => {
   const switchMenu = e => {
     e && e.preventDefault();
     toggleMenu();
-    if (!isMenuOpen && isAboutOpen) closeAboutSubMenu();
     if (!isMenuOpen && isSampleOpen) closeSampleMenu();
+    if (!isMenuOpen && isAboutOpen) closeAboutSubMenu();
   }
 
   const goToURI = (uri) => {

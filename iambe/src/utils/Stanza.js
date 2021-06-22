@@ -220,6 +220,7 @@ class Stanza {
       if (!!output && output !== 'N/A') bestGuess = output[0];
       if (!!output && output.length > 1 && output !== 'N/A') {
         fourthPossibles = output;
+        bestGuess = output[0][0]; // I added this to fix a weird bug; it's not in the corresponding part of this method for other stanza-lengths
       } else if (!!output && output.length === 1) {
         return output[0];
       }
@@ -240,7 +241,7 @@ class Stanza {
         aaabb:false,
       };
 
-      console.log("fourthPossibles",fourthPossibles);
+      // console.log("fourthPossibles",fourthPossibles,"bestGuess",bestGuess);
       fourthPossibles.forEach(scheme => {schemes[scheme[0]] = true});
 
       if (schemes.splt1) {
@@ -283,6 +284,7 @@ class Stanza {
       if (bestGuess === 'N/A') {
         if (fourthPossibles.length > 0) bestGuess = fourthPossibles[0][0];
       }
+
       return bestGuess;
     }
     else if (stan.length === 6) {

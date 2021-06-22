@@ -11,10 +11,31 @@ export const DICKINSON = "The Martyr Poets–did not tell–\nBut wrought their 
 export const POPE = `While they ring round the same unvaried chimes,\nWith sure returns of still expected rhymes,\nWhere'er you find "the cooling western breeze,"\nIn the next line it "whispers through the trees"\nIf crystal streams "with pleasing murmurs creep"\nThe reader's threatened (not in vain) with "sleep"\nThen, at the last and only couplet fraught\nWith some unmeaning thing they call a thought,\nA needless Alexandrine ends the song\nThat, like a wounded snake drags its slow length along.`;
 
 export const all_samples = {
-  // 'Stitch in Time':STITCH,
-  // 'Mary had a little lamb':MARY,
-  // 'Amazing Grace':GRACE,
-  // 'Sonnet 116':SONNET116,
+  /* 'Stitch in Time': {
+    title:'',
+    sample: new Stanza(STITCH).getLines().map(line => <p>{line}</p>),
+    toRun: STITCH,
+  },*/
+  /*'Mary had a little lamb': {
+    title:'',
+    sample: new Stanza(MARY).getLines().map(line => <p>{line}</p>),
+    toRun: MARY,
+  },*/
+
+  // 'Newton': {
+  //   title:'"Amazing Grace"',
+  //   sample: new Poem(GRACE).getStanzas().map(stanza => (
+  //     <div style={{marginBottom:'1rem'}}>
+  //       {new Stanza(stanza).getLines().map(line => <p>{line}</p>)}
+  //     </div>)
+  //   ),
+  //   toRun: GRACE,
+  // },
+  // 'Shakespeare':{
+  //   title: 'Sonnet 116',
+  //   sample: new Stanza(SONNET116).getLines().map(line => <p>{line}</p>),
+  //   toRun: SONNET116,
+  // },
   'Pope': {
     title:'from "Essay on Criticism"',
     sample: new Stanza(POPE).getLines().map(line => <p>{line}</p>),
@@ -26,7 +47,7 @@ export const all_samples = {
     toRun: KEATS,
   },
   'Dickinson': {
-    title:'The Martyr Poets – did not tell – (Fr665)',
+    title:'"The Martyr Poets – did not tell –" (Fr665)',
     sample: new Poem(DICKINSON).getStanzas().map(stanza => (
     <div style={{marginBottom:'1rem'}}>
       {new Stanza(stanza).getLines().map(line => <p>{line}</p>)}
