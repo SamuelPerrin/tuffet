@@ -63,13 +63,13 @@ export const LINE_METER_DESCRIPTIONS = {
     <p><strong>Iambic trimeter</strong> consists of six syllables arranged in three metrical feet with rising rhythm. The most standard form of iambic trimeter is three iambs (da Dum da Dum da Dum), but there is sometimes trochaic inversion in the first foot. Stanzas rarely consist entirely of iambic trimeter, but it does play an important role in hymn meters like <em>common meter</em> and <em>short meter</em>.</p>
   </div>,
   'iambic trimeter catalectic': <div className='paragraph'>
-    <p><strong></strong></p>
+    <p><strong>Iambic trimeter</strong> consists of six syllables arranged in three metrical feet with rising rhythm. The most standard form of iambic trimeter is three iambs (da Dum da Dum da Dum). In a <strong>catalectic</strong> line, the last foot is lacking its final syllable.</p>
   </div>,
   'iambic tetrameter': <div className='paragraph'>
     <p><strong>Iambic tetrameter</strong> consists of eight syllables arranged in four metrical feet with rising rhythm. The most standard form of iambic trimeter is four iambs (da Dum da Dum da Dum da Dum), but it isn't uncommon to see trochaic inversion in the first foot. A quatrain of iambic tetrameter is called <em>long meter</em> and is a common meter for hymns, as in "When I Survey the Wondrous Cross". Iambic tetrameter is also used in other hymn meters like <em>common meter</em> and <em>short meter</em>.</p>
   </div>,
   'iambic tetrameter catalectic': <div className='paragraph'>
-    <p><strong></strong></p>
+    <p><strong>Iambic tetrameter</strong> consists of eight syllables arranged in four metrical feet with rising rhythm. The most standard form of iambic trimeter is four iambs (da Dum da Dum da Dum da Dum), but in a <strong>catalectic</strong> line, the last foot is lacking its final syllable. Iambic tetrameter catalectic is sometimes substituted for its acatalectic cousin in hymn stanzas like <em>common meter</em>.</p>
   </div>,
   'iambic pentameter': <div className='paragraph'>
     <p><strong>Iambic pentameter</strong> consists of ten syllables arranged in five metrical feet with rising rhythm. The most standard form of iambic pentameter is five iambs (da Dum da Dum da Dum da Dum), but there are several common variations, including adding an unstressed eleventh syllable after the last iamb and substituting a trochee for one of more of the first four iambs. Iambic pentameter is probably the most important poetic meter in the history of English poetry. Everyone from Chaucer to Shakespeare and from Milton to Wordsworth wrote much of their verse in this meter. It is highly flexible, supporting lyrical and narrative verse, sonnet and epic.</p>
@@ -77,19 +77,19 @@ export const LINE_METER_DESCRIPTIONS = {
     <p>When iambic pentameter is unrhymed, it is called <strong>blank meter</strong>. When it is rhymed in couplets, it is called <strong>heroic couplets</strong>. Iambic pentameter is the meter normally used in the sonnet, a rhymed stanza of fourteen lines.</p>
   </div>,
   'iambic pentameter catalectic': <div className='paragraph'>
-    <p><strong></strong></p>
+    <p><strong>Iambic pentameter</strong> consists of ten syllables arranged in five metrical feet with rising rhythm. The most standard form of iambic pentameter is five iambs (da Dum da Dum da Dum da Dum), but in a <strong>catalectic</strong> line, the last foot is lacking its final syllable.</p>
   </div>,
   'iambic hexameter': <div className='paragraph'>
     <p><strong>Iambic hexameter</strong> consists of twelve syllables arranged in six metrical feet with rising rhythm. The most standard form of iambic hexameter is six iambs (da Dum da Dum da Dum da Dum da Dum) with a caesura after the third foot, but variations are common, including trochaic substitution and an unstressed thirteenth syllable. Stanzas rarely consist of solely iambic hexameters outside of the tradition of alexandrines (rhymed hexameter couplets) inherited from the medieval French tradition. Iambic hexameter sometimes appears as the last line of pentameter stanzas, such as the <em>Spenserian</em> and some <em>heroic couplets</em>. It also appears as the first line of <em>poulter's measure</em>.</p>
   </div>,
   'iambic hexameter catalectic': <div className='paragraph'>
-    <p><strong></strong></p>
+    <p><strong>Iambic hexameter</strong> consists of twelve syllables arranged in six metrical feet with rising rhythm. The most standard form of iambic hexameter is six iambs (da Dum da Dum da Dum da Dum da Dum), but in a <strong>catalectic</strong> line, the last foot is lacking its final syllable. Tuffet identifies as iambic hexameter catalectic many lines of iambic pentameter that have an eleventh unstressed syllable at the end. This is a common variant of <strong>iambic pentameter</strong>.</p>
   </div>,
   'iambic heptameter': <div className='paragraph'>
-    <p><strong></strong></p>
+    <p><strong>Iambic heptameter</strong> consists of fourteen syllables arranged in seven metrical feet with rising rhythm. The most standard form of iambic heptameter is seven iambs (da Dum da Dum da Dum da Dum da Dum da Dum da Dum), with a caesura after the fourth foot, but variations are common. Rhymed couplets of iambic heptameter are called <strong>fourteeners</strong>. A rhymed couplet in which the first line is <strong>iambic hexameter</strong> and the second is iambic heptameter is called <strong>poulter's measure</strong>.</p>
   </div>,
   'iambic heptameter catalectic': <div className='paragraph'>
-    <p><strong></strong></p>
+    <p><strong>Iambic heptameter</strong> consists of fourteen syllables arranged in seven metrical feet with rising rhythm. The most standard form of iambic heptameter is seven iambs (da Dum da Dum da Dum da Dum da Dum da Dum da Dum), but in a <strong>catalectic</strong> line, the last foot is lacking its final syllable.</p>
   </div>,
 };
 export const RHYME_TYPE_DESCRIPTIONS = {
@@ -182,7 +182,9 @@ export const RHYME_TYPE_DESCRIPTIONS = {
   'anisobaric rhyme':<div className={'paragraph'}>
     <p>Instead of rhyming stressed syllables with stressed and unstressed with unstressed, as in full rhyme, one might also match a stressed syllable with an unstressed, as in <i>be</i>&ndash;<i>happy</i> or <i>go</i>&ndash;<i>sorrow</i>. Such pairs are called <strong>anisobaric rhymes</strong>, from the Greek for &ldquo;unequal weight&rdquo;. Anisobaric rhymes differ from promotion rhymes in one important aspect: the unstressed syllable rhymed in anisobaric pairs is not (and cannot be) promoted by the line&rsquo;s meter. In promotion rhymes, the unstressed &lt;y&gt; in a word like <i>eternity</i> can be stress-promoted in iambic lines because it is two syllables away from the word&rsquo;s primary stress. But in an anisobaric rhyme, the unstressed &lt;y&gt; in a word like <i>happy</i> is directly adjacent to the syllable with primary stress and cannot be promoted without a stress-clash.</p>
   </div>,
-  // 'N/A':'nonrhyme',
+  'N/A':<div className='paragraph'>
+    <p>Tuffet identifies as <strong>nonrhyme</strong> pairs of words that don't rhyme, but which might be expected to rhyme, given the rest of the stanza's rhyme scheme.</p>
+  </div>,
 };
 export const FAQs = {
   'How does it work?':<div className='paragraph'>
@@ -203,8 +205,8 @@ export const FAQs = {
 
 export const VARIATION_DESCRIPTIONS = {
   'trochaic inversion':"A trochee (/\xa0×) in place of an iamb (×\xa0/)",
-  'pyrrhic substitution':"A pyrrhic foot (× ×) in place of an iamb (× /)",
-  'anapestic substitution':"An anapest (× × /) in place of an iamb (× /)",
+  'pyrrhic substitution':"A pyrrhic foot (×\xa0×) in place of an iamb (×\xa0/)",
+  'anapestic substitution':"An anapest (×\xa0×\xa0/) in place of an iamb (×\xa0/)",
   'feminine ending':"A line that ends with an extra unstressed syllable",
   'catalexis':"",
 }
