@@ -1,9 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
-import {WHITE} from '../../constants/colors';
 
 const ButtonWrapper = styled.button`
-  color:${WHITE};
+  color:${props => props.theme.white};
   cursor: pointer;
   outline: none;
   border: none;
