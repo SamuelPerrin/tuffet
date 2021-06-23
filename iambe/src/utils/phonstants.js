@@ -217,6 +217,7 @@ export const RHYME_SCHEMES = {
   'djuan':'ottava rima (ABABABCC)',
   'quat2':'ABCBDEFE',
   'cpls4':'AABBCCDD',
+  'petra':'ABBAABBA',
   'cpmp3':'AABCCBDDB',
   'raven':'AABCCCBBB',
   'shalo':'AAAABCCCB',

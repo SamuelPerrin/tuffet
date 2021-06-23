@@ -439,12 +439,17 @@ class Stanza {
     else if (stan.length === 8) {
       const onetwo = new Rhyme(stan[0], stan[1]).getScore();
       const onethree = new Rhyme(stan[0], stan[2]).getScore();
+      const onefour = new Rhyme(stan[0], stan[3]).getScore();
       const onefive = new Rhyme(stan[0], stan[4]).getScore();
+      const oneeight = new Rhyme(stan[0], stan[7]).getScore();
       const twothree = new Rhyme(stan[1], stan[2]).getScore();
       const twofour = new Rhyme(stan[1], stan[3]).getScore();
       const twosix = new Rhyme(stan[1], stan[5]).getScore();
+      const twoseven = new Rhyme(stan[1], stan[6]).getScore();
       const threefour = new Rhyme(stan[2], stan[3]).getScore();
       const threefive = new Rhyme(stan[2], stan[4]).getScore();
+      const threesix = new Rhyme(stan[2], stan[5]).getScore();
+      const threeseven = new Rhyme(stan[2], stan[6]).getScore();
       const fourfive = new Rhyme(stan[3], stan[4]).getScore();
       const foursix = new Rhyme(stan[3], stan[5]).getScore();
       const foureight = new Rhyme(stan[3], stan[7]).getScore();
@@ -464,17 +469,23 @@ class Stanza {
         {rs:'djuan', pairs:['onethree','onefive','twofour','twosix','threefive','foursix','seveneight']},
         {rs:'quat2', pairs:['twofour','sixeight']},
         {rs:'cpls4', pairs:['onetwo','threefour','fivesix','seveneight']},
+        {rs:'petra', pairs:['onefour','onefive','oneeight','twothree','twosix','twoseven','threesix','threeseven','fourfive','foureight','fiveeight','sixseven']},
       ];
 
       const allScores = {
         'onetwo':onetwo,
         'onethree':onethree,
+        'onefour':onefour,
         'onefive':onefive,
+        'oneeight':oneeight,
         'twothree':twothree,
         'twofour':twofour,
         'twosix':twosix,
+        'twoseven':twoseven,
         'threefour':threefour,
         'threefive':threefive,
+        'threesix':threesix,
+        'threeseven':threeseven,
         'fourfive':fourfive,
         'foursix':foursix,
         'foureight':foureight,
@@ -929,6 +940,8 @@ class Stanza {
           return makeRhymes([[1, 3], [5, 7]]);
         case 'cpls4':
           return makeRhymes([[0, 1], [2, 3], [4, 5], [6, 7]]);
+        case 'petra':
+          return makeRhymes([[0, 3], [1, 2], [2, 5], [3, 4], [4, 7], [5, 6]])
         default:
           return rhymes;
       }
