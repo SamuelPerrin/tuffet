@@ -343,6 +343,7 @@ class Stanza {
       if (!!output) bestGuess = output[0];
       if (!!output && output.length > 1) {
         fourthPossibles = output;
+        bestGuess = output[0][0]; // it seems like this is necessary (taken from stanza of length 5)
       } else if (!!output && output.length === 1) {
         return output[0];
       }
@@ -384,8 +385,8 @@ class Stanza {
           bestGuess = 'babab';
         } else bestGuess = 'bcbdb';
       }
-      if (bestGuess === 'N/A' && fourthPossibles.length > 0) bestGuess = fourthPossibles[0][0]
-      
+      if (bestGuess === 'N/A' && fourthPossibles.length > 0) bestGuess = fourthPossibles[0][0];
+
       return bestGuess;
     }
     else if (stan.length === 7) {
