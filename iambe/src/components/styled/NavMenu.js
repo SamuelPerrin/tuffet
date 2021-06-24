@@ -86,7 +86,15 @@ const NavMenu = props => {
 
   const goToRhymes = (sample) => {
     switchMenu();
-    getRhymes(sample ? sample : poetry);
+    if (typeof sample === 'string') {
+      console.log("getting rhymes with sample",sample);
+      getRhymes(sample);
+    }
+    else {
+      console.log("getting rhymes with poetry",poetry);
+      getRhymes(poetry);
+    }
+    // getRhymes(sample ? sample : poetry);
     history.push('/rhyme');
   }
 
