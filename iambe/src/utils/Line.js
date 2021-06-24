@@ -190,6 +190,7 @@ class Line {
       } else if (equiv(foots.slice(-4), ['D','D','U','I'])) changeFeet(['D','D','U','I'], ['T','I','I','U','I']);
       else if (equiv(foots.slice(-4), ['D','T','I','I'])) changeFeet(['D','T','I','I'], ['T','I','A','I']);
       else if (equiv(foots.slice(-4), ['D','A','I','I'])) changeFeet(['D','A','I','I'], ['T','I','I','I','I']);
+      else if (equiv(foots.slice(-4), ['D','T','D','I'])) changeFeet(['D','T','D','I'], ['T','I','I','T','I']);
     } else if (foots.slice(-1)[0] === 'T') { // weird lines ending in 'T'
       if (equiv(foots.slice(-5), ['D','T','T','T','T'])) changeFeet(['D','T','T','T','T'], ['T','I','I','I','I','unstr']);
       else if (equiv(foots.slice(-3), ['D','T','T'])) changeFeet(['D','T','T'], ['T','I','I','unstr']);
@@ -549,11 +550,11 @@ class Line {
     }
 
     // Make some corrections
-    // console.log("going to correctWeirdFeet with foots:",foots);
+    console.log("going to correctWeirdFeet with foots:",foots);
     const corrected = this.correctWeirdFeet(foots, feet);
     foots = corrected[0];
     feet = corrected[1];
-    // console.log("back from correctWeirdFeet with foots:", foots);
+    console.log("back from correctWeirdFeet with foots:", foots);
 
     // Get a label for this line's meter
     const label = this.getLabel(foots, feet);

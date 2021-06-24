@@ -2321,6 +2321,7 @@ const lexicon = {
 	"deride": ["D IH0 R AY1 D"],
 	"derision": ["D ER0 IH1 ZH AH0 N"],
 	"derive": ["D ER0 AY1 V"],
+	"desart": ["D EH1 Z ER0 T"],
 	"descend": ["D IH0 S EH1 N D"],
 	"descent": ["D IH0 S EH1 N T"],
 	"describe": ["D IH0 S K R AY1 B"],
