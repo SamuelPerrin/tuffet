@@ -253,6 +253,7 @@ class Line {
         dumpsters()
       }
       else if (equiv(foots.slice(-3), ['I','D','D'])) changeFeet(['I','D','D'], ['I','T','I','U']);
+      else if (equiv(foots.slice(-4), ['T','U','D','D'])) changeFeet(['T','U','D','D'], ['T','U','T','I','I']);
       else if (equiv(foots.slice(-4), ['U','D','T','U'])) changeFeet(['U','D','T','U'], ['A','A','A']);
       else if (equiv(foots.slice(-4), ['U','D','D','U'])) changeFeet(['U','D','D','U'], ['U','T','I','I','U']);
       else if (equiv(foots.slice(-4), ['I','A','D','U'])) changeFeet(['I','A','D','U'], ['I','I','I','I','U']);

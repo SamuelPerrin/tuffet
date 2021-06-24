@@ -383,6 +383,7 @@ const lexicon = {
 	"annabel": ["AE1 N AH0 B EH3 L"],
 	"anneal": ["AH0 N IY1 L"],
 	"annihilate": ["AH0 N AY1 L EY3 T", "AH0 N AY1 AH0 L EY2 T"],
+	"annihilated": ["AH0 N AY1 AH0 L EY2 T IH0 D","AH0 N AY1 L EY3 T IH0 D"],
 	"annihilation": ["AH0 N AY2 AH0 L EY1 SH AH0 N"],
 	"anniversary": ["AE2 N AH0 V ER1 S ER0 IY3"],
 	"anno": ["AA1 N OW0"],

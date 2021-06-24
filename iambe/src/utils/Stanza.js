@@ -1,4 +1,5 @@
 import Line from './Line';
+import Word from './Word';
 import Rhyme from './Rhyme';
 
 class Stanza {
@@ -800,7 +801,7 @@ class Stanza {
       for (let list of arr) {
         let rhyme = {};
         rhyme.lines = [lines[list[0]], lines[list[1]]];
-        rhyme.words = [new Line(lines[list[0]]).getTerm()[0], new Line(lines[list[1]]).getTerm()[0]];
+        rhyme.words = [new Word(new Line(lines[list[0]]).getTerm()[0]).word, new Word(new Line(lines[list[1]]).getTerm()[0]).word];
         rhyme.rt = new Rhyme(lines[list[0]], lines[list[1]]).getRhymeType();
         rhymes.push(rhyme);
       }
