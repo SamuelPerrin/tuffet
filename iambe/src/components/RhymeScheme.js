@@ -31,7 +31,10 @@ const RhymeScheme = props => {
     var stanzaRhymes = stanza.getRhymes();
   }
 
-  const submitCrement = dir => crement(dir,'stanzaNum');
+  const submitCrement = dir => {
+    window.scrollTo(0,0);
+    crement(dir,'stanzaNum');
+  }
   const goBack = () => history.push('/rhyme');
   
   useEffect(() => {
