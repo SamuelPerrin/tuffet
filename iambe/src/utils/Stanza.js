@@ -1039,11 +1039,11 @@ class Stanza {
     }
     else if (totalLines === 4) {
       if (counts.iambic4false + counts.iambic4true + counts['N/A4false'] === 2) {
-        if (counts.iambic3false + counts['N/A3false'] === 2) guess = 'common hymn';
+        if (counts.iambic3false + counts['N/A3false'] === 2) guess = 'common meter';
       }
-      else if (counts.iambic4false + counts.iambic5true + counts.iambic4true === 4) guess = 'long hymn';
+      else if (counts.iambic4false + counts.iambic5true + counts.iambic4true === 4) guess = 'long meter';
       else if (counts.iambic4false + counts.iambic4true === 1) {
-        if (counts.iambic3false === 3 || counts.iambic3false + counts['N/A3false'] === 3) guess = 'short hymn';
+        if (counts.iambic3false === 3 || counts.iambic3false + counts['N/A3false'] === 3) guess = 'short meter';
       }
       else if (counts.trochaic4false === 2) {
         if (counts.trochaic3true === 2) guess = '8s&5s';
@@ -1056,10 +1056,10 @@ class Stanza {
     }
     else if (totalLines === 5) {
       if (counts.iambic4false + counts.iambic4true === 1) {
-        if (counts['N/A2false'] + counts.iambic2false === 2 && counts.iambic3false === 2) guess = 'common hymn, split';
+        if (counts['N/A2false'] + counts.iambic2false === 2 && counts.iambic3false === 2) guess = 'common meter, split';
       }
       else if (counts.iambic4false + counts.iambic4true === 0) {
-        if (counts.iambic2false === 2 && counts.iambic3false === 3) guess = 'short hymn, split';
+        if (counts.iambic2false === 2 && counts.iambic3false === 3) guess = 'short meter, split';
       }
       else if (counts.anapestic3false + counts.anapestic4true === 3) {
         if (counts.anapestic2false + counts.anapestic3true === 2) guess = 'limerick';
@@ -1070,7 +1070,7 @@ class Stanza {
       // else if (counts.trochaic8false + counts.trochaic8true > 2) guess = 'raven';
     }
     else if (totalLines === 8) {
-      if ((counts.iambic4false + counts.iambic4true === 4) && counts.iambic3false === 4) guess = 'common hymn, doubled';
+      if ((counts.iambic4false + counts.iambic4true === 4) && counts.iambic3false === 4) guess = 'common meter, doubled';
     }
     else if (totalLines === 9) {
       if (counts.iambic4false === 8 && counts.iambic3false === 1) guess = 'Lady of Shalott';
