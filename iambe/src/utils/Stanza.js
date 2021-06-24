@@ -665,6 +665,7 @@ class Stanza {
       const twosix = new Rhyme(stan[1], stan[5]).getScore();
       const twoseven = new Rhyme(stan[1], stan[6]).getScore();
       const twonine = new Rhyme(stan[1], stan[8]).getScore();
+      const threefive = new Rhyme(stan[2], stan[4]).getScore();
       const threesix = new Rhyme(stan[2], stan[5]).getScore();
       const threeseven = new Rhyme(stan[2], stan[6]).getScore();
       const threeten = new Rhyme(stan[2], stan[9]).getScore();
@@ -699,6 +700,7 @@ class Stanza {
         {rs:'sonsh', pairs:['onethree','twofour','fiveseven','sixeight','nineeleven','tentwelve','thirteenfourteen']},
         {rs:'sonpe', pairs:['onefour','onefive','oneeight','twothree','twosix','threefourtwoseven','threesix','threeseven','fourfive','foureight','fiveeight','sixseven','ninetwelve','tenthirteen','elevenfourteen']},
         {rs:'stozy', pairs:['onethree','onefive','twofour','sixeight','seventen','nineeleven','ninethirteen','eleventhirteen','twelvefourteen']},
+        {rs:'stoz2', pairs:['onefour','twothree','twofive','twoseven','threefive','threeseven','fiveseven','sixeight','nineten','ninetwelve','tentwelve','eleventhirteen','elevenfourteen','thirteenfourteen']},
         {rs:'sonfr', pairs:['onefour','oneeight','twofive','twonine','threeseven','threeten','foureight','fivenine','sixeleven','seventen','eleventhirteen','twelvefourteen']},
         {rs:'sone1', pairs:['onethree','twofour','fiveseven','sixeight','nineten','ninetwelve','tentwelve','eleventhirteen','elevenfourteen','thirteenfourteen']},
         {rs:'sone2', pairs:['onethree','twofour','twonine','fournine','fiveseven','fiveten','seventen','sixeight','eleventhirteen','twelvefourteen']},
@@ -722,6 +724,7 @@ class Stanza {
         'twosix':twosix,
         'twoseven':twoseven,
         'twonine':twonine,
+        'threefive':threefive,
         'threesix':threesix,
         'threeseven':threeseven,
         'threeten':threeten,
@@ -985,6 +988,8 @@ class Stanza {
           return makeRhymes([[0, 3], [1, 2], [2, 5], [3, 4], [4, 7], [5, 6], [8, 11], [9, 12], [10, 13]]);
         case 'stozy':
           return makeRhymes([[0, 2], [1, 3], [2, 4], [5, 7], [6, 9], [8, 10], [10, 12], [11, 13]]);
+        case 'stoz2':
+          return makeRhymes([[0, 3], [1, 2], [2, 4], [4, 6], [5, 7], [8, 9], [9, 11], [10, 12], [12, 13]]);
         case 'sonfr':
           return makeRhymes([[0, 3], [1, 4], [2, 6], [3, 7], [4, 8], [5, 10], [6, 9], [10, 12], [11, 13]]);
         case 'sone1':

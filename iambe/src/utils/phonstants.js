@@ -230,6 +230,7 @@ export const RHYME_SCHEMES = {
   'sonsh':'Shakespearean sonnet (ABAB\u200bCDCD\u200bEFEF\u200bGG)',
   'sonpe':'Petrarchan sonnet (ABBA\u200bABBA\u200bCDECDE)',
   'stozy':'sonnet (ABAB\u200bACDC\u200bED\u200bEFEF)',
+  'stoz2':'sonnet (ABBA\u200bBCBC\u200bDDE\u200bDEE)',
   'sonfr':'sonnet (ABCA\u200bBDCA\u200bBC\u200bDEDE)',
   'sone1':'sonnet (ABAB\u200bCDCD\u200bEEF\u200bEFF)',
   'sone2':'sonnet (ABAB\u200bCDCD\u200bBC\u200bEFEF)',

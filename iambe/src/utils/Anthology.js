@@ -142,6 +142,7 @@ class Anthology {
       'sonsh':0,
       'sonpe':0,
       'stozy':0,
+      'stoz2':0,
       'sonfr':0,
       'sone1':0,
       'sone2':0,

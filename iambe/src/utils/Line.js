@@ -550,11 +550,11 @@ class Line {
     }
 
     // Make some corrections
-    console.log("going to correctWeirdFeet with foots:",foots);
+    // console.log("going to correctWeirdFeet with foots:",foots);
     const corrected = this.correctWeirdFeet(foots, feet);
     foots = corrected[0];
     feet = corrected[1];
-    console.log("back from correctWeirdFeet with foots:", foots);
+    // console.log("back from correctWeirdFeet with foots:", foots);
 
     // Get a label for this line's meter
     const label = this.getLabel(foots, feet);
