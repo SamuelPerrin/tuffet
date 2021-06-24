@@ -54,6 +54,7 @@ const RhymedStanza = props => {
           .getBoundingClientRect().bottom;
         if (firstBottom === 140) offset.current = 80;
         else if (firstBottom === 100) offset.current = 40;
+        else if (firstBottom === 122) offset.current = 60;
         else if (firstBottom === 124) offset.current = -64;
         else if (firstBottom === 148) offset.current = 80;
         else if (firstBottom === 164) offset.current = -16;
@@ -62,7 +63,7 @@ const RhymedStanza = props => {
         else if (firstBottom === 196) offset.current = -112;
         else if (firstBottom === 212) offset.current = -200;
         else offset.current = 672 - 4*(firstBottom);
-        // console.log("firstBottom:",firstBottom);
+        // console.log("for line",rhyme.lines[i],"firstBottom:",firstBottom);
         // console.log("offset.current",offset.current);
       }
       return {

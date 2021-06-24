@@ -25,7 +25,6 @@ const Home = props => {
 
   const submitRhymes = e => {
     e.preventDefault();
-    console.log("submitting");
     try {
       getRhymes(poem);
       history.push('/rhyme');
