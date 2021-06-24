@@ -7,14 +7,16 @@ import { YellowSpan, RedSpan, BlueSpan } from './styled/Spans';
 import ButtonRow from './styled/ButtonRow';
 import TextArea from './styled/TextArea';
 import Button from './styled/Button';
-import { getRhymes, getMeter } from '../actions';
+import Toast from './styled/Toast';
 
+import { getRhymes, getMeter } from '../actions';
 import * as samples from '../constants/samples';
 
 
 const Home = props => {
   const { poetry, getRhymes, getMeter } = props;
   const [poem, setPoem] = useState(poetry ? poetry: "");
+  const [showToast, setShowToast] = useState(false);
   let history = useHistory();
 
   const handleChange = e => {
@@ -23,14 +25,24 @@ const Home = props => {
 
   const submitRhymes = e => {
     e.preventDefault();
-    getRhymes(poem);
-    history.push('/rhyme');
+    try {
+      getRhymes(poem);
+      history.push('/rhyme');
+    } catch (err) {
+      console.log(err);
+      setShowToast(true);
+    }
   }
 
   const submitMeter = e => {
     e.preventDefault();
-    getMeter(poem);
-    history.push('/meter');
+    try {
+      getMeter(poem);
+      history.push('/meter');
+    } catch (err) {
+      console.log(err);
+      setShowToast(true);
+    }
   }
 
   const submitSample = sample => {
@@ -64,6 +76,13 @@ const Home = props => {
           </ButtonRow>
         </form>  
       </Section>
+      {showToast &&
+      <Toast
+        variant='danger'
+        onClick={() => setShowToast(false)}
+      >
+        Oops! Something went wrong.
+      </Toast>}
     </div>
   )
 }

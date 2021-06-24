@@ -1,4 +1,5 @@
 import Line from './Line';
+import Word from './Word';
 import Rhyme from './Rhyme';
 
 class Stanza {
@@ -343,6 +344,7 @@ class Stanza {
       if (!!output) bestGuess = output[0];
       if (!!output && output.length > 1) {
         fourthPossibles = output;
+        bestGuess = output[0][0]; // it seems like this is necessary (taken from stanza of length 5)
       } else if (!!output && output.length === 1) {
         return output[0];
       }
@@ -384,8 +386,8 @@ class Stanza {
           bestGuess = 'babab';
         } else bestGuess = 'bcbdb';
       }
-      if (bestGuess === 'N/A' && fourthPossibles.length > 0) bestGuess = fourthPossibles[0][0]
-      
+      if (bestGuess === 'N/A' && fourthPossibles.length > 0) bestGuess = fourthPossibles[0][0];
+
       return bestGuess;
     }
     else if (stan.length === 7) {
@@ -439,12 +441,17 @@ class Stanza {
     else if (stan.length === 8) {
       const onetwo = new Rhyme(stan[0], stan[1]).getScore();
       const onethree = new Rhyme(stan[0], stan[2]).getScore();
+      const onefour = new Rhyme(stan[0], stan[3]).getScore();
       const onefive = new Rhyme(stan[0], stan[4]).getScore();
+      const oneeight = new Rhyme(stan[0], stan[7]).getScore();
       const twothree = new Rhyme(stan[1], stan[2]).getScore();
       const twofour = new Rhyme(stan[1], stan[3]).getScore();
       const twosix = new Rhyme(stan[1], stan[5]).getScore();
+      const twoseven = new Rhyme(stan[1], stan[6]).getScore();
       const threefour = new Rhyme(stan[2], stan[3]).getScore();
       const threefive = new Rhyme(stan[2], stan[4]).getScore();
+      const threesix = new Rhyme(stan[2], stan[5]).getScore();
+      const threeseven = new Rhyme(stan[2], stan[6]).getScore();
       const fourfive = new Rhyme(stan[3], stan[4]).getScore();
       const foursix = new Rhyme(stan[3], stan[5]).getScore();
       const foureight = new Rhyme(stan[3], stan[7]).getScore();
@@ -464,17 +471,23 @@ class Stanza {
         {rs:'djuan', pairs:['onethree','onefive','twofour','twosix','threefive','foursix','seveneight']},
         {rs:'quat2', pairs:['twofour','sixeight']},
         {rs:'cpls4', pairs:['onetwo','threefour','fivesix','seveneight']},
+        {rs:'petra', pairs:['onefour','onefive','oneeight','twothree','twosix','twoseven','threesix','threeseven','fourfive','foureight','fiveeight','sixseven']},
       ];
 
       const allScores = {
         'onetwo':onetwo,
         'onethree':onethree,
+        'onefour':onefour,
         'onefive':onefive,
+        'oneeight':oneeight,
         'twothree':twothree,
         'twofour':twofour,
         'twosix':twosix,
+        'twoseven':twoseven,
         'threefour':threefour,
         'threefive':threefive,
+        'threesix':threesix,
+        'threeseven':threeseven,
         'fourfive':fourfive,
         'foursix':foursix,
         'foureight':foureight,
@@ -653,6 +666,7 @@ class Stanza {
       const twosix = new Rhyme(stan[1], stan[5]).getScore();
       const twoseven = new Rhyme(stan[1], stan[6]).getScore();
       const twonine = new Rhyme(stan[1], stan[8]).getScore();
+      const threefive = new Rhyme(stan[2], stan[4]).getScore();
       const threesix = new Rhyme(stan[2], stan[5]).getScore();
       const threeseven = new Rhyme(stan[2], stan[6]).getScore();
       const threeten = new Rhyme(stan[2], stan[9]).getScore();
@@ -687,6 +701,7 @@ class Stanza {
         {rs:'sonsh', pairs:['onethree','twofour','fiveseven','sixeight','nineeleven','tentwelve','thirteenfourteen']},
         {rs:'sonpe', pairs:['onefour','onefive','oneeight','twothree','twosix','threefourtwoseven','threesix','threeseven','fourfive','foureight','fiveeight','sixseven','ninetwelve','tenthirteen','elevenfourteen']},
         {rs:'stozy', pairs:['onethree','onefive','twofour','sixeight','seventen','nineeleven','ninethirteen','eleventhirteen','twelvefourteen']},
+        {rs:'stoz2', pairs:['onefour','twothree','twofive','twoseven','threefive','threeseven','fiveseven','sixeight','nineten','ninetwelve','tentwelve','eleventhirteen','elevenfourteen','thirteenfourteen']},
         {rs:'sonfr', pairs:['onefour','oneeight','twofive','twonine','threeseven','threeten','foureight','fivenine','sixeleven','seventen','eleventhirteen','twelvefourteen']},
         {rs:'sone1', pairs:['onethree','twofour','fiveseven','sixeight','nineten','ninetwelve','tentwelve','eleventhirteen','elevenfourteen','thirteenfourteen']},
         {rs:'sone2', pairs:['onethree','twofour','twonine','fournine','fiveseven','fiveten','seventen','sixeight','eleventhirteen','twelvefourteen']},
@@ -710,6 +725,7 @@ class Stanza {
         'twosix':twosix,
         'twoseven':twoseven,
         'twonine':twonine,
+        'threefive':threefive,
         'threesix':threesix,
         'threeseven':threeseven,
         'threeten':threeten,
@@ -785,7 +801,7 @@ class Stanza {
       for (let list of arr) {
         let rhyme = {};
         rhyme.lines = [lines[list[0]], lines[list[1]]];
-        rhyme.words = [new Line(lines[list[0]]).getTerm()[0], new Line(lines[list[1]]).getTerm()[0]];
+        rhyme.words = [new Word(new Line(lines[list[0]]).getTerm()[0]).word, new Word(new Line(lines[list[1]]).getTerm()[0]).word];
         rhyme.rt = new Rhyme(lines[list[0]], lines[list[1]]).getRhymeType();
         rhymes.push(rhyme);
       }
@@ -929,6 +945,8 @@ class Stanza {
           return makeRhymes([[1, 3], [5, 7]]);
         case 'cpls4':
           return makeRhymes([[0, 1], [2, 3], [4, 5], [6, 7]]);
+        case 'petra':
+          return makeRhymes([[0, 3], [1, 2], [2, 5], [3, 4], [4, 7], [5, 6]])
         default:
           return rhymes;
       }
@@ -971,6 +989,8 @@ class Stanza {
           return makeRhymes([[0, 3], [1, 2], [2, 5], [3, 4], [4, 7], [5, 6], [8, 11], [9, 12], [10, 13]]);
         case 'stozy':
           return makeRhymes([[0, 2], [1, 3], [2, 4], [5, 7], [6, 9], [8, 10], [10, 12], [11, 13]]);
+        case 'stoz2':
+          return makeRhymes([[0, 3], [1, 2], [2, 4], [4, 6], [5, 7], [8, 9], [9, 11], [10, 12], [12, 13]]);
         case 'sonfr':
           return makeRhymes([[0, 3], [1, 4], [2, 6], [3, 7], [4, 8], [5, 10], [6, 9], [10, 12], [11, 13]]);
         case 'sone1':
@@ -1025,11 +1045,11 @@ class Stanza {
     }
     else if (totalLines === 4) {
       if (counts.iambic4false + counts.iambic4true + counts['N/A4false'] === 2) {
-        if (counts.iambic3false + counts['N/A3false'] === 2) guess = 'common hymn';
+        if (counts.iambic3false + counts['N/A3false'] === 2) guess = 'common meter';
       }
-      else if (counts.iambic4false + counts.iambic5true + counts.iambic4true === 4) guess = 'long hymn';
+      else if (counts.iambic4false + counts.iambic5true + counts.iambic4true === 4) guess = 'long meter';
       else if (counts.iambic4false + counts.iambic4true === 1) {
-        if (counts.iambic3false === 3 || counts.iambic3false + counts['N/A3false'] === 3) guess = 'short hymn';
+        if (counts.iambic3false === 3 || counts.iambic3false + counts['N/A3false'] === 3) guess = 'short meter';
       }
       else if (counts.trochaic4false === 2) {
         if (counts.trochaic3true === 2) guess = '8s&5s';
@@ -1042,10 +1062,10 @@ class Stanza {
     }
     else if (totalLines === 5) {
       if (counts.iambic4false + counts.iambic4true === 1) {
-        if (counts['N/A2false'] + counts.iambic2false === 2 && counts.iambic3false === 2) guess = 'common hymn, split';
+        if (counts['N/A2false'] + counts.iambic2false === 2 && counts.iambic3false === 2) guess = 'common meter, split';
       }
       else if (counts.iambic4false + counts.iambic4true === 0) {
-        if (counts.iambic2false === 2 && counts.iambic3false === 3) guess = 'short hymn, split';
+        if (counts.iambic2false === 2 && counts.iambic3false === 3) guess = 'short meter, split';
       }
       else if (counts.anapestic3false + counts.anapestic4true === 3) {
         if (counts.anapestic2false + counts.anapestic3true === 2) guess = 'limerick';
@@ -1056,7 +1076,7 @@ class Stanza {
       // else if (counts.trochaic8false + counts.trochaic8true > 2) guess = 'raven';
     }
     else if (totalLines === 8) {
-      if ((counts.iambic4false + counts.iambic4true === 4) && counts.iambic3false === 4) guess = 'common hymn, doubled';
+      if ((counts.iambic4false + counts.iambic4true === 4) && counts.iambic3false === 4) guess = 'common meter, doubled';
     }
     else if (totalLines === 9) {
       if (counts.iambic4false === 8 && counts.iambic3false === 1) guess = 'Lady of Shalott';

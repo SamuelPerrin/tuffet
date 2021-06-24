@@ -6,14 +6,14 @@ export const STANZA_METER_DESCRIPTIONS = {
     <p>The English pentameter is likely a descendant of the Italian hendecasyllable, a line of eleven syllables used by Dante and Petrarch. Chaucer adapted this line to English, which doesn't have as many weak endings as Italian, resulting in a line of ten syllables.</p>
     <p>When iambic pentameter is unrhymed, it is called <strong>blank meter</strong>. When it is rhymed in couplets, it is called <strong>heroic couplets</strong>. Iambic pentameter is the meter normally used in the sonnet, a rhymed stanza of fourteen lines.</p>
   </div>,
-  'common hymn': <div className='paragraph'>
-    <p>The <strong>common hymn</strong> (8.6.8.6), sometimes called <strong>common meter</strong>, is a quatrain in which the first and third lines are iambic tetrameter and the second and fourth lines are iambic trimeter. Common meter is familiar from hymns like John Newton’s “Amazing Grace”, Isaac Watts’s “Joy to the World”, and the Christmas carol “O Little Town of Bethlehem”. It was also the favorite form of Emily Dickinson. When a common meter quatrain is collapsed down to a rhyming couplet with fourteen syllables in each line, the resulting verse form is called fourteeners.</p>
+  'common meter': <div className='paragraph'>
+    <p><strong>Common meter</strong> (8.6.8.6) is a quatrain in which the first and third lines are iambic tetrameter and the second and fourth lines are iambic trimeter. Common meter is familiar from hymns like John Newton’s “Amazing Grace”, Isaac Watts’s “Joy to the World”, and the Christmas carol “O Little Town of Bethlehem”. It was also the favorite form of Emily Dickinson. When a common meter quatrain is collapsed down to a rhyming couplet with fourteen syllables in each line, the resulting verse form is called fourteeners.</p>
     <p>Common meter is related to the English ballad, which also features alternating lines with four and three stressed syllables. The ballad is more flexible than common meter proper, allowing for headless lines, anapestic substitution, and the like.</p>
   </div>,
-  'long hymn': <div className='paragraph'>
+  'long meter': <div className='paragraph'>
     <p><strong>Long meter</strong> (8.8.8.8) is a quatrain of iambic tetrameter, in which each line has eight syllables arranged in four metrical feet with rising rhythm (da Dum da Dum da Dum da Dum). Long meter's name is derived from the fact that its second and fourth lines are longer than they would be in common meter. Like common meter and short meter, long meter was popular for hymns, yielding classics like Isaac Watts's "When I Survey the Wondrous Cross". It is also used throughout Alfred Lord Tennyson's book-length poem, <em>In Memoriam A.H.H.</em>.</p>
   </div>,
-  'short hymn': <div className='paragraph'>
+  'short meter': <div className='paragraph'>
     <p><strong>Short meter</strong> (6.6.8.6) is a quatrain in of iambic trimeter in which the third line is iambic tetrameter. Short meter is short as compared to common meter, in which the first line is one foot longer. Like common meter and long meter, short meter was a popular hymn meter, used in such hymns as "Blest Be the Tie that Binds".</p>
     <p>When short meter is collapsed into a rhyming couplet with twelve syllables in the first line and fourteen in the second, it is known as <em>poulter's measure</em>, since a poulter—who sold eggs—sometimes gave twelve in a dozen and sometimes fourteen (compare the term <em>baker's dozen</em>, which has a similar origin).</p>
   </div>,
@@ -21,17 +21,17 @@ export const STANZA_METER_DESCRIPTIONS = {
     <p><strong>Ballad meter</strong> is a quatrain alternating lines with four beats and three beats. Ballad meter closely resembles common meter, which alternates iambic lines with eight syllables and six syllables. Unlike common meter, which counts stressed and unstressed syllables, ballad meter counts only stressed syllables&mdash;it is accentual rather than accentual-syllabic. Thus, ballad meter is more flexible than common meter, allowing variations like headless lines and anapestic substitution.</p>
     <p>Ballad meter has had hundreds of years of success in popular culture, generating everything from "The House of the Rising Sun" and "The Yellow Rose of Texas" to the theme songs for <em>Gilligan's Island</em> and the <em>Pokemon</em> anime series. There is also a tradition of ballad among writers of art-verse, including Samuel Taylor Coleridge's "Rime of the Ancient Mariner".</p>
   </div>,
-  'common hymn, doubled': <div className='paragraph'>
+  'common meter, doubled': <div className='paragraph'>
     <p><strong>Common meter double</strong> (8.6.8.6.8.6.8.6) is an eight-line stanza that doubles the pattern of common meter, alternating lines of iambic tetrameter and iambic trimeter. Common meter double is a popular hymn meter, producing such songs as "It Came Upon the Midnight Clear" and "America the Beautiful."</p>
   </div>,
   'common particular': <div className='paragraph'>
     <p><strong>Common particular meter</strong> (8.8.6.8.8.6) is a metrical variant of common meter that doubles the tetrameters to produce a sestet in which the first, second, fourth, and fifth lines are iambic tetrameter and the third and sixth lines are iambic trimeter. Stanzas of common particular meter often use the rhyme scheme AABCCB.</p>
   </div>,
-  'common hymn, split': <div className='paragraph'>
-    <p>When a quatrain of common meter has one of its tetrameters split into two lines of dimeter, the result is <strong>common hymn, split</strong> (4.4.6.8.6 or 8.6.4.4.6), a stanza of five lines that sounds the same as a common meter quatrain.</p>
+  'common meter, split': <div className='paragraph'>
+    <p>When a quatrain of common meter has one of its tetrameters split into two lines of dimeter, the result is <strong>common meter, split</strong> (4.4.6.8.6 or 8.6.4.4.6), a stanza of five lines that sounds the same as a common meter quatrain.</p>
   </div>,
-  'short hymn, split': <div className='paragraph'>
-    <p>When a quatrain of short meter (6.6.8.6) has its tetrameter split into two lines of dimeter, the result is <strong>short hymn, split</strong> (6.6.4.4.6), a stanza of five lines that sounds the same as a short meter quatrain.</p>
+  'short meter, split': <div className='paragraph'>
+    <p>When a quatrain of short meter (6.6.8.6) has its tetrameter split into two lines of dimeter, the result is <strong>short meter, split</strong> (6.6.4.4.6), a stanza of five lines that sounds the same as a short meter quatrain.</p>
   </div>,
   'limerick': <div className='paragraph'>
     <p>The <strong>limerick</strong> is a rhymed stanza of five-lines popular with writers of light verse. Metrically, limericks feature trimeter in lines 1, 2, and 5 and dimeter in lines 3 and 4. The rhythm of the lines in a limerick tends to be rising, though it is often acephalous (lacking the first unstressed syllable). Anapestic substitution is common, and lines often feature feminine endings.</p>

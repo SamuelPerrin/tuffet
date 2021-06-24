@@ -18,6 +18,8 @@ class Word {
     if (this.word.slice(-1) === "'" && !["th'", "o'", "i'"].includes(this.word)) {
       this.word = this.word.slice(0,-1);
     }
+    if (this.word.includes('ó')) this.word = this.word.replace('ó','o');
+    if (this.word.includes('é')) this.word = this.word.replace('é','e');
   }
 
   getPron(rhyme=false) {

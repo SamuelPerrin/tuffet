@@ -86,7 +86,7 @@ const NavMenu = props => {
 
   const goToRhymes = (sample) => {
     switchMenu();
-    getRhymes(sample ? sample : poetry);
+    getRhymes(typeof sample === 'string' ? sample : poetry);
     history.push('/rhyme');
   }
 
