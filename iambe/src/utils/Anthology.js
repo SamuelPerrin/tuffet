@@ -130,6 +130,7 @@ class Anthology {
       'quat2':0,
       'cpls4':0,
       'petra':0,
+      'abab2':0,
       'cpmp3':0,
       'raven':0,
       'shalo':0,

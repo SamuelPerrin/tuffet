@@ -27,6 +27,15 @@ const FAQ = () => {
             <p>Tuffet is a poetry resource that automatically identifies the rhymes and meter of poetry in English. It uses a dictionary adapted from the open-source Carnegie Mellon Pronouncing Dictionary.</p>
           </div>
         </Section>
+        <iframe
+          width="560"
+          height="315"
+          src="https://www.youtube.com/embed/N8XZ_QScfQw"
+          title="YouTube video player"
+          frameborder="0"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowFullScreen
+        />
         <Section>
           <h2><RedSpan>Frequently Asked Questions</RedSpan></h2>
           <Accordion data={Object.entries(FAQs)} />

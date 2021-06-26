@@ -472,6 +472,7 @@ class Stanza {
         {rs:'quat2', pairs:['twofour','sixeight']},
         {rs:'cpls4', pairs:['onetwo','threefour','fivesix','seveneight']},
         {rs:'petra', pairs:['onefour','onefive','oneeight','twothree','twosix','twoseven','threesix','threeseven','fourfive','foureight','fiveeight','sixseven']},
+        {rs:'abab2', pairs:['onethree','twofour','fiveseven','sixeight']},
       ];
 
       const allScores = {
@@ -509,7 +510,7 @@ class Stanza {
       }
 
       // Perform a few last checks to correct some of winnower's biases
-      const schemes = { oct48:false, oct24:false, oc458:false, oc148:false, ocaaa:false, cpls4:false };
+      const schemes = { oct48:false, oct24:false, oc458:false, oc148:false, ocaaa:false, quat2:false, cpls4:false, petra:false, abab2:false };
       fourthPossibles.forEach(scheme => {schemes[scheme[0]] = true});
 
       if (schemes.oct48) {
@@ -523,6 +524,11 @@ class Stanza {
         if (schemes.oct24 && allScores['twosix'] > THRESHOLD) bestGuess = 'oct24';
         if (schemes.oc458 && allOver(allScores, ['fourfive','fiveeight'])) {
           bestGuess = 'oc458';
+        }
+      }
+      if (schemes.quat2) {
+        if (schemes.abab2 && allOver(allScores, ['onethree','fiveseven'])) {
+          bestGuess = 'abab2';
         }
       }
       if (bestGuess === 'N/A') {
@@ -946,7 +952,9 @@ class Stanza {
         case 'cpls4':
           return makeRhymes([[0, 1], [2, 3], [4, 5], [6, 7]]);
         case 'petra':
-          return makeRhymes([[0, 3], [1, 2], [2, 5], [3, 4], [4, 7], [5, 6]])
+          return makeRhymes([[0, 3], [1, 2], [2, 5], [3, 4], [4, 7], [5, 6]]);
+        case 'abab2':
+          return makeRhymes([[0, 2], [1, 3], [4, 6], [5, 7]]);
         default:
           return rhymes;
       }

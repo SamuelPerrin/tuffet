@@ -117,7 +117,7 @@ test('getRhymes identifies rhymes in couplets', () => {
 
 test('getRhymes identifies rhymes in quatrains', () => {
   const quatr = new Stanza("very brave\nI know\nthe bosom\nof Woe");
-  const quatrRhymes = [{lines:['I know','of Woe'], words: ['know','Woe'], rt: 'full rhyme'}];
+  const quatrRhymes = [{lines:['I know','of Woe'], words: ['know','woe'], rt: 'full rhyme'}];
   expect(quatr.getRhymes()).toStrictEqual(quatrRhymes);
 });
 
@@ -133,14 +133,14 @@ test('getMeter identifies 6s&5s', () => {
   expect(dickinson.getMeter()).toBe('6s&5s');
 })
 
-test('getMeter identifies common hymns', () => {
+test('getMeter identifies common meter', () => {
   const dickinson = new Stanza("As if I asked a common alms–\nAnd in my wandering hand,\nA stranger pressed a kingdom–\nAnd I–bewildered stand–");
-  expect(dickinson.getMeter()).toBe('common hymn');
+  expect(dickinson.getMeter()).toBe('common meter');
 })
 
-test('getMeter identifies short hymns', () => {
+test('getMeter identifies short meter', () => {
   const prose = new Stanza(`They shut me up in Prose–\nAs when a little Girl\nThey put me in the Closet–\nBecause they liked me "still"–`);
-  expect(prose.getMeter()).toBe('short hymn');
+  expect(prose.getMeter()).toBe('short meter');
 })
 
 test('getMeter identifies iambic pentameter', () => {

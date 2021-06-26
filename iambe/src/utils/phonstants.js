@@ -218,6 +218,7 @@ export const RHYME_SCHEMES = {
   'quat2':'ABCBDEFE',
   'cpls4':'AABBCCDD',
   'petra':'ABBAABBA',
+  'abab2':'ABABCDCD',
   'cpmp3':'AABCCBDDB',
   'raven':'AABCCCBBB',
   'shalo':'AAAABCCCB',

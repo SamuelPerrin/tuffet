@@ -17,7 +17,7 @@ test('getRhymes returns a list of rhyme objects from each stanza', () => {
 
 test('getPoemMeter identifies a poem in which every stanza has the same meter', () => {
   const dickinson = new Poem("As if I asked a common alms–\nAnd in my wandering hand,\nA stranger pressed a kingdom–\nAnd I–bewildered stand–\n\nAs if I asked the Orient\nHad it for me a morn?\nAnd it sh'd lift its purple dikes\nAnd flood me with the Dawn!");
-  expect(dickinson.getPoemMeter()).toBe('common hymn');
+  expect(dickinson.getPoemMeter()).toBe('common meter');
 })
 
 test('getPoemMeter identifies a poem in which stanzas have different meters', () => {
@@ -27,6 +27,6 @@ test('getPoemMeter identifies a poem in which stanzas have different meters', ()
 
 test('getMeters identifies the meter of short stanzas', () => {
   const prose = new Poem(`They shut me up in Prose–\nAs when a little Girl\nThey put me in the Closet–\nBecause they liked me "still"–\n\nStill! Could themself have peeped–\nAnd seen my Brain–go round–\nThey might as wise have lodged a Bird\nFor Treason–in the Pound–`);
-  expect(prose.getMeters()).toStrictEqual(['short hymn','short hymn']);
+  expect(prose.getMeters()).toStrictEqual(['short meter','short meter']);
 })
 
