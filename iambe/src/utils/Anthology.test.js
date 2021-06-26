@@ -33,7 +33,7 @@ test('getRhymes returns a list of rhyme objects from each poem', () => {
         },
         {
           lines:["out of the floor", "quietly Stare"],
-          words:["floor", "Stare"],
+          words:["floor", "stare"],
           rt:'full consonance'
         }
       ],
@@ -45,7 +45,7 @@ test('getRhymes returns a list of rhyme objects from each poem', () => {
         },
         {
           lines: ["is asking What", "have i done that"],
-          words:["What", "that"],
+          words:["what", "that"],
           rt:"full consonance"
         }
       ]
@@ -82,8 +82,8 @@ test('getMeterStatsByStanza counts meters by stanza', () => {
   expect(meterStats['N/A']).toBe(3);
 
   const meterStatsD = anthD.getMeterStatsByStanza();
-  expect(meterStatsD['short hymn']).toBe(2);
-  expect(meterStatsD['common hymn']).toBe(2);
+  expect(meterStatsD['short meter']).toBe(2);
+  expect(meterStatsD['common meter']).toBe(2);
 })
 
 test('getStanzaMeters returns stanza meters', () => {
@@ -91,5 +91,5 @@ test('getStanzaMeters returns stanza meters', () => {
   expect(stanzaMeters[1][1]).toBe("N/A");
 
   const stanzaMetersD = anthD.getStanzaMeters();
-  expect(stanzaMetersD[0][1]).toBe("short hymn");
+  expect(stanzaMetersD[0][1]).toBe("short meter");
 })
