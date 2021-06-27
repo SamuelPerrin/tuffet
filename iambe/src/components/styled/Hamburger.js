@@ -7,15 +7,23 @@ import NavMenu from './NavMenu';
 
 const StyledHamburger = styled.button`
   background-color: rgba(0,0,0,0);
+  color:white;
+  font-size:1.25rem;
   border:none;
-  width: 1.5rem;
-  /* min-height: 1.5rem; */
-  /* padding:0.25rem; */
+  width: 6.25rem;
   margin: 0.75rem;
   cursor:pointer;
 
+  display:flex;
+  flex-flow:row nowrap;
+  justify-content:space-between;
+  align-items:center;
+
   &.closed {
     > span {
+      visibility:visible;
+    }
+    > div > span {
       display:block;
       width:1.5rem;
       height:2px;
@@ -31,6 +39,10 @@ const StyledHamburger = styled.button`
 
   &.open {
     > span {
+      visibility:hidden;
+    }
+
+    > div > span {
       display:block;
       width:1.5rem;
       height:2px;
@@ -42,16 +54,16 @@ const StyledHamburger = styled.button`
       &:not(:last-child) {
         margin-bottom:0.3rem;
       }
-    > span:first-child {
+      > div > span:first-child {
       transform: rotate(45deg);
     }
       
-    > span:nth-child(2) {
+    > div > span:nth-child(2) {
       opacity: 0;
       height:0.8rem;
     }
     
-    > span:last-child {
+    > div > span:last-child {
       transform: rotate(-45deg);
     }
   }
@@ -72,9 +84,12 @@ const Hamburger = props => {
   return (
     <>
       <StyledHamburger onClick={switchMenu} className={isMenuOpen ? 'open' : 'closed'}>
-        <span></span>
-        <span></span>
-        <span></span>
+        <span>MENU</span>
+        <div>
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
       </StyledHamburger>
       <NavMenu />
     </>
