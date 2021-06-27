@@ -186,6 +186,236 @@ export const RHYME_TYPE_DESCRIPTIONS = {
     <p>Tuffet identifies as <strong>nonrhyme</strong> pairs of words that don't rhyme, but which might be expected to rhyme, given the rest of the stanza's rhyme scheme.</p>
   </div>,
 };
+export const RHYME_SCHEME_DESCRIPTIONS = {
+  'couplet (AA)':<div className='paragraph'>
+    <p></p>
+  </div>,
+  'AAA':<div className='paragraph'>
+    <p></p>
+  </div>,
+  'AAB':<div className='paragraph'>
+    <p></p>
+  </div>,
+  'ABA':<div className='paragraph'>
+    <p></p>
+  </div>,
+  'ABB':<div className='paragraph'>
+    <p></p>
+  </div>,
+  'ABCB':<div className='paragraph'>
+    <p></p>
+  </div>,
+  'ABAB':<div className='paragraph'>
+    <p></p>
+  </div>,
+  'ABBA':<div className='paragraph'>
+    <p></p>
+  </div>,
+  'AAAA':<div className='paragraph'>
+    <p></p>
+  </div>,
+  '2 couplets (AABB)':<div className='paragraph'>
+    <p></p>
+  </div>,
+  'ABAA':<div className='paragraph'>
+    <p></p>
+  </div>,
+  'AABA':<div className='paragraph'>
+    <p></p>
+  </div>,
+  'ABCCB':<div className='paragraph'>
+    <p></p>
+  </div>,
+  'AABCB':<div className='paragraph'>
+    <p></p>
+  </div>,
+  'ABCDC':<div className='paragraph'>
+    <p></p>
+  </div>,
+  'ABCDB':<div className='paragraph'>
+    <p></p>
+  </div>,
+  'AABAB':<div className='paragraph'>
+    <p></p>
+  </div>,
+  'AABBB':<div className='paragraph'>
+    <p></p>
+  </div>,
+  'AABBC':<div className='paragraph'>
+    <p></p>
+  </div>,
+  'ABABA':<div className='paragraph'>
+    <p></p>
+  </div>,
+  'ABBAA':<div className='paragraph'>
+    <p></p>
+  </div>,
+  'ABABB':<div className='paragraph'>
+    <p></p>
+  </div>,
+  'ABBAB':<div className='paragraph'>
+    <p></p>
+  </div>,
+  'ABAAB':<div className='paragraph'>
+    <p></p>
+  </div>,
+  'AABBA':<div className='paragraph'>
+    <p></p>
+  </div>,
+  'AAABB':<div className='paragraph'>
+    <p></p>
+  </div>,
+  'AABCCB':<div className='paragraph'>
+    <p></p>
+  </div>,
+  'ABCBDB':<div className='paragraph'>
+    <p></p>
+  </div>,
+  'ABABAB':<div className='paragraph'>
+    <p></p>
+  </div>,
+  'ABCDEC':<div className='paragraph'>
+    <p></p>
+  </div>,
+  'ABCDED':<div className='paragraph'>
+    <p></p>
+  </div>,
+  '3 couplets (AABBCC)':<div className='paragraph'>
+    <p></p>
+  </div>,
+  'ABABCC':<div className='paragraph'>
+    <p></p>
+  </div>,
+  'ABACBC':<div className='paragraph'>
+    <p></p>
+  </div>,
+  'ABACCC':<div className='paragraph'>
+    <p></p>
+  </div>,
+  'ABACCB':<div className='paragraph'>
+    <p></p>
+  </div>,
+  'ABCABC':<div className='paragraph'>
+    <p></p>
+  </div>,
+  'ABCCAB':<div className='paragraph'>
+    <p></p>
+  </div>,
+  'AABBBA':<div className='paragraph'>
+    <p></p>
+  </div>,
+  'ABABCCC':<div className='paragraph'>
+    <p></p>
+  </div>,
+  'ABCACBB':<div className='paragraph'>
+    <p></p>
+  </div>,
+  'ABABACC':<div className='paragraph'>
+    <p></p>
+  </div>,
+  'rhyme royal (ABABBCC)':<div className='paragraph'>
+    <p></p>
+  </div>,
+  'ABCDEBFD':<div className='paragraph'>
+    <p></p>
+  </div>,
+  'ABCDEFGD':<div className='paragraph'>
+    <p></p>
+  </div>,
+  'ABCDDEFD':<div className='paragraph'>
+    <p></p>
+  </div>,
+  'AABCDDEC':<div className='paragraph'>
+    <p></p>
+  </div>,
+  'AAABCCCB':<div className='paragraph'>
+    <p></p>
+  </div>,
+  'ottava rima (ABABABCC)':<div className='paragraph'>
+    <p></p>
+  </div>,
+  'ABCBDEFE':<div className='paragraph'>
+    <p></p>
+  </div>,
+  'AABBCCDD':<div className='paragraph'>
+    <p></p>
+  </div>,
+  'ABBAABBA':<div className='paragraph'>
+    <p></p>
+  </div>,
+  'ABABCDCD':<div className='paragraph'>
+    <p></p>
+  </div>,
+  'AABCCBDDB':<div className='paragraph'>
+    <p></p>
+  </div>,
+  'AABCCCBBB':<div className='paragraph'>
+    <p></p>
+  </div>,
+  'AAAABCCCB':<div className='paragraph'>
+    <p></p>
+  </div>,
+  'spenserian stanza (ABAB\u200bBCBCC)':<div>
+    <p></p>
+  </div>,// these characters are zero-width spaces, used to allow smoother text-wrapping in long word
+  'English ode (ABAB\u200bCDE\u200bDCE)':<div className='paragraph'>
+    <p></p>
+  </div>,
+  'English ode (ABAB\u200bCDE\u200bCDE)':<div className='paragraph'>
+    <p></p>
+  </div>,
+  '5 couplets (AABB\u200bCCD\u200bDEE)':<div className='paragraph'>
+    <p></p>
+  </div>,
+  'English ode (ABAB\u200bCDE\u200bCED)':<div className='paragraph'>
+    <p></p>
+  </div>,
+  'Italian sonnet (ABBA\u200bABBA\u200bCDC\u200bDCD)':<div className='paragraph'>
+    <p></p>
+  </div>,
+  'Shakespearean sonnet (ABAB\u200bCDCD\u200bEFEF\u200bGG)':<div className='paragraph'>
+    <p></p>
+  </div>,
+  'Petrarchan sonnet (ABBA\u200bABBA\u200bCDECDE)':<div className='paragraph'>
+    <p></p>
+  </div>,
+  'sonnet (ABAB\u200bACDC\u200bED\u200bEFEF)':<div className='paragraph'>
+    <p></p>
+  </div>,
+  'sonnet (ABBA\u200bBCBC\u200bDDE\u200bDEE)':<div className='paragraph'>
+    <p></p>
+  </div>,
+  'sonnet (ABCA\u200bBDCA\u200bBC\u200bDEDE)':<div className='paragraph'>
+    <p></p>
+  </div>,
+  'sonnet (ABAB\u200bCDCD\u200bEEF\u200bEFF)':<div className='paragraph'>
+    <p></p>
+  </div>,
+  'sonnet (ABAB\u200bCDCD\u200bBC\u200bEFEF)':<div className='paragraph'>
+    <p></p>
+  </div>,
+  'sonnet (ABAB\u200bCDCD\u200bEFE\u200bGGF)':<div className='paragraph'>
+    <p></p>
+  </div>,
+  'sonnet (ABBA\u200bABBA\u200bCDD\u200bCDC)':<div className='paragraph'>
+    <p></p>
+  </div>,
+  'sonnet (ABBA\u200bABBA\u200bCDC\u200bDDC)':<div className='paragraph'>
+    <p></p>
+  </div>,
+  'sonnet (ABBA\u200bABBA\u200bCDE\u200bDCE)':<div className='paragraph'>
+    <p></p>
+  </div>,
+  'sonnet (ABBA\u200bABBA\u200bCDC\u200bEDE)':<div className='paragraph'>
+    <p></p>
+  </div>,
+  'sonnet (ABBA\u200bABBA\u200bCDE\u200bDEC)':<div className='paragraph'>
+    <p></p>
+  </div>,
+  'sonnet (ABBA\u200bABBA\u200bCDC\u200bDEE)':<div className='paragraph'>
+    <p></p>
+  </div>,
+}
 export const FAQs = {
   'How does it work?':<div className='paragraph'>
     <p>To analyze a stanza's rhyme, Tuffet looks up the pronunciation of the last word of every line in a dictionary (using an algorithm to guess the pronunciation of terms that aren't in its dictionary). It also has an algorithm for deciding which pronunciation is being used when the same spelling can be pronounced multiple ways, like <em>live</em> rhyming with either <em>give</em> or <em>five</em>. By comparing the pronunciation of words, Tuffet is able to determine whether and how words rhyme.</p>
@@ -201,12 +431,11 @@ export const FAQs = {
   'How should I format poetry before using Tuffet?':<div className='paragraph'>
     <p>Leave at least one blank line between stanzas. Within a stanza, there should not be any blank lines.</p>
   </div>,
-}
-
+};
 export const VARIATION_DESCRIPTIONS = {
   'trochaic inversion':"A trochee (/\xa0×) in place of an iamb (×\xa0/)",
   'pyrrhic substitution':"A pyrrhic foot (×\xa0×) in place of an iamb (×\xa0/)",
   'anapestic substitution':"An anapest (×\xa0×\xa0/) in place of an iamb (×\xa0/)",
   'feminine ending':"A line that ends with an extra unstressed syllable",
   'catalexis':"",
-}
+};

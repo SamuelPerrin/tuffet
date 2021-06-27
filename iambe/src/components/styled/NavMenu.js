@@ -108,6 +108,7 @@ const NavMenu = props => {
         <div className={isMenuOpen && isAboutOpen ? 'open' : 'closed'}>
           <span onClick={() => goToURI('/about')} className='menu-item sub-item'>About Tuffet</span>
           <span onClick={() => goToURI('/about/rhymes')} className='menu-item sub-item'>About Rhyme</span>
+          <span onClick={() => goToURI('/about/rhyme-schemes')} className='menu-item sub-item'>About Rhyme Schemes</span>
           <span onClick={() => goToURI('/about/meter')} className='menu-item sub-item'>About Meter</span>
         </div>
       </span>
