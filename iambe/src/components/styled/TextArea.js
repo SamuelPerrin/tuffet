@@ -6,7 +6,7 @@ const TextAreaWrapper = styled.div`
   position:relative;
 
   @media (max-width:650px) {
-    width:80%;
+    width:95%;
   }
 
   @media (min-width:650px) {
