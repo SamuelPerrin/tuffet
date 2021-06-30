@@ -63,7 +63,7 @@ const Home = props => {
       <Section>
         <h3>Try it with one of these samples!</h3>
         <ButtonRow>
-          <Button onClick={() => submitSample(samples.STITCH)}>Stitch in Time</Button>
+          <Button onClick={() => submitSample(samples.MARY)}>Mary had a little lamb</Button>
           <Button onClick={() => submitSample(samples.GRACE)}>Amazing Grace</Button>
           <Button onClick={() => submitSample(samples.SONNET116)}>Sonnet 116</Button>
         </ButtonRow>
