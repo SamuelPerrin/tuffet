@@ -217,27 +217,19 @@ export const RHYME_SCHEME_DESCRIPTIONS = {
   'AAA':<div className='paragraph'>
     <p>A tercet in which all lines rhyme, sometimes called a triplet.</p>
   </div>,
-  'AAB':<div className='paragraph'>
-    <p></p>
-  </div>,
+  'AAB':false,
   'ABA':<div className='paragraph'>
     <p>A tercet in which the first and third lines rhyme. Most commonly used for <em>terza rima</em>, which Tuffet is not well-equipped to identify because its rhymes cross stanza boundaries.</p>
   </div>,
-  'ABB':<div className='paragraph'>
-    <p></p>
-  </div>,
-  'AAAA':<div className='paragraph'>
-    <p></p>
-  </div>,
+  'ABB':false,
+  'AAAA':false,
   'AABA':<div className='paragraph'>
     <p>A quatrain in which the first, second, and fourth lines rhyme. Tuffet is sensitive to slant rhyme and sometimes identifies as AABA those stanzas that would ordinarily be identified as having a rhyme scheme of ABCB.</p>
   </div>,
   '2 couplets (AABB)':<div className='paragraph'>
     <p>A quatrain made of two rhymed couplets.</p>
   </div>,
-  'ABAA':<div className='paragraph'>
-    <p></p>
-  </div>,
+  'ABAA':false,
   'ABAB':<div className='paragraph'>
     <p>A quatrain with interlocking rhymes, used with ballad meter and in the quatrains of a Shakespearean sonnet.</p>
   </div>,
@@ -247,51 +239,25 @@ export const RHYME_SCHEME_DESCRIPTIONS = {
   'ABCB':<div className='paragraph'>
     <p>A quatrain in which the second and fourth lines rhyme. This is the most common rhyme scheme for common meter and short meter.</p>
   </div>,
-  'AAABB':<div className='paragraph'>
-    <p></p>
-  </div>,
-  'AABAB':<div className='paragraph'>
-    <p></p>
-  </div>,
-  'AABBA':<div className='paragraph'>
-    <p></p>
-  </div>,
-  'AABBB':<div className='paragraph'>
-    <p></p>
-  </div>,
-  'AABBC':<div className='paragraph'>
-    <p></p>
-  </div>,
-  'AABCB':<div className='paragraph'>
-    <p></p>
-  </div>,
-  'ABAAB':<div className='paragraph'>
-    <p></p>
-  </div>,
-  'ABABA':<div className='paragraph'>
-    <p></p>
-  </div>,
-  'ABABB':<div className='paragraph'>
-    <p></p>
-  </div>,
-  'ABBAA':<div className='paragraph'>
-    <p></p>
-  </div>,
-  'ABBAB':<div className='paragraph'>
-    <p></p>
-  </div>,
-  'ABCCB':<div className='paragraph'>
-    <p></p>
-  </div>,
+  'AAABB':false,
+  'AABAB':false,
+  'AABBA':false,
+  'AABBB':false,
+  'AABBC':false,
+  'AABCB':false,
+  'ABAAB':false,
+  'ABABA':false,
+  'ABABB':false,
+  'ABBAA':false,
+  'ABBAB':false,
+  'ABCCB':false,
   'ABCDB':<div className='paragraph'>
     <p>A quintain in which the second and fifth lines rhyme, most often used when a quatrain rhymed ABCB has its third line split in two.</p>
   </div>,
   'ABCDC':<div className='paragraph'>
     <p>A quintain in which the third and fifth lines rhyme, most often used when a quatrain rhymed ABCB has its first line split in two.</p>
   </div>,
-  'AABBBA':<div className='paragraph'>
-    <p></p>
-  </div>,
+  'AABBBA':false,
   '3 couplets (AABBCC)':<div className='paragraph'>
     <p>A sestain made of three rhymed couplets.</p>
   </div>,
@@ -304,51 +270,25 @@ export const RHYME_SCHEME_DESCRIPTIONS = {
   'ABABCC':<div className='paragraph'>
     <p>A sestain that has the same rhyme scheme as the last six lines of a Shakespearean sonnet; also used in Shakespeare's "Venus and Adonis".</p>
   </div>,
-  'ABACBC':<div className='paragraph'>
-    <p></p>
-  </div>,
-  'ABACCB':<div className='paragraph'>
-    <p></p>
-  </div>,
-  'ABACCC':<div className='paragraph'>
-    <p></p>
-  </div>,
-  'ABCABC':<div className='paragraph'>
-    <p></p>
-  </div>,
+  'ABACBC':false,
+  'ABACCB':false,
+  'ABACCC':false,
+  'ABCABC':false,
   'ABCBDB':<div className='paragraph'>
     <p>A sestain in which even-numbered lines rhyme.</p>
   </div>,
-  'ABCCAB':<div className='paragraph'>
-    <p></p>
-  </div>,
-  'ABCDEC':<div className='paragraph'>
-    <p></p>
-  </div>,
-  'ABCDED':<div className='paragraph'>
-    <p></p>
-  </div>,
-  'ABABACC':<div className='paragraph'>
-    <p></p>
-  </div>,
+  'ABCCAB':false,
+  'ABCDEC':false,
+  'ABCDED':false,
+  'ABABACC':false,
   'rhyme royal (ABABBCC)':<div className='paragraph'>
     <p><strong>Rhyme royal</strong> was first used in English poetry by Chaucer. It is usually paired with iambic pentameter, as in Shakespeare's "The Rape of Lucrece".</p>
   </div>,
-  'ABABCCC':<div className='paragraph'>
-    <p></p>
-  </div>,
-  'ABCACBB':<div className='paragraph'>
-    <p></p>
-  </div>,
-  'AAABCCCB':<div className='paragraph'>
-    <p></p>
-  </div>,
-  'AABBCCDD':<div className='paragraph'>
-    <p></p>
-  </div>,
-  'AABCDDEC':<div className='paragraph'>
-    <p></p>
-  </div>,
+  'ABABCCC':false,
+  'ABCACBB':false,
+  'AAABCCCB':false,
+  'AABBCCDD':false,
+  'AABCDDEC':false,
   'ottava rima (ABABABCC)':<div className='paragraph'>
     <p><strong>Ottava rima</strong> originated in Italian poetry, where it was used by poets like Boccaccio and Torquato Tasso for epic narrative verse. It was first adapted to English in translations of those Italian works, but more notably it came to serve as the rhyme scheme in Byron's <em>Don Juan</em>.</p>
   </div>,
@@ -361,27 +301,17 @@ export const RHYME_SCHEME_DESCRIPTIONS = {
   'ABCBDEFE':<div className='paragraph'>
     <p>Often used with common meter double.</p>
   </div>,
-  'ABCDDEFD':<div className='paragraph'>
-    <p></p>
-  </div>,
-  'ABCDEBFD':<div className='paragraph'>
-    <p></p>
-  </div>,
-  'ABCDEFGD':<div className='paragraph'>
-    <p></p>
-  </div>,
-  'AAAABCCCB':<div className='paragraph'>
-    <p></p>
-  </div>,
+  'ABCDDEFD':false,
+  'ABCDEBFD':false,
+  'ABCDEFGD':false,
+  'AAAABCCCB':false,
   'spenserian stanza (ABAB\u200bBCBCC)':<div className='paragraph'>
     <p>The rhyme scheme of the nine-line <strong>Spenserian stanza</strong> is named for its inventor, Edmund Spenser, who used it for his epic <em>The Faerie Queene</em>. It may have been adapted from rhyme royal (ABABBCC).</p>
   </div>,// these characters are zero-width spaces, used to allow smoother text-wrapping in long word
   'AABCCBDDB':<div className='paragraph'>
     <p>This nine-line pattern extends the six-line rhyme-scheme AABCCB that is often used with common particular meter.</p>
   </div>,
-  'AABCCCBBB':<div className='paragraph'>
-    <p></p>
-  </div>,
+  'AABCCCBBB':false,
   '5 couplets (AABB\u200bCCD\u200bDEE)':<div className='paragraph'>
     <p>Five rhymed couplets in one stanza.</p>
   </div>,
