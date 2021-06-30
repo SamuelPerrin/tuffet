@@ -8896,6 +8896,7 @@ const lexicon = {
 	"twill": ["T W IH1 L"],
 	"twin": ["T W IH1 N"],
 	"twine": ["T W AY1 N"],
+	"twinkle": ["T W IH1 NG K AH0 L"],
 	"twinkled": ["T W IH1 NG K AH0 L D"],
 	"twinkling": ["T W IH1 NG K L IH0 NG"],
 	"twirl": ["T W ER1 L"],

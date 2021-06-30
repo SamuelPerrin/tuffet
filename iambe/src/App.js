@@ -15,6 +15,7 @@ import MeterStanza from './components/MeterStanza';
 import MeterType from './components/MeterType';
 import MeterLine from './components/MeterLine';
 import AboutRhymes from './components/AboutRhymes';
+import AboutRhymeSchemes from './components/AboutRhymeSchemes';
 import AboutMeter from './components/AboutMeter';
 import FAQs from './components/FAQ';
 import Samples from './components/Samples';
@@ -40,6 +41,7 @@ function App() {
           <Route exact path="/meter/line" component={MeterLine} />
           <Route exact path="/about" component={FAQs} />
           <Route exact path="/about/rhymes" component={AboutRhymes} />
+          <Route exact path="/about/rhyme-schemes" component={AboutRhymeSchemes} />
           <Route exact path="/about/meter" component={AboutMeter} />
           <Route exact path="/samples" component={Samples} />
           <Route component={PageNotFound} />

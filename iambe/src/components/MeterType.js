@@ -49,7 +49,7 @@ const MeterType = props => {
       </Breadcrumbs>
       <Container>
         <Section>
-          <h2><RedSpan>Meter: {mt}</RedSpan></h2>
+          <h2><RedSpan>Meter: <a href={'#' + mt}>{mt}</a></RedSpan></h2>
           <Table maxWidth='1200px'>
             <caption style={{textAlign:'center'}}>
               This stanza has {lineMeterCounts[mt]} instance{lineMeterCounts[mt] === 1 ? '' : 's'} of {mt}:
@@ -71,7 +71,7 @@ const MeterType = props => {
           </Table>
         </Section>
         <Section>
-          <h2><YellowSpan>What is {mt}?</YellowSpan></h2>
+          <h2 id={mt}><YellowSpan>What is {mt}?</YellowSpan></h2>
           {LINE_METER_DESCRIPTIONS[mt]}
         </Section>
         <Button onClick={goBack}>Back to Stanza</Button>

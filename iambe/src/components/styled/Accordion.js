@@ -5,6 +5,7 @@ const AccordionItemWrapper = styled.div`
   h3 {
     margin:0;
   }
+
   h3 button {
     display: flex;
     justify-content: space-between;
@@ -15,7 +16,6 @@ const AccordionItemWrapper = styled.div`
     width: 100%;
     color: ${props => props.theme.white};
     cursor:pointer;
-    }
   }
 
   h3 button.active {
@@ -63,7 +63,7 @@ const AccordionItem = props => {
 
   const toggle = e => {
     e.preventDefault();
-    setActive(!active);
+    text && setActive(!active);
   }
 
   return (
@@ -71,10 +71,10 @@ const AccordionItem = props => {
       <h3>
         <button
           onClick={toggle}
-          className={active ? 'active' : 'inactive'}
+          className={active ? 'active item' : 'inactive item'}
         >
           <span>{title}</span>
-          <span>{active ? '–' : '+'}</span>
+          {text && <span>{active ? '–' : '+'}</span>}
         </button>
       </h3>
       <div className='panel'>
@@ -88,11 +88,10 @@ const AccordionItem = props => {
 
 const Accordion = props => {
   const {data, ...rest} = props;
+
   return (
     <div {...rest}>
-      <form>
-        {data.map((x, i)=> (<AccordionItem key={i} title={x[0]} text={x[1]} />))}
-      </form>
+      {data.map((x, i) => (<AccordionItem key={i} title={x[0]} text={x[1]} />))}
     </div>
   )
 }

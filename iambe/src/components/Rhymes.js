@@ -130,7 +130,7 @@ const Rhymes = props => {
           <ol>
             {rhymeSchemeCounts && Object.entries(rhymeSchemeCounts).filter(entry => entry[1] > 0).sort((a,b) => b[1] - a[1]).map(entry => <li key={entry[0]}>{RHYME_SCHEMES[entry[0]]} ({entry[1]} stanza{entry[1] > 1 ? 's' : ''})</li>)}
           </ol>
-          <Link to="/about/rhymes"><RedSpan>Read more »</RedSpan></Link>
+          <Link to="/about/rhyme-schemes"><RedSpan>Read more »</RedSpan></Link>
         </Section>
         <Section>
           <h2><BlueSpan>Rhyme Scheme by Stanza</BlueSpan></h2>

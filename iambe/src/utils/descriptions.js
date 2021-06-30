@@ -8,7 +8,7 @@ export const STANZA_METER_DESCRIPTIONS = {
   </div>,
   'common meter': <div className='paragraph'>
     <p><strong>Common meter</strong> (8.6.8.6) is a quatrain in which the first and third lines are iambic tetrameter and the second and fourth lines are iambic trimeter. Common meter is familiar from hymns like John Newton’s “Amazing Grace”, Isaac Watts’s “Joy to the World”, and the Christmas carol “O Little Town of Bethlehem”. It was also the favorite form of Emily Dickinson. When a common meter quatrain is collapsed down to a rhyming couplet with fourteen syllables in each line, the resulting verse form is called fourteeners.</p>
-    <p>Common meter is related to the English ballad, which also features alternating lines with four and three stressed syllables. The ballad is more flexible than common meter proper, allowing for headless lines, anapestic substitution, and the like.</p>
+    <p>Common meter is similar to the English ballad, which also features alternating lines with four and three stressed syllables. The ballad is more flexible than common meter proper, allowing for headless lines, anapestic substitution, and the like.</p>
   </div>,
   'long meter': <div className='paragraph'>
     <p><strong>Long meter</strong> (8.8.8.8) is a quatrain of iambic tetrameter, in which each line has eight syllables arranged in four metrical feet with rising rhythm (da Dum da Dum da Dum da Dum). Long meter's name is derived from the fact that its second and fourth lines are longer than they would be in common meter. Like common meter and short meter, long meter was popular for hymns, yielding classics like Isaac Watts's "When I Survey the Wondrous Cross". It is also used throughout Alfred Lord Tennyson's book-length poem, <em>In Memoriam A.H.H.</em>.</p>
@@ -42,14 +42,14 @@ export const STANZA_METER_DESCRIPTIONS = {
   'fourteeners': <div className='paragraph'>
     <p><strong>Fourteeners</strong> are couplets of (usually rhymed) iambic heptameter, which consists of seven metrical feet with fourteen syllables in rising rhythm (da Dum da Dum da Dum da Dum da Dum da Dum da Dum), often with caesura after the eighth syllable. When divided at the caesura, two rhymed fourteeners make a common meter quatrain.</p>
   </div>,
+  'sixes & fives':<div className='paragraph'>
+    <p><strong>Sixes and Fives</strong> (6.5.6.5) is a quatrain alternating lines of trochaic trimeter (with six syllables) and trochaic trimeter catalectic (with five). It is sometimes used for hymns, including "Onward, Christian Soldiers".</p>
+  </div>,
   'eights & fives': <div className='paragraph'>
     <p><strong>Eights and Fives</strong> (8.5.8.5) is a quatrain alternating lines of trochaic tetrameter (with eight syllables) and trochaic trimeter catalectic (with five). It can be thought of as the trochaic equivalent of the iambic common meter. It is used in some hymns and is the favorite trochaic meter of Emily Dickinson.</p>
   </div>,
   'eights & sevens': <div className='paragraph'>
     <p><strong>Eights and Sevens</strong> (8.7.8.7) is a quatrain alternating lines of trochaic tetrameter (with eight syllables) and trochaic tetrameter catalectic (with seven). It was used primarily as a hymn meter, producing "Come Thou Fount of Every Blessing" and Charles Wesley's "Loves Divine, All Loves Excelling".</p>
-  </div>,
-  'sixes & fives':<div className='paragraph'>
-    <p><strong>Sixes and Fives</strong> (6.5.6.5) is a quatrain alternating lines of trochaic trimeter (with six syllables) and trochaic trimeter catalectic (with five). It is sometimes used for hymns, including "Onward, Christian Soldiers".</p>
   </div>,
   // 'raven': <div className='paragraph'>
   //   <p>This stanza is the same as the one used in Edgar Allan Poe's <strong>The Raven</strong>.</p>
@@ -66,10 +66,10 @@ export const LINE_METER_DESCRIPTIONS = {
     <p><strong>Iambic trimeter</strong> consists of six syllables arranged in three metrical feet with rising rhythm. The most standard form of iambic trimeter is three iambs (da Dum da Dum da Dum). In a <strong>catalectic</strong> line, the last foot is lacking its final syllable.</p>
   </div>,
   'iambic tetrameter': <div className='paragraph'>
-    <p><strong>Iambic tetrameter</strong> consists of eight syllables arranged in four metrical feet with rising rhythm. The most standard form of iambic trimeter is four iambs (da Dum da Dum da Dum da Dum), but it isn't uncommon to see trochaic inversion in the first foot. A quatrain of iambic tetrameter is called <em>long meter</em> and is a common meter for hymns, as in "When I Survey the Wondrous Cross". Iambic tetrameter is also used in other hymn meters like <em>common meter</em> and <em>short meter</em>.</p>
+    <p><strong>Iambic tetrameter</strong> consists of eight syllables arranged in four metrical feet with rising rhythm. The most standard form of iambic tetrameter is four iambs (da Dum da Dum da Dum da Dum), but it isn't uncommon to see trochaic inversion in the first foot. A quatrain of iambic tetrameter is called <em>long meter</em> and is a common meter for hymns, as in "When I Survey the Wondrous Cross". Iambic tetrameter is also used in other hymn meters like <em>common meter</em> and <em>short meter</em>.</p>
   </div>,
   'iambic tetrameter catalectic': <div className='paragraph'>
-    <p><strong>Iambic tetrameter</strong> consists of eight syllables arranged in four metrical feet with rising rhythm. The most standard form of iambic trimeter is four iambs (da Dum da Dum da Dum da Dum), but in a <strong>catalectic</strong> line, the last foot is lacking its final syllable. Iambic tetrameter catalectic is sometimes substituted for its acatalectic cousin in hymn stanzas like <em>common meter</em>.</p>
+    <p><strong>Iambic tetrameter</strong> consists of eight syllables arranged in four metrical feet with rising rhythm. The most standard form of iambic tetrameter is four iambs (da Dum da Dum da Dum da Dum), but in a <strong>catalectic</strong> line, the last foot is lacking its final syllable. Iambic tetrameter catalectic is sometimes substituted for its acatalectic cousin in hymn stanzas like <em>common meter</em>.</p>
   </div>,
   'iambic pentameter': <div className='paragraph'>
     <p><strong>Iambic pentameter</strong> consists of ten syllables arranged in five metrical feet with rising rhythm. The most standard form of iambic pentameter is five iambs (da Dum da Dum da Dum da Dum), but there are several common variations, including adding an unstressed eleventh syllable after the last iamb and substituting a trochee for one of more of the first four iambs. Iambic pentameter is probably the most important poetic meter in the history of English poetry. Everyone from Chaucer to Shakespeare and from Milton to Wordsworth wrote much of their verse in this meter. It is highly flexible, supporting lyrical and narrative verse, sonnet and epic.</p>
@@ -90,6 +90,30 @@ export const LINE_METER_DESCRIPTIONS = {
   </div>,
   'iambic heptameter catalectic': <div className='paragraph'>
     <p><strong>Iambic heptameter</strong> consists of fourteen syllables arranged in seven metrical feet with rising rhythm. The most standard form of iambic heptameter is seven iambs (da Dum da Dum da Dum da Dum da Dum da Dum da Dum), but in a <strong>catalectic</strong> line, the last foot is lacking its final syllable.</p>
+  </div>,
+  'trochaic trimeter':<div className='paragraph'>
+    <p><strong>Trochaic trimeter</strong> consists of six syllables arranged in three metrical feet with falling rhythm. The most standard form of trochaic trimeter is three trochees (Dum da Dum da Dum da). In the verse form Sixes and Fives, the sixes are lines of trochaic trimeter.</p>
+  </div>,
+  'trochaic trimeter catalectic':<div className='paragraph'>
+    <p><strong>Trochaic trimeter</strong> consists of six syllables arranged in three metrical feet with falling rhythm. The most standard form of trochaic tetrameter is three trochees (Dum da Dum da Dum da), but in a <strong>catalectic</strong> line, the last foot is lacking its final syllable. In a verse form like Sixes and Fives or Eights and Fives, the fives are lines of trochaic trimeter catalectic.</p>
+  </div>,
+  'trochaic tetrameter':<div className='paragraph'>
+    <p><strong>Trochaic tetrameter</strong> consists of eight syllables arranged in four metrical feet with falling rhythm. The most standard form of trochaic tetrameter is four trochees (Dum da Dum da Dum da Dum da). In the verse form Eights and Fives, the eights are lines of trochaic tetrameter.</p>
+  </div>,
+  'trochaic tetrameter catalectic':<div className='paragraph'>
+    <p><strong>Trochaic tetrameter</strong> consists of eight syllables arranged in four metrical feet with falling rhythm. The most standard form of trochaic tetrameter is four trochees (Dum da Dum da Dum da Dum da), but in a <strong>catalectic</strong> line, the last foot is lacking its final syllable. In the verse form Eights and Sevens, the sevens are lines of trochaic tetrameter catalectic. An acephalous (headless) line of iambic tetrameter sounds like trochaic tetrameter catalectic and sometimes appears in ballads.</p>
+  </div>,
+  'trochaic pentameter':<div className='paragraph'>
+    <p><strong>Trochaic pentameter</strong> consists of ten syllables arranged in five metrical feet with falling rhythm. The most standard form of trochaic pentameter is five trochees (Dum da Dum da Dum da Dum da Dum da).</p>
+  </div>,
+  'trochaic pentameter catalectic':<div className='paragraph'>
+    <p><strong>Trochaic pentameter</strong> consists of ten syllables arranged in five metrical feet with falling rhythm. The most standard form of trochaic pentameter is five trochees (Dum da Dum da Dum da Dum da Dum da), but in a <strong>catalectic</strong> line, the last foot is missing its final syllable.</p>
+  </div>,
+  'anapestic trimeter':<div className='paragraph'>
+    <p><strong>Anapestic trimeter</strong> consists of three metrical feet with rising rhythm. The most standard form of anapestic trimeter is three anapests (da da Dum da da Dum da da Dum), but it is common to see an iamb (da Dum) to be substituted for one or more of the anapests.</p>
+  </div>,
+  'anapestic trimeter catalectic':<div className='paragraph'>
+    <p><strong>Anapestic trimeter</strong> consists of three metrical feet with rising rhythm. The most standard form of anapestic trimeter is three anapests (da da Dum da da Dum da da Dum), but in a <strong>catalectic</strong> line, the last foot is missing its final syllable.</p>
   </div>,
 };
 export const RHYME_TYPE_DESCRIPTIONS = {
@@ -186,6 +210,166 @@ export const RHYME_TYPE_DESCRIPTIONS = {
     <p>Tuffet identifies as <strong>nonrhyme</strong> pairs of words that don't rhyme, but which might be expected to rhyme, given the rest of the stanza's rhyme scheme.</p>
   </div>,
 };
+export const RHYME_SCHEME_DESCRIPTIONS = {
+  'couplet (AA)':<div className='paragraph'>
+    <p>A <strong>couplet</strong> is a two-line stanza with end rhyme. A stand-alone couplet is sometimes used to express an epigram. Couplets in iambic pentameter are called <em>heroic couplets</em>. Couplets of iambic hexameter are called <em>alexandrines</em>. Couplets of iambic heptameter are called <em>fourteeners</em>. A mixed couplet of iambic hexameter and iambic heptameter is called <em>poulter's measure</em>.</p>
+  </div>,
+  'AAA':<div className='paragraph'>
+    <p>A tercet in which all lines rhyme, sometimes called a triplet.</p>
+  </div>,
+  'AAB':false,
+  'ABA':<div className='paragraph'>
+    <p>A tercet in which the first and third lines rhyme. Most commonly used for <em>terza rima</em>, which Tuffet is not well-equipped to identify because its rhymes cross stanza boundaries.</p>
+  </div>,
+  'ABB':false,
+  'AAAA':false,
+  'AABA':<div className='paragraph'>
+    <p>A quatrain in which the first, second, and fourth lines rhyme. Tuffet is sensitive to slant rhyme and sometimes identifies as AABA those stanzas that would ordinarily be identified as having a rhyme scheme of ABCB.</p>
+  </div>,
+  '2 couplets (AABB)':<div className='paragraph'>
+    <p>A quatrain made of two rhymed couplets.</p>
+  </div>,
+  'ABAA':false,
+  'ABAB':<div className='paragraph'>
+    <p>A quatrain with interlocking rhymes, used with ballad meter and in the quatrains of a Shakespearean sonnet.</p>
+  </div>,
+  'ABBA':<div className='paragraph'>
+    <p>A quatrain with chiastic or "cross" rhyme, as is used throughout Tennyson's <em>In Memoriam A.H.H.</em>. This pattern is also repeated in the octave of a Petrarchan sonnet.</p>
+  </div>,
+  'ABCB':<div className='paragraph'>
+    <p>A quatrain in which the second and fourth lines rhyme. This is the most common rhyme scheme for common meter and short meter.</p>
+  </div>,
+  'AAABB':false,
+  'AABAB':false,
+  'AABBA':false,
+  'AABBB':false,
+  'AABBC':false,
+  'AABCB':false,
+  'ABAAB':false,
+  'ABABA':false,
+  'ABABB':false,
+  'ABBAA':false,
+  'ABBAB':false,
+  'ABCCB':false,
+  'ABCDB':<div className='paragraph'>
+    <p>A quintain in which the second and fifth lines rhyme, most often used when a quatrain rhymed ABCB has its third line split in two.</p>
+  </div>,
+  'ABCDC':<div className='paragraph'>
+    <p>A quintain in which the third and fifth lines rhyme, most often used when a quatrain rhymed ABCB has its first line split in two.</p>
+  </div>,
+  'AABBBA':false,
+  '3 couplets (AABBCC)':<div className='paragraph'>
+    <p>A sestain made of three rhymed couplets.</p>
+  </div>,
+  'AABCCB':<div className='paragraph'>
+    <p>Sometimes used with common particular meter.</p>
+  </div>,
+  'ABABAB':<div className='paragraph'>
+    <p>A sestain with interlocking rhymes, as used in Shelley's "She walks in beauty".</p>
+  </div>,
+  'ABABCC':<div className='paragraph'>
+    <p>A sestain that has the same rhyme scheme as the last six lines of a Shakespearean sonnet; also used in Shakespeare's "Venus and Adonis".</p>
+  </div>,
+  'ABACBC':false,
+  'ABACCB':false,
+  'ABACCC':false,
+  'ABCABC':false,
+  'ABCBDB':<div className='paragraph'>
+    <p>A sestain in which even-numbered lines rhyme.</p>
+  </div>,
+  'ABCCAB':false,
+  'ABCDEC':false,
+  'ABCDED':false,
+  'ABABACC':false,
+  'rhyme royal (ABABBCC)':<div className='paragraph'>
+    <p><strong>Rhyme royal</strong> was first used in English poetry by Chaucer. It is usually paired with iambic pentameter, as in Shakespeare's "The Rape of Lucrece".</p>
+  </div>,
+  'ABABCCC':false,
+  'ABCACBB':false,
+  'AAABCCCB':false,
+  'AABBCCDD':false,
+  'AABCDDEC':false,
+  'ottava rima (ABABABCC)':<div className='paragraph'>
+    <p><strong>Ottava rima</strong> originated in Italian poetry, where it was used by poets like Boccaccio and Torquato Tasso for epic narrative verse. It was first adapted to English in translations of those Italian works, but more notably it came to serve as the rhyme scheme in Byron's <em>Don Juan</em>.</p>
+  </div>,
+  'ABABCDCD':<div className='paragraph'>
+    <p>A rhymed octave, as in the first eight lines of a Shakespearean sonnet.</p>
+  </div>,
+  'ABBAABBA':<div className='paragraph'>
+    <p>A rhymed octave, as in the first eight lines of a Petrarchan sonnet.</p>
+  </div>,
+  'ABCBDEFE':<div className='paragraph'>
+    <p>Often used with common meter double.</p>
+  </div>,
+  'ABCDDEFD':false,
+  'ABCDEBFD':false,
+  'ABCDEFGD':false,
+  'AAAABCCCB':false,
+  'spenserian stanza (ABAB\u200bBCBCC)':<div className='paragraph'>
+    <p>The rhyme scheme of the nine-line <strong>Spenserian stanza</strong> is named for its inventor, Edmund Spenser, who used it for his epic <em>The Faerie Queene</em>. It may have been adapted from rhyme royal (ABABBCC).</p>
+  </div>,// these characters are zero-width spaces, used to allow smoother text-wrapping in long word
+  'AABCCBDDB':<div className='paragraph'>
+    <p>This nine-line pattern extends the six-line rhyme-scheme AABCCB that is often used with common particular meter.</p>
+  </div>,
+  'AABCCCBBB':false,
+  '5 couplets (AABB\u200bCCD\u200bDEE)':<div className='paragraph'>
+    <p>Five rhymed couplets in one stanza.</p>
+  </div>,
+  'English ode (ABAB\u200bCDE\u200bCDE)':<div className='paragraph'>
+    <p>The most common rhyme scheme for English odes, as used in Keats's "Ode to a Nightingale".</p>
+  </div>,
+  'English ode (ABAB\u200bCDE\u200bCED)':<div className='paragraph'>
+    <p>A variant of the standard rhyme scheme for English odes.</p>
+  </div>,
+  'English ode (ABAB\u200bCDE\u200bDCE)':<div className='paragraph'>
+    <p>A variant of the standard rhyme scheme for English odes.</p>
+  </div>,
+  'sonnet (ABAB\u200bACDC\u200bEDE\u200bFEF)':<div className='paragraph'>
+    <p>A nonstandard sonnet rhyme scheme, as used in Shelley's "Ozymandias".</p>
+  </div>,
+  'Shakespearean sonnet (ABAB\u200bCDCD\u200bEFEF\u200bGG)':<div className='paragraph'>
+    <p>The standard rhyme scheme of the English or <strong>Shakespearean sonnet</strong>.</p>
+  </div>,
+  'sonnet (ABAB\u200bCDCD\u200bBC\u200bEFEF)':<div className='paragraph'>
+    <p>A variant of the Shakespearean sonnet, as used in Keats's "To Sleep".</p>
+  </div>,
+  'sonnet (ABAB\u200bCDCD\u200bEEF\u200bEFF)':<div className='paragraph'>
+    <p>A variant of the Shakespearean sonnet, as used in Keats's "On Peace".</p>
+  </div>,
+  'sonnet (ABAB\u200bCDCD\u200bEFE\u200bGGF)':<div className='paragraph'>
+    <p>A variant of the Shakespearean sonnet.</p>
+  </div>,
+  'Italian sonnet (ABBA\u200bABBA\u200bCDC\u200bDCD)':<div className='paragraph'>
+    <p>A common rhyme scheme in the tradition of the Petrarchan or <strong>Italian sonnet</strong>.</p>
+  </div>,
+  'sonnet (ABBA\u200bABBA\u200bCDC\u200bDDC)':<div className='paragraph'>
+    <p>A variant of the Petrarchan or Italian sonnet.</p>
+  </div>,
+  'sonnet (ABBA\u200bABBA\u200bCDC\u200bDEE)':<div className='paragraph'>
+    <p>A variant of the Petrarchan or Italian sonnet.</p>
+  </div>,
+  'sonnet (ABBA\u200bABBA\u200bCDC\u200bEDE)':<div className='paragraph'>
+    <p>A variant of the Petrarchan or Italian sonnet.</p>
+  </div>,
+  'sonnet (ABBA\u200bABBA\u200bCDD\u200bCDC)':<div className='paragraph'>
+    <p>A variant of the Petrarchan or Italian sonnet.</p>
+  </div>,
+  'Petrarchan sonnet (ABBA\u200bABBA\u200bCDE\u200bCDE)':<div className='paragraph'>
+    <p>A common rhyme scheme in the tradition of the Italian or <strong>Petrarchan sonnet</strong>.</p>
+  </div>,
+  'sonnet (ABBA\u200bABBA\u200bCDE\u200bDCE)':<div className='paragraph'>
+    <p>A variant of the Petrarchan or Italian sonnet.</p>
+  </div>,
+  'sonnet (ABBA\u200bABBA\u200bCDE\u200bDEC)':<div className='paragraph'>
+    <p>A variant of the Petrarchan or Italian sonnet.</p>
+  </div>,
+  'sonnet (ABBA\u200bBCBC\u200bDDE\u200bDEE)':<div className='paragraph'>
+    <p>A nonstandard sonnet rhyme scheme.</p>
+  </div>,
+  'sonnet (ABCA\u200bBDCA\u200bBC\u200bDEDE)':<div className='paragraph'>
+    <p>A nonstandard sonnet rhyme scheme.</p>
+  </div>,
+}
 export const FAQs = {
   'How does it work?':<div className='paragraph'>
     <p>To analyze a stanza's rhyme, Tuffet looks up the pronunciation of the last word of every line in a dictionary (using an algorithm to guess the pronunciation of terms that aren't in its dictionary). It also has an algorithm for deciding which pronunciation is being used when the same spelling can be pronounced multiple ways, like <em>live</em> rhyming with either <em>give</em> or <em>five</em>. By comparing the pronunciation of words, Tuffet is able to determine whether and how words rhyme.</p>
@@ -201,12 +385,11 @@ export const FAQs = {
   'How should I format poetry before using Tuffet?':<div className='paragraph'>
     <p>Leave at least one blank line between stanzas. Within a stanza, there should not be any blank lines.</p>
   </div>,
-}
-
+};
 export const VARIATION_DESCRIPTIONS = {
   'trochaic inversion':"A trochee (/\xa0×) in place of an iamb (×\xa0/)",
   'pyrrhic substitution':"A pyrrhic foot (×\xa0×) in place of an iamb (×\xa0/)",
   'anapestic substitution':"An anapest (×\xa0×\xa0/) in place of an iamb (×\xa0/)",
   'feminine ending':"A line that ends with an extra unstressed syllable",
-  'catalexis':"",
-}
+  'catalexis':"A line that is missing its last syllable",
+};

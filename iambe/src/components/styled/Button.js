@@ -2,19 +2,35 @@ import React from 'react';
 import styled from 'styled-components';
 
 const ButtonWrapper = styled.button`
-  color:${props => props.theme.white};
+  color: ${props => {
+    switch(props.variant) {
+      case 'clear':
+        return props.theme.gray;
+      default:
+        return props.theme.white;
+    }
+  }};
   cursor: pointer;
   outline: none;
-  border: none;
+  border: ${props => {
+    switch(props.variant) {
+      case 'clear':
+        return '1px solid ' + props.theme.gray;
+      default:
+        return 'none';
+    }
+  }};
   border-radius: ${props => props.theme.borderRadius};
   background-color: ${props => {
     switch(props.variant) {
       case 'danger':
-        return props.theme.dangerColor
+        return props.theme.dangerColor;
       case 'disabled':
-        return props.theme.disabledColor
+        return props.theme.disabledColor;
+      case 'clear':
+        return 'rgba(255,255,255,0.5)';
       default:
-        return props.theme.blue
+        return props.theme.blue;
     }
   }};
 
@@ -24,7 +40,7 @@ const ButtonWrapper = styled.button`
       case 'small':
         return 'auto';
       default:
-        return props.theme.buttonWidth
+        return props.theme.buttonWidth;
     }
   }};
   padding: ${props => {
@@ -40,15 +56,24 @@ const ButtonWrapper = styled.button`
   margin: ${props => props.theme.space};
 
   &:hover{
-    color:${props => props.theme.pale};
+    color:${props => {
+      switch (props.variant) {
+        case 'clear':
+          return props.theme.white;
+        default:
+          return props.theme.pale;
+      }}
+    };
     background-color: ${props => {
       switch(props.variant) {
         case 'danger':
-          return '#EE4F45'
+          return '#EE4F45';
         case 'disabled':
-          return '#85858B'
+          return '#85858B';
+        case 'clear':
+          return props.theme.gray;
         default:
-          return '#2877C6'
+          return '#2877C6';
       }
     }};
 

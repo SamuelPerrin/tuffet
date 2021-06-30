@@ -42,7 +42,7 @@ const MeterStanza = props => {
       </Breadcrumbs>
       <Container>
         <Section>
-          <h2><RedSpan>Meter: {stanzaType}</RedSpan></h2>
+          <h2><RedSpan>Meter: <a href={'#' + stanzaType}>{stanzaType}</a></RedSpan></h2>
           <Table maxWidth='1200px'>
             <caption style={{textAlign:'center'}}>
               This sample has {stanzaList.length} stanza{stanzaList.length === 1 ? '' : 's'} of {stanzaType}:
@@ -64,7 +64,7 @@ const MeterStanza = props => {
           </Table>
         </Section>
         <Section>
-          <h2><YellowSpan>What is {stanzaType}?</YellowSpan></h2>
+          <h2 id={stanzaType}><YellowSpan>What is {stanzaType}?</YellowSpan></h2>
           {STANZA_METER_DESCRIPTIONS[stanzaType]}
         </Section>
         <Button onClick={goBack}>Back to Meter</Button>

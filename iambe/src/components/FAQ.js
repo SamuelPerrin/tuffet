@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import styled from 'styled-components';
 
 import Breadcrumbs from './styled/Breadcrumbs';
 import Container from './styled/Container';
@@ -8,6 +9,22 @@ import { RedSpan, YellowSpan } from './styled/Spans';
 import Accordion from './styled/Accordion';
 
 import { FAQs } from '../utils/descriptions';
+
+const Video = styled.iframe`
+  /* for mobile */
+  @media (max-width:800px) {
+    width:90%;
+    height:calc(9*90vw/16);
+  }
+
+  /* for larger screens */
+  @media (min-width:800px) {
+    width:560px;
+    height:315px;
+  }
+
+  margin-bottom:${props => props.theme.space};
+`
 
 const FAQ = () => {
   useEffect(() => {
@@ -27,7 +44,7 @@ const FAQ = () => {
             <p>Tuffet is a poetry resource that automatically identifies the rhymes and meter of poetry in English. It uses a dictionary adapted from the open-source Carnegie Mellon Pronouncing Dictionary.</p>
           </div>
         </Section>
-        <iframe
+        <Video
           width="560"
           height="315"
           src="https://www.youtube.com/embed/N8XZ_QScfQw"
