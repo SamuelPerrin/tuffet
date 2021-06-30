@@ -69,7 +69,7 @@ const Home = props => {
         </ButtonRow>
         <form style={{width:'100%', display:'flex', flexFlow:'column nowrap', alignItems:'center', justifyContent:'center'}}>
           <h3>Or enter some poetry of your own:</h3>
-          <TextArea value={poem} onChange={handleChange} placeholder="Enter a poem..." />
+          <TextArea value={poem} onChange={handleChange} placeholder="Enter a poem..." setValue={setPoem} />
           <ButtonRow>
             <Button onClick={submitRhymes}>Get Rhymes</Button>
             <Button onClick={submitMeter}>Get Meter</Button>
