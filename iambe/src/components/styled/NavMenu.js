@@ -8,10 +8,8 @@ import {POPE, KEATS, DICKINSON} from '../../constants/samples';
 
 const StyledMenu = styled.div`
   position: absolute;
-   width: calc(100% - 3rem);
-   left: 50%;
+   right: 5%;
    top:50%;
-   transform: translateX(-50%);
    background: ${props => props.theme.pale};
    margin-top: 1.5rem;
    border-radius: 5px;
@@ -33,6 +31,7 @@ const StyledMenu = styled.div`
     display: block;
     font-size: ${props => props.theme.headerFont};
     padding-left:1rem;
+    padding-right:1rem;
     cursor:pointer;
 
     &:hover {
@@ -62,7 +61,7 @@ const StyledMenu = styled.div`
 
     &.super-item{
       .symbol {
-        padding-right:${props => props.theme.space};
+        /* padding-right:${props => props.theme.space}; */
       }
     }
   }
@@ -95,31 +94,33 @@ const NavMenu = props => {
     switchMenu();
     history.push('/meter');
   }
+
   return (
     <StyledMenu className={isMenuOpen ? 'open' : 'closed'}>
       <span onClick={() => goToURI('/')} className={'menu-item'}>Home</span>
       <span className='menu-item super-item' onClick={() => toggleAboutSubMenu()}>
         <div style={{display:'flex', justifyContent:'space-between'}}>
-          <span onClick={() => goToURI('/about')}>About</span>
+          <span>About</span>
           <span className='symbol'>
             {isAboutOpen ? '–' : '+'}
           </span>
         </div>
         <div className={isMenuOpen && isAboutOpen ? 'open' : 'closed'}>
           <span onClick={() => goToURI('/about')} className='menu-item sub-item'>About Tuffet</span>
-          <span onClick={() => goToURI('/about/rhymes')} className='menu-item sub-item'>About Rhyme</span>
-          <span onClick={() => goToURI('/about/rhyme-schemes')} className='menu-item sub-item'>About Rhyme Schemes</span>
-          <span onClick={() => goToURI('/about/meter')} className='menu-item sub-item'>About Meter</span>
+          <span onClick={() => goToURI('/about/rhymes')} className='menu-item sub-item'>About rhyme</span>
+          <span onClick={() => goToURI('/about/rhyme-schemes')} className='menu-item sub-item'>About rhyme schemes</span>
+          <span onClick={() => goToURI('/about/meter')} className='menu-item sub-item'>About meter</span>
         </div>
       </span>
       <span className='menu-item super-item' onClick={() => toggleSampleMenu()}>
         <div style={{display:'flex', justifyContent:'space-between'}}>
-          <span onClick={() => goToURI('/samples')}>Samples</span>
+          <span>Samples</span>
           <span className='symbol'>
             {isSampleOpen ? '–' : '+'}
           </span>
         </div>
         <div className={isMenuOpen && isSampleOpen ? 'open' : 'closed'}>
+          <span onClick={() => goToURI('/samples')} className='menu-item sub-item'>All samples</span>
           <span onClick={() => goToRhymes(POPE)} className='menu-item sub-item'>Pope</span>
           <span onClick={() => goToRhymes(KEATS)} className='menu-item sub-item'>Keats</span>
           <span onClick={() => goToRhymes(DICKINSON)} className='menu-item sub-item'>Dickinson</span>

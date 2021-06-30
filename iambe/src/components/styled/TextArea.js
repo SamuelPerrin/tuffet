@@ -54,12 +54,12 @@ export default function TextArea(props) {
         placeholder={placeholder}
         rows='15'
       />
-      <Button
+      {value && <Button
         onClick={clearText}
         variant='clear'
       >
         Clear
-      </Button>
+      </Button>}
     </TextAreaWrapper>
   )
 }

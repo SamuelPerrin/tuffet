@@ -4,7 +4,7 @@ import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 
 import Hamburger from './Hamburger';
-import tuffetlogo1 from '../../images/tuffetlogo1.png';
+import tuffetlogo3 from '../../images/tuffetlogo3.png';
 import { toggleMenu, closeAboutSubMenu } from '../../actions';
 
 const NavWrapper = styled.nav`
@@ -26,9 +26,14 @@ const NavWrapper = styled.nav`
     font-size: ${props => props.theme.headerFontSize};
     font-weight: bold;
     text-decoration: none;
-    /* margin-left: ${props => props.theme.space}; */
     width:8rem;
     cursor:pointer;
+
+    img {
+      width:2rem;
+      height:1.75rem;
+      margin-top:0.25rem;
+    }
   }
 `;
 
@@ -41,13 +46,20 @@ const Navbar = props => {
       toggleMenu();
       closeAboutSubMenu();
     }
+    
     history.push('/');
   }
 
+  const handleEscape = e => {
+    if (isMenuOpen && e.key === 'Escape') {
+      toggleMenu();
+    }
+  }
+
   return(
-    <NavWrapper>
+    <NavWrapper onKeyDown={handleEscape}>
       <div style={{display:'flex',justifyContent:'space-around'}} className='logo'>
-        <img src={tuffetlogo1} alt='logo' width='32px' onClick={goHome} />
+        <img src={tuffetlogo3} alt='logo' onClick={goHome} />
         <span onClick={goHome} >Tuffet</span>
       </div>
       <Hamburger />
