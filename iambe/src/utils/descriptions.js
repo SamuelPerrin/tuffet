@@ -371,6 +371,10 @@ export const RHYME_SCHEME_DESCRIPTIONS = {
   </div>,
 }
 export const FAQs = {
+  "What's with the name?":<div className='paragraph'>
+    <p>Tuffet's name is derived from the nursery rhyme "Little Miss Muffet", in which the protagonist is said to sit on a tuffet. Many readers assume that <em>tuffet</em> is a nonce word invented just to rhyme with <em>Muffet</em> and that it can only be defined as the sort of thing that Miss Muffet sat on. In fact, a tuffet is a mound of grass and is a relative of the word <em>tuft</em>.</p>
+    <p>Regardless of its dictionary definition, <em>tuffet</em> evokes the very idea of rhyme as well as any other single word, and that's why it was picked as the name of this project.</p>
+  </div>,
   'How does it work?':<div className='paragraph'>
     <p>To analyze a stanza's rhyme, Tuffet looks up the pronunciation of the last word of every line in a dictionary (using an algorithm to guess the pronunciation of terms that aren't in its dictionary). It also has an algorithm for deciding which pronunciation is being used when the same spelling can be pronounced multiple ways, like <em>live</em> rhyming with either <em>give</em> or <em>five</em>. By comparing the pronunciation of words, Tuffet is able to determine whether and how words rhyme.</p>
     <p>Analyzing a line's meter is harder because every word must be pronounced. Some words can be pronounced in multiple ways, like the noun <em>object</em> with stress in the first syllable and the verb <em>object</em> with stress in the second syllable, or <em>wondering</em> pronounced with three syllables or (as it is sometimes pronounced in poetry) with just two syllables. Tuffet accounts for this, selecting the pronunciation that (in its view, at least) makes for the most metrical line.</p>
@@ -382,7 +386,7 @@ export const FAQs = {
   'Does Tuffet work for languages other than English?':<div className='paragraph'>
     <p>Not right now.</p>
   </div>,
-  'How should I format poetry before using Tuffet?':<div className='paragraph'>
+  'How should I format poetry when using Tuffet?':<div className='paragraph'>
     <p>Leave at least one blank line between stanzas. Within a stanza, there should not be any blank lines.</p>
   </div>,
 };

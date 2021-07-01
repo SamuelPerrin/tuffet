@@ -1065,7 +1065,9 @@ class Stanza {
       }
       else if (counts.trochaic3false === 2 && counts.trochaic3true === 2) guess = '6s&5s';
       if (counts.iambic4false + counts.trochaic4false + counts.trochaic4true + counts['N/A4false'] === 2) {
-        if (counts.iambic3false + counts.trochaic3false + counts.trochaic3true + counts['N/A3false'] === 2) guess = 'ballad';
+        if (counts.iambic3false + counts.trochaic3false + counts.trochaic3true + counts['N/A3false'] === 2) {
+          if (guess !== 'common meter') guess = 'ballad';
+        }
       }
     }
     else if (totalLines === 5) {

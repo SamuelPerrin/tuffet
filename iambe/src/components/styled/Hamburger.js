@@ -8,9 +8,9 @@ import NavMenu from './NavMenu';
 const StyledHamburger = styled.button`
   background-color: rgba(0,0,0,0);
   color:white;
+  width:6.25rem;
   font-size:1.25rem;
   border:none;
-  width: 6.25rem;
   margin: 0.75rem;
   cursor:pointer;
 
@@ -19,10 +19,24 @@ const StyledHamburger = styled.button`
   justify-content:space-between;
   align-items:center;
 
+  @media (max-width:599px) {
+    width:2.75rem;
+  }
+
   &.closed {
     > span {
       visibility:visible;
     }
+
+    @media (min-width:600px) {
+    width: 6.25rem;
+    &:before {
+      content:'MENU';
+      color:white;
+      display:block;
+      }
+    }
+
     > div > span {
       display:block;
       width:1.5rem;
@@ -38,6 +52,8 @@ const StyledHamburger = styled.button`
   }
 
   &.open {
+    width:2.75rem;
+    
     > span {
       visibility:hidden;
     }
@@ -51,10 +67,11 @@ const StyledHamburger = styled.button`
       transform-origin: 1px 1px;
     }
 
-      &:not(:last-child) {
-        margin-bottom:0.3rem;
-      }
-      > div > span:first-child {
+    &:not(:last-child) {
+      margin-bottom:0.3rem;
+    }
+    
+    > div > span:first-child {
       transform: rotate(45deg);
     }
       
@@ -84,7 +101,7 @@ const Hamburger = props => {
   return (
     <>
       <StyledHamburger onClick={switchMenu} className={isMenuOpen ? 'open' : 'closed'}>
-        <span>MENU</span>
+        {/* <span className='hide-for-mobile'>MENU</span> */}
         <div>
           <span></span>
           <span></span>
