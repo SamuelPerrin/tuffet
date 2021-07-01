@@ -4151,6 +4151,7 @@ const lexicon = {
 	"hesperides": ["H EH0 S P EH1 R IH D IY2 Z"],
 	"hew": ["HH Y UW1"],
 	"hewn": ["HH Y UW1 N"],
+	"hey": ["HH EY1"],
 	"hiatus": ["HH AY0 EY1 T AH0 S"],
 	"hiawatha": ["HH AY2 AH0 W AA1 TH AH0"],
 	"hibernal": ["H AY0 B ER1 N AH0 L"],

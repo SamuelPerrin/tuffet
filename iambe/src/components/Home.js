@@ -55,13 +55,13 @@ const Home = props => {
       <Section style={{marginTop:'1rem'}}>
         <h3>Poetry is easier than ever with Tuffet!</h3>
         <ul>
-          <li>Visualize <RedSpan><Link to='/about/rhyme-schemes'>rhyme schemes</Link></RedSpan>!</li>
-          <li>Detect over a dozen kinds of <YellowSpan><Link to='/about/rhymes'>slant rhyme</Link></YellowSpan>!</li>
-          <li>Identify <BlueSpan><Link to='/about/meter'>meter</Link></BlueSpan> and <BlueSpan><Link to='/about/meter'>verse form</Link></BlueSpan>!</li>
+          <li>Visualize <RedSpan><Link to='/about/rhyme-schemes'>rhyme schemes</Link></RedSpan></li>
+          <li>Detect over a dozen kinds of <YellowSpan><Link to='/about/rhymes'>slant rhyme</Link></YellowSpan></li>
+          <li>Identify <BlueSpan><Link to='/about/meter'>meter</Link></BlueSpan> and <BlueSpan><Link to='/about/meter'>verse form</Link></BlueSpan></li>
         </ul>
       </Section>
       <Section>
-        <h3>Try it with one of these samples!</h3>
+        <h3>Try it with one of these samples:</h3>
         <ButtonRow>
           <Button onClick={() => submitSample(samples.MARY)}>Mary had a little lamb</Button>
           <Button onClick={() => submitSample(samples.GRACE)}>Amazing Grace</Button>
