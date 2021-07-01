@@ -70,10 +70,12 @@ const MeterType = props => {
             </tbody>
           </Table>
         </Section>
-        <Section>
-          <h2 id={mt}><YellowSpan>What is {mt}?</YellowSpan></h2>
-          {LINE_METER_DESCRIPTIONS[mt]}
-        </Section>
+        {mt in LINE_METER_DESCRIPTIONS && 
+          <Section>
+            <h2 id={mt}><YellowSpan>What is {mt}?</YellowSpan></h2>
+            {LINE_METER_DESCRIPTIONS[mt]}
+          </Section>
+        }
         <Button onClick={goBack}>Back to Stanza</Button>
       </Container>
     </div>
