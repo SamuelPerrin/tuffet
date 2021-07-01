@@ -3,7 +3,7 @@ import styled from 'styled-components';
 
 const ContainerWrapper = styled.div`
     margin: 0 auto;
-    width: 100%;
+    /* width: 100%; */
     max-width: ${(props) => props.maxWidth};
     display: flex;
     flex-direction: column;
@@ -14,10 +14,10 @@ const ContainerWrapper = styled.div`
 `
 
 export default function Container(props) {
-    const { children, maxWidth, className } = props
+    const { children, maxWidth, className, id } = props
 
     return (
-        <ContainerWrapper maxWidth={maxWidth} className={className}>
+        <ContainerWrapper maxWidth={maxWidth} className={className} id={id}>
             {children}
         </ContainerWrapper>
     )

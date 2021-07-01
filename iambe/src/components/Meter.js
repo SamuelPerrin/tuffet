@@ -5,6 +5,7 @@ import { Link, useHistory, Redirect } from 'react-router-dom';
 import { Pie } from 'react-chartjs-2';
 
 import Breadcrumbs from './styled/Breadcrumbs';
+import FlexRow from './styled/FlexRow';
 import Container from './styled/Container';
 import Section from './styled/Section';
 import { YellowSpan, RedSpan } from './styled/Spans';
@@ -78,63 +79,68 @@ const Meter = props => {
         <Link to='/' key='Home'>Home</Link>
         <Link to='/meter' key='Meter' className='current'>Meter</Link>
       </Breadcrumbs>
-      <Container>
-        <Section>
-          <h2><YellowSpan>Stanzas by Meter</YellowSpan></h2>
-          <div style={{
-            display:'flex',
-            flexFlow:'row wrap',
-            justifyContent: 'center',
-          }}>
-            <Pie
-              data={pieData}
-              style={{maxWidth:200,maxHeight:200}}
-              options={pieOptions}
-            />
-            <div>
-              {Object.entries(stanzaMeterCounts)
-                .reduce((a,b) => a+b[1], 0) > 1 ?
-                  Object.entries(stanzaMeterCounts).filter(a => a[1] > 0).length === 1 ? 
-                  <p>The only meter in this sample is:</p> :
-                  <p>The most common meters in this sample are:</p> :
-                <p>This stanza's meter is:</p>}
-              <ul>
-                {stanzaMeterCounts && counts.map((entry,i) => (
-                  <ListItemTile
-                    key={entry[0]}
-                    onClick={submitStanzaMeterDetail}
-                    rt={entry[0]}
-                    bulletColor={COLOR_SEQUENCE[i % COLOR_SEQUENCE.length]}
-                    className='legend'
-                  >
-                    {entry[0]} ({entry[1]} stanza{entry[1] > 1 ? 's' : ''})
-                  </ListItemTile>
-                ))}
-              </ul>
+      <FlexRow>
+        <Container id="context">
+          <Section>
+            <h2><YellowSpan>Stanzas by Meter</YellowSpan></h2>
+            <div style={{
+              display:'flex',
+              flexFlow:'row wrap',
+              justifyContent: 'center',
+            }}>
+              <Pie
+                data={pieData}
+                style={{maxWidth:200,maxHeight:200}}
+                options={pieOptions}
+              />
+              <div>
+                {Object.entries(stanzaMeterCounts)
+                  .reduce((a,b) => a+b[1], 0) > 1 ?
+                    Object.entries(stanzaMeterCounts).filter(a => a[1] > 0).length === 1 ? 
+                    <p>The only meter in this sample is:</p> :
+                    <p>The most common meters in this sample are:</p> :
+                  <p>This stanza's meter is:</p>}
+                <ul>
+                  {stanzaMeterCounts && counts.map((entry,i) => (
+                    <ListItemTile
+                      key={entry[0]}
+                      onClick={submitStanzaMeterDetail}
+                      rt={entry[0]}
+                      bulletColor={COLOR_SEQUENCE[i % COLOR_SEQUENCE.length]}
+                      className='legend'
+                    >
+                      {entry[0]} ({entry[1]} stanza{entry[1] > 1 ? 's' : ''})
+                    </ListItemTile>
+                  ))}
+                </ul>
+              </div>
             </div>
-          </div>
-          <Link to="/meter/scansion"><YellowSpan>Read more »</YellowSpan></Link>
-        </Section>
-        <Section>
-          <h2><RedSpan>Meter by Stanza</RedSpan></h2>
-          <p>Select a stanza to learn more about its meter.</p>
-          <div style={{border:'1px solid black',borderRadius:'5px',padding:'1rem',marginTop:'1rem'}}>
-            {poems.map(poem => new Poem(poem).getStanzas().map(stanza => {
-                  stanzaNum++
-                  const thisStanza = new Stanza(stanza)
-                  return <StanzaTile 
-                    onClick={submitLineMeterDetail}
-                    children={thisStanza.getLines()} 
-                    hoverText={"Meter: " + thisStanza.getMeter()}
-                    key={stanzaNum}
-                    stanzaNum={stanzaNum}
-                  />
-                }
-              ))}
-          </div>
-        </Section>
-        <Button onClick={goToRhymes}>Get Rhymes</Button>
-      </Container>
+            <Link to="/meter/scansion"><YellowSpan>Read more »</YellowSpan></Link>
+          </Section>
+          <Button onClick={goToRhymes} className="hide-for-mobile">Get Rhymes</Button>
+        </Container>
+        <Container id="text">
+          <Section>
+            <h2><RedSpan>Meter by Stanza</RedSpan></h2>
+            <p>Select a stanza to learn more about its meter.</p>
+            <div style={{border:'1px solid black',borderRadius:'5px',padding:'1rem',marginTop:'1rem'}}>
+              {poems.map(poem => new Poem(poem).getStanzas().map(stanza => {
+                    stanzaNum++
+                    const thisStanza = new Stanza(stanza)
+                    return <StanzaTile 
+                      onClick={submitLineMeterDetail}
+                      children={thisStanza.getLines()} 
+                      hoverText={"Meter: " + thisStanza.getMeter()}
+                      key={stanzaNum}
+                      stanzaNum={stanzaNum}
+                    />
+                  }
+                ))}
+            </div>
+          </Section>
+          <Button onClick={goToRhymes} className="hide-for-desktop">Get Rhymes</Button>
+        </Container>
+        </FlexRow>
     </div>
   )
 }
