@@ -62,9 +62,9 @@ const RhymedStanza = props => {
         else if (firstBottom === 188) offset.current = -96; //for first rhyme in 2 or 3, I was using offset.current -= 4*((firstBottom - 140));
         else if (firstBottom === 196) offset.current = -112;
         else if (firstBottom === 212) offset.current = -200;
-        else offset.current = 672 - 4*(firstBottom);
-        // console.log("for line",rhyme.lines[i],"firstBottom:",firstBottom);
-        // console.log("offset.current",offset.current);
+        else offset.current = 576 - 4*(firstBottom);
+        console.log("for line",rhyme.lines[i],"firstBottom:",firstBottom);
+        console.log("offset.current",offset.current);
       }
       return {
         1: Array.from(document.querySelectorAll('span.rhymedLine'))
