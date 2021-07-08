@@ -324,6 +324,9 @@ export const RHYME_SCHEME_DESCRIPTIONS = {
   'English ode (ABAB\u200bCDE\u200bDCE)':<div className='paragraph'>
     <p>A variant of the standard rhyme scheme for English odes.</p>
   </div>,
+  'English ode (AABCBCA\u200bDEED)':<div className='paragraph'>
+    <p>A variant of the standard rhyme scheme for English odes.</p>
+  </div>,
   'sonnet (ABAB\u200bACDC\u200bEDE\u200bFEF)':<div className='paragraph'>
     <p>A nonstandard sonnet rhyme scheme, as used in Shelley's "Ozymandias".</p>
   </div>,

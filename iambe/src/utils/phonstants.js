@@ -227,6 +227,7 @@ export const RHYME_SCHEMES = {
   'odeng':'English ode (ABAB\u200bCDE\u200bCDE)',
   'cpls5':'5 couplets (AABB\u200bCCD\u200bDEE)',
   'odek2':'English ode (ABAB\u200bCDE\u200bCED)',
+  'odema':'English ode (ABCBCA\u200bDEED)',
   'sonit':'Italian sonnet (ABBA\u200bABBA\u200bCDC\u200bDCD)',
   'sonsh':'Shakespearean sonnet (ABAB\u200bCDCD\u200bEFEF\u200bGG)',
   'sonpe':'Petrarchan sonnet (ABBA\u200bABBA\u200bCDECDE)',

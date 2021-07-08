@@ -612,8 +612,10 @@ class Stanza {
     else if (stan.length === 10) {
       const onetwo = new Rhyme(stan[0], stan[1]).getScore();
       const onethree = new Rhyme(stan[0], stan[2]).getScore();
+      const onesix = new Rhyme(stan[0], stan[5]).getScore();
       const twofour = new Rhyme(stan[1], stan[3]).getScore();
       const threefour = new Rhyme(stan[2], stan[3]).getScore();
+      const threefive = new Rhyme(stan[2], stan[4]).getScore();
       const fivesix = new Rhyme(stan[4], stan[5]).getScore();
       const fiveeight = new Rhyme(stan[4], stan[7]).getScore();
       const fivenine = new Rhyme(stan[4], stan[8]).getScore();
@@ -623,20 +625,24 @@ class Stanza {
       const seveneight = new Rhyme(stan[6], stan[7]).getScore();
       const sevennine = new Rhyme(stan[6], stan[8]).getScore();
       const seventen = new Rhyme(stan[6], stan[9]).getScore();
+      const eightnine = new Rhyme(stan[7], stan[8]).getScore();
       const nineten = new Rhyme(stan[8], stan[9]).getScore();
 
       const possibles = [
         {rs:'odeke', pairs:['onethree','twofour','fivenine','sixeight','seventen']},
         {rs:'odeng', pairs:['onethree','twofour','fiveeight','sixnine','seventen']},
         {rs:'odek2', pairs:['onethree','twofour','fiveeight','sixten','sevennine']},
+        {rs:'odema', pairs:['onesix','twofour','threefive','seventen','eightnine']},
         {rs:'cpls5', pairs:['onetwo','threefour','fivesix','seveneight','nineten']},
       ];
 
       const allScores = {
         'onetwo':onetwo,
         'onethree':onethree,
+        'onesix':onesix,
         'twofour':twofour,
         'threefour':threefour,
+        'threefive':threefive,
         'fivesix':fivesix,
         'fiveeight':fiveeight,
         'fivenine':fivenine,
@@ -646,6 +652,7 @@ class Stanza {
         'seveneight':seveneight,
         'sevennine':sevennine,
         'seventen':seventen,
+        'eightnine':eightnine,
         'nineten':nineten,
       };
 
@@ -983,6 +990,8 @@ class Stanza {
           return makeRhymes([[0, 1], [2, 3], [4, 5], [6, 7], [8, 9]]);
         case 'odek2':
           return makeRhymes([[0, 2], [1, 3], [4, 7], [5, 9], [6, 8]]);
+        case 'odema':
+          return makeRhymes([[0, 5], [1, 3], [2, 4], [6, 9], [7, 8]]);
         default:
           return rhymes;
       }
