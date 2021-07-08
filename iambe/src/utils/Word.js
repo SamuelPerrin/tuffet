@@ -520,7 +520,7 @@ class Word {
     let pron = '';
 
     if (this.word in cmupd) {
-      console.log("Going to CMUPD for",this.word);
+      // console.log(this.word in Word.last ? null : `Going to CMUPD for ${this.word}`);
       if (cmupd[this.word].length === 1) {
         return rhyme ? cmupd[this.word] : cmupd[this.word][0];
       } else if (rhyme) {

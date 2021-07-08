@@ -191,6 +191,7 @@ class Line {
       else if (equiv(foots.slice(-4), ['D','T','I','I'])) changeFeet(['D','T','I','I'], ['T','I','A','I']);
       else if (equiv(foots.slice(-4), ['D','A','I','I'])) changeFeet(['D','A','I','I'], ['T','I','I','I','I']);
       else if (equiv(foots.slice(-4), ['D','T','D','I'])) changeFeet(['D','T','D','I'], ['T','I','I','T','I']);
+      else if (equiv(foots.slice(-4), ['T','A','A','I'])) changeFeet(['T','A','A','I'], ['T','I','T','I','I']);
     } else if (foots.slice(-1)[0] === 'T') { // weird lines ending in 'T'
       if (equiv(foots.slice(-5), ['D','T','T','T','T'])) changeFeet(['D','T','T','T','T'], ['T','I','I','I','I','unstr']);
       else if (equiv(foots.slice(-3), ['D','T','T'])) changeFeet(['D','T','T'], ['T','I','I','unstr']);
@@ -235,6 +236,7 @@ class Line {
       else if (equiv(foots.slice(-4), ['D','U','T','str'])) changeFeet(['D','U','T','str'], ['T','I','I','I']);
       else if (equiv(foots.slice(-5), ['D','T','U','T','str'])) changeFeet(['D','T','U','T','str'], ['T','I','I','I','I']);
       else if (equiv(foots.slice(-5), ['D','U','T','T','str'])) changeFeet(['D','U','T','T','str'], ['T','I','I','I','I']);
+      else if (equiv(foots.slice(-5), ['D','I','T','T','str'])) changeFeet(['D','I','T','T','str'], ['T','U','U','I','I']);
       else if (equiv(foots.slice(-5), ['D','U','U','T','str'])) changeFeet(['D','U','U','T','str'], ['T','I','I','I','I']);
       else if (equiv(foots.slice(-4), ['I','A','U','str'])) changeFeet(['I','A','U','str'], ['I','I','T','I']);
       else if (equiv(foots.slice(-5), ['I','A','U','U','str'])) changeFeet(['I','A','U','U','str'], ['I','I','U','U','I'])
