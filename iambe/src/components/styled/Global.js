@@ -32,6 +32,9 @@ const GlobalStyle = createGlobalStyle`
     dl,
     dd {
     margin: 0;
+    padding: 0;
+    border: 0;
+    vertical-align: baseline;
     }
     /* Set core body defaults */
     body {

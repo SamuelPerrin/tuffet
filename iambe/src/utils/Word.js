@@ -1,4 +1,5 @@
 import lexicon from './lexicon';
+import cmupd from './cmupd';
 import Pron from './Pron';
 import * as phonstants from './phonstants';
 
@@ -42,16 +43,16 @@ class Word {
         // otherwise, if all prons have the same stresses, return first, else return list
         pron = lexicon[this.word];
         if (pron.map(p => new Pron(p).getStress()).every(st => st === new Pron(pron[0]).getStress())) {
-          pron = pron[0]
+          pron = pron[0];
         }
       }
     }
 
-    // if the lexicon doesn't have the pronunciation, get it from CMUPD, by guessing, or by asking the user
+    // if the lexicon doesn't have the pronunciation, get it from CMUPD or by guessing
     else {
-      // *** add in missing logic here for CMUPD ***
-      pron = this.getHardPron();
+      pron = this.getHardPron(rhyme);
     }
+
     pron = this.correctPron(pron);
 
     return pron;
@@ -505,13 +506,36 @@ class Word {
     return pron
   }
 
-  getHardPron() {
+  getHardPron(rhyme) {
     /*
      * returns a guess at the pronunciation of a word that isn't in the lexicon.
      * Called by: Word.getPron
      */
+
+    // first check for a familiar root
     const check = this.checkHardPron();
     if (check && check.length > 0) return check;
+
+    // if that doesn't work, but the CMUPD has pronunciation(s) for the word, use that
+    let pron = '';
+
+    if (this.word in cmupd) {
+      // console.log(this.word in Word.last ? null : `Going to CMUPD for ${this.word}`);
+      if (cmupd[this.word].length === 1) {
+        return rhyme ? cmupd[this.word] : cmupd[this.word][0];
+      } else if (rhyme) {
+        return cmupd[this.word];
+      } else {
+        pron = cmupd[this.word];
+        if (pron.map(p => new Pron(p).getStress()).every(st => st === new Pron(pron[0]).getStress())) {
+          return pron[0];
+        } else {
+          return pron;
+        }
+      }
+    }
+
+    // otherwise, guess the pronunciation
     const guess = this.guessHardPron();
     if (guess.length > 0) return guess;
   }
