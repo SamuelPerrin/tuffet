@@ -208,6 +208,7 @@ class Anthology {
     const stanzaMeters = this.getPoems().map(poem => new Poem(poem).getStanzas().map(stanza => new Stanza(stanza).getMeter())).flat();
     const counts =  {
       'iambic pentameter':0,
+      'iambic tetrameter':0,
       'alexandrines':0,
       'fourteeners':0,
       'common meter':0,

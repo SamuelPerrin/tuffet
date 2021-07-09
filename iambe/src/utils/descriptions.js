@@ -6,6 +6,9 @@ export const STANZA_METER_DESCRIPTIONS = {
     <p>The English pentameter is likely a descendant of the Italian hendecasyllable, a line of eleven syllables used by Dante and Petrarch. Chaucer adapted this line to English, which doesn't have as many weak endings as Italian, resulting in a line of ten syllables.</p>
     <p>When iambic pentameter is unrhymed, it is called <strong>blank meter</strong>. When it is rhymed in couplets, it is called <strong>heroic couplets</strong>. Iambic pentameter is the meter normally used in the sonnet, a rhymed stanza of fourteen lines.</p>
   </div>,
+  'iambic tetrameter': <div className='paragraph'>
+    <p><strong>Iambic tetrameter</strong> consists of four metrical feet with eight syllables in rising rhythm. A quatrain of iambic tetrameter is called <strong>long meter</strong>.</p>
+  </div>,
   'common meter': <div className='paragraph'>
     <p><strong>Common meter</strong> (8.6.8.6) is a quatrain in which the first and third lines are iambic tetrameter and the second and fourth lines are iambic trimeter. Common meter is familiar from hymns like John Newton’s “Amazing Grace”, Isaac Watts’s “Joy to the World”, and the Christmas carol “O Little Town of Bethlehem”. It was also the favorite form of Emily Dickinson. When a common meter quatrain is collapsed down to a rhyming couplet with fourteen syllables in each line, the resulting verse form is called fourteeners.</p>
     <p>Common meter is similar to the English ballad, which also features alternating lines with four and three stressed syllables. The ballad is more flexible than common meter proper, allowing for headless lines, anapestic substitution, and the like.</p>
