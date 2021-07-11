@@ -78,7 +78,7 @@ const Scansion = props => {
       </Breadcrumbs>
       <Container>
         <Section>
-          <h2><RedSpan>Scansion</RedSpan></h2>
+          <h2><RedSpan>Meter by Line</RedSpan></h2>
           <div className='paragraph'>
             <p>Select a line from this stanza to learn more about its meter.</p>
           </div>
