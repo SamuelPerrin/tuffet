@@ -1056,7 +1056,7 @@ class Stanza {
     let guess = "N/A";
 
     if ((counts.iambic5false + counts.iambic6true) / totalLines >= 0.75) guess = 'iambic pentameter';
-    if (counts.iambic4false === totalLines) guess = 'iambic tetrameter';
+    if (counts.iambic4false === totalLines && totalLines !== 4) guess = 'iambic tetrameter';
     else if (totalLines === 2) {
       if (counts.iambic6false + counts.iambic7true === 2) guess = 'alexandrines';
       else if (counts.iambic7false === 2) guess = 'fourteeners';
