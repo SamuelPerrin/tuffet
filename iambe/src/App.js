@@ -20,6 +20,7 @@ import AboutMeter from './components/AboutMeter';
 import FAQs from './components/FAQ';
 import Samples from './components/Samples';
 import PageNotFound from './components/PageNotFound';
+import Footer from './components/styled/Footer';
 
 function App() {
   return (
@@ -46,6 +47,7 @@ function App() {
           <Route exact path="/samples" component={Samples} />
           <Route component={PageNotFound} />
         </Switch>
+        <Footer />
       </div>
     </ThemeProvider>  
   );
