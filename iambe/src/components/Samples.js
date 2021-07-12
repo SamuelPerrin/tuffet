@@ -5,7 +5,7 @@ import { Link, useHistory } from 'react-router-dom';
 import Breadcrumbs from './styled/Breadcrumbs';
 import Container from './styled/Container';
 import Section from './styled/Section';
-import { RedSpan, YellowSpan } from './styled/Spans';
+import { RedSpan } from './styled/Spans';
 import Accordion from './styled/Accordion';
 import ButtonRow from './styled/ButtonRow';
 import Button from './styled/Button';

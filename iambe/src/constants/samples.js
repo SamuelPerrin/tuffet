@@ -9,6 +9,7 @@ export const SONNET116 = "Let me not to the marriage of true minds\nAdmit impedi
 export const KEATS = "If by dull rhymes our English must be chained,\nAnd, like Andromeda, the Sonnet sweet\nFettered, in spite of painèd loveliness,\nLet us find out, if we must be constrained,\nSandals more interwoven and complete\nTo fit the naked foot of Poesy:\nLet us inspect the lyre, and weigh the stress\nOf every chord, and see what may be gained\nBy ear industrious, and attention meet;\nMisers of sound and syllable, no less\nThan Midas of his coinage, let us be\nJealous of dead leaves in the bay wreath crown;\nSo, if we may not let the Muse be free,\nShe will be bound with garlands of her own.";
 export const DICKINSON = "The Martyr Poets–did not tell–\nBut wrought their Pang in syllable–\nThat when their mortal name be numb–\nTheir mortal fate–encourage Some–\n\nThe Martyr Painters–never spoke–\nBequeathing–rather–to their Work–\nThat when their conscious fingers cease–\nSome seek in Art–the Art of Peace–";
 export const POPE = `While they ring round the same unvaried chimes,\nWith sure returns of still expected rhymes,\nWhere'er you find "the cooling western breeze,"\nIn the next line it "whispers through the trees"\nIf crystal streams "with pleasing murmurs creep"\nThe reader's threatened (not in vain) with "sleep"\nThen, at the last and only couplet fraught\nWith some unmeaning thing they call a thought,\nA needless Alexandrine ends the song\nThat, like a wounded snake drags its slow length along.`;
+export const BYRON = `Most epic poets plunge 'in medias res'\n(Horace makes this th' heroic turnpike road),\nAnd then your hero tells, whene'er you please,\nWhat went before—by way of episode,\nWhile seated after dinner at his ease,\nBeside his mistress in some soft abode,\nPalace, or garden, paradise, or cavern,\nWhich serves the happy couple for a tavern.\n\nThat is the usual method, but not mine—\nMy way is to begin with the beginning;\nThe regularity of my design\nForbids all wandering as the worst of sinning,\nAnd therefore I shall open with a line\n(Although it cost me half an hour in spinning)\nNarrating somewhat of Don Juan's father,\nAnd also of his mother, if you'd rather.`;
 
 export const all_samples = {
   /* 'Stitch in Time': {
@@ -38,20 +39,29 @@ export const all_samples = {
   // },
   'Pope': {
     title:'from "Essay on Criticism"',
-    sample: new Stanza(POPE).getLines().map(line => <p>{line}</p>),
+    sample: new Stanza(POPE).getLines().map(line => <p key={line.slice(0,8)}>{line}</p>),
     toRun: POPE,
+  },
+  'Byron': {
+    title:'from "Don Juan", canto 1',
+    sample: new Poem(BYRON).getStanzas().map(stanza => (
+      <div style={{marginBottom:'1rem'}} key={stanza.slice(-6)}>
+        {new Stanza(stanza).getLines().map(line => <p key={line.slice(0,8)}>{line}</p>)}
+      </div>)
+    ),
+    toRun: BYRON,
   },
   'Keats': {
     title:'"If by dull rhymes..."',
-    sample: new Stanza(KEATS).getLines().map(line => <p>{line}</p>),
+    sample: new Stanza(KEATS).getLines().map(line => <p key={line.slice(0,8)}>{line}</p>),
     toRun: KEATS,
   },
   'Dickinson': {
     title:'"The Martyr Poets – did not tell –" (Fr665)',
     sample: new Poem(DICKINSON).getStanzas().map(stanza => (
-    <div style={{marginBottom:'1rem'}}>
-      {new Stanza(stanza).getLines().map(line => <p>{line}</p>)}
-    </div>)
+      <div style={{marginBottom:'1rem'}} key={stanza.slice(-6)}>
+        {new Stanza(stanza).getLines().map(line => <p key={line.slice(0,8)}>{line}</p>)}
+      </div>)
     ),
     toRun: DICKINSON,
   },

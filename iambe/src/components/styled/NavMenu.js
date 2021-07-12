@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import { useHistory } from 'react-router-dom';
 
 import { getRhymes, getMeter, toggleMenu, toggleAboutSubMenu, closeAboutSubMenu, toggleSampleMenu, closeSampleMenu } from '../../actions';
-import {POPE, KEATS, DICKINSON} from '../../constants/samples';
+import {POPE, BYRON, KEATS, DICKINSON} from '../../constants/samples';
 
 const StyledMenu = styled.div`
   position: absolute;
@@ -122,6 +122,7 @@ const NavMenu = props => {
         <div className={isMenuOpen && isSampleOpen ? 'open' : 'closed'}>
           <span onClick={() => goToURI('/samples')} className='menu-item sub-item'>All samples</span>
           <span onClick={() => goToRhymes(POPE)} className='menu-item sub-item'>Pope</span>
+          <span onClick={() => goToRhymes(BYRON)} className='menu-item sub-item'>Byron</span>
           <span onClick={() => goToRhymes(KEATS)} className='menu-item sub-item'>Keats</span>
           <span onClick={() => goToRhymes(DICKINSON)} className='menu-item sub-item'>Dickinson</span>
         </div>
