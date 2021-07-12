@@ -58,8 +58,8 @@ const MeterLine = props => {
       <Breadcrumbs>
         <Link to='/' key="Home">Home</Link>
         <Link to='/meter' key="Meter">Meter</Link>
-        <Link to='/meter/scansion' key="Scansion">Scansion</Link>
-        <Link to='/meter/line' className='current' key="Line">Line</Link>
+        <Link to='/meter/scansion' key="Stanza">Stanza</Link>
+        <Link to='/meter/line' className='current' key="Line">Scansion</Link>
       </Breadcrumbs>
       <Container>
         <Section>

@@ -38,7 +38,7 @@ const MeterStanza = props => {
       <Breadcrumbs>
         <Link to='/'>Home</Link>
         <Link to='/meter'>Meter</Link>
-        <Link to='/meter/stanza' className='current'>Stanza</Link>
+        <Link to='/meter/stanza' className='current'>{stanzaType.slice(0,1).toUpperCase() + stanzaType.slice(1)}</Link>
       </Breadcrumbs>
       <Container>
         <Section>
