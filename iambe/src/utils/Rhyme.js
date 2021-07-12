@@ -231,13 +231,14 @@ class Rhyme {
       if (rimes1.coda === '' && !((rimes1.nucl + rimes2.nucl).includes('ER'))) {
         rhymeType = 'zero consonance';
       } else {
-        let has_vow = false;
+        // let has_vow = false;
         
-        for (let vow of Object.keys(phonstants.CMUPD_VOWELS)) {
-          if (rimes1.coda.includes(vow)) has_vow = true;
-        }
+        // for (let vow of Object.keys(phonstants.CMUPD_VOWELS)) {
+        //   if (rimes1.coda.includes(vow)) has_vow = true;
+        // }
 
-        if (!has_vow) rhymeType = 'full consonance';
+        // if (!has_vow) rhymeType = 'full consonance';
+        if (rimes1.coda !== '') rhymeType = 'full consonance';
       }
     }
 
@@ -245,7 +246,7 @@ class Rhyme {
       if ((this.numless(rimes1.lastCoda) === this.numless(rimes2.coda) && rimes2.coda !== '') || 
       (this.numless(rimes1.coda) === this.numless(rimes2.lastCoda) && rimes1.coda !== '') ||
       (this.numless(rimes1.lastCoda) === this.numless(rimes2.lastCoda) && rimes1.lastCoda !== '')) {
-        rhymeType = 'promotion consonance'
+        rhymeType = 'promotion consonance';
       } else if (rimes1.lastCoda !== '' && rimes2.lastCoda !== '') {
         for (let phone1 of rimes1.lastCoda.split(' ')) {
           if (rimes2.lastCoda.split(' ').includes(phone1) && !(phone1 in phonstants.CMUPD_VOWELS)) {

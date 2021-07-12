@@ -44,8 +44,8 @@ const MeterType = props => {
       <Breadcrumbs>
         <Link to='/'>Home</Link>
         <Link to='/meter'>Meter</Link>
-        <Link to='/meter/scansion'>Scansion</Link>
-        <Link to='/meter/type' className='current'>Meter Type</Link>
+        <Link to='/meter/scansion'>Stanza</Link>
+        <Link to='/meter/type' className='current'>Type</Link>
       </Breadcrumbs>
       <Container>
         <Section>

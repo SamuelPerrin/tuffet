@@ -72,13 +72,13 @@ const Scansion = props => {
   else return (
     <div>
       <Breadcrumbs>
-        <Link to='/'>Home</Link>
-        <Link to='/meter'>Meter</Link>
-        <Link to='/meter/scansion' className='current'>Scansion</Link>
+        <Link to='/' key="Home">Home</Link>
+        <Link to='/meter' key="Meter">Meter</Link>
+        <Link to='/meter/scansion' key="Stanza" className='current'>Stanza</Link>
       </Breadcrumbs>
       <Container>
         <Section>
-          <h2><RedSpan>Scansion</RedSpan></h2>
+          <h2><RedSpan>Meter by Line</RedSpan></h2>
           <div className='paragraph'>
             <p>Select a line from this stanza to learn more about its meter.</p>
           </div>

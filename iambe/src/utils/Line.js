@@ -85,7 +85,7 @@ class Line {
         demerit++;
         if (foots.includes('D')) demerit++;
         if (foots.includes('A')) demerit += 2;
-        if (foots.includes('I')) demerit++;
+        if (foots.includes('I')) demerit += 2;
         if (foots.includes('str')) demerit++;
         if (foots.includes('unstr')) demerit += 2;
         if (foots.filter(x => x === 'T').length === foots.length) demerit -= 1; // every foot is 'T'
@@ -202,6 +202,7 @@ class Line {
       else if (equiv(foots.slice(-4), ['T','D','I','unstr'])) changeFeet(['T','D','I','unstr'], ['T','T','T','T']);
       else if (equiv(foots.slice(-4), ['A','I','I','unstr'])) changeFeet(['A','I','I','unstr'], ['T','T','T','T']);
       else if (equiv(foots.slice(-4), ['D','I','I','unstr'])) changeFeet(['D','I','I','unstr'], ['T','T','T','T']);
+      else if (equiv(foots.slice(-4), ['D','D','I','unstr'])) changeFeet(['D','D','I','unstr'], ['T','I','T','I','unstr']);
       else if (equiv(foots.slice(-4), ['A','U','I','unstr'])) changeFeet(['A','U','I','unstr'], ['T','T','T','T']);
       else if (equiv(foots.slice(-2), ['T','unstr'])) changeFeet(['T','unstr'], ['D']);
     } else if (foots.slice(-1)[0] === 'str') { // weird lines ending in 'str'

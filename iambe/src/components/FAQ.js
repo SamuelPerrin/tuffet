@@ -5,7 +5,7 @@ import styled from 'styled-components';
 import Breadcrumbs from './styled/Breadcrumbs';
 import Container from './styled/Container';
 import Section from './styled/Section';
-import { RedSpan, YellowSpan } from './styled/Spans';
+import { RedSpan, YellowSpan, BlueSpan } from './styled/Spans';
 import Accordion from './styled/Accordion';
 
 import { FAQs } from '../utils/descriptions';
@@ -56,6 +56,15 @@ const FAQ = () => {
         <Section>
           <h2><RedSpan>Frequently Asked Questions</RedSpan></h2>
           <Accordion data={Object.entries(FAQs)} />
+        </Section>
+        <Section className='paragraph'>
+          <h2><BlueSpan>Learn more</BlueSpan></h2>
+          <p>See what Tuffet has to say about:</p>
+          <ul style={{marginTop:'0'}}>
+            <li><Link to='/about/rhyme-schemes'><RedSpan>Rhyme Schemes</RedSpan></Link></li>
+            <li><Link to='/about/rhymes'><YellowSpan>Rhymes</YellowSpan></Link></li>
+            <li><Link to='/about/meter'><BlueSpan>Meter</BlueSpan></Link></li>
+          </ul>
         </Section>
       </Container>
     </div>
