@@ -83,7 +83,7 @@ const RhymedStanza = props => {
   return (
     <FlexRow>
       <div style={{marginLeft:'0.3rem'}}>
-        {stanza.map(line => <StyledLine className='rhymedLine'>{line}</StyledLine>)}
+        {stanza.map(line => <StyledLine className='rhymedLine' key={line}>{line}</StyledLine>)}
       </div>
       <StyledSVG>
         <g fill={'none'} strokeWidth={3}>
