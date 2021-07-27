@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
-import {Link} from 'react-router-dom';
+import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
 import tuffetlogo3 from '../../images/tuffetlogo3.png';
 
 const StyledFooter = styled.footer`
@@ -37,7 +38,9 @@ const FooterColumn = styled.div`
   }
 `
 
-const Footer = () => {
+const Footer = props => {
+  const { currentUser } = props;
+
   return (
     <StyledFooter>
       <div className='content'>
@@ -49,7 +52,7 @@ const Footer = () => {
         <FooterColumn>
           <Link to='/'>Home</Link>
           <Link to='/about'>About</Link>
-          <Link to='/samples'>Samples</Link>
+          {currentUser ? <Link to='/my-poems'>My Poems</Link> : <Link to='/samples'>Samples</Link>}
         </FooterColumn>
         <FooterColumn className='wrappable'>
           <a href='https://www.github.com/SamuelPerrin/tuffet/' target='_blank' rel='noreferrer'>GitHub</a>
@@ -62,4 +65,10 @@ const Footer = () => {
   )
 }
 
-export default Footer
+const mapStateToProps = state => {
+  return ({
+    currentUser: state.currentUser,
+  })
+}
+
+export default connect(mapStateToProps, {})(Footer)

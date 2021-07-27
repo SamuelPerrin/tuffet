@@ -17,16 +17,19 @@ export const TOGGLE_ABOUT_MENU = 'TOGGLE_ABOUT_MENU';
 export const CLOSE_ABOUT_MENU = 'CLOSE_ABOUT_MENU';
 export const TOGGLE_SAMPLE_MENU = 'TOGGLE_SAMPLE_MENU';
 export const CLOSE_SAMPLE_MENU = 'CLOSE_SAMPLE_MENU';
+export const GET_CURRENT_USER = 'GET_CURRENT_USER';
+export const SAVE_POEM = 'SAVE_POEM';
+export const SIGN_OUT = 'SIGN_OUT';
 
 export const getRhymes = poetry => {
   const anth = new Anthology(poetry);
   return {type:GET_RHYMES, payload:{
-  poetry: poetry,
-  poems: anth.getPoems(),
-  rhymes: anth.getRhymes(),
-  rhymeTypeCounts: anth.getRhymeStats(),
-  rhymeSchemeCounts: anth.getRhymeSchemeStats(),
-}}};
+    poetry: poetry,
+    poems: anth.getPoems(),
+    rhymes: anth.getRhymes(),
+    rhymeTypeCounts: anth.getRhymeStats(),
+    rhymeSchemeCounts: anth.getRhymeSchemeStats(),
+  }}};
 
 export const getRhymeSchemeDetails = num => ({type:GET_RHYME_SCHEME_DETAILS, payload:{stanzaNum: num}});
 
@@ -35,11 +38,11 @@ export const getRhymeTypeDetails = rhymeType => ({type:GET_RHYME_TYPE_DETAILS, p
 export const getMeter = poetry => {
   const anth = new Anthology(poetry);
   return {type:GET_METER, payload:{
-  poetry: poetry,
-  poems: anth.getPoems(),
-  stanzaMeters: anth.getStanzaMeters(),
-  stanzaMeterCounts: anth.getMeterStatsByStanza(),
-}}};
+    poetry: poetry,
+    poems: anth.getPoems(),
+    stanzaMeters: anth.getStanzaMeters(),
+    stanzaMeterCounts: anth.getMeterStatsByStanza(),
+  }}};
 
 export const getLineMeterDetails = num => ({type:GET_LINE_METER_DETAILS, payload:{stanzaNum: num}}); // this is the same as getRhymeSchemeDetails: refactor?
 
@@ -65,3 +68,9 @@ export const closeAboutSubMenu = () => ({type:CLOSE_ABOUT_MENU});
 export const toggleSampleMenu = () => ({type:TOGGLE_SAMPLE_MENU});
 
 export const closeSampleMenu = () => ({type:CLOSE_SAMPLE_MENU});
+
+export const getCurrentUser = (userData) => ({type:GET_CURRENT_USER, payload:userData});
+
+export const savePoem = (poemObj) => ({type:SAVE_POEM, payload:poemObj});
+
+export const signOut = () => ({type:SIGN_OUT});

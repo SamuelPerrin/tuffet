@@ -20,6 +20,11 @@ import AboutMeter from './components/AboutMeter';
 import FAQs from './components/FAQ';
 import Samples from './components/Samples';
 import PageNotFound from './components/PageNotFound';
+import Login from './components/Login';
+import Register from './components/Register';
+import UserPoems from './components/UserPoems';
+import AddPoem from './components/AddPoem';
+import EditPoem from './components/EditPoem';
 import Footer from './components/styled/Footer';
 
 function App() {
@@ -45,6 +50,13 @@ function App() {
           <Route exact path="/about/rhyme-schemes" component={AboutRhymeSchemes} />
           <Route exact path="/about/meter" component={AboutMeter} />
           <Route exact path="/samples" component={Samples} />
+          <Route exact path="/login">
+            <Login uri="/my-poems"/>
+          </Route>
+          <Route exact path="/register" component={Register} />
+          <Route exact path="/my-poems" component={UserPoems} />
+          <Route exact path="/save-poem" component={AddPoem} />
+          <Route path="/edit/poem/:poemid" component={EditPoem} />
           <Route component={PageNotFound} />
         </Switch>
         <Footer />

@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { useHistory } from 'react-router-dom';
+import { useHistory, Link } from 'react-router-dom';
 import styled from 'styled-components';
 
 import Hamburger from './Hamburger';
@@ -38,7 +38,7 @@ const NavWrapper = styled.nav`
 `;
 
 const Navbar = props => {
-  const { isMenuOpen, toggleMenu, closeAboutSubMenu } = props;
+  const { isMenuOpen, currentUser, toggleMenu, closeAboutSubMenu } = props;
   const history = useHistory();
 
   const goHome = () => {
@@ -62,7 +62,10 @@ const Navbar = props => {
         <img src={tuffetlogo3} alt='logo' onClick={goHome} />
         <span onClick={goHome} >Tuffet</span>
       </div>
-      <Hamburger />
+      <div style={{display:'flex', alignItems:"center"}}>
+        <Link to='/my-poems' style={{fontSize:"1rem"}}>{currentUser && currentUser.username}</Link>
+        <Hamburger />
+      </div>
     </NavWrapper>
   )
 }
@@ -71,6 +74,7 @@ const mapStateToProps = state => {
   return {
     ...state,
     isMenuOpen: state.isMenuOpen,
+    currentUser: state.currentUser,
   }
 }
 

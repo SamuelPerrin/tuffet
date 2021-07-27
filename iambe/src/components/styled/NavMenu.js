@@ -3,19 +3,19 @@ import { connect } from 'react-redux';
 import styled from 'styled-components';
 import { useHistory } from 'react-router-dom';
 
-import { getRhymes, getMeter, toggleMenu, toggleAboutSubMenu, closeAboutSubMenu, toggleSampleMenu, closeSampleMenu } from '../../actions';
+import { getRhymes, getMeter, toggleMenu, toggleAboutSubMenu, closeAboutSubMenu, toggleSampleMenu, closeSampleMenu, signOut } from '../../actions';
 import {POPE, BYRON, KEATS, DICKINSON} from '../../constants/samples';
 
 const StyledMenu = styled.div`
   position: absolute;
-   right: 5%;
-   top:50%;
-   background: ${props => props.theme.pale};
-   margin-top: 1.5rem;
-   border-radius: 5px;
-   border: 1px solid ${props => props.theme.black};
-   color: ${props => props.theme.black};
-   font-weight:normal;
+  right: 5%;
+  top:50%;
+  background: ${props => props.theme.pale};
+  margin-top: 1.5rem;
+  border-radius: 5px;
+  border: 1px solid ${props => props.theme.black};
+  color: ${props => props.theme.black};
+  font-weight:normal;
 
   &.closed {
     visibility:hidden;
@@ -68,7 +68,22 @@ const StyledMenu = styled.div`
 `
 
 const NavMenu = props => {
-  const { poetry, isMenuOpen, isAboutOpen, isSampleOpen, getRhymes, getMeter, toggleMenu, toggleAboutSubMenu, closeAboutSubMenu, toggleSampleMenu, closeSampleMenu } = props;
+  const { 
+    poetry,
+    isMenuOpen,
+    isAboutOpen,
+    isSampleOpen,
+    currentUser,
+    getRhymes,
+    getMeter,
+    toggleMenu,
+    toggleAboutSubMenu,
+    closeAboutSubMenu,
+    toggleSampleMenu,
+    closeSampleMenu,
+    signOut,
+  } = props;
+
   const history = useHistory();
 
   const switchMenu = e => {
@@ -93,6 +108,14 @@ const NavMenu = props => {
     getMeter(poetry);
     switchMenu();
     history.push('/meter');
+  }
+
+  const logout = () => {
+    window.localStorage.removeItem("tuffet-token");
+    window.localStorage.removeItem("userData");
+    signOut();
+    toggleMenu();
+    history.push('');
   }
 
   return (
@@ -129,6 +152,11 @@ const NavMenu = props => {
       </span>
       {poetry && <span onClick={goToRhymes} className='menu-item'>Rhyme</span>}
       {poetry && <span onClick={goToMeter} className='menu-item'>Meter</span>}
+      {currentUser ?
+        <span onClick={() => goToURI('/my-poems')} className='menu-item'>My Poems</span> : 
+        <span onClick={() => goToURI('/login')} className='menu-item'>Login</span>}
+      {currentUser && 
+        <span onClick={logout} className='menu-item'>Logout</span>}
     </StyledMenu>
 )
 }
@@ -139,7 +167,8 @@ const mapStateToProps = state => {
     isMenuOpen: state.isMenuOpen,
     isAboutOpen: state.isAboutOpen,
     isSampleOpen: state.isSampleOpen,
+    currentUser: state.currentUser,
   }
 }
 
-export default connect(mapStateToProps, { getRhymes, getMeter, toggleMenu, toggleAboutSubMenu, closeAboutSubMenu, toggleSampleMenu, closeSampleMenu })(NavMenu);
+export default connect(mapStateToProps, { getRhymes, getMeter, toggleMenu, toggleAboutSubMenu, closeAboutSubMenu, toggleSampleMenu, closeSampleMenu, signOut })(NavMenu);
