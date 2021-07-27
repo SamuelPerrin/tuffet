@@ -10,9 +10,9 @@ const ButtonRowWrapper = styled.div`
 `
 
 export default function ButtonRow (props) {
-  const {maxWidth, children} = props;
+  const {maxWidth, children, className} = props;
   return (
-    <ButtonRowWrapper maxWidth={maxWidth}>
+    <ButtonRowWrapper maxWidth={maxWidth} className={className}>
       {children}
     </ButtonRowWrapper>
   )

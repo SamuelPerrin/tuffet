@@ -17,7 +17,7 @@ export const STANZA_METER_DESCRIPTIONS = {
     <p><strong>Long meter</strong> (8.8.8.8) is a quatrain of iambic tetrameter, in which each line has eight syllables arranged in four metrical feet with rising rhythm (da Dum da Dum da Dum da Dum). Long meter's name is derived from the fact that its second and fourth lines are longer than they would be in common meter. Like common meter and short meter, long meter was popular for hymns, yielding classics like Isaac Watts's "When I Survey the Wondrous Cross". It is also used throughout Alfred Lord Tennyson's book-length poem, <em>In Memoriam A.H.H.</em>.</p>
   </div>,
   'short meter': <div className='paragraph'>
-    <p><strong>Short meter</strong> (6.6.8.6) is a quatrain in of iambic trimeter in which the third line is iambic tetrameter. Short meter is short as compared to common meter, in which the first line is one foot longer. Like common meter and long meter, short meter was a popular hymn meter, used in such hymns as "Blest Be the Tie that Binds".</p>
+    <p><strong>Short meter</strong> (6.6.8.6) is a quatrain of iambic trimeter in which the third line is iambic tetrameter. Short meter is short as compared to common meter, in which the first line is one foot longer. Like common meter and long meter, short meter was a popular hymn meter, used in such hymns as "Blest Be the Tie that Binds".</p>
     <p>When short meter is collapsed into a rhyming couplet with twelve syllables in the first line and fourteen in the second, it is known as <em>poulter's measure</em>, since a poulter—who sold eggs—sometimes gave twelve in a dozen and sometimes fourteen (compare the term <em>baker's dozen</em>, which has a similar origin).</p>
   </div>,
   'ballad':<div className='paragraph'>

@@ -15,6 +15,7 @@ const initialState = {
   isMenuOpen: false,
   isAboutOpen: false,
   isSampleOpen: false,
+  currentUser: JSON.parse(window.localStorage.getItem("userData")) || false,
 }
 
 const reducer = (state=initialState, action) => {
@@ -110,6 +111,24 @@ const reducer = (state=initialState, action) => {
       return {
         ...state,
         isSampleOpen: !state.isSampleOpen,
+      }
+    case actions.GET_CURRENT_USER:
+      return {
+        ...state,
+        currentUser: action.payload,
+      }
+    case actions.SAVE_POEM:
+      return {
+        ...state,
+        currentUser: {
+          ...state.currentUser,
+          poems: [...state.currentUser.poems, {poem: action.payload}],
+        }
+      }
+    case actions.SIGN_OUT:
+      return {
+        ...state,
+        currentUser: false,
       }
     default:
       return state

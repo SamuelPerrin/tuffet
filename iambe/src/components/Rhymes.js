@@ -9,6 +9,7 @@ import Section from './styled/Section';
 import StanzaTile from './styled/StanzaTile';
 import ListItemTile from './styled/ListItemTile';
 import Button from './styled/Button';
+import ButtonRow from './styled/ButtonRow';
 import FlexRow from './styled/FlexRow';
 import { Pie } from 'react-chartjs-2';
 
@@ -20,7 +21,7 @@ import { RHYME_SCHEMES, RHYME_TYPES } from '../utils/phonstants';
 import { COLOR_SEQUENCE } from '../constants/colors';
 
 const Rhymes = props => {
-  let {poetry, poems, rhymeTypeCounts, rhymeSchemeCounts, getRhymeSchemeDetails, getRhymeTypeDetails, getMeter} = props;
+  let {poetry, poems, rhymeTypeCounts, rhymeSchemeCounts, currentUser, getRhymeSchemeDetails, getRhymeTypeDetails, getMeter} = props;
   let history = useHistory();
 
   useEffect(() => {
@@ -45,6 +46,11 @@ const Rhymes = props => {
     e.preventDefault();
     getMeter(poetry);
     history.push("/meter");
+  }
+
+  const goToAddPoem = e => {
+    e.preventDefault();
+    history.push("/save-poem");
   }
 
   const typeCounts = rhymeTypeCounts && Object.entries(rhymeTypeCounts).filter(x => x[1] > 0).sort((a,b) => b[1] - a[1]);
@@ -134,7 +140,12 @@ const Rhymes = props => {
             </ol>
             <Link to="/about/rhyme-schemes"><RedSpan>Read more »</RedSpan></Link>
           </Section>
-          <Button onClick={goToMeter} className="hide-for-mobile">Get Meter</Button>
+          <ButtonRow className="hide-for-mobile">
+            <Button onClick={goToMeter}>Get Meter</Button>
+            {currentUser ?
+            !currentUser.poems.some(one => one.poem.text === poems[0]) && <Button onClick={goToAddPoem}>Save Poem</Button> :
+            <Button onClick={goToAddPoem}>Save Poem</Button>}
+          </ButtonRow>
         </Container>
         <Container id="text">
           <Section>
@@ -154,7 +165,12 @@ const Rhymes = props => {
               ))}
             </div>
           </Section>
-          <Button onClick={goToMeter} className="hide-for-desktop">Get Meter</Button>
+          <ButtonRow className="hide-for-desktop">
+            <Button onClick={goToMeter}>Get Meter</Button>
+            {currentUser ?
+            !currentUser.poems.some(one => one.poem.text === poems[0]) && <Button onClick={goToAddPoem}>Save Poem</Button> :
+            <Button onClick={goToAddPoem}>Save Poem</Button>}
+          </ButtonRow>
         </Container>
       </FlexRow>
     </div>
@@ -169,6 +185,7 @@ const mapStateToProps = state => {
   rhymes: state.rhymes,
   rhymeTypeCounts: state.rhymeTypeCounts,
   rhymeSchemeCounts: state.rhymeSchemeCounts,
+  currentUser: state.currentUser,
   }
 }
 

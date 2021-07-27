@@ -12,6 +12,7 @@ import { YellowSpan, RedSpan } from './styled/Spans';
 import ListItemTile from './styled/ListItemTile';
 import StanzaTile from './styled/StanzaTile';
 import Button from './styled/Button';
+import ButtonRow from './styled/ButtonRow';
 
 import { getLineMeterDetails, getRhymes, getStanzaMeterDetails } from '../actions';
 
@@ -20,7 +21,7 @@ import Poem from '../utils/Poem';
 import Stanza from '../utils/Stanza';
 
 const Meter = props => {
-  const { poetry, poems, stanzaMeterCounts, getLineMeterDetails, getRhymes, getStanzaMeterDetails} = props;
+  const { poetry, poems, stanzaMeterCounts, getLineMeterDetails, currentUser, getRhymes, getStanzaMeterDetails} = props;
   const history = useHistory();
 
   const submitLineMeterDetail = e => {
@@ -41,6 +42,11 @@ const Meter = props => {
     e.preventDefault();
     getRhymes(poetry);
     history.push("/rhyme");
+  }
+
+  const goToAddPoem = e => {
+    e.preventDefault();
+    history.push("/save-poem");
   }
 
   const counts = stanzaMeterCounts && Object.entries(stanzaMeterCounts).filter(x => x[1] > 0).sort((a,b) => b[1] - a[1]);
@@ -117,7 +123,12 @@ const Meter = props => {
             </div>
             <Link to="/meter/scansion"><YellowSpan>Read more »</YellowSpan></Link>
           </Section>
-          <Button onClick={goToRhymes} className="hide-for-mobile">Get Rhymes</Button>
+          <ButtonRow className="hide-for-mobile">
+            <Button onClick={goToRhymes}>Get Rhymes</Button>
+            {currentUser ?
+             !currentUser.poems.some(one => one.poem.text === poems[0]) && <Button onClick={goToAddPoem}>Save Poem</Button> :
+             <Button onClick={goToAddPoem}>Save Poem</Button>}
+          </ButtonRow>
         </Container>
         <Container id="text">
           <Section>
@@ -138,7 +149,12 @@ const Meter = props => {
                 ))}
             </div>
           </Section>
-          <Button onClick={goToRhymes} className="hide-for-desktop">Get Rhymes</Button>
+          <ButtonRow className="hide-for-desktop">
+            <Button onClick={goToRhymes}>Get Rhymes</Button>
+            {currentUser ?
+            !currentUser.poems.some(one => one.poem.text === poems[0]) && <Button onClick={goToAddPoem}>Save Poem</Button> :
+            <Button onClick={goToAddPoem}>Save Poem</Button>}
+          </ButtonRow>
         </Container>
         </FlexRow>
     </div>
@@ -150,6 +166,7 @@ const mapStateToProps = state => ({
   poems: state.poems,
   stanzaMeters: state.stanzaMeters,
   stanzaMeterCounts: state.stanzaMeterCounts,
+  currentUser: state.currentUser,
 })
 
 export default connect(mapStateToProps, { getLineMeterDetails, getRhymes, getStanzaMeterDetails })(Meter)
