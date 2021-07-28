@@ -140,11 +140,11 @@ const Rhymes = props => {
             </ol>
             <Link to="/about/rhyme-schemes"><RedSpan>Read more »</RedSpan></Link>
           </Section>
-          <ButtonRow className="hide-for-mobile">
-            <Button onClick={goToMeter}>Get Meter</Button>
+          <ButtonRow>
+            <Button onClick={goToMeter} className="hide-for-mobile">Get Meter</Button>
             {currentUser ?
             !currentUser.poems.some(one => one.poem.text === poems[0]) && <Button onClick={goToAddPoem}>Save Poem</Button> :
-            <Button onClick={goToAddPoem}>Save Poem</Button>}
+            <Button onClick={goToAddPoem} className="hide-for-mobile">Save Poem</Button>}
           </ButtonRow>
         </Container>
         <Container id="text">
@@ -165,11 +165,11 @@ const Rhymes = props => {
               ))}
             </div>
           </Section>
-          <ButtonRow className="hide-for-desktop">
-            <Button onClick={goToMeter}>Get Meter</Button>
+          <ButtonRow>
+            <Button onClick={goToMeter} className="hide-for-desktop">Get Meter</Button>
             {currentUser ?
             !currentUser.poems.some(one => one.poem.text === poems[0]) && <Button onClick={goToAddPoem}>Save Poem</Button> :
-            <Button onClick={goToAddPoem}>Save Poem</Button>}
+            <Button onClick={goToAddPoem} className="hide-for-desktop">Save Poem</Button>}
           </ButtonRow>
         </Container>
       </FlexRow>

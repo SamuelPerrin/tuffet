@@ -123,11 +123,11 @@ const Meter = props => {
             </div>
             <Link to="/meter/scansion"><YellowSpan>Read more »</YellowSpan></Link>
           </Section>
-          <ButtonRow className="hide-for-mobile">
-            <Button onClick={goToRhymes}>Get Rhymes</Button>
+          <ButtonRow>
+            <Button onClick={goToRhymes} className="hide-for-mobile">Get Rhymes</Button>
             {currentUser ?
              !currentUser.poems.some(one => one.poem.text === poems[0]) && <Button onClick={goToAddPoem}>Save Poem</Button> :
-             <Button onClick={goToAddPoem}>Save Poem</Button>}
+             <Button onClick={goToAddPoem} className="hide-for-mobile">Save Poem</Button>}
           </ButtonRow>
         </Container>
         <Container id="text">
@@ -149,11 +149,11 @@ const Meter = props => {
                 ))}
             </div>
           </Section>
-          <ButtonRow className="hide-for-desktop">
-            <Button onClick={goToRhymes}>Get Rhymes</Button>
+          <ButtonRow>
+            <Button onClick={goToRhymes} className="hide-for-desktop">Get Rhymes</Button>
             {currentUser ?
             !currentUser.poems.some(one => one.poem.text === poems[0]) && <Button onClick={goToAddPoem}>Save Poem</Button> :
-            <Button onClick={goToAddPoem}>Save Poem</Button>}
+            <Button onClick={goToAddPoem} className="hide-for-desktop">Save Poem</Button>}
           </ButtonRow>
         </Container>
         </FlexRow>
