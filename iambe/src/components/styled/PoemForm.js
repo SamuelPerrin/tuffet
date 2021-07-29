@@ -38,7 +38,7 @@ const PoemForm = props => {
           <div className='paragraph'>
             <p>Fill out the form below to save this poem so you can come back to it later.</p>
           </div>
-          <form onSubmit={onSubmit} style={{display:"flex", flexFlow:"column", alignItems:"center", justifyContent:"space-evenly"}}>
+          <form onSubmit={onSubmit} style={{width:"100%", display:"flex", flexFlow:"column", alignItems:"center", justifyContent:"space-evenly"}}>
             <label style={{display:"flex", flexFlow:"row", alignItems:"center", justifyContent:"space-evenly", margin:"1rem"}}>
               Title:&nbsp;
               <input 
