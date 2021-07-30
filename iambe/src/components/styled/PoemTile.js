@@ -7,6 +7,7 @@ import { deletePoemById } from '../../api-client/auth';
 import { BlueSpan, YellowSpan } from './Spans';
 import ButtonRow from './ButtonRow';
 import Button from './Button';
+import HoverCard from './HoverCard';
 
 const StyledPoem = styled.div`
   height:13rem;
@@ -116,7 +117,7 @@ const StyledPoem = styled.div`
 `;
 
 const PoemTile = props => {
-  const { poem, setLoading, getRhymes, getMeter, getCurrentUser, fetchCurrentUser } = props;
+  const { poem, setLoading, getRhymes, getMeter, getCurrentUser, fetchCurrentUser, filterPoemsBy, filtered } = props;
   const [openMenu, setOpenMenu] = useState(false);
   const history = useHistory();
 
@@ -151,7 +152,13 @@ const PoemTile = props => {
           <span className={openMenu ? 'menu-button open' : 'menu-button'}>{openMenu ? 'x' : '...'}</span>
         </div>
       </div>
-      <p className='attr'><em>by <YellowSpan>{poem.author ? poem.author : "Anonymous"}</YellowSpan></em></p>
+      <em className='attr'>by&nbsp;
+        <HoverCard hoverText={filtered ? "" : "Click to filter poems by author"}>
+          <YellowSpan onClick={filterPoemsBy} style={filtered ? {} : {cursor:"pointer"}}>
+            {poem.author ? poem.author : "Anonymous"}
+          </YellowSpan>
+        </HoverCard>
+      </em>
       <div className="lines">
         {poem.text.split('\n').map((line, i) => i < 2 ? <p key={i}>{line}</p> : null)}
         {poem.text.split('\n').length > 2 ? <p>...</p> : null}
