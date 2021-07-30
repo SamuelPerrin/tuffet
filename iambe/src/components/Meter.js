@@ -123,11 +123,11 @@ const Meter = props => {
             </div>
             <Link to="/meter/scansion"><YellowSpan>Read more »</YellowSpan></Link>
           </Section>
-          <ButtonRow>
-            <Button onClick={goToRhymes} className="hide-for-mobile">Get Rhymes</Button>
+          <ButtonRow className="hide-for-mobile">
+            <Button onClick={goToRhymes} size="small">Get Rhymes</Button>
             {currentUser ?
-             !currentUser.poems.some(one => one.poem.text === poems[0]) && <Button onClick={goToAddPoem}>Save Poem</Button> :
-             <Button onClick={goToAddPoem} className="hide-for-mobile">Save Poem</Button>}
+             !currentUser.poems.some(one => one.poem.text === poems[0]) && <Button onClick={goToAddPoem} size="small">Save Poem</Button> :
+             <Button onClick={goToAddPoem} size="small">Save Poem</Button>}
           </ButtonRow>
         </Container>
         <Container id="text">
@@ -150,10 +150,10 @@ const Meter = props => {
             </div>
           </Section>
           <ButtonRow>
-            <Button onClick={goToRhymes} className="hide-for-desktop">Get Rhymes</Button>
+            <Button onClick={goToRhymes} className="hide-for-desktop" size="small">Get Rhymes</Button>
             {currentUser ?
-            !currentUser.poems.some(one => one.poem.text === poems[0]) && <Button onClick={goToAddPoem}>Save Poem</Button> :
-            <Button onClick={goToAddPoem} className="hide-for-desktop">Save Poem</Button>}
+            !currentUser.poems.some(one => one.poem.text === poems[0]) && <Button onClick={goToAddPoem} size="small">Save Poem</Button> :
+            <Button onClick={goToAddPoem} className="hide-for-desktop" size="small">Save Poem</Button>}
           </ButtonRow>
         </Container>
         </FlexRow>

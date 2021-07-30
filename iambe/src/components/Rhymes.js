@@ -141,10 +141,10 @@ const Rhymes = props => {
             <Link to="/about/rhyme-schemes"><RedSpan>Read more »</RedSpan></Link>
           </Section>
           <ButtonRow>
-            <Button onClick={goToMeter} className="hide-for-mobile">Get Meter</Button>
+            <Button onClick={goToMeter} className="hide-for-mobile" size="small">Get Meter</Button>
             {currentUser ?
-            !currentUser.poems.some(one => one.poem.text === poems[0]) && <Button onClick={goToAddPoem}>Save Poem</Button> :
-            <Button onClick={goToAddPoem} className="hide-for-mobile">Save Poem</Button>}
+            !currentUser.poems.some(one => one.poem.text === poems[0]) && <Button onClick={goToAddPoem} className="hide-for-mobile" size="small">Save Poem</Button> :
+            <Button onClick={goToAddPoem} className="hide-for-mobile" size="small">Save Poem</Button>}
           </ButtonRow>
         </Container>
         <Container id="text">
@@ -166,10 +166,10 @@ const Rhymes = props => {
             </div>
           </Section>
           <ButtonRow>
-            <Button onClick={goToMeter} className="hide-for-desktop">Get Meter</Button>
+            <Button onClick={goToMeter} className="hide-for-desktop" size="small">Get Meter</Button>
             {currentUser ?
-            !currentUser.poems.some(one => one.poem.text === poems[0]) && <Button onClick={goToAddPoem}>Save Poem</Button> :
-            <Button onClick={goToAddPoem} className="hide-for-desktop">Save Poem</Button>}
+            !currentUser.poems.some(one => one.poem.text === poems[0]) && <Button onClick={goToAddPoem} size="small">Save Poem</Button> :
+            <Button onClick={goToAddPoem} className="hide-for-desktop" size="small">Save Poem</Button>}
           </ButtonRow>
         </Container>
       </FlexRow>
