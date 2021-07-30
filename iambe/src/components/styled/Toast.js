@@ -77,7 +77,8 @@ const Toast = props => {
   return (
     <ToastWrapper variant={variant} onClick={onClick}>
       <div className='container'>
-        {variant === 'danger' && <div className='icon'>x</div>}
+        {variant === 'warning' && <div className='icon'>x</div>}
+        {variant === 'success' && <div className='icon'>!</div>}
         {children}
       </div>
     </ToastWrapper>

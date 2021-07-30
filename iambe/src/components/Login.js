@@ -24,6 +24,7 @@ const Login = props => {
   const [errors, setErrors] = useState(initialValues);
   const [showToast, setShowToast] = useState(false);
   const [disabled, setDisabled] = useState(true);
+  const [loading, setLoading] = useState(false);
   const history = useHistory();
   const { getCurrentUser, uri } = props;
 
@@ -34,9 +35,11 @@ const Login = props => {
     await loginSchema
       .validate(formValues)
       .then(async _ => {
+        setLoading(true);
         const userData = await login(formValues);
         getCurrentUser(userData);
         loggedIn = userData && userData.username;
+        setLoading(false);
       })
       .catch(err => console.log(err));
     
@@ -116,6 +119,13 @@ const Login = props => {
       >
         Oops! Something went wrong.
       </Toast>}
+      {loading &&
+        <Toast
+          variant='success'
+          onClick={() => setLoading(false)}
+        >
+          Loading might take a minute.
+        </Toast>}
     </div>
   )
 }
