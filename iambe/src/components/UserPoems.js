@@ -18,6 +18,7 @@ const UserPoems = props => {
   const poemsToRender = useRef(userpoems);
   const [filtered, setFiltered] = useState();
   const [author, setAuthor] = useState();
+  const [sortBy, setSortBy] = useState('titlesAZ');
 
   useEffect(() => {
     poemsToRender.current = userpoems;
@@ -38,6 +39,19 @@ const UserPoems = props => {
     setFiltered(false);
   }
 
+  const comparisons = {
+    titlesAZ: (a,b) => a.poem.title.localeCompare(b.poem.title),
+    titlesZA: (a,b) => b.poem.title.localeCompare(a.poem.title),
+    authorsAZ: (a,b) => a.poem.author.localeCompare(b.poem.author),
+    authorsZA: (a,b) => b.poem.author.localeCompare(a.poem.author),
+    newestFirst: (a,b) => b.poem.poemid - a.poem.poemid,
+    oldestFirst: (a,b) => a.poem.poemid - b.poem.poemid,
+  }
+
+  const handleSort = e => {
+    setSortBy(e.target.value);
+  }
+
   return (
     username ?
     <div>
@@ -48,9 +62,20 @@ const UserPoems = props => {
               {filtered ? "Saved Poems by " + author : username.slice(0,1).toUpperCase() + username.slice(1) + "'s Poems"}
             </RedSpan>
           </h2>
+          <div>
+            <label htmlFor="sortby">Sort by:&nbsp;</label>
+            <select name="sortby" id="sortby" value={sortBy} onChange={handleSort}>
+              <option value={'newestFirst'}>Newest first</option>
+              <option value={'oldestFirst'}>Oldest first</option>
+              <option value={'titlesAZ'}>Titles, A to Z</option>
+              <option value={'titlesZA'}>Titles, Z to A</option>
+              <option value={'authorsAZ'}>Authors, A to Z</option>
+              <option value={'authorsZA'}>Authors, Z to A</option>
+            </select>
+          </div>
           {poemsToRender.current.length ? 
           <div style={{display:"flex", flexFlow:"row wrap", justifyContent:"space-evenly"}}>
-            {poemsToRender.current.length && poemsToRender.current.map(poem => (
+            {poemsToRender.current.length && poemsToRender.current.sort(comparisons[sortBy]).map(poem => (
               <PoemTile
                 poem={poem.poem}
                 getRhymes={getRhymes}
