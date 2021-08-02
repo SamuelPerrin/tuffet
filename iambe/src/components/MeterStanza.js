@@ -63,11 +63,11 @@ const MeterStanza = props => {
             </tbody>
           </Table>
         </Section>
-        <Section>
+        {stanzaType in STANZA_METER_DESCRIPTIONS && <Section>
           <h2 id={stanzaType}><YellowSpan>What is {stanzaType}?</YellowSpan></h2>
           {STANZA_METER_DESCRIPTIONS[stanzaType]}
-        </Section>
-        <Button onClick={goBack}>Back to Meter</Button>
+        </Section>}
+        <Button onClick={goBack} size="small">Back to Meter</Button>
       </Container>
     </div>
   )

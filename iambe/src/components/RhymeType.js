@@ -66,7 +66,7 @@ const RhymeType = props => {
           <h2 id={RHYME_TYPES[rt]}><RedSpan>What is {RHYME_TYPES[rt]}?</RedSpan></h2>
             {RHYME_TYPE_DESCRIPTIONS[rt]}
         </Section>
-        <Button onClick={goBack}>Back to Rhymes</Button>
+        <Button onClick={goBack} size="small">Back to Rhymes</Button>
       </Container>
     </div>
   )
