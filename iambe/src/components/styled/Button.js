@@ -6,6 +6,8 @@ const ButtonWrapper = styled.button`
     switch(props.variant) {
       case 'clear':
         return props.theme.gray;
+      case 'inverted':
+        return props.theme.blue;
       default:
         return props.theme.white;
     }
@@ -16,11 +18,20 @@ const ButtonWrapper = styled.button`
     switch(props.variant) {
       case 'clear':
         return '1px solid ' + props.theme.gray;
+      case 'inverted':
+        return '1px solid ' + props.theme.blue;
       default:
         return 'none';
     }
   }};
-  border-radius: ${props => props.theme.borderRadius};
+  border-radius: ${props => {
+    switch(props.size) {
+      case 'x-small':
+        return '50%';
+      default:
+        return props.theme.borderRadius
+    }
+  }};
   background-color: ${props => {
     switch(props.variant) {
       case 'danger':
@@ -29,6 +40,8 @@ const ButtonWrapper = styled.button`
         return props.theme.disabledColor;
       case 'clear':
         return 'rgba(255,255,255,0.5)';
+      case 'inverted':
+        return props.theme.white;
       default:
         return props.theme.blue;
     }
@@ -37,6 +50,7 @@ const ButtonWrapper = styled.button`
   font-size: ${props => props.theme.fontSize};
   width: ${props => {
     switch(props.size) {
+      case 'x-small':
       case 'small':
         return 'auto';
       default:
@@ -47,18 +61,36 @@ const ButtonWrapper = styled.button`
     switch(props.size) {
       case 'small':
         return '0.5rem 2rem';
+      case 'x-small':
+        return '0.5rem 1rem';
       default:
         return 'auto';
     }
   }};
   max-width: 18rem;
-  height: ${props => props.theme.buttonHeight};
-  margin: ${props => props.theme.space};
+  height: ${props => {
+    switch(props.size) {
+      case 'x-small':
+        return 'auto';
+      default:
+        return props.theme.buttonHeight;
+    }
+  }};
+  margin: ${props => {
+    switch(props.size) {
+      case 'x-small':
+        return "4px";
+      default:
+        return props.theme.space;
+    }
+  }};
 
   &:hover{
     color:${props => {
       switch (props.variant) {
         case 'clear':
+          return props.theme.white;
+        case 'inverted':
           return props.theme.white;
         default:
           return props.theme.pale;
@@ -72,6 +104,8 @@ const ButtonWrapper = styled.button`
           return '#85858B';
         case 'clear':
           return props.theme.gray;
+        case 'inverted':
+          return props.theme.blue;
         default:
           return '#2877C6';
       }
