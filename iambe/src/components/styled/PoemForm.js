@@ -34,10 +34,10 @@ const PoemForm = props => {
     <div>
       <Container>
         <Section>
-          <h2><RedSpan>Save This Poem</RedSpan></h2>
-          <div className='paragraph'>
+          <h2><RedSpan>{editing ? "Edit Poem" : "Save Poem"}</RedSpan></h2>
+          {editing || <div className='paragraph'>
             <p>Fill out the form below to save this poem so you can come back to it later.</p>
-          </div>
+          </div>}
           <form onSubmit={onSubmit} style={{width:"100%", display:"flex", flexFlow:"column", alignItems:"center", justifyContent:"space-evenly"}}>
             <label style={{display:"flex", flexFlow:"row", alignItems:"center", justifyContent:"space-evenly", margin:"1rem"}}>
               Title:&nbsp;
@@ -64,7 +64,7 @@ const PoemForm = props => {
               value={formValues.text}
               placeholder="Text"
             />
-            <Button>Save Poem</Button>
+            <Button>Save {editing ? "Changes" : "Poem"}</Button>
           </form>
         </Section>
       </Container>
