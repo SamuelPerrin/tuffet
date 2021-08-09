@@ -276,6 +276,7 @@ export const RHYME_SCHEME_DESCRIPTIONS = {
   'ABACBC':false,
   'ABACCB':false,
   'ABACCC':false,
+  'ABBAAB':false,
   'ABCABC':false,
   'ABCBDB':<div className='paragraph'>
     <p>A sestain in which even-numbered lines rhyme.</p>

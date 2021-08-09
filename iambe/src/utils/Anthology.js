@@ -117,6 +117,7 @@ class Anthology {
       'bcabc':0,
       'bccab':0,
       'a2b3a':0,
+      'bbaab':0,
       'babc3':0,
       'cacbb':0,
       'srima':0,
