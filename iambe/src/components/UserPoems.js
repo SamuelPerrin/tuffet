@@ -6,12 +6,13 @@ import { getRhymes, getMeter, getCurrentUser } from '../actions';
 import { fetchCurrentUser } from '../api-client/auth';
 
 import Login from './Login';
-import { RedSpan, YellowSpan } from './styled/Spans';
+import { RedSpan } from './styled/Spans';
 import Container from './styled/Container';
 import Section from './styled/Section';
 import Paginator from './styled/Paginator';
 import PoemTile from './styled/PoemTile';
 import Button from './styled/Button';
+import Spinner from './styled/Spinner';
 
 const UserPoems = props => {
   const { username, userpoems, getRhymes, getMeter, getCurrentUser } = props;
@@ -22,11 +23,12 @@ const UserPoems = props => {
   const [sortBy, setSortBy] = useState('newestFirst');
   const [perPage, setPerPage] = useState(6);
   const [refresh, setRefresh] = useState(0);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     poemsToRender.current = userpoems;
     setFiltered(false);
-  }, []);
+  }, [loading]);
 
   const filterPoemsBy = e => {
     const filterAuthor = e.target.innerHTML;
@@ -98,7 +100,7 @@ const UserPoems = props => {
           </div>
           {poemsToRender.current.length ? 
           <div>
-            {poemsToRender.current.length && 
+            {!loading && 
               <Paginator
                 data={poemsToRender.current.sort(comparisons[sortBy])}
                 perPage={perPage}
@@ -109,7 +111,9 @@ const UserPoems = props => {
                 fetchCurrentUser={fetchCurrentUser}
                 filterPoemsBy={filterPoemsBy}
                 filtered={filtered}
+                setRefresh={setRefresh}
                 refresh={refresh}
+                setLoading={setLoading}
               />
             }
           </div>
@@ -119,6 +123,7 @@ const UserPoems = props => {
             </div>}
           {filtered && 
             <Button onClick={unfilter} size="small">Remove filter</Button>}
+          {loading && <Spinner />}
         </Section>
       </Container>
     </div>

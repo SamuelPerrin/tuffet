@@ -13,6 +13,7 @@ import { YellowSpan, BlueSpan } from './styled/Spans';
 import TextInput from './styled/TextInput';
 import Button from './styled/Button';
 import Toast from './styled/Toast';
+import Spinner from './styled/Spinner';
 
 const initialValues = {
   username:"",
@@ -86,7 +87,7 @@ const Login = props => {
   return (
     <div>
       <Container>
-        <Section>
+        {loading ? <Spinner /> : <Section>
           <h2><YellowSpan>Log in</YellowSpan></h2>
           <form onSubmit={handleSubmit} style={{display:"flex", flexFlow:"column", alignItems:"center", justifyContent:"space-evenly"}}>
             <TextInput 
@@ -110,7 +111,7 @@ const Login = props => {
             <Button variant={disabled ? 'disabled' : ''} disabled={disabled}>Login</Button>
           </form>
           <p>Don't have an account? <Link to='/register'><BlueSpan>Sign up!</BlueSpan></Link></p>
-        </Section>
+        </Section>}
       </Container>
       {showToast &&
       <Toast
@@ -119,13 +120,13 @@ const Login = props => {
       >
         Oops! Something went wrong.
       </Toast>}
-      {loading &&
+      {/* {loading &&
         <Toast
           variant='success'
           onClick={() => setLoading(false)}
         >
           Loading might take a minute.
-        </Toast>}
+        </Toast>} */}
     </div>
   )
 }
