@@ -125,8 +125,8 @@ const Meter = props => {
           </Section>
           <ButtonRow className="hide-for-mobile">
             <Button onClick={goToRhymes} size="small">Get Rhymes</Button>
-            {currentUser ?
-             !currentUser.poems.some(one => one.poem.text === poems[0]) && <Button onClick={goToAddPoem} size="small">Save Poem</Button> :
+            {currentUser &&
+             !currentUser.poems.some(one => one.poem.text === poems[0]) &&
              <Button onClick={goToAddPoem} size="small">Save Poem</Button>}
           </ButtonRow>
         </Container>
@@ -151,8 +151,8 @@ const Meter = props => {
           </Section>
           <ButtonRow>
             <Button onClick={goToRhymes} className="hide-for-desktop" size="small">Get Rhymes</Button>
-            {currentUser ?
-            !currentUser.poems.some(one => one.poem.text === poems[0]) && <Button onClick={goToAddPoem} size="small">Save Poem</Button> :
+            {currentUser &&
+            !currentUser.poems.some(one => one.poem.text === poems[0]) &&
             <Button onClick={goToAddPoem} className="hide-for-desktop" size="small">Save Poem</Button>}
           </ButtonRow>
         </Container>
