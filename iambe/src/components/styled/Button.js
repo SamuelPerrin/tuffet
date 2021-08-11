@@ -26,8 +26,6 @@ const ButtonWrapper = styled.button`
   }};
   border-radius: ${props => {
     switch(props.size) {
-      case 'x-small':
-        return '50%';
       default:
         return props.theme.borderRadius
     }

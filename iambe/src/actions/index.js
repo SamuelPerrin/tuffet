@@ -20,6 +20,7 @@ export const CLOSE_SAMPLE_MENU = 'CLOSE_SAMPLE_MENU';
 export const GET_CURRENT_USER = 'GET_CURRENT_USER';
 export const SAVE_POEM = 'SAVE_POEM';
 export const SIGN_OUT = 'SIGN_OUT';
+export const SET_ERROR = 'SET_ERROR';
 
 export const getRhymes = poetry => {
   const anth = new Anthology(poetry);
@@ -74,3 +75,5 @@ export const getCurrentUser = (userData) => ({type:GET_CURRENT_USER, payload:use
 export const savePoem = (poemObj) => ({type:SAVE_POEM, payload:poemObj});
 
 export const signOut = () => ({type:SIGN_OUT});
+
+export const setError = (error) => ({type:SET_ERROR, payload:error})

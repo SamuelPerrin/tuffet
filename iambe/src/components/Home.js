@@ -9,14 +9,13 @@ import TextArea from './styled/TextArea';
 import Button from './styled/Button';
 import Toast from './styled/Toast';
 
-import { getRhymes, getMeter } from '../actions';
+import { getRhymes, getMeter, setError } from '../actions';
 import * as samples from '../constants/samples';
 
 
 const Home = props => {
-  const { poetry, getRhymes, getMeter } = props;
+  const { poetry, toastError, getRhymes, getMeter, setError } = props;
   const [poem, setPoem] = useState(poetry ? poetry: "");
-  const [showToast, setShowToast] = useState(false);
   let history = useHistory();
 
   const handleChange = e => {
@@ -30,7 +29,9 @@ const Home = props => {
       history.push('/rhyme');
     } catch (err) {
       console.log(err);
-      setShowToast(true);
+      if (err.message === "Error: Poems cannot be empty!") setError(err.message);
+      else if (err.message === "Tuffet cannot find rhymes in one line!") setError(err.message);
+      else setError("Something went wrong with that poem!");
     }
   }
 
@@ -41,7 +42,8 @@ const Home = props => {
       history.push('/meter');
     } catch (err) {
       console.log(err);
-      setShowToast(true);
+      if (err.message === "Error: Poems cannot be empty!") setError(err.message);
+      setError("Something went wrong with that poem!");
     }
   }
 
@@ -76,12 +78,12 @@ const Home = props => {
           </ButtonRow>
         </form>  
       </Section>
-      {showToast &&
+      {toastError &&
       <Toast
         variant='danger'
-        onClick={() => setShowToast(false)}
+        onClick={() => setError(false)}
       >
-        Oops! Something went wrong.
+        {toastError}
       </Toast>}
     </div>
   )
@@ -89,8 +91,9 @@ const Home = props => {
 
 const mapStateToProps = state => {
   return {
-    poetry: state.poetry
+    poetry: state.poetry,
+    toastError: state.toastError,
   };
 };
 
-export default connect(mapStateToProps, { getRhymes, getMeter })(Home)
+export default connect(mapStateToProps, { getRhymes, getMeter, setError })(Home)

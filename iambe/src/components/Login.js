@@ -4,7 +4,7 @@ import { useHistory, Link } from 'react-router-dom';
 import * as yup from 'yup';
 
 import { login } from '../api-client/auth';
-import { getCurrentUser } from '../actions';
+import { getCurrentUser, setError } from '../actions';
 import { loginSchema } from '../yup_schema/';
 
 import Container from './styled/Container';
@@ -23,11 +23,10 @@ const initialValues = {
 const Login = props => {
   const [formValues, setFormValues] = useState(initialValues);
   const [errors, setErrors] = useState(initialValues);
-  const [showToast, setShowToast] = useState(false);
   const [disabled, setDisabled] = useState(true);
   const [loading, setLoading] = useState(false);
   const history = useHistory();
-  const { getCurrentUser, uri } = props;
+  const { toastError, uri, getCurrentUser, setError,  } = props;
 
   const handleSubmit = async e => {
     e.preventDefault();
@@ -37,7 +36,13 @@ const Login = props => {
       .validate(formValues)
       .then(async _ => {
         setLoading(true);
-        const userData = await login(formValues);
+        // const userData = await login(formValues);
+        let userData = await login(formValues);
+        if (userData.status) {
+          if (userData.status === 401) setError("Username and password not found.");
+          else setError("Something went wrong!");
+        }
+
         getCurrentUser(userData);
         loggedIn = userData && userData.username;
         setLoading(false);
@@ -47,7 +52,6 @@ const Login = props => {
     if (loggedIn) {
       history.push(uri);
     } else {
-      setShowToast(true);
       setFormValues(initialValues);
     }
   }
@@ -113,12 +117,12 @@ const Login = props => {
           <p>Don't have an account? <Link to='/register'><BlueSpan>Sign up!</BlueSpan></Link></p>
         </Section>}
       </Container>
-      {showToast &&
+      {toastError &&
       <Toast
         variant='danger'
-        onClick={() => setShowToast(false)}
+        onClick={() => setError(false)}
       >
-        Oops! Something went wrong.
+        {toastError}
       </Toast>}
       {/* {loading &&
         <Toast
@@ -133,7 +137,8 @@ const Login = props => {
 
 const mapStateToProps = state => {
   return {
+    toastError: state.toastError,
   }
 }
 
-export default connect(mapStateToProps, { getCurrentUser })(Login)
+export default connect(mapStateToProps, { getCurrentUser, setError })(Login)

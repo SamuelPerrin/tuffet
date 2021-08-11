@@ -3,12 +3,12 @@ import { useHistory, useParams } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 import { axiosWithAuth, fetchCurrentUser } from '../api-client/auth';
-import { getCurrentUser } from '../actions';
+import { getCurrentUser, setError } from '../actions';
 
 import PoemForm from './styled/PoemForm';
 
 const EditPoem = props => {
-  const { currentUser, getCurrentUser } = props;
+  const { currentUser, getCurrentUser, setError } = props;
   const history = useHistory();
   const { poemid } = useParams();
 
@@ -16,7 +16,11 @@ const EditPoem = props => {
     await axiosWithAuth()
       .put(`/poems/poem/${poemid}`, formValues)
       .then(async _ => getCurrentUser(await fetchCurrentUser()))
-      .catch(err => console.log(err));
+      .catch(err => {
+        console.log(err);
+        if (err.response.status === 401) setError("You might need to log in!");
+        else setError("Something went wrong with saving that poem!");
+      });
     
       history.push('/my-poems');
   }
@@ -32,4 +36,4 @@ const mapStateToProps = state => {
   }
 }
 
-export default connect(mapStateToProps, { getCurrentUser })(EditPoem)
+export default connect(mapStateToProps, { getCurrentUser, setError })(EditPoem)

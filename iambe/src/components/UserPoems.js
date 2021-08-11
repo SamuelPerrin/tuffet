@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import { connect } from 'react-redux';
 
-import { getRhymes, getMeter, getCurrentUser } from '../actions';
+import { getRhymes, getMeter, getCurrentUser, setError } from '../actions';
 import { fetchCurrentUser } from '../api-client/auth';
 
 import Login from './Login';
@@ -13,9 +13,10 @@ import Paginator from './styled/Paginator';
 import PoemTile from './styled/PoemTile';
 import Button from './styled/Button';
 import Spinner from './styled/Spinner';
+import Toast from './styled/Toast';
 
 const UserPoems = props => {
-  const { username, userpoems, getRhymes, getMeter, getCurrentUser } = props;
+  const { username, userpoems, error, getRhymes, getMeter, getCurrentUser, setError } = props;
   const history = useHistory();
   const poemsToRender = useRef(userpoems);
   const [filtered, setFiltered] = useState();
@@ -75,6 +76,13 @@ const UserPoems = props => {
               {filtered ? "Saved Poems by " + author : username.slice(0,1).toUpperCase() + username.slice(1) + "'s Poems"}
             </RedSpan>
           </h2>
+          {error &&
+            <Toast
+              variant='danger'
+              onClick={() => setError(false)}
+            >
+              {error}
+            </Toast>}
           <div style={{display:"flex", flexFlow:"row wrap", justifyContent:"space-evenly", width:"100%"}}>
             {poemsToRender.current.length > 3 && <label htmlFor="sortby" style={{display:"block", width:"auto"}}>
               Sort by:&nbsp;
@@ -136,7 +144,8 @@ const mapStateToProps = state => {
   return {
     username: state.currentUser.username,
     userpoems: state.currentUser.poems,
+    error: state.toastError,
   }
 }
 
-export default connect(mapStateToProps, { getRhymes, getMeter, getCurrentUser })(UserPoems)
+export default connect(mapStateToProps, { getRhymes, getMeter, getCurrentUser, setError })(UserPoems)

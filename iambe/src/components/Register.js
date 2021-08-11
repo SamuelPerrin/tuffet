@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import axios from 'axios';
 import * as yup from 'yup';
 
-import { getCurrentUser } from '../actions';
+import { getCurrentUser, setError } from '../actions';
 import { BASE_URL, login } from '../api-client/auth';
 import { registerSchema } from '../yup_schema';
 
@@ -16,8 +16,7 @@ import Button from './styled/Button';
 import Toast from './styled/Toast';
 
 const Register = props => {
-  const { getCurrentUser } = props;
-  const [showToast, setShowToast] = useState(false);
+  const { toastError, getCurrentUser, setError } = props;
   const history = useHistory();
 
   const initialValues = {
@@ -42,11 +41,18 @@ const Register = props => {
             await getCurrentUser(userData);
             history.push("/my-poems");
           })
-          .catch(err => console.log(err));
+          .catch(err => {
+            console.log(err);
+            if (err.response.status === 500) setError("That username is already taken!");
+            else setError("Oops! Something went wrong!");
+          });
           })
-      .catch(err => console.log(err));
+      .catch(err => {
+        console.log(err);
+        setError("Oops! Something went wrong!");
+      });
     
-    setShowToast(true);
+    // setError("Something went wrong!");
   }
 
   const handleChange = e => {
@@ -118,17 +124,19 @@ const Register = props => {
           </form>
         </Section>
       </Container>
-      {showToast &&
-      <Toast
-        variant='danger'
-        onClick={() => setShowToast(false)}
-      >
-        Oops! That name is already taken.
-      </Toast>}
+      {toastError &&
+        <Toast
+          variant='danger'
+          onClick={() => setError(false)}
+        >
+          {toastError}
+        </Toast>}
     </div>
   )
 }
 
-const mapStateToProps = state => ({})
+const mapStateToProps = state => ({
+  toastError: state.toastError,
+})
 
-export default connect(mapStateToProps, {getCurrentUser})(Register)
+export default connect(mapStateToProps, { getCurrentUser, setError })(Register)

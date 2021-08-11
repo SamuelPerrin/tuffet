@@ -16,6 +16,7 @@ const initialState = {
   isAboutOpen: false,
   isSampleOpen: false,
   currentUser: JSON.parse(window.localStorage.getItem("userData")) || false,
+  toastError: false,
 }
 
 const reducer = (state=initialState, action) => {
@@ -129,6 +130,11 @@ const reducer = (state=initialState, action) => {
       return {
         ...state,
         currentUser: false,
+      }
+    case actions.SET_ERROR:
+      return {
+        ...state,
+        toastError: action.payload,
       }
     default:
       return state
