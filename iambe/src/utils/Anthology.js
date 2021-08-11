@@ -11,12 +11,15 @@ class Anthology {
 
   getPoems() {
     // returns an array of strings representing the poems in the anthology, with stanzas divided by \n\n and lines divided by \n
+    if (this.text.length === 0) throw new Error("Error: Poems cannot be empty!");
     return this.text.split('\n\n\n\n').filter(x => !!x);
   }
 
   getRhymes() {
     // returns an array of rhyme data from every stanza in every poem in the anthology
-     const rhymes = [];
+    if (!this.text.includes("\n")) throw new Error("Tuffet cannot find rhymes in one line!");
+    
+    const rhymes = [];
      
      this.getPoems().forEach(poem => rhymes.push(new Poem(poem).getRhymes()));
      
@@ -117,6 +120,7 @@ class Anthology {
       'bcabc':0,
       'bccab':0,
       'a2b3a':0,
+      'bbaab':0,
       'babc3':0,
       'cacbb':0,
       'srima':0,

@@ -142,8 +142,8 @@ const Rhymes = props => {
           </Section>
           <ButtonRow>
             <Button onClick={goToMeter} className="hide-for-mobile" size="small">Get Meter</Button>
-            {currentUser ?
-            !currentUser.poems.some(one => one.poem.text === poems[0]) && <Button onClick={goToAddPoem} className="hide-for-mobile" size="small">Save Poem</Button> :
+            {currentUser &&
+            !currentUser.poems.some(one => one.poem.text === poems[0]) &&
             <Button onClick={goToAddPoem} className="hide-for-mobile" size="small">Save Poem</Button>}
           </ButtonRow>
         </Container>
@@ -167,8 +167,8 @@ const Rhymes = props => {
           </Section>
           <ButtonRow>
             <Button onClick={goToMeter} className="hide-for-desktop" size="small">Get Meter</Button>
-            {currentUser ?
-            !currentUser.poems.some(one => one.poem.text === poems[0]) && <Button onClick={goToAddPoem} size="small">Save Poem</Button> :
+            {currentUser &&
+            !currentUser.poems.some(one => one.poem.text === poems[0]) && 
             <Button onClick={goToAddPoem} className="hide-for-desktop" size="small">Save Poem</Button>}
           </ButtonRow>
         </Container>

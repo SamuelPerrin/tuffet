@@ -7,7 +7,7 @@ const ToastWrapper = styled.div`
   align-items: center;
   justify-content: flex-end;
   width:100%;  
-  position:absolute;
+  position:static;
 
   .container {
     display:flex;
@@ -30,8 +30,9 @@ const ToastWrapper = styled.div`
     padding: 0 1rem 0 0;
 
     position: relative;
-    bottom: 2rem;
+    /* bottom: 2rem; */
     width: 100%;
+    z-index:3;
   }
 
   div.icon {
@@ -44,6 +45,7 @@ const ToastWrapper = styled.div`
     padding: 0.25rem;
     text-align: center;
     line-height: 1.25rem;
+    cursor:pointer;
 
     &:hover {
       background-color: ${props => props.theme.white};
@@ -77,7 +79,7 @@ const Toast = props => {
   return (
     <ToastWrapper variant={variant} onClick={onClick}>
       <div className='container'>
-        {variant === 'warning' && <div className='icon'>x</div>}
+        {variant === 'danger' && <div className='icon'>x</div>}
         {variant === 'success' && <div className='icon'>!</div>}
         {children}
       </div>

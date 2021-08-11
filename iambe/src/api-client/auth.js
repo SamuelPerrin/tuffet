@@ -39,7 +39,7 @@ export const login = async ({ username, password }) => {
 
     return userData;
   } catch (err ) {
-    console.log('err', err);
+    return err.response;
   }
 }
 

@@ -117,7 +117,7 @@ const StyledPoem = styled.div`
 `;
 
 const PoemTile = props => {
-  const { poem, setLoading, getRhymes, getMeter, getCurrentUser, fetchCurrentUser, filterPoemsBy, filtered } = props;
+  const { poem, getRhymes, getMeter, getCurrentUser, fetchCurrentUser, filterPoemsBy, filtered, refresh, setRefresh, setLoading } = props;
   const [openMenu, setOpenMenu] = useState(false);
   const history = useHistory();
 
@@ -142,6 +142,8 @@ const PoemTile = props => {
     await deletePoemById(id);
     getCurrentUser(await fetchCurrentUser());
     setLoading(false);
+    setRefresh(refresh + 1);
+    window.scrollTo(0,0);
   }
 
   return (

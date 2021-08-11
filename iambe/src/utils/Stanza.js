@@ -100,7 +100,7 @@ class Stanza {
       // returns true if the score of each pair in arr is greater than the THRESHOLD
       return arr.every(x => scores[x] > THRESHOLD)
     }
-
+    
     if (stan.length === 2) {
       const onetwo = new Rhyme(...stan).getScore();
       if (onetwo > THRESHOLD) bestGuess = 'cplt1';
@@ -294,7 +294,7 @@ class Stanza {
       const onefour = new Rhyme(stan[0], stan[3]).getScore();
       const onefive = new Rhyme(stan[0], stan[4]).getScore();
       const onesix = new Rhyme(stan[0], stan[5]).getScore();
-      // const twothree = new Rhyme(stan[1], stan[2]).getScore();
+      const twothree = new Rhyme(stan[1], stan[2]).getScore();
       const twofour = new Rhyme(stan[1], stan[3]).getScore();
       const twofive = new Rhyme(stan[1], stan[4]).getScore();
       const twosix = new Rhyme(stan[1], stan[5]).getScore();
@@ -318,7 +318,8 @@ class Stanza {
         {rs:'baccb', pairs:['onethree', 'twosix', 'fourfive']},
         {rs:'bcabc', pairs:['onefour', 'twofive', 'threesix']},
         {rs:'bccab', pairs:['onefive', 'twosix', 'threefour']},
-        {rs:'a2b3a', pairs:['onetwo','onesix','twosix','threefour','threefive','fourfive']},
+        {rs:'a2b3a', pairs:['onetwo', 'onesix', 'twosix', 'threefour', 'threefive', 'fourfive']},
+        {rs:'bbaab', pairs:['onefour', 'onefive', 'twothree','twosix', 'threesix', 'fourfive']},
       ];
 
       const allScores = {
@@ -326,8 +327,8 @@ class Stanza {
         'onethree':onethree,
         'onefour':onefour,
         'onefive':onefive,
-        'onseix':onesix,
-        // 'twothree':twothree,
+        'onesix':onesix,
+        'twothree':twothree,
         'twofour':twofour,
         'twofive':twofive,
         'twosix':twosix,
@@ -341,6 +342,7 @@ class Stanza {
 
       let fourthPossibles = [];
       let output = this.winnower(possibles, allScores);
+      
       if (!!output) bestGuess = output[0];
       if (!!output && output.length > 1) {
         fourthPossibles = output;
@@ -922,6 +924,8 @@ class Stanza {
           return makeRhymes([[0, 4], [1, 5], [2, 3]]);
         case 'a2b3a':
           return makeRhymes([[0, 1], [1, 5], [2, 3], [3, 4]]);
+        case 'bbaab':
+          return makeRhymes([[0, 3], [1, 2], [2, 5], [3, 4]])
         default:
           return rhymes;
       }

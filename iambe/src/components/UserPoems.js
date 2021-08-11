@@ -2,19 +2,21 @@ import React, { useState, useRef, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import { connect } from 'react-redux';
 
-import { getRhymes, getMeter, getCurrentUser } from '../actions';
+import { getRhymes, getMeter, getCurrentUser, setError } from '../actions';
 import { fetchCurrentUser } from '../api-client/auth';
 
 import Login from './Login';
-import { RedSpan, YellowSpan } from './styled/Spans';
+import { RedSpan } from './styled/Spans';
 import Container from './styled/Container';
 import Section from './styled/Section';
 import Paginator from './styled/Paginator';
 import PoemTile from './styled/PoemTile';
 import Button from './styled/Button';
+import Spinner from './styled/Spinner';
+import Toast from './styled/Toast';
 
 const UserPoems = props => {
-  const { username, userpoems, getRhymes, getMeter, getCurrentUser } = props;
+  const { username, userpoems, error, getRhymes, getMeter, getCurrentUser, setError } = props;
   const history = useHistory();
   const poemsToRender = useRef(userpoems);
   const [filtered, setFiltered] = useState();
@@ -22,11 +24,12 @@ const UserPoems = props => {
   const [sortBy, setSortBy] = useState('newestFirst');
   const [perPage, setPerPage] = useState(6);
   const [refresh, setRefresh] = useState(0);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     poemsToRender.current = userpoems;
     setFiltered(false);
-  }, []);
+  }, [loading]);
 
   const filterPoemsBy = e => {
     const filterAuthor = e.target.innerHTML;
@@ -73,6 +76,13 @@ const UserPoems = props => {
               {filtered ? "Saved Poems by " + author : username.slice(0,1).toUpperCase() + username.slice(1) + "'s Poems"}
             </RedSpan>
           </h2>
+          {error &&
+            <Toast
+              variant='danger'
+              onClick={() => setError(false)}
+            >
+              {error}
+            </Toast>}
           <div style={{display:"flex", flexFlow:"row wrap", justifyContent:"space-evenly", width:"100%"}}>
             {poemsToRender.current.length > 3 && <label htmlFor="sortby" style={{display:"block", width:"auto"}}>
               Sort by:&nbsp;
@@ -98,7 +108,7 @@ const UserPoems = props => {
           </div>
           {poemsToRender.current.length ? 
           <div>
-            {poemsToRender.current.length && 
+            {!loading && 
               <Paginator
                 data={poemsToRender.current.sort(comparisons[sortBy])}
                 perPage={perPage}
@@ -109,7 +119,9 @@ const UserPoems = props => {
                 fetchCurrentUser={fetchCurrentUser}
                 filterPoemsBy={filterPoemsBy}
                 filtered={filtered}
+                setRefresh={setRefresh}
                 refresh={refresh}
+                setLoading={setLoading}
               />
             }
           </div>
@@ -119,6 +131,7 @@ const UserPoems = props => {
             </div>}
           {filtered && 
             <Button onClick={unfilter} size="small">Remove filter</Button>}
+          {loading && <Spinner />}
         </Section>
       </Container>
     </div>
@@ -131,7 +144,8 @@ const mapStateToProps = state => {
   return {
     username: state.currentUser.username,
     userpoems: state.currentUser.poems,
+    error: state.toastError,
   }
 }
 
-export default connect(mapStateToProps, { getRhymes, getMeter, getCurrentUser })(UserPoems)
+export default connect(mapStateToProps, { getRhymes, getMeter, getCurrentUser, setError })(UserPoems)

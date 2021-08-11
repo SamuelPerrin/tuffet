@@ -25,6 +25,13 @@ const PoemForm = props => {
     });
   }
 
+  const clearText = _ => {
+    setFormValues({
+      ...formValues,
+      text: "",
+    })
+  }
+
   const onSubmit = e => {
     e.preventDefault();
     handleSubmit(formValues);
@@ -62,6 +69,7 @@ const PoemForm = props => {
               name='text'
               type='text'
               value={formValues.text}
+              setValue={clearText}
               placeholder="Text"
             />
             <Button>Save {editing ? "Changes" : "Poem"}</Button>

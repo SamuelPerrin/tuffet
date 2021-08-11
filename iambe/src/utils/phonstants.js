@@ -205,6 +205,7 @@ export const RHYME_SCHEMES = {
   'bcabc':'ABCABC',
   'bccab':'ABCCAB',
   'a2b3a':'AABBBA',
+  'bbaab':'ABBAAB',
   'babc3':'ABABCCC',
   'cacbb':'ABCACBB',
   'srima':'ABABACC',
