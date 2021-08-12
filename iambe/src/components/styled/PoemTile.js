@@ -117,7 +117,7 @@ const StyledPoem = styled.div`
 `;
 
 const PoemTile = props => {
-  const { poem, getRhymes, getMeter, getCurrentUser, fetchCurrentUser, filterPoemsBy, filtered, refresh, setRefresh, setLoading } = props;
+  const { poem, getRhymes, getMeter, getCurrentUser, fetchCurrentUser, filterPoemsByAuthor, filtered, refresh, setRefresh, setLoading } = props;
   const [openMenu, setOpenMenu] = useState(false);
   const history = useHistory();
 
@@ -156,7 +156,7 @@ const PoemTile = props => {
       </div>
       <em className='attr'>by&nbsp;
         <HoverCard hoverText={filtered ? "" : "Click to filter poems by author"}>
-          <YellowSpan onClick={filterPoemsBy} style={filtered ? {} : {cursor:"pointer"}}>
+          <YellowSpan onClick={filterPoemsByAuthor} style={filtered ? {} : {cursor:"pointer"}}>
             {poem.author ? poem.author : "Anonymous"}
           </YellowSpan>
         </HoverCard>
