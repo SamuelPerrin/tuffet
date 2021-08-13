@@ -8,6 +8,7 @@ import { BlueSpan, YellowSpan } from './Spans';
 import ButtonRow from './ButtonRow';
 import Button from './Button';
 import HoverCard from './HoverCard';
+import Modal from './Modal';
 
 const StyledPoem = styled.div`
   height:13rem;
@@ -119,6 +120,7 @@ const StyledPoem = styled.div`
 const PoemTile = props => {
   const { poem, getRhymes, getMeter, getCurrentUser, fetchCurrentUser, filterPoemsByAuthor, filtered, refresh, setRefresh, setLoading } = props;
   const [openMenu, setOpenMenu] = useState(false);
+  const [showModal, setShowModal] = useState(false);
   const history = useHistory();
 
   const toggleOpenMenu = () => setOpenMenu(!openMenu);
@@ -139,6 +141,7 @@ const PoemTile = props => {
 
   const deletePoem = async id => {
     setLoading(true);
+    setShowModal(false);
     await deletePoemById(id);
     getCurrentUser(await fetchCurrentUser());
     setLoading(false);
@@ -146,7 +149,12 @@ const PoemTile = props => {
     window.scrollTo(0,0);
   }
 
-  return (
+  const openModal = () => {
+    setShowModal(true);
+    setOpenMenu(false);
+  }
+
+  return (!showModal ? 
     <StyledPoem>
       <div className='flexRow'>
         <h3><BlueSpan>{poem.title ? poem.title : "Untitled"}</BlueSpan></h3>
@@ -172,9 +180,17 @@ const PoemTile = props => {
       {openMenu && 
         <div className={openMenu ? 'open-menu' : 'closed-menu'}>
           <div className='menu-item' onClick={() => updatePoem(poem.poemid)}>Edit poem</div>
-          <div className='menu-item' onClick={() => deletePoem(poem.poemid)}>Delete poem</div>
+          <div className='menu-item' onClick={openModal}>Delete poem</div>
         </div>}
     </StyledPoem>
+    :
+    <Modal
+      variant="delete"
+      onConfirm={() => deletePoem(poem.poemid)}
+      setShowModal={setShowModal}
+    >
+      Are you sure you want to delete "{poem.title}"?
+    </Modal>
   )
 }
 
