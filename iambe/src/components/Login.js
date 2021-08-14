@@ -97,7 +97,6 @@ const Login = props => {
             <TextInput 
               label="Username"
               name="username"
-              placeholder="username"
               type="text"
               value={formValues.username}
               error={errors.username}
@@ -106,7 +105,6 @@ const Login = props => {
             <TextInput 
               label="Password"
               name="password"
-              placeholder="password"
               type="password"
               value={formValues.password}
               error={errors.password}
