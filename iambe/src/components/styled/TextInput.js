@@ -13,7 +13,17 @@ const InputWrapper = styled.label`
   }};
   align-items:center;
   justify-content:space-evenly;
-  margin:1rem;
+  margin:0.75rem;
+  
+  input {
+    border-radius: ${props => props.theme.borderRadius};
+    border: 1px solid ${props => props.theme.gray};
+    padding: 0.25rem 0.625rem;
+
+    &:focus {
+      border: 1px solid ${props => props.theme.black};
+    }
+  }
 
   .error {
     color: ${props => props.theme.red};
@@ -39,4 +49,4 @@ const TextInput = props => {
   )
 }
 
-export default TextInput
+export default TextInput;

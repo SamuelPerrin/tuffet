@@ -4877,7 +4877,7 @@ const lexicon = {
 	"lane": ["L EY1 N"],
 	"language": ["L AE1 NG G W IH0 JH"],
 	"languid": ["L AE1 NG G W IH0 D"],
-	"languish": ["L AE1 NG G W IH0 SH", "L AE1 NG GW IH0 SH EH3 D"],
+	"languish": ["L AE1 NG G W IH0 SH"],
 	"languishment": ["L AE1 NG G W IH0 SH M AH2 N T"],
 	"languor": ["L AE1 NG G ER0"],
 	"lank": ["L AE1 NG K"],
