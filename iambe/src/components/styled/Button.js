@@ -114,8 +114,6 @@ const ButtonWrapper = styled.button`
   transition: all 0.1s ease-in-out;
 `
 
-
-
 export default function Button(props) {
   const {onClick, children, variant, size, ...rest} = props;
   return(

@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useHistory, Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 import { getRhymes, getMeter, getCurrentUser, setError } from '../actions';
@@ -7,6 +7,7 @@ import { fetchCurrentUser } from '../api-client/auth';
 
 import Login from './Login';
 import { RedSpan } from './styled/Spans';
+import Breadcrumbs from './styled/Breadcrumbs';
 import Container from './styled/Container';
 import Section from './styled/Section';
 import Paginator from './styled/Paginator';
@@ -40,6 +41,7 @@ const UserPoems = props => {
     poemsToRender.current = filteredList;
     setFiltered(true);
     setRefresh(refresh + 1);
+    window.scrollTo(0,0);
   }
 
   // for search bar
@@ -129,6 +131,11 @@ const UserPoems = props => {
   return (
     username ?
     <div>
+      <Breadcrumbs>
+        <Link to='/'>Home</Link>
+        <Link to='/my-poems' className={!filtered && 'current'} onClick={unfilter}>My Poems</Link>
+        {filtered && <Link to='/my-poems' className='current'>{author ? author : 'Search'}</Link>}
+      </Breadcrumbs>
       <Container>
         <Section>
           <h2>

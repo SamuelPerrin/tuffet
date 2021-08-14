@@ -16,10 +16,10 @@ const StanzaTileWrapper = styled.div`
 `
 
 export default function StanzaTile(props) {
-  const { children, maxWidth, className, hoverText, onClick, stanzaNum } = props;
+  const { children, maxWidth, className, hoverText, onClick, stanzaNum, ...rest } = props;
 
   return (
-    <StanzaTileWrapper maxWidth={maxWidth} className={className}>
+    <StanzaTileWrapper maxWidth={maxWidth} className={className} {...rest}>
       <HoverCard hoverText={hoverText} onClick={onClick}>
         {children.map(child => <p stanzanum={stanzaNum} onClick={onClick} key={child}>{child}</p>)}
       </HoverCard>

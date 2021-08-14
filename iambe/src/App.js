@@ -25,6 +25,7 @@ import Register from './components/Register';
 import UserPoems from './components/UserPoems';
 import AddPoem from './components/AddPoem';
 import EditPoem from './components/EditPoem';
+import FocusPoem from './components/FocusPoem';
 import Footer from './components/styled/Footer';
 
 function App() {
@@ -57,6 +58,7 @@ function App() {
           <Route exact path="/my-poems" component={UserPoems} />
           <Route exact path="/save-poem" component={AddPoem} />
           <Route path="/edit/poem/:poemid" component={EditPoem} />
+          <Route path="/poem/:poemid" component={FocusPoem} />
           <Route component={PageNotFound} />
         </Switch>
         <Footer />

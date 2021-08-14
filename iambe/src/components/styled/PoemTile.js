@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import { useHistory } from 'react-router-dom';
+import { useHistory, Link } from 'react-router-dom';
 
 import { deletePoemById } from '../../api-client/auth';
 
@@ -157,7 +157,7 @@ const PoemTile = props => {
   return (!showModal ? 
     <StyledPoem>
       <div className='flexRow'>
-        <h3><BlueSpan>{poem.title ? poem.title : "Untitled"}</BlueSpan></h3>
+        <h3><BlueSpan><Link to={`/poem/${poem.poemid}`}>{poem.title ? poem.title : "Untitled"}</Link></BlueSpan></h3>
         <div className='menu' onClick={toggleOpenMenu}>
           <span className={openMenu ? 'menu-button open' : 'menu-button'}>{openMenu ? 'x' : '...'}</span>
         </div>

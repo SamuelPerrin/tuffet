@@ -19,8 +19,12 @@ export default function Breadcrumbs(props) {
   const {maxWidth, children, ...rest} = props;
   return(
     <BreadcrumbWrapper {...rest} maxWidth={maxWidth} aria-label='Breadcrumb'>
-      {children.map((child, i) =>
-        <span key={i}>{child}&nbsp;/&nbsp;</span>)}
+      {
+        children.map((child, i) => {
+          if (child) return <span key={i}>{child}&nbsp;/&nbsp;</span>
+          else return null;
+        })
+      }
     </BreadcrumbWrapper>
   )
 }
