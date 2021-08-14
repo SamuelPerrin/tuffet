@@ -10,6 +10,7 @@ import Container from './styled/Container';
 import Section from './styled/Section';
 import { YellowSpan, RedSpan } from './styled/Spans';
 import ListItemTile from './styled/ListItemTile';
+import PoemBox from './styled/PoemBox';
 import StanzaTile from './styled/StanzaTile';
 import Button from './styled/Button';
 import ButtonRow from './styled/ButtonRow';
@@ -134,7 +135,7 @@ const Meter = props => {
           <Section>
             <h2><RedSpan>Meter by Stanza</RedSpan></h2>
             <p>Select a stanza to learn more about its meter.</p>
-            <div style={{border:'1px solid black',borderRadius:'5px',padding:'1rem',marginTop:'1rem'}}>
+            <PoemBox>
               {poems.map(poem => new Poem(poem).getStanzas().map(stanza => {
                     stanzaNum++
                     const thisStanza = new Stanza(stanza)
@@ -147,7 +148,7 @@ const Meter = props => {
                     />
                   }
                 ))}
-            </div>
+            </PoemBox>
           </Section>
           <ButtonRow>
             <Button onClick={goToRhymes} className="hide-for-desktop" size="small">Get Rhymes</Button>

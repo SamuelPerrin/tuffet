@@ -6,6 +6,7 @@ import Breadcrumbs from './styled/Breadcrumbs';
 import { YellowSpan, RedSpan, BlueSpan } from './styled/Spans';
 import Container from './styled/Container';
 import Section from './styled/Section';
+import PoemBox from './styled/PoemBox';
 import StanzaTile from './styled/StanzaTile';
 import ListItemTile from './styled/ListItemTile';
 import Button from './styled/Button';
@@ -151,7 +152,7 @@ const Rhymes = props => {
           <Section>
             <h2><BlueSpan>Rhyme Scheme by Stanza</BlueSpan></h2>
             <p>Select a stanza to learn more about its rhymes.</p>
-            <div style={{border:'1px solid black',borderRadius:'5px',padding:'1rem',marginTop:'1rem'}}>
+            <PoemBox>
               {poems.map(poem => new Poem(poem).getStanzas().map(stanza => {
                   stanzaNum++;
                   return <StanzaTile 
@@ -163,7 +164,7 @@ const Rhymes = props => {
                   />
                 }
               ))}
-            </div>
+            </PoemBox>
           </Section>
           <ButtonRow>
             <Button onClick={goToMeter} className="hide-for-desktop" size="small">Get Meter</Button>

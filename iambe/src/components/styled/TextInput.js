@@ -3,7 +3,14 @@ import styled from 'styled-components';
 
 const InputWrapper = styled.label`
   display:flex;
-  flex-flow:column;
+  flex-flow: ${props => {
+    switch (props.variant) {
+      case 'horizontal':
+        return 'row';
+      default:
+        return 'column'
+    }
+  }};
   align-items:center;
   justify-content:space-evenly;
   margin:1rem;
@@ -15,10 +22,10 @@ const InputWrapper = styled.label`
 `
 
 const TextInput = props => {
-  const { name, type, onChange, placeholder, error, value, label } = props;
+  const { name, type, onChange, placeholder, error, value, label, variant } = props;
 
   return (
-    <InputWrapper>
+    <InputWrapper variant={variant}>
       {label}
       <input
         name={name}

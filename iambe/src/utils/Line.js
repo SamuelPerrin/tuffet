@@ -335,6 +335,8 @@ class Line {
     // Decide which pronunciation is most likely
     const best = this.howRegular(meters);
 
+    // console.log("I'm going with", best);
+
     return best;
   }
 
@@ -570,7 +572,7 @@ class Line {
       }
     }
 
-    if (this.text.includes("various")) console.log(foots, feet)
+    // if (this.text.includes("travellers")) console.log(foots, feet)
 
     return {feet, foots, label};
   }
@@ -841,13 +843,18 @@ class Line {
     const lineList = words.map(word => {
       const stressList = new Word(word).getStressList(true);
       let numSyls;
+      let bestPron;
 
       // get sylCount by checking which pron of the word is being used in this line
       if (Array.isArray(stressList[0])) { // word is a crux
         for (let pron of stressList) {
           if (flatFeet.slice(0, pron.length).every((v,i) => v === pron[i])) {
-            numSyls = pron.length;
-            var bestPron = pron;
+            // only overwrite if this pron has more syls than the one already found
+            // this is necessary for a case like traveller [1,4,3] vs. trav'ler [1,4], where [1,4] was overwriting b/c it also matches 
+            if ((bestPron && pron.length >= bestPron.length) || !bestPron) {
+              numSyls = pron.length;
+              bestPron = pron;
+            }
           }
         }
       } else {
@@ -899,6 +906,8 @@ class Line {
         }
         safetyCount++;
       }
+
+      // console.log("posList is", posList);
 
       return {word: word.text, posList: posList}
     })
