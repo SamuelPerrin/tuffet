@@ -23,6 +23,12 @@ public class Poem extends Auditable {
     @Column(nullable = false)
     private String text;
 
+    private String publication;
+
+    @Lob
+    @Type(type = "text")
+    private String notes;
+
     @OneToMany(mappedBy = "poem", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnoreProperties(value = "poem", allowSetters = true)
     private List<UserPoems> users = new ArrayList<>();
@@ -33,6 +39,14 @@ public class Poem extends Auditable {
         this.title = title;
         this.author = author;
         this.text = text;
+    }
+
+    public Poem(String title, String author, String text, String publication, String notes) {
+        this.title = title;
+        this.author = author;
+        this.text = text;
+        this.publication = publication;
+        this.notes = notes;
     }
 
     public long getPoemid() {
@@ -65,6 +79,22 @@ public class Poem extends Auditable {
 
     public void setText(String text) {
         this.text = text;
+    }
+
+    public String getPublication() {
+        return publication;
+    }
+
+    public void setPublication(String publication) {
+        this.publication = publication;
+    }
+
+    public String getNotes() {
+        return notes;
+    }
+
+    public void setNotes(String notes) {
+        this.notes = notes;
     }
 
     public List<UserPoems> getUsers() {

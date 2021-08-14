@@ -38,6 +38,8 @@ public class PoemServiceImpl implements PoemService {
         newPoem.setTitle(poem.getTitle());
         newPoem.setAuthor(poem.getAuthor());
         newPoem.setText(poem.getText());
+        newPoem.setPublication(poem.getPublication());
+        newPoem.setNotes(poem.getNotes());
 
         newPoem.getUsers().clear();
         for (UserPoems up : poem.getUsers()) {
@@ -69,6 +71,14 @@ public class PoemServiceImpl implements PoemService {
 
         if (poem.getText() != null) {
             currentPoem.setText(poem.getText());
+        }
+
+        if (poem.getPublication() != null) {
+            currentPoem.setPublication(poem.getPublication());
+        }
+
+        if (poem.getNotes() != null) {
+            currentPoem.setNotes(poem.getNotes());
         }
 
         if (poem.getUsers().size() > 0) {
