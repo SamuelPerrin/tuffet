@@ -116,19 +116,13 @@ const Login = props => {
         </Section>}
       </Container>
       {toastError &&
-      <Toast
-        variant='danger'
-        onClick={() => setError(false)}
-      >
-        {toastError}
-      </Toast>}
-      {/* {loading &&
         <Toast
-          variant='success'
-          onClick={() => setLoading(false)}
+          variant='danger'
+          onClick={() => setError(false)}
         >
-          Loading might take a minute.
-        </Toast>} */}
+          {toastError}
+        </Toast>
+      }
     </div>
   )
 }
