@@ -133,7 +133,7 @@ const UserPoems = props => {
     <div>
       <Breadcrumbs>
         <Link to='/'>Home</Link>
-        <Link to='/my-poems' className={!filtered && 'current'} onClick={unfilter}>My Poems</Link>
+        <Link to='/my-poems' className={!filtered && 'current'} style={{textDecoration:'none'}} onClick={unfilter}>My Poems</Link>
         {filtered && <Link to='/my-poems' className='current'>{author ? author : 'Search'}</Link>}
       </Breadcrumbs>
       <Container>

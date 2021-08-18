@@ -9,11 +9,18 @@ const TextAreaWrapper = styled.div`
   position:relative;
 
   @media (max-width:650px) {
-    width:95%;
+    width: 95%;
   }
 
   @media (min-width:650px) {
-    width:40rem;
+    width: ${props => {
+      switch(props.variant) {
+        case 'no-clear':
+          return '20rem'
+        default:
+          return '40rem';
+      }
+    }};
   }
   
   button {
@@ -42,11 +49,19 @@ const StyledTextArea = styled.textarea`
   font-size: ${props => props.theme.inputFontSize};
   height: ${props => props.theme.textAreaHeight};
   padding: ${props => props.theme.textAreaPadding};
+  border: ${props => {
+    switch(props.variant) {
+      case 'no-clear':
+        return '1px solid ' + props.theme.black;
+      default:
+        return '2px solid ' + props.theme.black;
+    }
+  }};
   border: 2px solid ${props => props.theme.black};
 `
 
 export default function TextArea(props) {
-  const {onChange, value, setValue, name, placeholder, error, ...rest} = props;
+  const {onChange, value, setValue, name, placeholder, variant, error, ...rest} = props;
 
   const clearText = e => {
     e.preventDefault();
@@ -54,7 +69,7 @@ export default function TextArea(props) {
   }
 
   return(
-    <TextAreaWrapper>
+    <TextAreaWrapper variant={variant}>
       <StyledTextArea
         {...rest}
         name={name}
@@ -63,12 +78,14 @@ export default function TextArea(props) {
         placeholder={placeholder}
         rows='15'
       />
-      {value && <Button
+      {variant !== 'no-clear' && value &&
+        <Button
         onClick={clearText}
         variant='clear'
-      >
-        Clear
-      </Button>}
+        >
+          Clear
+        </Button>
+      }
       <p className="error">{error}</p>
     </TextAreaWrapper>
   )
