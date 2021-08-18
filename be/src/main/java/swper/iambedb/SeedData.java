@@ -7,6 +7,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 import swper.iambedb.models.*;
+import swper.iambedb.services.MessageService;
 import swper.iambedb.services.PoemService;
 import swper.iambedb.services.RoleService;
 import swper.iambedb.services.UserService;
@@ -27,6 +28,9 @@ public class SeedData implements CommandLineRunner {
 
     @Autowired
     PoemService poemService;
+
+    @Autowired
+    MessageService messageService;
 
     @Transactional
     @Override
@@ -80,5 +84,14 @@ public class SeedData implements CommandLineRunner {
         );
         p4.getUsers().add(new UserPoems(u2, p4));
         p4 = poemService.save(p4);
+
+        Message m1 = new Message("This is the subject","Sample body of the message goes here.", u2);
+        m1 = messageService.save(m1);
+
+        Message m2 = new Message("Hello, there!", "This is just to say how great everything is!","test@test.tech");
+        m2 = messageService.save(m2);
+
+        Message m3 = new Message("What happens to the title field if the title is long?", "Once upon a time there was a body that was a little bit longer than anyone was expecting", u2);
+        m3 = messageService.save(m3);
     }
 }
