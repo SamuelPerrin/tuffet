@@ -3,8 +3,8 @@ import { connect } from 'react-redux';
 import { useHistory, Link } from 'react-router-dom';
 import * as yup from 'yup';
 
-import { login } from '../api-client/auth';
-import { getCurrentUser, setError } from '../actions';
+import { login, axiosWithAuth } from '../api-client/auth';
+import { getCurrentUser, setError, setMessages } from '../actions';
 import { loginSchema } from '../yup_schema/';
 
 import Container from './styled/Container';
@@ -26,31 +26,42 @@ const Login = props => {
   const [disabled, setDisabled] = useState(true);
   const [loading, setLoading] = useState(false);
   const history = useHistory();
-  const { toastError, uri, getCurrentUser, setError,  } = props;
+  const { toastError, uri, getCurrentUser, setError, setMessages } = props;
 
   const handleSubmit = async e => {
     e.preventDefault();
     let loggedIn = false;
+    let userData;
 
     await loginSchema
       .validate(formValues)
       .then(async _ => {
         setLoading(true);
-        // const userData = await login(formValues);
-        let userData = await login(formValues);
+        userData = await login(formValues);
         if (userData.status) {
-          if (userData.status === 401) setError("Username and password not found.");
-          else setError("Something went wrong!");
+          if (userData.status === 401) setError({message:"Username and password not found.", variant:"danger"});
+          else setError({message:"Something went wrong!", variant:"danger"});
+        }
+        getCurrentUser(userData);
+
+        if (userData.role === "ADMIN") {
+          let messages;
+          await axiosWithAuth()
+            .get('/messages/messages')
+            .then(res => messages = res.data)
+            .catch(err => console.log(err));
+          
+          setMessages(messages);
         }
 
-        getCurrentUser(userData);
         loggedIn = userData && userData.username;
         setLoading(false);
       })
       .catch(err => console.log(err));
     
     if (loggedIn) {
-      history.push(uri);
+      if (userData.role === "ADMIN") history.push("/dashboard");
+      else history.push(uri);
     } else {
       setFormValues(initialValues);
     }
@@ -119,18 +130,11 @@ const Login = props => {
       </Container>
       {toastError &&
       <Toast
-        variant='danger'
+        variant={toastError.variant}
         onClick={() => setError(false)}
       >
-        {toastError}
+        {toastError.message}
       </Toast>}
-      {/* {loading &&
-        <Toast
-          variant='success'
-          onClick={() => setLoading(false)}
-        >
-          Loading might take a minute.
-        </Toast>} */}
     </div>
   )
 }
@@ -141,4 +145,4 @@ const mapStateToProps = state => {
   }
 }
 
-export default connect(mapStateToProps, { getCurrentUser, setError })(Login)
+export default connect(mapStateToProps, { getCurrentUser, setError, setMessages })(Login)

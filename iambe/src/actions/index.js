@@ -21,6 +21,7 @@ export const GET_CURRENT_USER = 'GET_CURRENT_USER';
 export const SAVE_POEM = 'SAVE_POEM';
 export const SIGN_OUT = 'SIGN_OUT';
 export const SET_ERROR = 'SET_ERROR';
+export const SET_MESSAGES = 'SET_MESSAGES';
 
 export const getRhymes = poetry => {
   const anth = new Anthology(poetry);
@@ -76,4 +77,6 @@ export const savePoem = (poemObj) => ({type:SAVE_POEM, payload:poemObj});
 
 export const signOut = () => ({type:SIGN_OUT});
 
-export const setError = (error) => ({type:SET_ERROR, payload:error})
+export const setError = (error) => ({type:SET_ERROR, payload:error});
+
+export const setMessages = (messages) => ({type:SET_MESSAGES, payload:messages});

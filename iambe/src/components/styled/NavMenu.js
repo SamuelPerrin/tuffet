@@ -3,8 +3,9 @@ import { connect } from 'react-redux';
 import styled from 'styled-components';
 import { useHistory } from 'react-router-dom';
 
-import { getRhymes, getMeter, toggleMenu, toggleAboutSubMenu, closeAboutSubMenu, toggleSampleMenu, closeSampleMenu, signOut } from '../../actions';
+import { getRhymes, getMeter, toggleMenu, toggleAboutSubMenu, closeAboutSubMenu, toggleSampleMenu, closeSampleMenu, signOut, setMessages } from '../../actions';
 import {POPE, BYRON, KEATS, DICKINSON} from '../../constants/samples';
+import { fetchMessages } from '../../api-client/auth';
 
 const StyledMenu = styled.div`
   position: absolute;
@@ -82,6 +83,7 @@ const NavMenu = props => {
     toggleSampleMenu,
     closeSampleMenu,
     signOut,
+    setMessages,
   } = props;
 
   const history = useHistory();
@@ -110,6 +112,12 @@ const NavMenu = props => {
     history.push('/meter');
   }
 
+  const goToDash = async () => {
+    switchMenu();
+    await setMessages(await fetchMessages());
+    history.push('/dashboard');
+  }
+
   const logout = () => {
     window.localStorage.removeItem("tuffet-token");
     window.localStorage.removeItem("userData");
@@ -135,6 +143,7 @@ const NavMenu = props => {
           <span onClick={() => goToURI('/about/meter')} className='menu-item sub-item'>About meter</span>
         </div>
       </span>
+      <span onClick={() => goToURI('/contact')} className='menu-item'>Contact Us</span>
       <span className='menu-item super-item' onClick={() => toggleSampleMenu()}>
         <div style={{display:'flex', justifyContent:'space-between'}}>
           <span>Samples</span>
@@ -155,6 +164,8 @@ const NavMenu = props => {
       {currentUser ?
         <span onClick={() => goToURI('/my-poems')} className='menu-item'>My Poems</span> : 
         <span onClick={() => goToURI('/login')} className='menu-item'>Login</span>}
+      {currentUser && currentUser.role === 'ADMIN' && 
+        <span onClick={goToDash} className='menu-item'>Dashboard</span>}
       {currentUser && 
         <span onClick={logout} className='menu-item'>Logout</span>}
     </StyledMenu>
@@ -171,4 +182,4 @@ const mapStateToProps = state => {
   }
 }
 
-export default connect(mapStateToProps, { getRhymes, getMeter, toggleMenu, toggleAboutSubMenu, closeAboutSubMenu, toggleSampleMenu, closeSampleMenu, signOut })(NavMenu);
+export default connect(mapStateToProps, { getRhymes, getMeter, toggleMenu, toggleAboutSubMenu, closeAboutSubMenu, toggleSampleMenu, closeSampleMenu, signOut, setMessages })(NavMenu);

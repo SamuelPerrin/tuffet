@@ -3,6 +3,9 @@ import styled from 'styled-components';
 import Button from './Button';
 
 const TextAreaWrapper = styled.div`
+  display:flex;
+  flex-flow:column nowrap;
+  justify-content:center;
   position:relative;
 
   @media (max-width:650px) {
@@ -21,6 +24,12 @@ const TextAreaWrapper = styled.div`
     height:2rem;
     padding:0;
   }
+
+  .error {
+    color: ${props => props.theme.red};
+    font-size: ${props => props.theme.smallFont};
+    text-align:center;
+  }
 `
 
 const StyledTextArea = styled.textarea`
@@ -37,7 +46,7 @@ const StyledTextArea = styled.textarea`
 `
 
 export default function TextArea(props) {
-  const {onChange, value, setValue, name, placeholder, ...rest} = props;
+  const {onChange, value, setValue, name, placeholder, error, ...rest} = props;
 
   const clearText = e => {
     e.preventDefault();
@@ -60,6 +69,7 @@ export default function TextArea(props) {
       >
         Clear
       </Button>}
+      <p className="error">{error}</p>
     </TextAreaWrapper>
   )
 }

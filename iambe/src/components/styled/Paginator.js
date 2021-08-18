@@ -3,7 +3,7 @@ import ButtonRow from './ButtonRow';
 import Button from './Button';
 
 const Paginator = props => {
-  const { data, perPage, Item, ...rest } = props;
+  const { data, perPage, Item, variant, ...rest } = props;
   const [lot, setLot] = useState(0);
   const lotData = data.slice(lot * perPage, (lot + 1) * perPage);
   const lastLot = Math.ceil(data.length / perPage) - 1;
@@ -19,11 +19,12 @@ const Paginator = props => {
 
   return (
     <>
-      <div style={{display:"flex", flexFlow:"row wrap", justifyContent:"space-evenly"}}>
+      <div style={{display:"flex", flexFlow:(variant === "vertical" && "column nowrap") || "row wrap",  justifyContent:"space-evenly"}}>
         {lotData.map(x => (
           <Item
-            key={x.poem.text}
+            key={x.poem ? x.poem.text : x.messageid}
             poem={x.poem}
+            message={x}
             {...rest}
           />
           ))}

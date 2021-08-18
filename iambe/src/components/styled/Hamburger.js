@@ -101,7 +101,6 @@ const Hamburger = props => {
   return (
     <>
       <StyledHamburger onClick={switchMenu} className={isMenuOpen ? 'open' : 'closed'}>
-        {/* <span className='hide-for-mobile'>MENU</span> */}
         <div>
           <span></span>
           <span></span>

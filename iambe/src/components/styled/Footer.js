@@ -52,6 +52,7 @@ const Footer = props => {
         <FooterColumn>
           <Link to='/'>Home</Link>
           <Link to='/about'>About</Link>
+          <Link to='/contact'>Contact Us</Link>
           {currentUser ? <Link to='/my-poems'>My Poems</Link> : <Link to='/samples'>Samples</Link>}
         </FooterColumn>
         <FooterColumn className='wrappable'>

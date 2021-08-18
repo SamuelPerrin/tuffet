@@ -1,6 +1,8 @@
 import axios from 'axios';
+import { setMessages } from '../actions';
 
-export const BASE_URL = "https://swper-iambedb.herokuapp.com"
+// export const BASE_URL = "https://swper-iambedb.herokuapp.com";
+export const BASE_URL = "http://localhost:2019";
 
 const setToken = (token) => {
   window.localStorage.setItem('tuffet-token', token);
@@ -66,7 +68,7 @@ export const fetchCurrentUser = async () => {
     
     await axiosWithAuth()
       .get('/users/user/')
-      .then(res => {
+      .then(async res => {
         const { username, email, poems, roles, userid } = res.data;
         const user = { username, email, poems, role: roles[0].role.name, userid };
         userData = user;
@@ -91,4 +93,17 @@ export const deletePoemById = async (id) => {
   setUserData(userData);
   
   return userData;
+}
+
+export const fetchMessages = async () => {
+  let messages = [];
+
+  await axiosWithAuth()
+    .get('/messages/messages')
+    .then(res => {
+      messages = res.data;
+    })
+    .catch(err => console.log(err))
+  
+  return messages;
 }

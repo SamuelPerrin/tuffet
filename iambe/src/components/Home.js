@@ -29,9 +29,9 @@ const Home = props => {
       history.push('/rhyme');
     } catch (err) {
       console.log(err);
-      if (err.message === "Error: Poems cannot be empty!") setError(err.message);
-      else if (err.message === "Tuffet cannot find rhymes in one line!") setError(err.message);
-      else setError("Something went wrong with that poem!");
+      if (err.message === "Error: Poems cannot be empty!") setError({message:err.message, variant:"danger"});
+      else if (err.message === "Tuffet cannot find rhymes in one line!") setError({message:err.message, variant:"danger"});
+      else setError({message:"Something went wrong with that poem!", variant:"danger"});
     }
   }
 
@@ -42,8 +42,8 @@ const Home = props => {
       history.push('/meter');
     } catch (err) {
       console.log(err);
-      if (err.message === "Error: Poems cannot be empty!") setError(err.message);
-      setError("Something went wrong with that poem!");
+      if (err.message === "Error: Poems cannot be empty!") setError({message:err.message, variant:"danger"});
+      setError({message:"Something went wrong with that poem!", variant:"danger"});
     }
   }
 
@@ -80,10 +80,10 @@ const Home = props => {
       </Section>
       {toastError &&
       <Toast
-        variant='danger'
+        variant={toastError.variant}
         onClick={() => setError(false)}
       >
-        {toastError}
+        {toastError.message}
       </Toast>}
     </div>
   )
