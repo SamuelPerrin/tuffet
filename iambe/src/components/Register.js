@@ -100,24 +100,24 @@ const Register = props => {
               error={errors.username}
               onChange={handleChange}
             />
-              <TextInput
-                label="Email"
-                name="email"
-                placeholder="email"
-                type="text"
-                value={formValues.email}
-                error={errors.email}
-                onChange={handleChange}
-              />
-              <TextInput
-                label="Password*"
-                name="password"
-                placeholder="password"
-                type="password"
-                value={formValues.password}
-                error={errors.password}
-                onChange={handleChange}
-              />
+            <TextInput
+              label="Email"
+              name="email"
+              placeholder="email"
+              type="text"
+              value={formValues.email}
+              error={errors.email}
+              onChange={handleChange}
+            />
+            <TextInput
+              label="Password*"
+              name="password"
+              placeholder="password"
+              type="password"
+              value={formValues.password}
+              error={errors.password}
+              onChange={handleChange}
+            />
             <Button variant={disabled ? 'disabled' : ''} disabled={disabled}>Submit</Button>
           </form>
         </Section>

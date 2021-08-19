@@ -39,7 +39,9 @@ const Login = props => {
         setLoading(true);
         userData = await login(formValues);
         if (userData.status) {
-          if (userData.status === 401) setError({message:"Username and password not found.", variant:"danger"});
+          if (userData.status === 401 || userData.status === 400) {
+            setError({message:"Username and password not found.", variant:"danger"});
+          }
           else setError({message:"Something went wrong!", variant:"danger"});
         }
         getCurrentUser(userData);

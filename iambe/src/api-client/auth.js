@@ -1,7 +1,7 @@
 import axios from 'axios';
-import { setMessages } from '../actions';
 
 export const BASE_URL = "https://swper-iambedb.herokuapp.com";
+// export const BASE_URL = "http://localhost:2019";
 
 const setToken = (token) => {
   window.localStorage.setItem('tuffet-token', token);
