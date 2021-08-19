@@ -33,6 +33,7 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
                 .permitAll()
                 .antMatchers("/logout").authenticated()
                 .antMatchers(HttpMethod.GET, "/users/**").authenticated()
+                .antMatchers(HttpMethod.PATCH, "/users/**").authenticated()
                 .antMatchers(HttpMethod.GET, "/poems/**").authenticated()
                 .antMatchers(HttpMethod.POST, "/poems/poem").authenticated()
                 .antMatchers(HttpMethod.PUT, "/poems/poem/**").authenticated()

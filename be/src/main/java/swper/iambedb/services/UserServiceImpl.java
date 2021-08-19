@@ -3,13 +3,12 @@ package swper.iambedb.services;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.oauth2.client.resource.OAuth2AccessDeniedException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import swper.iambedb.exceptions.ResourceNotFoundException;
-import swper.iambedb.models.Role;
-import swper.iambedb.models.User;
-import swper.iambedb.models.UserPoems;
-import swper.iambedb.models.UserRoles;
+import swper.iambedb.models.*;
 import swper.iambedb.repositories.UserRepository;
 
 import java.util.ArrayList;
@@ -23,6 +22,12 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private RoleService roleService;
+
+    @Autowired
+    private PoemService poemService;
+
+    @Autowired
+    private HelperFunctions helperFunctions;
 
     public User findUserById(long id) {
         return userrepos.findById(id)
@@ -72,6 +77,44 @@ public class UserServiceImpl implements UserService {
     }
 
     @Transactional
+    @Override
+    public User update(User user, long id) {
+        User currentUser = findUserById(id);
+
+        if (helperFunctions.isAuthorizedToMakeChange(currentUser.getUsername())) {
+            if (user.getUsername() != null) {
+                currentUser.setUsername(user.getUsername().toLowerCase());
+            }
+            if (user.getPassword() != null) {
+                currentUser.setPasswordNoEncrypt(user.getPassword());
+            }
+            if (user.getEmail() != null) {
+                currentUser.setEmail(user.getEmail().toLowerCase());
+            }
+
+            if (user.getRoles().size() > 0) {
+                currentUser.getRoles().clear();
+                for (UserRoles ur : user.getRoles()) {
+                    Role addRole = roleService.findRoleById(ur.getRole().getRoleid());
+                    currentUser.getRoles().add(new UserRoles(currentUser, addRole));
+                }
+            }
+
+            if (user.getPoems().size() > 0) {
+                currentUser.getPoems().clear();
+                for (UserPoems up : user.getPoems()) {
+                    Poem addPoem = poemService.findPoemById(up.getPoem().getPoemid());
+                    currentUser.getPoems().add(new UserPoems(currentUser, addPoem));
+                }
+            }
+
+            return userrepos.save(currentUser);
+        } else {
+            throw new OAuth2AccessDeniedException();
+        }
+    }
+
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
     @Override
     public void deleteAll() {
         userrepos.deleteAll();

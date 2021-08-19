@@ -49,6 +49,12 @@ public class UserController {
         return new ResponseEntity<>(null, responseHeaders, HttpStatus.CREATED);
     }
 
+    @PatchMapping(value = "/user/{id}", consumes = "application/json")
+    public ResponseEntity<?> updateUser(@RequestBody User updateUser, @PathVariable long id) {
+        userService.update(updateUser, id);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
     @GetMapping(value = "/user", produces = "application/json")
     public ResponseEntity<?> getCurrentUserInfo(Authentication authentication) {
         User u = userService.findByName(authentication.getName());
