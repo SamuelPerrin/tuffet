@@ -129,7 +129,7 @@ const UserPoems = props => {
   }
 
   return (
-    username ?
+    username &&
     <div>
       <Breadcrumbs>
         <Link to='/'>Home</Link>
@@ -224,9 +224,7 @@ const UserPoems = props => {
           {loading && <Spinner />}
         </Section>
       </Container>
-    </div>
-    :
-    <Login uri="/my-poems" />
+    </div>  
   )
 }
 
