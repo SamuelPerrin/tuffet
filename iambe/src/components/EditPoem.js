@@ -18,8 +18,8 @@ const EditPoem = props => {
       .then(async _ => getCurrentUser(await fetchCurrentUser()))
       .catch(err => {
         console.log(err);
-        if (err.response.status === 401) setError("You might need to log in!");
-        else setError("Something went wrong with saving that poem!");
+        if (err.response.status === 401) setError({message:"You might need to log in!", variant:"danger"});
+        else setError({message:"Something went wrong with saving that poem!", variant:"danger"});
       });
     
       history.push('/my-poems');

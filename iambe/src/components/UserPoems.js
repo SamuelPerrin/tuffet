@@ -129,7 +129,7 @@ const UserPoems = props => {
   }
 
   return (
-    username ?
+    username &&
     <div>
       <Breadcrumbs>
         <Link to='/'>Home</Link>
@@ -149,10 +149,10 @@ const UserPoems = props => {
           </h2>
           {error &&
             <Toast
-              variant='danger'
+              variant={error.variant}
               onClick={() => setError(false)}
             >
-              {error}
+              {error.message}
             </Toast>}
           <div style={{display:"flex", flexFlow:"row wrap", justifyContent:"space-evenly", alignItems:"center", width:"100%"}}>
             {<label htmlFor="sortby" style={{display:"block", width:"auto", visibility:poemsToRender.current.length > 3 ? "visible" : "hidden"}}>
@@ -224,9 +224,7 @@ const UserPoems = props => {
           {loading && <Spinner />}
         </Section>
       </Container>
-    </div>
-    :
-    <Login uri="/my-poems" />
+    </div>  
   )
 }
 

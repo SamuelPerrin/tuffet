@@ -43,16 +43,14 @@ const Register = props => {
           })
           .catch(err => {
             console.log(err);
-            if (err.response.status === 500) setError("That username is already taken!");
-            else setError("Oops! Something went wrong!");
+            if (err.response.status === 500) setError({message:"That username is already taken!", variant:"danger"});
+            else setError({message:"Oops! Something went wrong!", variant:"danger"});
           });
           })
       .catch(err => {
         console.log(err);
-        setError("Oops! Something went wrong!");
+        setError({message:"Oops! Something went wrong!", variant:"danger"});
       });
-    
-    // setError("Something went wrong!");
   }
 
   const handleChange = e => {
@@ -102,34 +100,34 @@ const Register = props => {
               error={errors.username}
               onChange={handleChange}
             />
-              <TextInput
-                label="Email"
-                name="email"
-                placeholder="email"
-                type="text"
-                value={formValues.email}
-                error={errors.email}
-                onChange={handleChange}
-              />
-              <TextInput
-                label="Password*"
-                name="password"
-                placeholder="password"
-                type="password"
-                value={formValues.password}
-                error={errors.password}
-                onChange={handleChange}
-              />
+            <TextInput
+              label="Email"
+              name="email"
+              placeholder="email"
+              type="text"
+              value={formValues.email}
+              error={errors.email}
+              onChange={handleChange}
+            />
+            <TextInput
+              label="Password*"
+              name="password"
+              placeholder="password"
+              type="password"
+              value={formValues.password}
+              error={errors.password}
+              onChange={handleChange}
+            />
             <Button variant={disabled ? 'disabled' : ''} disabled={disabled}>Submit</Button>
           </form>
         </Section>
       </Container>
       {toastError &&
         <Toast
-          variant='danger'
+          variant={toastError.variant}
           onClick={() => setError(false)}
         >
-          {toastError}
+          {toastError.message}
         </Toast>}
     </div>
   )

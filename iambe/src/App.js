@@ -26,7 +26,11 @@ import UserPoems from './components/UserPoems';
 import AddPoem from './components/AddPoem';
 import EditPoem from './components/EditPoem';
 import FocusPoem from './components/FocusPoem';
+import AdminDash from './components/AdminDash';
+import Contact from './components/Contact';
+import EditUser from './components/EditUser';
 import Footer from './components/styled/Footer';
+import PrivateRoute from './components/PrivateRoute';
 
 function App() {
   return (
@@ -55,10 +59,13 @@ function App() {
             <Login uri="/my-poems"/>
           </Route>
           <Route exact path="/register" component={Register} />
-          <Route exact path="/my-poems" component={UserPoems} />
-          <Route exact path="/save-poem" component={AddPoem} />
-          <Route path="/edit/poem/:poemid" component={EditPoem} />
-          <Route path="/poem/:poemid" component={FocusPoem} />
+          <Route path="/contact" component={Contact} />
+          <PrivateRoute exact path="/my-poems" component={UserPoems} />
+          <PrivateRoute exact path="/save-poem" component={AddPoem} />
+          <PrivateRoute path="/edit/poem/:poemid" component={EditPoem} />
+          <PrivateRoute path="/poem/:poemid" component={FocusPoem} />
+          <PrivateRoute path="/dashboard" roles={["ADMIN"]} component={AdminDash} />
+          <PrivateRoute path="/edit-user" component={EditUser} />
           <Route component={PageNotFound} />
         </Switch>
         <Footer />

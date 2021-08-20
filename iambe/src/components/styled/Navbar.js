@@ -35,11 +35,23 @@ const NavWrapper = styled.nav`
       margin-top:0.25rem;
     }
   }
+
+  .username {
+    font-size:1rem;
+    text-decoration:none;
+  }
+
+  .unread {
+    font-weight:bold;
+    color:${props => props.theme.white};
+    font-size:${props => props.smallFont};
+  }
 `;
 
 const Navbar = props => {
-  const { isMenuOpen, currentUser, toggleMenu, closeAboutSubMenu } = props;
+  const { isMenuOpen, currentUser, toggleMenu, closeAboutSubMenu, messages } = props;
   const history = useHistory();
+  let unreadMessages = messages.filter(x => !x.read).length;
 
   const goHome = () => {
     if (isMenuOpen) {
@@ -63,7 +75,13 @@ const Navbar = props => {
         <span onClick={goHome} >Tuffet</span>
       </div>
       <div style={{display:'flex', alignItems:"center"}}>
-        <Link to='/my-poems' style={{fontSize:"1rem"}}>{currentUser && currentUser.username}</Link>
+        <Link
+          to='/my-poems'
+          className="username"
+        >
+          {currentUser && currentUser.username}
+          {currentUser.role === "ADMIN" && <sup className="unread">{unreadMessages > 0 && unreadMessages}</sup>}
+        </Link>
         <Hamburger />
       </div>
     </NavWrapper>
@@ -75,6 +93,7 @@ const mapStateToProps = state => {
     ...state,
     isMenuOpen: state.isMenuOpen,
     currentUser: state.currentUser,
+    messages: state.messages,
   }
 }
 
