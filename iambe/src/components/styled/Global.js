@@ -44,7 +44,7 @@ const GlobalStyle = createGlobalStyle`
       text-rendering: optimizeSpeed;
       line-height: 1.5;
       font-family: 'Roboto', sans-serif;
-      padding-bottom:10rem;
+      padding-bottom:12rem;
     }
     /* Remove list styles on ul, ol elements  */
     /* ul,
