@@ -1,4 +1,5 @@
 import Pron from './Pron';
+import Pronunciation from './Pronunciation';
 
 test('constructor is working for "test"', () => {
   const test = new Pron("T EH1 S T").text;
@@ -31,7 +32,7 @@ test('getStress determines stress of "test" and "openly"', () => {
   expect(openly.getStress()).toBe("100");
 })
 
-test('getStress determines stress of "unusupecting"', () => {
+test('getStress determines stress of "unsuspecting"', () => {
   const unsuspecting = new Pron("AH2 N S AH0 S P EH1 K T IH0 NG");
   const stress = unsuspecting.getStress();
   expect(stress).toBe('2010');
@@ -42,6 +43,13 @@ test('getLastPrime finds last primary stress correctly', () => {
   expect(new Pron("AH2 N S AH0 S P EH1 K T IH0 NG").getLastPrime(["AH2", "N", "S", "AH0", "S", "P", "EH1", "K", "T", "IH0", "NG"])).toBe(6);
   expect(new Pron("Y EH3 T").getLastPrime(["Y", "EH3", "T"])).toBe(1);
   expect(new Pron("AH3 N S AH3 S P EH3 K T IH3 NG").getLastPrime(["AH3", "N", "S", "AH3", "S", "P", "EH3", "K", "T", "IH3", "NG"])).toBe(9);
+})
+
+test('new getLastPrime finds last primary stress correctly', () => {
+  expect(new Pronunciation("T EH1 S T").getRimes().lastPrime).toBe(1);
+  expect(new Pronunciation("AH2 N S AH0 S P EH1 K T IH0 NG").getRimes().lastPrime).toBe(6);
+  expect(new Pronunciation("Y EH3 T").getRimes().lastPrime).toBe(1);
+  expect(new Pronunciation("AH3 N S AH3 S P EH3 K T IH3 NG").getRimes().lastPrime).toBe(9);
 })
 
 test('isAVowel identifies vowels correctly', () => {
