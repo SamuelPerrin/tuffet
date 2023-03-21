@@ -16,7 +16,7 @@ import Button from './styled/Button';
 
 import { crement } from '../actions';
 
-import { RHYME_TYPES, RHYME_SCHEMES } from '../utils/phonstants';
+import { RHYME_TYPES, RHYME_SCHEMES } from '../utilsTS/phonstants';
 
 const RhymeScheme = props => {
   const {poems, rhymes, stanzaNum, crement} = props;

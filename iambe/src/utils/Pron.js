@@ -1,4 +1,4 @@
-import * as phonstants from './phonstants';
+import * as phonstants from '../utilsTS/phonstants';
 
 class Pron {
   /*

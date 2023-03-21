@@ -1,5 +1,5 @@
 import Pron from './Pron';
-import Pronunciation from './Pronunciation';
+import Pronunciation from '../utilsTS/Pronunciation';
 
 test('constructor is working for "test"', () => {
   const test = new Pron("T EH1 S T").text;

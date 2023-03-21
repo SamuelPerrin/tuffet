@@ -1,4 +1,4 @@
-
+import { RhymeType } from "./Rhyme";
 // this file contains constants to be used in other utils
 export const MAKES_PLURAL_WITH_S : {[key: string]: boolean} = {
   'F':true,
@@ -132,7 +132,7 @@ export const TRIGRAMS : {[key: string]: string} = {'fth':'F TH ', 'ght':'T ','lc
 export const DIGRAPH_R : {[key: string]: string} = {'air':'EH1 R ','arr':'AA1 R ', 'ear':'IY1 R ', 'eer':'IY1 R ', 'eir':'IY1 R ', 'err':'EH1 R ', 'eur':'UH2 R ', 'ier':'IY1 R ', 'ior':'IY0 AO1 R ', 'irr':'ER1 ', 'oar':'AO1 R ', 'oer':'AO1 R ', 'oir':'W AA1 R ', 'oor':'UH1 R ', 'orr':'AO1 R ', 'our':'AW1 R ','urr':'ER1 '};
 export const PUNCTS_TO_DELETE = [',','⁠',".’",'.','!','?','"','“','”',';',':','(',')']; // the one that looks empty is a zero-width word-joiner
 export const PUNCTS_TO_SPACE = ['...','--',' – ','—','–','-','  '];
-export const RHYME_FULLNESS = {
+export const RHYME_FULLNESS : {[key: RhymeType]: number}= {
   'full rhyme':100,
   'homophone rhyme':95,
   'identical rhyme':90,
@@ -323,6 +323,28 @@ export const RHYME_TYPES = {
   'nasal consonance':'nasal consonance',
   'N/A':'nonrhyme',
 };
+export enum RhymeType {
+  fullRhyme = "full rhyme",
+  homophoneRhyme = "homophone rhyme",
+  identicalRhyme = "identical rhyme",
+  promotionRhyme = "promotion rhyme",
+  diphthongRhyme = "diphthong rhyme",
+  promotionDiphthongRhyme = "promotion diphthong rhyme",
+  sibilantAssonance = "sibilant assonance",
+  nasalAssonance = "nasal assonance",
+  assonance = "assonance",
+  fullConsonance = "full consonance",
+  promotionConsonance = "promotion consonance",
+  diphthongAssonance = "diphthong assonance",
+  partialConsonance = "partial consonance",
+  unstressedRhyme = "unstressed rhyme",
+  promotionDiphthongAssonance = "promotion diphthong assonance",
+  anisobaricRhyme = "anisobaric rhyme",
+  zeroConsonance = "zero consonance",
+  sibilantConsonance = "sibilant consonance",
+  nasalConsonance = "nasal consonance",
+  none = "N/A",
+}
 export const METER_NAMES = {
   2: 'dimeter',
   3: 'trimeter',

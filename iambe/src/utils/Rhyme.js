@@ -1,7 +1,7 @@
 import Line from './Line';
 import Word from './Word';
 import Pron from './Pron';
-import * as phonstants from './phonstants';
+import * as phonstants from '../utilsTS/phonstants';
 
 class Rhyme {
   constructor(line1, line2) {

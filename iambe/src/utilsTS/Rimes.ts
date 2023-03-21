@@ -1,15 +1,15 @@
 import Pronunciation from "./Pronunciation";
 
 export default class Rimes {
-  rime : string = ""; // the vowel of the last stressed syllable and everything after it
-  nucl : string = ""; // the vowel of the last stressed syllable
-  coda : string = ""; // everything following the last stressed syllable
-  lastRime : string = ""; // rime of the last syllable with at least secondary stress (can be same as rime)
-  lastNucl : string = ""; // vowel of the last syllable with at least secondary stress (can be same as nucleus)
-  lastCoda : string = ""; // everything following the last syllable with at least secondary stress
-  unstRime : string = ""; // the rime of the last vowel in the word, if it's unstressed
-  unstNucl : string = ""; // the last vowel of the word, if it's unstresseed
-  unstCoda : string = ""; // everything that comes after the last vowel in the word, if it's unstressed
+  rime : Pronunciation = ""; // the vowel of the last stressed syllable and everything after it
+  nucl : Pronunciation = ""; // the vowel of the last stressed syllable
+  coda : Pronunciation = ""; // everything following the last stressed syllable
+  lastRime : Pronunciation = ""; // rime of the last syllable with at least secondary stress (can be same as rime)
+  lastNucl : Pronunciation = ""; // vowel of the last syllable with at least secondary stress (can be same as nucleus)
+  lastCoda : Pronunciation = ""; // everything following the last syllable with at least secondary stress
+  unstRime : Pronunciation = ""; // the rime of the last vowel in the word, if it's unstressed
+  unstNucl : Pronunciation = ""; // the last vowel of the word, if it's unstressed
+  unstCoda : Pronunciation = ""; // everything that comes after the last vowel in the word, if it's unstressed
   lastPrime : number = -1000; // the index of the last vowel in the word with primary stress
 
   /**
@@ -21,9 +21,9 @@ export default class Rimes {
     this.lastPrime = this.getLastPrime(phoneList);
 
     // Assign rime, nucleus, and coda
-    this.rime = pronunciation.slice(pronunciation.indexOf(phoneList[this.lastPrime]));
-    this.nucl = phoneList[this.lastPrime];
-    if (this.rime.length > 3) this.coda = this.rime.slice(4);
+    this.rime = new Pronunciation(pronunciation.slice(pronunciation.indexOf(phoneList[this.lastPrime])));
+    this.nucl = new Pronunciation(phoneList[this.lastPrime]);
+    if (this.rime.length > 3) this.coda = new Pronunciation(this.rime.slice(4));
 
     // Assign lastRime, lastNucl, and lastCoda
     if (this.coda !== '') {
@@ -39,18 +39,18 @@ export default class Rimes {
       }
 
       if (codaVowel !== -1) {
-        this.lastRime = this.coda.slice(this.coda.indexOf(codaPhoneList[codaVowel]));
-        this.lastNucl = codaPhoneList[codaVowel];
+        this.lastRime = new Pronunciation(this.coda.slice(this.coda.indexOf(codaPhoneList[codaVowel])));
+        this.lastNucl = new Pronunciation(codaPhoneList[codaVowel]);
         if (this.lastRime.length > 3) {
-          this.lastCoda = this.lastRime.slice(4);
+          this.lastCoda = new Pronunciation(this.lastRime.slice(4));
         }
       }
     }
 
     if (this.lastRime === '') {
-      this.lastRime = this.rime;
-      this.lastNucl = this.nucl;
-      this.lastCoda = this.coda;
+      this.lastRime = new Pronunciation(this.rime);
+      this.lastNucl = new Pronunciation(this.nucl);
+      this.lastCoda = new Pronunciation(this.coda);
     }
 
     // Assign unstRime, unstNucl, and unstCoda
@@ -65,10 +65,10 @@ export default class Rimes {
       }
 
       if (lastCodaVowel !== -1) {
-        this.unstRime = this.lastCoda.slice(this.lastCoda.indexOf(lastCodaPhoneList[lastCodaVowel]));
-        this.unstNucl = lastCodaPhoneList[lastCodaVowel];
+        this.unstRime = new Pronunciation(this.lastCoda.slice(this.lastCoda.indexOf(lastCodaPhoneList[lastCodaVowel])));
+        this.unstNucl = new Pronunciation(lastCodaPhoneList[lastCodaVowel]);
         if (this.unstRime.length > 3) {
-          this.unstCoda = this.unstRime.slice(4);
+          this.unstCoda = new Pronunciation(this.unstRime.slice(4));
         }
       }
     }

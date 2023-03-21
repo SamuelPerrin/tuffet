@@ -28,13 +28,13 @@ export default class Pronunciation extends String {
     return this.stresses;
   }
 
-  getStressesList() {
+  getStressesList(): string[] {
     if (this.stressesList.length) return this.stressesList;
     if (this.stresses.length) return this.stresses.split("");
     return this.getStresses().split("");
   }
 
-  getRimes() {
+  getRimes(): Rimes {
     if (this.rimes !== null) {
       return this.rimes;
     }
@@ -62,6 +62,10 @@ export default class Pronunciation extends String {
    * @returns True if input is a Pronunciation, else false
    */
   static isPronunciation(input: Pronunciation | Pronunciation[]) : input is Pronunciation {
-    return (input as Pronunciation).type;
+    return (input as Pronunciation).getStresses !== undefined;
+  }
+
+  public toString(): string {
+    return this as string;
   }
 }

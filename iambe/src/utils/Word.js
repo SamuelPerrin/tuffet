@@ -1,7 +1,7 @@
-import lexicon from './lexicon';
-import cmupd from './cmupd';
+import lexicon from '../utilsTS/lexicon';
+import cmupd from '../utilsTS/cmupd';
 import Pron from './Pron';
-import * as phonstants from './phonstants';
+import * as phonstants from '../utilsTS/phonstants';
 
 class Word {
   // A string that represents a word

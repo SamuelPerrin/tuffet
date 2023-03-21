@@ -122,7 +122,7 @@ export default class Word {
    * @param returnArray optional flag to force the return value to be an array of strings
    * @returns 
    */
-  private getHardPronunciation(returnArray: boolean) : Pronunciation | Pronunciation[] | null {
+  private getHardPronunciation(returnArray: boolean) : PronunciationType {
     // first check for a familiar root
     const check = this.checkHardPronunciation();
     if (check && check.length > 0) return check;
@@ -157,7 +157,7 @@ export default class Word {
   /**
    * Returns a guess at the pronunciation of a word that isn't in CMUPD by pronouncing the root and affix(es) separately.
    */
-  private checkHardPronunciation() : Pronunciation | Pronunciation[] | null {
+  private checkHardPronunciation() : PronunciationType {
     let pronunciation : Pronunciation | null = null;
 
     // a helper function that makes different adjustments to pronunciations based on characteristic features of the last phoneme
@@ -662,3 +662,5 @@ interface PhoneObject {
   obj: {[key: string]: boolean};
   phone: string;
 }
+
+export type PronunciationType = Pronunciation | Pronunciation[] | null;

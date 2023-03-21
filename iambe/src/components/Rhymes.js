@@ -18,7 +18,7 @@ import { getRhymeSchemeDetails, getRhymeTypeDetails, getMeter } from '../actions
 
 import Poem from '../utils/Poem';
 import Stanza from '../utils/Stanza';
-import { RHYME_SCHEMES, RHYME_TYPES } from '../utils/phonstants';
+import { RHYME_SCHEMES, RHYME_TYPES } from '../utilsTS/phonstants';
 import { COLOR_SEQUENCE } from '../constants/colors';
 
 const Rhymes = props => {

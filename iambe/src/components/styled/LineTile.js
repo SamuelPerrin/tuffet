@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import HoverCard from './HoverCard';
 
 import Line from '../../utils/Line';
-import {METER_NAMES} from '../../utils/phonstants';
+import {METER_NAMES} from '../../utilsTS/phonstants';
 
 const LineTileWrapper = styled.div`
   display: flex;
