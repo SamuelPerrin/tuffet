@@ -1,4 +1,4 @@
-import { RhymeType } from "./Rhyme";
+
 // this file contains constants to be used in other utils
 export const MAKES_PLURAL_WITH_S : {[key: string]: boolean} = {
   'F':true,

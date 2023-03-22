@@ -7,16 +7,16 @@ import * as phonstants from './phonstants';
  * A string that represents a word
  */
 export default class Word {
-  text : string = "";
-  static last : string[] = [];
-  
+  text: string = "";
+  static last: string[] = [];
+
   constructor(text: string) {
     this.text = text.toLowerCase();
 
     if (text.length === 0) throw new Error(`Word cannot be empty.`);
 
     // remove initial apostrophes except from words like 'tis and 'twas
-    if (this.text.charAt(0) === "'" && this.text.slice(1, 4) !== 'tis' && this.text.slice(1,3) !== 'tw') {
+    if (this.text.charAt(0) === "'" && this.text.slice(1, 4) !== 'tis' && this.text.slice(1, 3) !== 'tw') {
       this.text = this.text.slice(1);
     }
 
@@ -26,8 +26,8 @@ export default class Word {
     }
 
     // replace certain accented characters
-    if (this.text.includes('ó')) this.text = this.text.replace('ó','o');
-    if (this.text.includes('é')) this.text = this.text.replace('é','e');
+    if (this.text.includes('ó')) this.text = this.text.replace('ó', 'o');
+    if (this.text.includes('é')) this.text = this.text.replace('é', 'e');
   }
 
   /**
@@ -37,8 +37,8 @@ export default class Word {
    * 
    * @param returnArray optional flag to force the return value to be an array of strings
    */
-  getPronunciation(returnArray: boolean = true) : Pronunciation | Pronunciation[] {
-    let pronunciation : Pronunciation | Pronunciation[];
+  getPronunciation(returnArray: boolean = true): Pronunciation | Pronunciation[] {
+    let pronunciation: Pronunciation | Pronunciation[];
 
     // Check the lexicon for the pronunciation
     if (this.text in lexicon) {
@@ -52,10 +52,10 @@ export default class Word {
         // otherwise, if all pronunciations have the same stresses, return first, else return list
         pronunciation = lexicon[this.text].map(p => new Pronunciation(p));
         if (pronunciation
-            .map(p => p.getStresses())
-            .every(st => st === (pronunciation as Pronunciation[])[0].getStresses())) {
-              pronunciation = pronunciation[0];
-            }
+          .map(p => p.getStresses())
+          .every(st => st === (pronunciation as Pronunciation[])[0].getStresses())) {
+          pronunciation = pronunciation[0];
+        }
       }
     }
 
@@ -75,15 +75,15 @@ export default class Word {
    * Checks for certain easily fixed problems in individual pronunciations or lists of pronunciations, returning correcting pronunciation(s)
    * @param pronunciation 
    */
-  private correctPronunciation(pronunciation: Pronunciation | Pronunciation[]) : Pronunciation | Pronunciation[] {
-    const ENDS_IN_DACTYL : {[key: string]: boolean}= {
-      '100':true,
-      '0100':true,
-      '2100':true,
-      '20100':true,
-      '10200':true,
+  private correctPronunciation(pronunciation: Pronunciation | Pronunciation[]): Pronunciation | Pronunciation[] {
+    const ENDS_IN_DACTYL: { [key: string]: boolean } = {
+      '100': true,
+      '0100': true,
+      '2100': true,
+      '20100': true,
+      '10200': true,
     }
-    let newPronunciation : Pronunciation | Pronunciation[] = pronunciation;
+    let newPronunciation: Pronunciation | Pronunciation[] = pronunciation;
 
     // Add minimal stress to dactyl suffixes in -y 
     if (Pronunciation.isPronunciation(pronunciation)) {
@@ -122,17 +122,17 @@ export default class Word {
    * @param returnArray optional flag to force the return value to be an array of strings
    * @returns 
    */
-  private getHardPronunciation(returnArray: boolean) : PronunciationType {
+  private getHardPronunciation(returnArray: boolean): PronunciationType {
     // first check for a familiar root
     const check = this.checkHardPronunciation();
     if (check && check.length > 0) return check;
 
     // If that doesn't work, but the CMUPD has pronunciation(s) for the word, use that
-    let pronunciation : Pronunciation | Pronunciation[] | null = null;
+    let pronunciation: Pronunciation | Pronunciation[] | null = null;
 
     if (this.text in cmupd) {
       if (cmupd[this.text].length === 1) {
-        return returnArray 
+        return returnArray
           ? cmupd[this.text].map(p => new Pronunciation(p))
           : new Pronunciation(cmupd[this.text][0]);
       } else if (returnArray) {
@@ -157,8 +157,8 @@ export default class Word {
   /**
    * Returns a guess at the pronunciation of a word that isn't in CMUPD by pronouncing the root and affix(es) separately.
    */
-  private checkHardPronunciation() : PronunciationType {
-    let pronunciation : Pronunciation | null = null;
+  private checkHardPronunciation(): PronunciationType {
+    let pronunciation: Pronunciation | null = null;
 
     // a helper function that makes different adjustments to pronunciations based on characteristic features of the last phoneme
     const checkLastPhone = function (
@@ -166,9 +166,9 @@ export default class Word {
       lastLet: string,
       phonstArr: PhoneObject[],
       elsePhon: string,
-      adjust : number = 0,
-      addin : string = ''
-    ) : Pronunciation |  null {
+      adjust: number = 0,
+      addin: string = ''
+    ): Pronunciation | null {
       const root = word.slice(0, lastLet.length + adjust) + addin;
       if (word.slice(-lastLet.length) === lastLet && root in lexicon) {
         const rootPronunciation = lexicon[root][0];
@@ -186,42 +186,42 @@ export default class Word {
     }
 
     // check if root + -s, -'s, -es, -ed, or -'d can be pronounced
-    pronunciation = checkLastPhone(this.text, "ed", [{obj: phonstants.MAKES_PAST_WITH_T, phone: ' T'}, {obj: phonstants.MAKES_PAST_WITH_ID, phone: ' IH0 D'}], ' D', 1);
-    if (pronunciation) return pronunciation;
-    
-    pronunciation = checkLastPhone(this.text, "s", [{obj: phonstants.MAKES_PLURAL_WITH_S, phone: ' S'}, {obj: phonstants.MAKES_PLURAL_WITH_IZ, phone: ' IH0 Z'}], ' Z');
+    pronunciation = checkLastPhone(this.text, "ed", [{ obj: phonstants.MAKES_PAST_WITH_T, phone: ' T' }, { obj: phonstants.MAKES_PAST_WITH_ID, phone: ' IH0 D' }], ' D', 1);
     if (pronunciation) return pronunciation;
 
-    pronunciation = checkLastPhone(this.text, "'s", [{obj: phonstants.MAKES_PLURAL_WITH_S, phone: ' S'}, {obj: phonstants.MAKES_PLURAL_WITH_IZ, phone: ' IH0 Z'}], ' Z');
+    pronunciation = checkLastPhone(this.text, "s", [{ obj: phonstants.MAKES_PLURAL_WITH_S, phone: ' S' }, { obj: phonstants.MAKES_PLURAL_WITH_IZ, phone: ' IH0 Z' }], ' Z');
     if (pronunciation) return pronunciation;
 
-    pronunciation = checkLastPhone(this.text, "’s", [{obj: phonstants.MAKES_PLURAL_WITH_S, phone: ' S'}, {obj: phonstants.MAKES_PLURAL_WITH_IZ, phone: ' IH0 Z'}], ' IH0 Z');
+    pronunciation = checkLastPhone(this.text, "'s", [{ obj: phonstants.MAKES_PLURAL_WITH_S, phone: ' S' }, { obj: phonstants.MAKES_PLURAL_WITH_IZ, phone: ' IH0 Z' }], ' Z');
+    if (pronunciation) return pronunciation;
+
+    pronunciation = checkLastPhone(this.text, "’s", [{ obj: phonstants.MAKES_PLURAL_WITH_S, phone: ' S' }, { obj: phonstants.MAKES_PLURAL_WITH_IZ, phone: ' IH0 Z' }], ' IH0 Z');
     if (pronunciation) return pronunciation;
 
     pronunciation = checkLastPhone(this.text, "es", [], ' IH0 Z');
     if (pronunciation) return pronunciation;
 
-    pronunciation = checkLastPhone(this.text, "ed", [{obj: phonstants.MAKES_PAST_WITH_T, phone: " T"}, {obj: phonstants.MAKES_PAST_WITH_ID, phone: " IH0 D"}], ' D');
+    pronunciation = checkLastPhone(this.text, "ed", [{ obj: phonstants.MAKES_PAST_WITH_T, phone: " T" }, { obj: phonstants.MAKES_PAST_WITH_ID, phone: " IH0 D" }], ' D');
     if (pronunciation) return pronunciation;
 
-    pronunciation = checkLastPhone(this.text, "'d", [{obj: phonstants.MAKES_PAST_WITH_T, phone: ' T'}, {obj: phonstants.MAKES_PAST_WITH_ID, phone: ' IH0 D'}], ' D', 0, 'e');
+    pronunciation = checkLastPhone(this.text, "'d", [{ obj: phonstants.MAKES_PAST_WITH_T, phone: ' T' }, { obj: phonstants.MAKES_PAST_WITH_ID, phone: ' IH0 D' }], ' D', 0, 'e');
     if (pronunciation) return pronunciation;
 
-    pronunciation = checkLastPhone(this.text, "’d", [{obj: phonstants.MAKES_PAST_WITH_T, phone: ' T'}, {obj: phonstants.MAKES_PAST_WITH_ID, phone: ' IH0 D'}], ' D', 0, 'e');
+    pronunciation = checkLastPhone(this.text, "’d", [{ obj: phonstants.MAKES_PAST_WITH_T, phone: ' T' }, { obj: phonstants.MAKES_PAST_WITH_ID, phone: ' IH0 D' }], ' D', 0, 'e');
     if (pronunciation) return pronunciation;
 
-    pronunciation = checkLastPhone(this.text, "’d", [{obj: phonstants.MAKES_PAST_WITH_T, phone: ' T'}, {obj: phonstants.MAKES_PAST_WITH_ID, phone: ' IH0 D'}], ' D', 0);
+    pronunciation = checkLastPhone(this.text, "’d", [{ obj: phonstants.MAKES_PAST_WITH_T, phone: ' T' }, { obj: phonstants.MAKES_PAST_WITH_ID, phone: ' IH0 D' }], ' D', 0);
     if (pronunciation) return pronunciation;
 
-    pronunciation = checkLastPhone(this.text, "'d", [{obj: phonstants.MAKES_PAST_WITH_T, phone: ' T'}, {obj: phonstants.MAKES_PAST_WITH_ID, phone: ' IH0 D'}], ' D', 0);
+    pronunciation = checkLastPhone(this.text, "'d", [{ obj: phonstants.MAKES_PAST_WITH_T, phone: ' T' }, { obj: phonstants.MAKES_PAST_WITH_ID, phone: ' IH0 D' }], ' D', 0);
     if (pronunciation) return pronunciation;
 
     // a helper function that makes different adjustments to pronunciations depending on the stress of the last syllable
-    const checkLastStress = function(
+    const checkLastStress = function (
       word: string,
       lastLet: string,
       afterUnstressedEnd: string,
-      afterStressedEnd: string) : Pronunciation | null {
+      afterStressedEnd: string): Pronunciation | null {
       const root = word.slice(0, -lastLet.length);
       if (word.slice(-lastLet.length) === lastLet && root in lexicon) {
         const stressString = new Pronunciation(lexicon[root][0]).getStresses();
@@ -258,7 +258,7 @@ export default class Word {
     if (pronunciation) return pronunciation;
 
     // a helper function that tacks on an ending to a pronunciation if the word has a given ending
-    const checkEnding = function(word: string, lastLet: string, substring: string, adjust: number = 0): Pronunciation | null {
+    const checkEnding = function (word: string, lastLet: string, substring: string, adjust: number = 0): Pronunciation | null {
       const root = word.slice(0, -lastLet.length + adjust);
       if (word.slice(-lastLet.length) === lastLet && root in lexicon) {
         return new Pronunciation(lexicon[root][0] + substring);
@@ -299,7 +299,7 @@ export default class Word {
     if (pronunciation) return pronunciation;
 
     // A helper function that adds a prefix
-    const checkPrefix = function(word: string, prefixSpelling: string, prefixPronunciation: string): Pronunciation | null {
+    const checkPrefix = function (word: string, prefixSpelling: string, prefixPronunciation: string): Pronunciation | null {
       const root = word.slice(prefixSpelling.length);
       if (word.slice(0, prefixSpelling.length) === prefixSpelling && root in lexicon) {
         return new Pronunciation(prefixPronunciation + lexicon[root]);
@@ -328,31 +328,31 @@ export default class Word {
   /**
    * Returns a guess at the pronunciation of a word that isn't in the lexicon by guessing for each vowel- and consonant-cluster
    */
-  private guessHardPronunciation() : Pronunciation {
+  private guessHardPronunciation(): Pronunciation {
     let pronunciation = '';
     const clusters = this.atomize();
     for (let c = 0; c < clusters.length; c++) {
       if (clusters[c].length === 1) {
         if (clusters[c] in phonstants.ALPHA_VOWELS) { // it's a vowel
-          if (clusters.length >= c+3 && clusters[c+1] in phonstants.CONSONANTS && clusters[c+2] === 'e') { // check for terminal VCe
+          if (clusters.length >= c + 3 && clusters[c + 1] in phonstants.CONSONANTS && clusters[c + 2] === 'e') { // check for terminal VCe
             pronunciation += phonstants.LONG_VOWELS[clusters[c]];
           } else if (clusters[c] === 'e') { // letter is e
-            if (clusters.length === c+2) { // e is penult cluster
+            if (clusters.length === c + 2) { // e is penult cluster
               if (pronunciation.slice(-2, -1) === 'R' && pronunciation.length >= 4 && pronunciation.slice(-4, -3) in ['B', 'C', 'D', 'F', 'G', 'K', 'P', 'T', 'V']) {
                 pronunciation += 'IH0 '; // not sure this rule is right: Cre
-              } else if (clusters[c+1] === 'd') { // ends in ed
-                if (pronunciation.slice(-2,-1) in ['T', 'D']) {
+              } else if (clusters[c + 1] === 'd') { // ends in ed
+                if (pronunciation.slice(-2, -1) in ['T', 'D']) {
                   pronunciation += 'IH0 ';
                 } else continue
-              } else if (clusters[c+1] === 's') { // ends in es
+              } else if (clusters[c + 1] === 's') { // ends in es
                 pronunciation += 'IH0 '; // this might be wrong
               } else pronunciation += 'EH2 ';
-            } else if (clusters.length === c+1) { // e is last cluster
-              if (pronunciation.slice(-2,-1) === 'L' && pronunciation.slice(-4,-3).toLowerCase() in phonstants.CONSONANTS) { // terminal Cle
+            } else if (clusters.length === c + 1) { // e is last cluster
+              if (pronunciation.slice(-2, -1) === 'L' && pronunciation.slice(-4, -3).toLowerCase() in phonstants.CONSONANTS) { // terminal Cle
                 pronunciation = pronunciation.slice(0, -2) + 'AH0 L ';
               }
             } else pronunciation += 'EH0 ';
-          } else if (c+1 === clusters.length) { // last cluster in non-e vowel
+          } else if (c + 1 === clusters.length) { // last cluster in non-e vowel
             pronunciation += phonstants.TERM_VOWELS[clusters[c]];
           } else { // vowel isn't e and isn't before 'silent' e and isn't terminal
             pronunciation += phonstants.SHORT_VOWELS[clusters[c]];
@@ -363,9 +363,9 @@ export default class Word {
           pronunciation += 'R ';
         } else if (clusters[c] === 'y') { // it's a y
           if (c === 0) pronunciation += 'Y '; // it's an initial Y
-          else if (clusters.length >= c+2 && clusters[c+1] in phonstants.CONSONANTS && clusters[c+2] === 'e') { // it's yCe
+          else if (clusters.length >= c + 2 && clusters[c + 1] in phonstants.CONSONANTS && clusters[c + 2] === 'e') { // it's yCe
             pronunciation += phonstants.LONG_VOWELS[clusters[c]];
-          } else if (clusters[c-1][0] in phonstants.CONSONANTS) { // y is preceded by a consonant cluster
+          } else if (clusters[c - 1][0] in phonstants.CONSONANTS) { // y is preceded by a consonant cluster
             if (clusters.length > 2) pronunciation += 'IY2 ';
             else pronunciation += 'AY1 ';
           } else pronunciation += 'IY2 ';
@@ -374,32 +374,32 @@ export default class Word {
         if (clusters[c] in phonstants.DIGRAPHS) pronunciation += phonstants.DIGRAPHS[clusters[c]];
         else if (clusters[c] in phonstants.DIGRAMS) pronunciation += phonstants.DIGRAMS[clusters[c]];
         else if (clusters[c].slice(-1) === 'r') {
-          if (clusters[c].slice(-2,-1) in phonstants.ALPHA_VOWELS) {
+          if (clusters[c].slice(-2, -1) in phonstants.ALPHA_VOWELS) {
             pronunciation += phonstants.VOWEL_R[clusters[c]];
           }
         } else if (clusters[c].slice(-1) in phonstants.CONSONANTS) {
           for (let char of clusters[c]) {
             pronunciation += phonstants.CONSONANTS[char];
           }
-        } else if (clusters[c].slice(0,1) in phonstants.ALPHA_VOWELS && clusters[c].slice(1,2) in phonstants.ALPHA_VOWELS) {
-          pronunciation += phonstants.LONG_VOWELS[clusters[c].slice(0,1)];
-          pronunciation += phonstants.SHORT_VOWELS[clusters[c].slice(1,2)];
+        } else if (clusters[c].slice(0, 1) in phonstants.ALPHA_VOWELS && clusters[c].slice(1, 2) in phonstants.ALPHA_VOWELS) {
+          pronunciation += phonstants.LONG_VOWELS[clusters[c].slice(0, 1)];
+          pronunciation += phonstants.SHORT_VOWELS[clusters[c].slice(1, 2)];
         }
       } else if (clusters[c].length === 3) {
         if (clusters[c] in phonstants.TRIGRAPHS) pronunciation += phonstants.TRIGRAPHS[clusters[c]];
         else if (clusters[c] in phonstants.TRIGRAMS) pronunciation += phonstants.TRIGRAMS[clusters[c]];
         else if (clusters[c] in phonstants.DIGRAPH_R) pronunciation += phonstants.DIGRAPH_R[clusters[c]];
         else if (clusters[c].slice(-1) in phonstants.CONSONANTS || clusters[c].slice(-1) === 'r') { // weird cons cluster ending in r (?)
-          if (clusters[c].slice(0,2) in phonstants.DIGRAMS) pronunciation += phonstants.DIGRAMS[clusters[c].slice(0,2)] + 'R ';
+          if (clusters[c].slice(0, 2) in phonstants.DIGRAMS) pronunciation += phonstants.DIGRAMS[clusters[c].slice(0, 2)] + 'R ';
         }
       } else if (clusters[c].length === 4) {
-        if (clusters[c].slice(0,2) in phonstants.DIGRAMS) {
+        if (clusters[c].slice(0, 2) in phonstants.DIGRAMS) {
           pronunciation += phonstants.DIGRAMS[clusters[c].slice(0, 2)];
           if (clusters[c].slice(2) in phonstants.DIGRAMS) {
             pronunciation += phonstants.DIGRAMS[clusters[c].slice(2)];
           } else if (clusters[c].slice(2) in phonstants.VOWEL_R) pronunciation += phonstants.VOWEL_R[clusters[c].slice(2)];
-        } else if (clusters[c].slice(0,2) in phonstants.VOWEL_R) {
-          pronunciation += phonstants.VOWEL_R[clusters[c].slice(0,2)];
+        } else if (clusters[c].slice(0, 2) in phonstants.VOWEL_R) {
+          pronunciation += phonstants.VOWEL_R[clusters[c].slice(0, 2)];
           if (clusters[c].slice(2) in phonstants.VOWEL_R) pronunciation += phonstants.VOWEL_R[clusters[c].slice(2)];
           else if (clusters[c].slice(2) in phonstants.DIGRAMS) pronunciation += phonstants.DIGRAMS[clusters[c].slice(2)];
         } else {
@@ -408,9 +408,9 @@ export default class Word {
           }
         }
       } else if (clusters[c].length > 4) {
-          for (let char of clusters[c]) {
-            if (char in phonstants.CONSONANTS) pronunciation += phonstants.CONSONANTS[char];
-          }
+        for (let char of clusters[c]) {
+          if (char in phonstants.CONSONANTS) pronunciation += phonstants.CONSONANTS[char];
+        }
       }
     }
 
@@ -422,7 +422,7 @@ export default class Word {
       else if (pronunciation.includes('AH2 T AH0 N')) pronunciation = pronunciation.replace('AH2 T AH0 N', 'UW1 SH AH0 N');
       else if (pronunciation.includes('AA2 T AH0 N')) pronunciation = pronunciation.replace('AA2 T AH0 N', 'OW1 SH AH0 N');
       else pronunciation = pronunciation.replace('T AH0 N', 'SH AH0 N');
-    } else if (this.text.slice(-2) === 'ed' && pronunciation.slice(-3,-2) in ['F', 'K', 'P', 'S']) pronunciation = pronunciation.slice(0,-1) + 'T';
+    } else if (this.text.slice(-2) === 'ed' && pronunciation.slice(-3, -2) in ['F', 'K', 'P', 'S']) pronunciation = pronunciation.slice(0, -1) + 'T';
 
     pronunciation = this.guessStress(pronunciation);
 
@@ -434,12 +434,12 @@ export default class Word {
    * @param pronunciation The pronunciation to have its stress corrected
    * @returns The pronunciation with corrected stress
    */
-  private guessStress(pronunciation: string) : string {
+  private guessStress(pronunciation: string): string {
     // Add primary stress to a one-syllable pronunciation
     if (new Pronunciation(pronunciation).getStresses().length === 1 && !pronunciation.includes('1')) {
       for (let char of pronunciation) {
-        if (['2','3','4','0'].includes(char)) {
-          pronunciation = pronunciation.replace(char,'1');
+        if (['2', '3', '4', '0'].includes(char)) {
+          pronunciation = pronunciation.replace(char, '1');
         }
       }
     }
@@ -450,9 +450,9 @@ export default class Word {
   /**
    * Returns a sequential list of the vowel- and consonant-clusters that make up the word's spelling, so that its pronunciation can be guessed at
    */
-  private atomize() : string[] {
+  private atomize(): string[] {
     let atom = '';
-    const atoms : string[] = [];
+    const atoms: string[] = [];
     for (let char of this.text) {
       if (char in phonstants.ALPHA_VOWELS) {
         if (char.length === 0 || atom.slice(-1) in phonstants.ALPHA_VOWELS) {
@@ -499,20 +499,20 @@ export default class Word {
             atom = char;
           } else atom += char;
         } else switch (atom.slice(-1)) {
-            case 'r':
-            case 'y':
+          case 'r':
+          case 'y':
+            atoms.push(atom);
+            atom = char;
+            break;
+          case 'w':
+            if (atom.length > 1 && atom.slice(-2, -1) in phonstants.ALPHA_VOWELS) {
               atoms.push(atom);
-              atom =  char;
-              break;
-            case 'w':
-              if (atom.length > 1 && atom.slice(-2,-1) in phonstants.ALPHA_VOWELS) {
-                atoms.push(atom);
-                atom = char;
-              } else if (atom.length > 1 && atom.slice(-2,-1) in phonstants.CONSONANTS) atom += char;
-              else if (atom.length === 1) atom += char;
-              break;
-            default:
-              break;
+              atom = char;
+            } else if (atom.length > 1 && atom.slice(-2, -1) in phonstants.CONSONANTS) atom += char;
+            else if (atom.length === 1) atom += char;
+            break;
+          default:
+            break;
         }
       } else if (char === 'r') {
         if (atom.length === 0) atom = char;
@@ -556,8 +556,8 @@ export default class Word {
    * Returns an order-preserving array of integers representing the relative stress of each syllable in the word.
    * @param crux Optional flag to return a list that preserves the ambiguity in the line's pronunciation
    */
-  getStressList(crux: boolean = false) : number[] | number[][] | 'crux' {
-    const ALWAYS_STRESSED = {'ah': true, 'o': true};
+  getStressList(crux: boolean = false): number[] | number[][] | 'crux' {
+    const ALWAYS_STRESSED = { 'ah': true, 'o': true };
 
     let pronunciation = this.getPronunciation();
 
@@ -612,9 +612,9 @@ export default class Word {
       if (lastWord in phonstants.PREPOSITIONS) {
         if (this.text in phonstants.DETERMINERS) {
           // de-stress determiners after prepositions
-          pronunciation = new Pronunciation(pronunciation.replace(/[123]/g,'4'));
+          pronunciation = new Pronunciation(pronunciation.replace(/[123]/g, '4'));
         } else if (this.text in phonstants.PER_PRON_OBJ) {
-          pronunciation = new Pronunciation(pronunciation.replace('3','2'));
+          pronunciation = new Pronunciation(pronunciation.replace('3', '2'));
         }
       }
     }
@@ -622,7 +622,7 @@ export default class Word {
     // Convert pronunciation to stress list
     let stress = [];
     for (let phone of pronunciation) {
-      switch(phone) {
+      switch (phone) {
         case '0':
           stress.push(4);
           break;
@@ -659,7 +659,7 @@ export default class Word {
 }
 
 interface PhoneObject {
-  obj: {[key: string]: boolean};
+  obj: { [key: string]: boolean };
   phone: string;
 }
 
