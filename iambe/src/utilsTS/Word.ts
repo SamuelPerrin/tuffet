@@ -37,7 +37,9 @@ export default class Word {
    * 
    * @param returnArray optional flag to force the return value to be an array of strings
    */
-  getPronunciation(returnArray: boolean = true): Pronunciation | Pronunciation[] {
+  getPronunciation(returnArray: false): Pronunciation | Pronunciation[];
+  getPronunciation(returnArray: true): Pronunciation[];
+  getPronunciation(returnArray: boolean = false): Pronunciation | Pronunciation[] {
     let pronunciation: Pronunciation | Pronunciation[];
 
     // Check the lexicon for the pronunciation
@@ -319,7 +321,7 @@ export default class Word {
     // Try switching apostrophes if necessary
     if (this.text.includes("’")) {
       this.text = this.text.replace("’", "'");
-      return this.getPronunciation();
+      return this.getPronunciation(false);
     }
 
     return pronunciation;
@@ -559,7 +561,7 @@ export default class Word {
   getStressList(crux: boolean = false): number[] | number[][] | 'crux' {
     const ALWAYS_STRESSED = { 'ah': true, 'o': true };
 
-    let pronunciation = this.getPronunciation();
+    let pronunciation = this.getPronunciation(false);
 
     // For words with multiple possible pronunciations
     if (Array.isArray(pronunciation)) {
@@ -612,9 +614,9 @@ export default class Word {
       if (lastWord in phonstants.PREPOSITIONS) {
         if (this.text in phonstants.DETERMINERS) {
           // de-stress determiners after prepositions
-          pronunciation = new Pronunciation(pronunciation.replace(/[123]/g, '4'));
+          pronunciation = new Pronunciation(pronunciation.toString().replace(/[123]/g, '4'));
         } else if (this.text in phonstants.PER_PRON_OBJ) {
-          pronunciation = new Pronunciation(pronunciation.replace('3', '2'));
+          pronunciation = new Pronunciation(pronunciation.toString().replace('3', '2'));
         }
       }
     }

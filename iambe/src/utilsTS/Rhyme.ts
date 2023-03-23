@@ -136,7 +136,7 @@ export default class Rhyme {
   ): phonstants.RhymeType {
     // Check to see if this rhyme type has been computed before
     if (this.rhymeInfoList.some(ri => ri.pron1.equals(pron1) && ri.pron2.equals(pron2))) {
-      return this.rhymeInfoList.find(ri => ri!.pron1.equals(pron1) && ri!.pron2.equals(pron2)).rhymeType;
+      return this.rhymeInfoList.find(ri => ri!.pron1.equals(pron1) && ri!.pron2.equals(pron2))!.rhymeType;
     }
 
     // To determine whether and how two lines rhyme,
@@ -171,7 +171,7 @@ export default class Rhyme {
 
     // Now that we have pronunciations, check again to see if this rhyme type has been computed before
     if (this.rhymeInfoList.some(ri => ri.pron1.equals(pron1) && ri.pron2.equals(pron2))) {
-      return this.rhymeInfoList.find(ri => ri!.pron1.equals(pron1) && ri!.pron2.equals(pron2)).rhymeType;
+      return this.rhymeInfoList.find(ri => ri!.pron1.equals(pron1) && ri!.pron2.equals(pron2))!.rhymeType;
     }
 
     // Start checking for rhyme types
@@ -227,7 +227,7 @@ export default class Rhyme {
       // diphthong-first rhymes
       if (rimes2.nucl.slice(0, 2) in phonstants.DIPHTHONGS
         && rimes1.nucl.slice(-2) === rimes2.nucl.slice(-2)) {
-        if (rimes1.coda === rimes2.coda) {
+        if (rimes1.coda.equals(rimes2.coda)) {
           rhymeType = phonstants.RhymeType.diphthongRhyme; // 'diph-diph rhyme';
         }
         else if (rimes1.nucl !== rimes2.nucl) {
@@ -235,7 +235,7 @@ export default class Rhyme {
         }
       } else if ((rimes1.nucl.slice(-2, -1) === 'Y' && rimes2.nucl.slice(0, 2) === 'IY')
         || (rimes1.nucl.slice(-2, -1) === 'W' && rimes2.nucl.slice(0, 2) === 'UW')) {
-        if (rimes1.coda === rimes2.coda) {
+        if (rimes1.coda.equals(rimes2.coda)) {
           rhymeType = phonstants.RhymeType.diphthongRhyme; //'diph-vow rhyme';
         }
         else {
@@ -249,8 +249,8 @@ export default class Rhyme {
       && rimes2.nucl.slice(0, 2) in phonstants.DIPHTHONGS) {
       // diphthong-second rhymes
       if ((rimes2.nucl.slice(-2, -1) === 'Y' && rimes1.nucl.slice(0, 2) === 'IY') || (rimes2.nucl.slice(-2, -1) === 'W' && rimes1.nucl.slice(0, 2) === 'UW')) {
-        if (rimes1.coda === rimes2.coda) rhymeType = phonstants.RhymeType.diphthongRhyme; // 'vow-diph rhyme';
-        else rhymeType = RhymeType.diphthongAssonance; // 'vow-diph assonance';
+        if (rimes1.coda.equals(rimes2.coda)) rhymeType = phonstants.RhymeType.diphthongRhyme; // 'vow-diph rhyme';
+        else rhymeType = phonstants.RhymeType.diphthongAssonance; // 'vow-diph assonance';
       }
     }
 
@@ -286,7 +286,7 @@ export default class Rhyme {
     }
 
     // consonantal rhymes
-    if ((maybeAssonance || rhymeType === phonstants.RhymeType.none) && rimes1.coda === rimes2.coda) {
+    if ((maybeAssonance || rhymeType === phonstants.RhymeType.none) && rimes1.coda.equals(rimes2.coda)) {
       if (rimes1.coda.toString() === '' && !((rimes1.nucl.toString() + rimes2.nucl.toString()).includes('ER'))) {
         rhymeType = phonstants.RhymeType.zeroConsonance;
       } else if (rimes1.coda.toString() !== '') rhymeType = phonstants.RhymeType.fullConsonance;
@@ -300,8 +300,8 @@ export default class Rhyme {
       } else if (rimes1.lastCoda.toString() !== '' && rimes2.lastCoda.toString() !== '') {
         for (let phone1 of rimes1.lastCoda.split(' ')) {
           if (rimes2.lastCoda.split(' ').includes(phone1) && !(phone1 in phonstants.CMUPD_VOWELS)) {
-            if ((rimes1.rime === rimes2.unstRime || rimes1.lastRime === rimes2.unstRime) ||
-              (rimes1.unstRime === rimes2.rime || rimes1.unstRime === rimes2.lastRime)) {
+            if ((rimes1.rime.equals(rimes2.unstRime) || rimes1.lastRime.equals(rimes2.unstRime)) ||
+              (rimes1.unstRime.equals(rimes2.rime) || rimes1.unstRime === rimes2.lastRime)) {
               rhymeType = phonstants.RhymeType.anisobaricRhyme;
               break;
             } else if (rimes1.unstRime === rimes2.unstRime && rimes1.unstRime.toString() !== '') {
@@ -317,13 +317,13 @@ export default class Rhyme {
     }
 
     if ((maybeAssonance || rhymeType === phonstants.RhymeType.none) && rimes1.lastCoda.length) {
-      if (rimes1.lastCoda === rimes2.lastcoda && rimes1.lastCoda !== '' && !((rimes1.lastNucl + rimes2.lastNucl).includes('ER'))) {
+      if (rimes1.lastCoda.equals(rimes2.lastcoda) && rimes1.lastCoda.toString() !== '' && !((rimes1.lastNucl.toString() + rimes2.lastNucl.toString()).includes('ER'))) {
         rhymeType = phonstants.RhymeType.zeroConsonance;
       }
       for (let nas of phonstants.NASALS) {
         if (rimes1.lastCoda.includes(nas)) {
           for (let sal of phonstants.NASALS) {
-            if (rimes2.lastCoda.includes(sal) && sal !== nas && !(new Pronunciation(rimes1.lastCoda + rimes2.lastCoda).getStress())) {
+            if (rimes2.lastCoda.includes(sal) && sal !== nas && !(new Pronunciation(rimes1.lastCoda.toString() + rimes2.lastCoda.toString()).getStresses())) {
               rhymeType = phonstants.RhymeType.nasalConsonance;
             }
           }
@@ -332,7 +332,7 @@ export default class Rhyme {
       for (let sib of phonstants.SIBILANTS) {
         if (rimes1.lastCoda.length && sib === rimes1.lastCoda.slice(-2)) {
           for (let bis of phonstants.SIBILANTS) {
-            if (rimes2.lastCoda.length && bis === rimes2.lastCoda.slice(-2) && !(new Pronunciation(rimes1.lastCoda + rimes2.lastCoda).getStress())) {
+            if (rimes2.lastCoda.length && bis === rimes2.lastCoda.slice(-2) && !(new Pronunciation(rimes1.lastCoda.toString() + rimes2.lastCoda.toString()).getStresses())) {
               rhymeType = phonstants.RhymeType.sibilantConsonance;
             }
           }
@@ -342,12 +342,12 @@ export default class Rhyme {
 
     // rhymes with unstressed syllables
     if ((maybeAssonance || rhymeType === phonstants.RhymeType.none || rhymeType === phonstants.RhymeType.partialConsonance)) {
-      if ((nlRime1 === this.numless(rimes2.unstRime)
-        || nlLastRime1 === this.numless(rimes2.unstRime))
-        || (nlRime2 === this.numless(rimes1.unstRime)
-          || nlLastRime2 === this.numless(rimes1.unstRime))) {
+      if ((numlessRime1.toString() === this.numless(rimes2.unstRime)
+        || numlessLastRime1.toString() === this.numless(rimes2.unstRime))
+        || (numlessRime2.toString() === this.numless(rimes1.unstRime)
+          || numlessLastRime2.toString() === this.numless(rimes1.unstRime))) {
         rhymeType = phonstants.RhymeType.anisobaricRhyme;
-      } else if (rimes1.unstRime === rimes2.unstRime && rimes1.unstRime !== '') rhymeType = phonstants.RhymeType.unstressedRhyme;
+      } else if (rimes1.unstRime.equals(rimes2.unstRime) && rimes1.unstRime.toString() !== '') rhymeType = phonstants.RhymeType.unstressedRhyme;
     } if (maybeAssonance) rhymeType = phonstants.RhymeType.assonance;
 
     // *** Check for mosaic rhyme here ***

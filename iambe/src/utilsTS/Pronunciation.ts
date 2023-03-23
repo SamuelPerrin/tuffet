@@ -65,7 +65,10 @@ export default class Pronunciation extends String {
     return (input as Pronunciation).getStresses !== undefined;
   }
 
-  public equals(pronunciation: Pronunciation): boolean {
+  public equals(pronunciation: Pronunciation | Pronunciation[] | null): boolean {
+    if (pronunciation === null || Array.isArray(pronunciation)) {
+      return false;
+    }
     return this.toString() === pronunciation.toString();
   }
 }
