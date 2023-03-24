@@ -11,6 +11,7 @@ export default class Rhyme {
   line1: Line = null!;
   line2: Line = null!;
   rhymeInfoList: RhymeInfo[] = [];
+  score: number = null!;
 
   constructor(line1: string, line2: string) {
     this.line1 = new Line(line1);
@@ -317,7 +318,7 @@ export default class Rhyme {
     }
 
     if ((maybeAssonance || rhymeType === phonstants.RhymeType.none) && rimes1.lastCoda.length) {
-      if (rimes1.lastCoda.equals(rimes2.lastcoda) && rimes1.lastCoda.toString() !== '' && !((rimes1.lastNucl.toString() + rimes2.lastNucl.toString()).includes('ER'))) {
+      if (rimes1.lastCoda.equals(rimes2.lastCoda) && rimes1.lastCoda.toString() !== '' && !((rimes1.lastNucl.toString() + rimes2.lastNucl.toString()).includes('ER'))) {
         rhymeType = phonstants.RhymeType.zeroConsonance;
       }
       for (let nas of phonstants.NASALS) {
@@ -357,11 +358,19 @@ export default class Rhyme {
     // console.log("leaving getRhymeType for",term1,"and",term2,"with",rhymeType);
 
     // Store the rhymeType for these pronunciations in case we need it again later
-    this.rhymeInfoList.push({ pron1, pron2, rhymeType });
+    this.rhymeInfoList.push({ pron1, pron2, term1, term2, rhymeType });
 
     return rhymeType;
   }
 
+  public getScore(): number {
+    if (this.score != null) return this.score;
+    if (this.rhymeInfoList && this.rhymeInfoList.rhymeType) {
+      this.score = this.getScoreForRhymeType(this.rhymeInfoList.rhymeType);
+      return this.score;
+    }
+    return this.getScoreForRhymeType(this.getRhymeType());
+  }
 
   private getScoreForRhymeType(rhymeType: phonstants.RhymeType): number {
     switch (rhymeType) {
@@ -414,5 +423,7 @@ export default class Rhyme {
 interface RhymeInfo {
   pron1: Pronunciation;
   pron2: Pronunciation;
+  term1: string;
+  term2: string;
   rhymeType: phonstants.RhymeType;
 }
