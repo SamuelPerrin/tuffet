@@ -344,7 +344,7 @@ export enum RhymeType {
   sibilantConsonance = "sibilant consonance",
   nasalConsonance = "nasal consonance",
   none = "N/A",
-}
+};
 export enum RhymeScheme {
   cplt1 = 'couplet (AA)',
   aaaxx = 'AAA',
@@ -424,8 +424,9 @@ export enum RhymeScheme {
   soni4 = 'sonnet (ABBA\u200bABBA\u200bCDC\u200bEDE)',
   soni5 = 'sonnet (ABBA\u200bABBA\u200bCDE\u200bDEC)',
   soni6 = 'sonnet (ABBA\u200bABBA\u200bCDC\u200bDEE)',
+  cpls8 = '8 couplets (AABB\u200bCCDD\u200bEEFF\u200bGGHH)',
   irreg = 'N/A',
-}
+};
 export const METER_NAMES = {
   2: 'dimeter',
   3: 'trimeter',

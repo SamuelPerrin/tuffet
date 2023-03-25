@@ -8,21 +8,24 @@ import * as phonstants from './phonstants';
  * Two lines of verse that may or may not rhyme
  */
 export default class Rhyme {
-  line1: Line = null!;
-  line2: Line = null!;
-  rhymeInfoList: RhymeInfo[] = [];
-  score: number = null!;
+  private line1: Line = null!;
+  private line2: Line = null!;
+  private rhymeInfoList: RhymeInfo[] = [];
+  private score: number = null!;
 
-  constructor(line1: string, line2: string) {
-    this.line1 = new Line(line1);
-    this.line2 = new Line(line2);
+  constructor(line1: Line, line2: Line);
+  constructor(line1: string, line2: string);
+  constructor(line1: Line | string, line2: Line | string) {
+
+    this.line1 = typeof line1 === 'string' ? new Line(line1) : line1;
+    this.line2 = typeof line2 === 'string' ? new Line(line2) : line2;
   }
 
   /**
    * Given a pronunciation, removes the numerals that represent vowels' stress and returns the rest of the string
    * @param pronunciation a pronunciation in CMUPD symbols
    */
-  numless(pronunciation: Pronunciation): string {
+  private numless(pronunciation: Pronunciation): string {
     ['1', '2', '3', '0'].forEach(num => pronunciation = new Pronunciation(pronunciation.replace(num, '')));
 
     return pronunciation.toString();
@@ -32,7 +35,7 @@ export default class Rhyme {
    * Removes doubled consonants and HH and returns the rest as a Pronunciation
    * @param pronunciation a list representing the phonemes of a CMUPD pronunciation
    */
-  mosaicize(pronunciation: string[]): Pronunciation {
+  private mosaicize(pronunciation: string[]): Pronunciation {
     for (let i = 0; i < pronunciation.length - 1; i++) {
       if (pronunciation[i] === pronunciation[i + 1]) {
         pronunciation.splice(i, 1);
@@ -50,7 +53,7 @@ export default class Rhyme {
    * @param candidates a list of Pronunciations for one of the terms in the line
    * @param which a number representing which of the terms is at issue
    */
-  checkFullness(candidates: Pronunciation[], which: number): Pronunciation {
+  private checkFullness(candidates: Pronunciation[], which: number): Pronunciation {
     // Make a list of objects with each pronunciation and the relative fullness of the rhyme it makes
     const scores: { pronunciation: Pronunciation; score: number; }[] = candidates
       .map(pron => {
@@ -71,7 +74,7 @@ export default class Rhyme {
    * @param prons list of possible pronunciations for one of the Rhyme's lines' terms
    * @returns Pronunciation
    */
-  resolvePron(prons: Pronunciation[]): Pronunciation {
+  private resolvePron(prons: Pronunciation[]): Pronunciation {
     const term1 = new Word(this.line1.getTerm()[0].toLowerCase());
     const term2 = new Word(this.line2.getTerm()[0].toLowerCase());
 
@@ -131,7 +134,7 @@ export default class Rhyme {
    * @param pron1 Optional pronunciation to use for the term of the first line
    * @param pron2 Optional pronunciation to use for the term of the second line
    */
-  getRhymeType(
+  public getRhymeType(
     pron1: PronunciationType = null,
     pron2: PronunciationType = null
   ): phonstants.RhymeType {
@@ -358,7 +361,7 @@ export default class Rhyme {
     // console.log("leaving getRhymeType for",term1,"and",term2,"with",rhymeType);
 
     // Store the rhymeType for these pronunciations in case we need it again later
-    this.rhymeInfoList.push({ pron1, pron2, term1, term2, rhymeType });
+    this.rhymeInfoList.push({ line1: this.line1, line2: this.line2, pron1, pron2, term1, term2, rhymeType });
 
     return rhymeType;
   }
@@ -418,9 +421,20 @@ export default class Rhyme {
         throw new Error(`Rhyme type ${rhymeType} not found!`);
     };
   }
+
+  public getRhymeInfoList(): RhymeInfo[] {
+    if (this.rhymeInfoList.length) {
+      return this.rhymeInfoList;
+    }
+
+    this.getRhymeType();
+    return this.rhymeInfoList;
+  }
 }
 
-interface RhymeInfo {
+export interface RhymeInfo {
+  line1: Line;
+  line2: Line;
   pron1: Pronunciation;
   pron2: Pronunciation;
   term1: string;
