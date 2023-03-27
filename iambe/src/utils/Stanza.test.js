@@ -1,4 +1,3 @@
-import Rhyme from './Rhyme';
 import Stanza from './Stanza';
 
 test('constructor sets text attribute', () => {
@@ -98,7 +97,7 @@ test('getRhymeScheme identifies rhyme schemes in sestets', () => {
   const babab = new Stanza("She walks in beauty, like the night\nOf cloudless climes and starry skies;\nAnd all that's best of dark and bright\nMeet in her aspect and her eyes;\nThus mellowed to that tender light\nWhich heaven to gaudy day denies.");
   expect(compm.getRhymeScheme()).toBe('compm');
   expect(babab.getRhymeScheme()).toBe('babab');
-})
+});
 
 test('getRhymes identifies rhymes in couplets', () => {
   const cplt = new Stanza('I know\nThe woe');

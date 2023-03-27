@@ -64,7 +64,13 @@ export default class Word {
     // If the lexicon doesn't have the pronunciation, get it from CMUPD or by guessing
     else {
       const hardPronunciation = this.getHardPronunciation(returnArray);
-      if (hardPronunciation != null) pronunciation = hardPronunciation;
+      if (hardPronunciation != null) {
+        if (returnArray && Pronunciation.isPronunciation(hardPronunciation)) {
+          pronunciation = [hardPronunciation];
+        } else {
+          pronunciation = hardPronunciation;
+        }
+      }
       else throw new Error(`Couldn't pronounce ${this.text} in getHardPronunciation.`);
     }
 
@@ -238,7 +244,7 @@ export default class Word {
     }
 
     // check if root + -ing, -less, -ness, -ly , -able, -ful, or -ment can be pronounced
-    pronunciation = checkLastStress(this.text, 'ing', " IH3 NG", "IH0 NG");
+    pronunciation = checkLastStress(this.text, 'ing', " IH3 NG", " IH0 NG");
     if (pronunciation) return pronunciation;
 
     pronunciation = checkLastStress(this.text, 'less', " L AH3 S", " L AH0 S");

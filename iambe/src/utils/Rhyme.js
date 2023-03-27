@@ -41,8 +41,13 @@ class Rhyme {
      * Called by: Rhyme.resolvePron
      */
 
+    console.log("in checkFullness with candidates", candidates);
     // make a list of objects with each pron and its relative fullness
-    const scores = candidates.map(pron => ({pron:pron, score: phonstants.RHYME_FULLNESS[which === 0 ? this.getRhymeType(pron) : this.getRhymeType(null, pron)]}));
+    const scores = candidates.map(pron => (
+      {
+        pron:pron,
+        score: phonstants.RHYME_FULLNESS[which === 0 ? this.getRhymeType(pron) : this.getRhymeType(null, pron)]
+      }));
 
     // return the pron that makes the fullest rhyme
     return scores.sort((a,b) => b.score - a.score)[0].pron;
@@ -54,6 +59,7 @@ class Rhyme {
      * Calls: Line.getTerm, Line.getStress, Word.getPron, Pron.getStress, Rhyme.checkFullness
      * Called by: Rhyme.getRhymeType
      */
+    console.log("in resolvePron with prons", prons);
     const term1 = new Line(this.line1).getTerm()[0].toLowerCase();
     const term2 = new Line(this.line2).getTerm()[0].toLowerCase();
      
@@ -111,7 +117,7 @@ class Rhyme {
      * Determines how and whether the two lines rhyme and returns a string labelling the rhyme type.
      * Pronunciation can be specified for either of the two terms
      */
-    
+    console.log("in getRhymeType with pron1", pron1, "\npron2", pron2);
     // establish necessary parts of term1
     const term1 = new Line(this.line1).getTerm()[0].toLowerCase();
     if (pron1 === null) {

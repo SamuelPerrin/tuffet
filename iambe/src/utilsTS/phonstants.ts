@@ -168,7 +168,7 @@ export const RHYME_FULLNESS : {[key: string]: number} = {
   'nasal consonance':8,
   'N/A':0,
 };
-export const RHYME_SCORE = {
+export const RHYME_SCORE : {[key: string]: number} = {
   'full rhyme':1.0,
   'homophone rhyme':0.5,
   'identical rhyme':0.5,

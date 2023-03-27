@@ -19,7 +19,9 @@ export default class Line {
 
     // remove some punctuation marks, and replace others with a space
     phonstants.PUNCTS_TO_DELETE.forEach(p => line = line.replace(new RegExp('\\' + p, 'g'), ''));
-    phonstants.PUNCTS_TO_SPACE.forEach(p => line = line.replace(new RegExp('\\' + p, 'g'), ' '));
+    phonstants.PUNCTS_TO_SPACE.forEach(p => {
+      line = line.replace(new RegExp('\\' + p, 'g'), ' ');
+    });
 
     return line.split(' ').filter(token => token.length > 0);
   }

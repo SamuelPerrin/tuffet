@@ -9,6 +9,7 @@ export default class Stanza {
   private THRESHOLD: number = 0.3;
   public text: string = "";
   private lines: Line[] = [];
+  private rhymes: RhymeInfo[] = [];
 
   constructor(text: string) {
     this.text = text;
@@ -26,9 +27,9 @@ export default class Stanza {
   }
 
   /**
-   * Returns true if the score of each pair in the array is greater than the THRESHOLD
-   * @param scores Object for determining the fullness of rhymetypes
-   * @param arr Array of rhymetypes in the stanza
+   * Returns true if the score of each pair in the array is greater than the `THRESHOLD`
+   * @param scores Object for determining the fullness of rhyme types
+   * @param arr Array of rhyme types in the stanza
    */
   private allOver(scores: { [key: string]: number }, arr: string[]) {
     return arr.every(rhyme => scores[rhyme] > this.THRESHOLD);
@@ -39,7 +40,7 @@ export default class Stanza {
    */
   public getRhymeScheme(): RhymeScheme {
     let bestGuess: RhymeScheme = RhymeScheme.irreg;
-    const lines : string[] = this.getLines().map(l => l.text);
+    const lines: string[] = this.getLines().map(l => l.text);
 
     if (lines.length === 2) {
       const onetwo = new Rhyme(lines[0], lines[1]).getScore();
@@ -69,18 +70,18 @@ export default class Stanza {
       const twofour = new Rhyme(lines[1], lines[3]).getScore();
       const threefour = new Rhyme(lines[2], lines[3]).getScore();
 
-      const possibles : RhymeSchemeData[] = [
-        {rs: RhymeScheme.quatr, pairs:['twofour']},
-        {rs: RhymeScheme.ababx, pairs:['onethree', 'twofour']},
-        {rs: RhymeScheme.abbax, pairs:['onefour', 'twothree']},
-        {rs: RhymeScheme.aaaax, pairs:['onetwo', 'onethree', 'onefour', 'twothree', 'twofour', 'threefour']},
-        {rs: RhymeScheme.cpls2, pairs:['onetwo', 'threefour']},
-        {rs: RhymeScheme.abaax, pairs:['onethree', 'onefour', 'threefour']},
-        {rs: RhymeScheme.aabax, pairs:['onetwo', 'onefour', 'twofour']},
+      const possibles: RhymeSchemeData[] = [
+        { rs: RhymeScheme.quatr, pairs: ['twofour'] },
+        { rs: RhymeScheme.ababx, pairs: ['onethree', 'twofour'] },
+        { rs: RhymeScheme.abbax, pairs: ['onefour', 'twothree'] },
+        { rs: RhymeScheme.aaaax, pairs: ['onetwo', 'onethree', 'onefour', 'twothree', 'twofour', 'threefour'] },
+        { rs: RhymeScheme.cpls2, pairs: ['onetwo', 'threefour'] },
+        { rs: RhymeScheme.abaax, pairs: ['onethree', 'onefour', 'threefour'] },
+        { rs: RhymeScheme.aabax, pairs: ['onetwo', 'onefour', 'twofour'] },
       ];
-      let fourthPossibles : RhymeScheme[] = [];
+      let fourthPossibles: RhymeScheme[] = [];
 
-      const allScores: { [key: string]: number } = {
+      const allScores: ScoreForLinePair = {
         'onetwo': onetwo,
         'onethree': onethree,
         'onefour': onefour,
@@ -96,7 +97,7 @@ export default class Stanza {
       else if (allScores.twofour > 0) return RhymeScheme.quatr; // for quatrains that otherwise wouldn't be rhymed
 
       // Perform a few last checks to correct some of winnower's biases
-      const schemes : {[key in RhymeScheme.quatr | RhymeScheme.ababx | RhymeScheme.abbax | RhymeScheme.aabax | RhymeScheme.cpls2 | RhymeScheme.aaaax | RhymeScheme.abaax]: boolean} = {
+      const schemes: { [key in RhymeScheme.quatr | RhymeScheme.ababx | RhymeScheme.abbax | RhymeScheme.aabax | RhymeScheme.cpls2 | RhymeScheme.aaaax | RhymeScheme.abaax]: boolean } = {
         [RhymeScheme.quatr]: false,
         [RhymeScheme.ababx]: false,
         [RhymeScheme.abbax]: false,
@@ -107,9 +108,9 @@ export default class Stanza {
       };
 
       fourthPossibles.forEach(scheme => {
-        if (scheme[0] in schemes) {
+        if (scheme in schemes) {
           // @ts-ignore
-          schemes[scheme[0]] = true;
+          schemes[scheme] = true;
         }
       });
 
@@ -134,34 +135,34 @@ export default class Stanza {
       const fourfive = new Rhyme(lines[3], lines[4]).getScore();
 
       const possibles = [
-        {rs:RhymeScheme.abccb, pairs:['twofive', 'threefour']},
-        {rs:RhymeScheme.aabcb, pairs:['onetwo', 'threefive']},
-        {rs:RhymeScheme.splt1, pairs:['threefive']},
-        {rs:RhymeScheme.splt3, pairs:['twofive']},
-        {rs:RhymeScheme.aabab, pairs:['onetwo', 'onefour', 'twofour', 'threefive']},
-        {rs:RhymeScheme.aabbb, pairs:['onetwo', 'threefour', 'threefive', 'fourfive']},
-        {rs:RhymeScheme.aabbc, pairs:['onetwo', 'threefour']},
-        {rs:RhymeScheme.ababa, pairs:['onethree', 'onefive', 'twofour', 'threefive']},
-        {rs:RhymeScheme.abbaa, pairs:['onefour', 'onefive', 'twothree', 'fourfive']},
-        {rs:RhymeScheme.ababb, pairs:['onethree', 'twofour', 'twofive', 'fourfive']},
-        {rs:RhymeScheme.abbab, pairs:['onefour', 'twothree', 'twofive', 'threefive']},
-        {rs:RhymeScheme.abaab, pairs:['onethree', 'onefour', 'twofive', 'threefour']},
-        {rs:RhymeScheme.aabba, pairs:['onetwo','onefive','twofive','threefour']},
-        {rs:RhymeScheme.aaabb, pairs:['onetwo','onethree','twothree','fourfive']},
+        { rs: RhymeScheme.abccb, pairs: ['twofive', 'threefour'] },
+        { rs: RhymeScheme.aabcb, pairs: ['onetwo', 'threefive'] },
+        { rs: RhymeScheme.splt1, pairs: ['threefive'] },
+        { rs: RhymeScheme.splt3, pairs: ['twofive'] },
+        { rs: RhymeScheme.aabab, pairs: ['onetwo', 'onefour', 'twofour', 'threefive'] },
+        { rs: RhymeScheme.aabbb, pairs: ['onetwo', 'threefour', 'threefive', 'fourfive'] },
+        { rs: RhymeScheme.aabbc, pairs: ['onetwo', 'threefour'] },
+        { rs: RhymeScheme.ababa, pairs: ['onethree', 'onefive', 'twofour', 'threefive'] },
+        { rs: RhymeScheme.abbaa, pairs: ['onefour', 'onefive', 'twothree', 'fourfive'] },
+        { rs: RhymeScheme.ababb, pairs: ['onethree', 'twofour', 'twofive', 'fourfive'] },
+        { rs: RhymeScheme.abbab, pairs: ['onefour', 'twothree', 'twofive', 'threefive'] },
+        { rs: RhymeScheme.abaab, pairs: ['onethree', 'onefour', 'twofive', 'threefour'] },
+        { rs: RhymeScheme.aabba, pairs: ['onetwo', 'onefive', 'twofive', 'threefour'] },
+        { rs: RhymeScheme.aaabb, pairs: ['onetwo', 'onethree', 'twothree', 'fourfive'] },
       ];
-      let fourthPossibles : RhymeScheme[] = [];
+      let fourthPossibles: RhymeScheme[] = [];
 
-      const allScores = {
-        'onetwo':onetwo,
-        'onethree':onethree,
-        'onefour':onefour,
-        'onefive':onefive,
-        'twothree':twothree,
-        'twofour':twofour,
-        'twofive':twofive,
-        'threefour':threefour,
-        'threefive':threefive,
-        'fourfive':fourfive,
+      const allScores: ScoreForLinePair = {
+        'onetwo': onetwo,
+        'onethree': onethree,
+        'onefour': onefour,
+        'onefive': onefive,
+        'twothree': twothree,
+        'twofour': twofour,
+        'twofive': twofive,
+        'threefour': threefour,
+        'threefive': threefive,
+        'fourfive': fourfive,
       };
 
       let output = this.winnower(possibles, allScores);
@@ -172,7 +173,7 @@ export default class Stanza {
       } else if (output && output.length === 1) return output[0];
 
       // Perform a few last checks to correct some of winnower's biases
-      const schemes: {[key in RhymeScheme]?: boolean} = {
+      const schemes: { [key in RhymeScheme]?: boolean } = {
         [RhymeScheme.splt1]: false,
         [RhymeScheme.aabcb]: false,
         [RhymeScheme.aabbb]: false,
@@ -189,7 +190,7 @@ export default class Stanza {
 
       fourthPossibles.forEach(scheme => {
         // @ts-ignore
-        schemes[scheme[0]] = true;
+        schemes[scheme] = true;
       });
 
       if (schemes[RhymeScheme.splt1]) {
@@ -217,7 +218,7 @@ export default class Stanza {
           if (bestGuess === RhymeScheme.irreg || bestGuess === RhymeScheme.aabcb) bestGuess = RhymeScheme.aabbc;
         }
       } if (bestGuess === RhymeScheme.irreg && fourthPossibles.length > 0) bestGuess = fourthPossibles[0];
-      
+
       return bestGuess;
     }
     else if (lines.length === 6) {
@@ -238,43 +239,43 @@ export default class Stanza {
       const fivesix = new Rhyme(lines[4], lines[5]).getScore();
 
       const possibles = [
-        {rs:RhymeScheme.compm, pairs:['onetwo', 'threesix', 'fourfive']},
-        {rs:RhymeScheme.bcbdb, pairs:['twofour', 'twosix','foursix']},
-        {rs:RhymeScheme.babab, pairs:['onethree', 'onefive','twofour','twosix','threefive','foursix']},
-        {rs:RhymeScheme.spl13, pairs:['threesix']},
-        {rs:RhymeScheme.spl12, pairs:['foursix']},
-        {rs:RhymeScheme.cpls3, pairs:['onetwo', 'threefour', 'fivesix']},
-        {rs:RhymeScheme.babcc, pairs:['onethree', 'twofour', 'fivesix']},
-        {rs:RhymeScheme.bacbc, pairs:['onethree', 'twofive', 'foursix']},
-        {rs:RhymeScheme.baccc, pairs:['onethree', 'fourfive', 'foursix', 'fivesix']},
-        {rs:RhymeScheme.baccb, pairs:['onethree', 'twosix', 'fourfive']},
-        {rs:RhymeScheme.bcabc, pairs:['onefour', 'twofive', 'threesix']},
-        {rs:RhymeScheme.bccab, pairs:['onefive', 'twosix', 'threefour']},
-        {rs:RhymeScheme.a2b3a, pairs:['onetwo', 'onesix', 'twosix', 'threefour', 'threefive', 'fourfive']},
-        {rs:RhymeScheme.bbaab, pairs:['onefour', 'onefive', 'twothree','twosix', 'threesix', 'fourfive']},
+        { rs: RhymeScheme.compm, pairs: ['onetwo', 'threesix', 'fourfive'] },
+        { rs: RhymeScheme.bcbdb, pairs: ['twofour', 'twosix', 'foursix'] },
+        { rs: RhymeScheme.babab, pairs: ['onethree', 'onefive', 'twofour', 'twosix', 'threefive', 'foursix'] },
+        { rs: RhymeScheme.spl13, pairs: ['threesix'] },
+        { rs: RhymeScheme.spl12, pairs: ['foursix'] },
+        { rs: RhymeScheme.cpls3, pairs: ['onetwo', 'threefour', 'fivesix'] },
+        { rs: RhymeScheme.babcc, pairs: ['onethree', 'twofour', 'fivesix'] },
+        { rs: RhymeScheme.bacbc, pairs: ['onethree', 'twofive', 'foursix'] },
+        { rs: RhymeScheme.baccc, pairs: ['onethree', 'fourfive', 'foursix', 'fivesix'] },
+        { rs: RhymeScheme.baccb, pairs: ['onethree', 'twosix', 'fourfive'] },
+        { rs: RhymeScheme.bcabc, pairs: ['onefour', 'twofive', 'threesix'] },
+        { rs: RhymeScheme.bccab, pairs: ['onefive', 'twosix', 'threefour'] },
+        { rs: RhymeScheme.a2b3a, pairs: ['onetwo', 'onesix', 'twosix', 'threefour', 'threefive', 'fourfive'] },
+        { rs: RhymeScheme.bbaab, pairs: ['onefour', 'onefive', 'twothree', 'twosix', 'threesix', 'fourfive'] },
       ];
 
-      const allScores = {
-        'onetwo':onetwo,
-        'onethree':onethree,
-        'onefour':onefour,
-        'onefive':onefive,
-        'onesix':onesix,
-        'twothree':twothree,
-        'twofour':twofour,
-        'twofive':twofive,
-        'twosix':twosix,
-        'threefour':threefour,
-        'threefive':threefive,
-        'threesix':threesix,
-        'fourfive':fourfive,
-        'foursix':foursix,
-        'fivesix':fivesix
+      const allScores: ScoreForLinePair = {
+        'onetwo': onetwo,
+        'onethree': onethree,
+        'onefour': onefour,
+        'onefive': onefive,
+        'onesix': onesix,
+        'twothree': twothree,
+        'twofour': twofour,
+        'twofive': twofive,
+        'twosix': twosix,
+        'threefour': threefour,
+        'threefive': threefive,
+        'threesix': threesix,
+        'fourfive': fourfive,
+        'foursix': foursix,
+        'fivesix': fivesix
       };
 
-      let fourthPossibles : RhymeScheme[] = [];
+      let fourthPossibles: RhymeScheme[] = [];
       let output = this.winnower(possibles, allScores);
-      
+
       if (output) bestGuess = output[0];
       if (output && output.length > 1) {
         fourthPossibles = output;
@@ -284,7 +285,7 @@ export default class Stanza {
       }
 
       // Perform a few last checks to correct some of winnower's biases
-      const schemes: {[key in RhymeScheme]?: boolean}  = {
+      const schemes: { [key in RhymeScheme]?: boolean } = {
         [RhymeScheme.spl13]: false,
         [RhymeScheme.compm]: false,
         [RhymeScheme.bcabc]: false,
@@ -297,7 +298,7 @@ export default class Stanza {
 
       fourthPossibles.forEach(scheme => {
         // @ts-ignore
-        schemes[scheme[0]] = true;
+        schemes[scheme] = true;
       });
 
       if (schemes[RhymeScheme.spl13]) {
@@ -336,25 +337,25 @@ export default class Stanza {
       const sixseven = new Rhyme(lines[5], lines[6]).getScore();
 
       const possibles = [
-        {rs: RhymeScheme.babc3, pairs:['onethree', 'twofour', 'fivesix','fiveseven','sixseven']},
-        {rs: RhymeScheme.cacbb, pairs:['onefour', 'twosix','twoseven','threefive','sixseven']},
-        {rs: RhymeScheme.srima, pairs:['onethree', 'onefive','twofour','threefive','sixseven']},
-        {rs: RhymeScheme.royal, pairs:['onethree','twofour','twofive','fourfive','sixseven']},
+        { rs: RhymeScheme.babc3, pairs: ['onethree', 'twofour', 'fivesix', 'fiveseven', 'sixseven'] },
+        { rs: RhymeScheme.cacbb, pairs: ['onefour', 'twosix', 'twoseven', 'threefive', 'sixseven'] },
+        { rs: RhymeScheme.srima, pairs: ['onethree', 'onefive', 'twofour', 'threefive', 'sixseven'] },
+        { rs: RhymeScheme.royal, pairs: ['onethree', 'twofour', 'twofive', 'fourfive', 'sixseven'] },
       ];
 
-      const allScores = {
-        'onethree':onethree,
-        'onefour':onefour,
-        'onefive':onefive,
-        'twofour':twofour,
-        'twofive':twofive,
-        'twosix':twosix,
-        'twoseven':twoseven,
-        'threefive':threefive,
-        'fourfive':fourfive,
-        'fivesix':fivesix,
-        'fiveseven':fiveseven,
-        'sixseven':sixseven,
+      const allScores: ScoreForLinePair = {
+        'onethree': onethree,
+        'onefour': onefour,
+        'onefive': onefive,
+        'twofour': twofour,
+        'twofive': twofive,
+        'twosix': twosix,
+        'twoseven': twoseven,
+        'threefive': threefive,
+        'fourfive': fourfive,
+        'fivesix': fivesix,
+        'fiveseven': fiveseven,
+        'sixseven': sixseven,
       };
 
       let fourthPossibles: RhymeScheme[] = [];
@@ -394,19 +395,19 @@ export default class Stanza {
       const seveneight = new Rhyme(lines[6], lines[7]).getScore();
 
       const possibles = [
-        {rs: RhymeScheme.oct24, pairs: ['twosix', 'foureight']},
-        {rs: RhymeScheme.oct48, pairs: ['foureight']},
-        {rs: RhymeScheme.oc458, pairs: ['fourfive','foureight','fiveeight']},
-        {rs: RhymeScheme.oc148, pairs: ['onetwo', 'foureight', 'fivesix']},
-        {rs: RhymeScheme.ocaaa, pairs: ['onetwo', 'onethree', 'twothree', 'foureight', 'fivesix', 'fiveseven', 'sixseven']},
-        {rs: RhymeScheme.djuan, pairs: ['onethree','onefive','twofour','twosix','threefive','foursix','seveneight']},
-        {rs: RhymeScheme.quat2, pairs: ['twofour','sixeight']},
-        {rs: RhymeScheme.cpls4, pairs: ['onetwo','threefour','fivesix','seveneight']},
-        {rs: RhymeScheme.petra, pairs: ['onefour','onefive','oneeight','twothree','twosix','twoseven','threesix','threeseven','fourfive','foureight','fiveeight','sixseven']},
-        {rs: RhymeScheme.abab2, pairs: ['onethree','twofour','fiveseven','sixeight']},
+        { rs: RhymeScheme.oct24, pairs: ['twosix', 'foureight'] },
+        { rs: RhymeScheme.oct48, pairs: ['foureight'] },
+        { rs: RhymeScheme.oc458, pairs: ['fourfive', 'foureight', 'fiveeight'] },
+        { rs: RhymeScheme.oc148, pairs: ['onetwo', 'foureight', 'fivesix'] },
+        { rs: RhymeScheme.ocaaa, pairs: ['onetwo', 'onethree', 'twothree', 'foureight', 'fivesix', 'fiveseven', 'sixseven'] },
+        { rs: RhymeScheme.djuan, pairs: ['onethree', 'onefive', 'twofour', 'twosix', 'threefive', 'foursix', 'seveneight'] },
+        { rs: RhymeScheme.quat2, pairs: ['twofour', 'sixeight'] },
+        { rs: RhymeScheme.cpls4, pairs: ['onetwo', 'threefour', 'fivesix', 'seveneight'] },
+        { rs: RhymeScheme.petra, pairs: ['onefour', 'onefive', 'oneeight', 'twothree', 'twosix', 'twoseven', 'threesix', 'threeseven', 'fourfive', 'foureight', 'fiveeight', 'sixseven'] },
+        { rs: RhymeScheme.abab2, pairs: ['onethree', 'twofour', 'fiveseven', 'sixeight'] },
       ];
 
-      const allScores = {
+      const allScores: ScoreForLinePair = {
         'onetwo': onetwo,
         'onethree': onethree,
         'onefour': onefour,
@@ -440,7 +441,7 @@ export default class Stanza {
       }
 
       // Perform a few last checks to correct some of winnower's biases
-      const schemes: {[key in RhymeScheme]?: boolean}   = { 
+      const schemes: { [key in RhymeScheme]?: boolean } = {
         [RhymeScheme.oct48]: false,
         [RhymeScheme.oct24]: false,
         [RhymeScheme.oc458]: false,
@@ -453,24 +454,24 @@ export default class Stanza {
       };
       fourthPossibles.forEach(scheme => {
         //@ts-ignore
-        schemes[scheme[0]] = true
+        schemes[scheme] = true
       });
 
       if (schemes[RhymeScheme.oct48]) {
-        if (schemes[RhymeScheme.oc148] && this.allOver(allScores, ['onetwo','fivesix'])) {
+        if (schemes[RhymeScheme.oc148] && this.allOver(allScores, ['onetwo', 'fivesix'])) {
           bestGuess = RhymeScheme.oc148;
-          if (schemes[RhymeScheme.ocaaa] && this.allOver(allScores, ['onethree','twothree','fiveseven','sixseven'])) {
+          if (schemes[RhymeScheme.ocaaa] && this.allOver(allScores, ['onethree', 'twothree', 'fiveseven', 'sixseven'])) {
             bestGuess = RhymeScheme.ocaaa;
           }
         }
         else bestGuess = RhymeScheme.oct48;
-        if (schemes[RhymeScheme.oct24] && allScores,twosix > this.THRESHOLD) bestGuess = RhymeScheme.oct24;
-        if (schemes[RhymeScheme.oc458] && this.allOver(allScores, ['fourfive','fiveeight'])) {
+        if (schemes[RhymeScheme.oct24] && allScores, twosix > this.THRESHOLD) bestGuess = RhymeScheme.oct24;
+        if (schemes[RhymeScheme.oc458] && this.allOver(allScores, ['fourfive', 'fiveeight'])) {
           bestGuess = RhymeScheme.oc458;
         }
       }
       if (schemes[RhymeScheme.quat2]) {
-        if (schemes[RhymeScheme.abab2] && this.allOver(allScores, ['onethree','fiveseven'])) {
+        if (schemes[RhymeScheme.abab2] && this.allOver(allScores, ['onethree', 'fiveseven'])) {
           bestGuess = RhymeScheme.abab2;
         }
       }
@@ -507,37 +508,37 @@ export default class Stanza {
       const eightnine = new Rhyme(lines[7], lines[8]).getScore();
 
       const possibles = [
-        {rs: RhymeScheme.cpmp3, pairs: ['onetwo', 'threesix','threenine','fourfive','sixnine','seveneight']},
-        {rs: RhymeScheme.raven, pairs: ['onetwo','threeseven','threeeight','threenine','fourfive','foursix','fivesix','seveneight','sevennine','eightnine']},
-        {rs: RhymeScheme.shalo, pairs: ['onetwo','onethree','onefour','twothree','twofour','threefour','fivenine','sixseven','sixeight','seveneight']},
-        {rs: RhymeScheme.spens, pairs: ['onethree', 'twofour', 'twofive','twoseven','fourfive','fourseven','fiveseven','sixeight','sixnine','eightnine']},
+        { rs: RhymeScheme.cpmp3, pairs: ['onetwo', 'threesix', 'threenine', 'fourfive', 'sixnine', 'seveneight'] },
+        { rs: RhymeScheme.raven, pairs: ['onetwo', 'threeseven', 'threeeight', 'threenine', 'fourfive', 'foursix', 'fivesix', 'seveneight', 'sevennine', 'eightnine'] },
+        { rs: RhymeScheme.shalo, pairs: ['onetwo', 'onethree', 'onefour', 'twothree', 'twofour', 'threefour', 'fivenine', 'sixseven', 'sixeight', 'seveneight'] },
+        { rs: RhymeScheme.spens, pairs: ['onethree', 'twofour', 'twofive', 'twoseven', 'fourfive', 'fourseven', 'fiveseven', 'sixeight', 'sixnine', 'eightnine'] },
       ];
 
-      const allScores = {
-        'onetwo':onetwo,
-        'onethree':onethree,
-        'onefour':onefour,
-        'twothree':twothree,
-        'twofour':twofour,
-        'twofive':twofive,
-        'twoseven':twoseven,
-        'threefour':threefour,
-        'threesix':threesix,
-        'threeseven':threeseven,
-        'threeeight':threeeight,
-        'threenine':threenine,
-        'fourfive':fourfive,
-        'foursix':foursix,
-        'fourseven':fourseven,
-        'fivesix':fivesix,
-        'fiveseven':fiveseven,
-        'fivenine':fivenine,
-        'sixseven':sixseven,
-        'sixeight':sixeight,
-        'sixnine':sixnine,
-        'seveneight':seveneight,
-        'sevennine':sevennine,
-        'eightnine':eightnine,
+      const allScores: ScoreForLinePair = {
+        'onetwo': onetwo,
+        'onethree': onethree,
+        'onefour': onefour,
+        'twothree': twothree,
+        'twofour': twofour,
+        'twofive': twofive,
+        'twoseven': twoseven,
+        'threefour': threefour,
+        'threesix': threesix,
+        'threeseven': threeseven,
+        'threeeight': threeeight,
+        'threenine': threenine,
+        'fourfive': fourfive,
+        'foursix': foursix,
+        'fourseven': fourseven,
+        'fivesix': fivesix,
+        'fiveseven': fiveseven,
+        'fivenine': fivenine,
+        'sixseven': sixseven,
+        'sixeight': sixeight,
+        'sixnine': sixnine,
+        'seveneight': seveneight,
+        'sevennine': sevennine,
+        'eightnine': eightnine,
       };
 
       let fourthPossibles: RhymeScheme[] = [];
@@ -572,31 +573,31 @@ export default class Stanza {
       const nineten = new Rhyme(lines[8], lines[9]).getScore();
 
       const possibles = [
-        {rs:RhymeScheme.odeke, pairs: ['onethree','twofour','fivenine','sixeight','seventen']},
-        {rs:RhymeScheme.odeng, pairs: ['onethree','twofour','fiveeight','sixnine','seventen']},
-        {rs:RhymeScheme.odek2, pairs: ['onethree','twofour','fiveeight','sixten','sevennine']},
-        {rs:RhymeScheme.odema, pairs: ['onesix','twofour','threefive','seventen','eightnine']},
-        {rs:RhymeScheme.cpls5, pairs: ['onetwo','threefour','fivesix','seveneight','nineten']},
+        { rs: RhymeScheme.odeke, pairs: ['onethree', 'twofour', 'fivenine', 'sixeight', 'seventen'] },
+        { rs: RhymeScheme.odeng, pairs: ['onethree', 'twofour', 'fiveeight', 'sixnine', 'seventen'] },
+        { rs: RhymeScheme.odek2, pairs: ['onethree', 'twofour', 'fiveeight', 'sixten', 'sevennine'] },
+        { rs: RhymeScheme.odema, pairs: ['onesix', 'twofour', 'threefive', 'seventen', 'eightnine'] },
+        { rs: RhymeScheme.cpls5, pairs: ['onetwo', 'threefour', 'fivesix', 'seveneight', 'nineten'] },
       ];
 
-      const allScores = {
-        'onetwo':onetwo,
-        'onethree':onethree,
-        'onesix':onesix,
-        'twofour':twofour,
-        'threefour':threefour,
-        'threefive':threefive,
-        'fivesix':fivesix,
-        'fiveeight':fiveeight,
-        'fivenine':fivenine,
-        'sixeight':sixeight,
-        'sixnine':sixnine,
-        'sixten':sixten,
-        'seveneight':seveneight,
-        'sevennine':sevennine,
-        'seventen':seventen,
-        'eightnine':eightnine,
-        'nineten':nineten,
+      const allScores: ScoreForLinePair = {
+        'onetwo': onetwo,
+        'onethree': onethree,
+        'onesix': onesix,
+        'twofour': twofour,
+        'threefour': threefour,
+        'threefive': threefive,
+        'fivesix': fivesix,
+        'fiveeight': fiveeight,
+        'fivenine': fivenine,
+        'sixeight': sixeight,
+        'sixnine': sixnine,
+        'sixten': sixten,
+        'seveneight': seveneight,
+        'sevennine': sevennine,
+        'seventen': seventen,
+        'eightnine': eightnine,
+        'nineten': nineten,
       };
 
       let fourthPossibles: RhymeScheme[] = [];
@@ -653,63 +654,63 @@ export default class Stanza {
       const thirteenfourteen = new Rhyme(lines[12], lines[13]).getScore();
 
       const possibles = [
-        {rs:RhymeScheme.sonit, pairs: ['onefour', 'onefive','oneeight','twothree','twosix','twoseven','threesix','threeseven','fourfive','foureight','fiveeight','sixseven','nineeleven','ninethirteen','tentwelve','tenfourteen','eleventhirteen','twelvefourteen']},
-        {rs:RhymeScheme.sonsh, pairs: ['onethree','twofour','fiveseven','sixeight','nineeleven','tentwelve','thirteenfourteen']},
-        {rs:RhymeScheme.sonpe, pairs: ['onefour','onefive','oneeight','twothree','twosix','threefourtwoseven','threesix','threeseven','fourfive','foureight','fiveeight','sixseven','ninetwelve','tenthirteen','elevenfourteen']},
-        {rs:RhymeScheme.stozy, pairs: ['onethree','onefive','twofour','sixeight','seventen','nineeleven','ninethirteen','eleventhirteen','twelvefourteen']},
-        {rs:RhymeScheme.stoz2, pairs: ['onefour','twothree','twofive','twoseven','threefive','threeseven','fiveseven','sixeight','nineten','ninetwelve','tentwelve','eleventhirteen','elevenfourteen','thirteenfourteen']},
-        {rs:RhymeScheme.sonfr, pairs: ['onefour','oneeight','twofive','twonine','threeseven','threeten','foureight','fivenine','sixeleven','seventen','eleventhirteen','twelvefourteen']},
-        {rs:RhymeScheme.sone1, pairs: ['onethree','twofour','fiveseven','sixeight','nineten','ninetwelve','tentwelve','eleventhirteen','elevenfourteen','thirteenfourteen']},
-        {rs:RhymeScheme.sone2, pairs: ['onethree','twofour','twonine','fournine','fiveseven','fiveten','seventen','sixeight','eleventhirteen','twelvefourteen']},
-        {rs:RhymeScheme.sone3, pairs: ['onethree','twofour','fiveseven','sixeight','nineeleven','tenfourteen','twelvethirteen']},
-        {rs:RhymeScheme.soni1, pairs: ['onefour', 'onefive','oneeight','twothree','twosix','twoseven','threesix','threeseven','fourfive','foureight','fiveeight','sixseven','ninetwelve','ninefourteen','teneleven','tenthirteen','eleventhirteen','twelvefourteen']},
-        {rs:RhymeScheme.soni2, pairs: ['onefour', 'onefive','oneeight','twothree','twosix','twoseven','threesix','threeseven','fourfive','foureight','fiveeight','sixseven','nineeleven','ninefourteen','tentwelve','tenthirteen','elevenfourteen','twelvethirteen']},
-        {rs:RhymeScheme.soni3, pairs: ['onefour', 'onefive','oneeight','twothree','twosix','twoseven','threesix','threeseven','fourfive','foureight','fiveeight','sixseven','ninethirteen','tentwelve','elevenfourteen']},
-        {rs:RhymeScheme.soni4, pairs: ['onefour', 'onefive','oneeight','twothree','twosix','twoseven','threesix','threeseven','fourfive','foureight','fiveeight','sixseven','nineeleven','tenthirteen','twelvefourteen']},
-        {rs:RhymeScheme.soni5, pairs: ['onefour', 'onefive','oneeight','twothree','twosix','twoseven','threesix','threeseven','fourfive','foureight','fiveeight','sixseven','ninefourteen','tentwelve','eleventhirteen']},
-        {rs:RhymeScheme.soni6, pairs: ['onefour', 'onefive','oneeight','twothree','twosix','twoseven','threesix','threeseven','fourfive','foureight','fiveeight','sixseven','nineeleven','tentwelve','thirteenfourteen']},
+        { rs: RhymeScheme.sonit, pairs: ['onefour', 'onefive', 'oneeight', 'twothree', 'twosix', 'twoseven', 'threesix', 'threeseven', 'fourfive', 'foureight', 'fiveeight', 'sixseven', 'nineeleven', 'ninethirteen', 'tentwelve', 'tenfourteen', 'eleventhirteen', 'twelvefourteen'] },
+        { rs: RhymeScheme.sonsh, pairs: ['onethree', 'twofour', 'fiveseven', 'sixeight', 'nineeleven', 'tentwelve', 'thirteenfourteen'] },
+        { rs: RhymeScheme.sonpe, pairs: ['onefour', 'onefive', 'oneeight', 'twothree', 'twosix', 'threefourtwoseven', 'threesix', 'threeseven', 'fourfive', 'foureight', 'fiveeight', 'sixseven', 'ninetwelve', 'tenthirteen', 'elevenfourteen'] },
+        { rs: RhymeScheme.stozy, pairs: ['onethree', 'onefive', 'twofour', 'sixeight', 'seventen', 'nineeleven', 'ninethirteen', 'eleventhirteen', 'twelvefourteen'] },
+        { rs: RhymeScheme.stoz2, pairs: ['onefour', 'twothree', 'twofive', 'twoseven', 'threefive', 'threeseven', 'fiveseven', 'sixeight', 'nineten', 'ninetwelve', 'tentwelve', 'eleventhirteen', 'elevenfourteen', 'thirteenfourteen'] },
+        { rs: RhymeScheme.sonfr, pairs: ['onefour', 'oneeight', 'twofive', 'twonine', 'threeseven', 'threeten', 'foureight', 'fivenine', 'sixeleven', 'seventen', 'eleventhirteen', 'twelvefourteen'] },
+        { rs: RhymeScheme.sone1, pairs: ['onethree', 'twofour', 'fiveseven', 'sixeight', 'nineten', 'ninetwelve', 'tentwelve', 'eleventhirteen', 'elevenfourteen', 'thirteenfourteen'] },
+        { rs: RhymeScheme.sone2, pairs: ['onethree', 'twofour', 'twonine', 'fournine', 'fiveseven', 'fiveten', 'seventen', 'sixeight', 'eleventhirteen', 'twelvefourteen'] },
+        { rs: RhymeScheme.sone3, pairs: ['onethree', 'twofour', 'fiveseven', 'sixeight', 'nineeleven', 'tenfourteen', 'twelvethirteen'] },
+        { rs: RhymeScheme.soni1, pairs: ['onefour', 'onefive', 'oneeight', 'twothree', 'twosix', 'twoseven', 'threesix', 'threeseven', 'fourfive', 'foureight', 'fiveeight', 'sixseven', 'ninetwelve', 'ninefourteen', 'teneleven', 'tenthirteen', 'eleventhirteen', 'twelvefourteen'] },
+        { rs: RhymeScheme.soni2, pairs: ['onefour', 'onefive', 'oneeight', 'twothree', 'twosix', 'twoseven', 'threesix', 'threeseven', 'fourfive', 'foureight', 'fiveeight', 'sixseven', 'nineeleven', 'ninefourteen', 'tentwelve', 'tenthirteen', 'elevenfourteen', 'twelvethirteen'] },
+        { rs: RhymeScheme.soni3, pairs: ['onefour', 'onefive', 'oneeight', 'twothree', 'twosix', 'twoseven', 'threesix', 'threeseven', 'fourfive', 'foureight', 'fiveeight', 'sixseven', 'ninethirteen', 'tentwelve', 'elevenfourteen'] },
+        { rs: RhymeScheme.soni4, pairs: ['onefour', 'onefive', 'oneeight', 'twothree', 'twosix', 'twoseven', 'threesix', 'threeseven', 'fourfive', 'foureight', 'fiveeight', 'sixseven', 'nineeleven', 'tenthirteen', 'twelvefourteen'] },
+        { rs: RhymeScheme.soni5, pairs: ['onefour', 'onefive', 'oneeight', 'twothree', 'twosix', 'twoseven', 'threesix', 'threeseven', 'fourfive', 'foureight', 'fiveeight', 'sixseven', 'ninefourteen', 'tentwelve', 'eleventhirteen'] },
+        { rs: RhymeScheme.soni6, pairs: ['onefour', 'onefive', 'oneeight', 'twothree', 'twosix', 'twoseven', 'threesix', 'threeseven', 'fourfive', 'foureight', 'fiveeight', 'sixseven', 'nineeleven', 'tentwelve', 'thirteenfourteen'] },
       ];
 
-      const allScores = {
-        'onethree':onethree,
-        'onefour':onefour,
-        'onefive':onefive,
-        'oneeight':oneeight,
-        'twothree':twothree,
-        'twofour':twofour,
-        'twofive':twofive,
-        'twosix':twosix,
-        'twoseven':twoseven,
-        'twonine':twonine,
-        'threefive':threefive,
-        'threesix':threesix,
-        'threeseven':threeseven,
-        'threeten':threeten,
-        'fourfive':fourfive,
-        'foureight':foureight,
-        'fournine':fournine,
-        'fiveseven':fiveseven,
-        'fiveeight':fiveeight,
-        'fivenine':fivenine,
-        'fiveten':fiveten,
-        'sixseven':sixseven,
-        'sixeight':sixeight,
-        'sixeleven':sixeleven,
-        'seventen':seventen,
-        'nineten':nineten,
-        'nineeleven':nineeleven,
-        'ninetwelve':ninetwelve,
-        'ninethirteen':ninethirteen,
-        'ninefourteen':ninefourteen,
-        'teneleven':teneleven,
-        'tentwelve':tentwelve,
-        'tenthirteen':tenthirteen,
-        'tenfourteen':tenfourteen,
-        'eleventhirteen':eleventhirteen,
-        'elevenfourteen':elevenfourteen,
-        'twelvethirteen':twelvethirteen,
-        'twelvefourteen':twelvefourteen,
-        'thirteenfourteen':thirteenfourteen
+      const allScores: ScoreForLinePair = {
+        'onethree': onethree,
+        'onefour': onefour,
+        'onefive': onefive,
+        'oneeight': oneeight,
+        'twothree': twothree,
+        'twofour': twofour,
+        'twofive': twofive,
+        'twosix': twosix,
+        'twoseven': twoseven,
+        'twonine': twonine,
+        'threefive': threefive,
+        'threesix': threesix,
+        'threeseven': threeseven,
+        'threeten': threeten,
+        'fourfive': fourfive,
+        'foureight': foureight,
+        'fournine': fournine,
+        'fiveseven': fiveseven,
+        'fiveeight': fiveeight,
+        'fivenine': fivenine,
+        'fiveten': fiveten,
+        'sixseven': sixseven,
+        'sixeight': sixeight,
+        'sixeleven': sixeleven,
+        'seventen': seventen,
+        'nineten': nineten,
+        'nineeleven': nineeleven,
+        'ninetwelve': ninetwelve,
+        'ninethirteen': ninethirteen,
+        'ninefourteen': ninefourteen,
+        'teneleven': teneleven,
+        'tentwelve': tentwelve,
+        'tenthirteen': tenthirteen,
+        'tenfourteen': tenfourteen,
+        'eleventhirteen': eleventhirteen,
+        'elevenfourteen': elevenfourteen,
+        'twelvethirteen': twelvethirteen,
+        'twelvefourteen': twelvefourteen,
+        'thirteenfourteen': thirteenfourteen
       };
 
       let output = this.winnower(possibles, allScores);
@@ -731,30 +732,30 @@ export default class Stanza {
       const eleventwelve = new Rhyme(lines[10], lines[11]).getScore();
       const thirteenfourteen = new Rhyme(lines[12], lines[13]).getScore();
       const fifteensixteen = new Rhyme(lines[14], lines[15]).getScore();
-      
+
       const scores = [onetwo, threefour, fivesix, seveneight, nineten, eleventwelve, thirteenfourteen, fifteensixteen];
       const allIn = scores.filter(score => score > this.THRESHOLD);
       if (allIn.length >= 5) bestGuess = RhymeScheme.cpls8;
     }
-    
+
     return bestGuess;
   }
 
   /**
    * 
    * @param rhymeSchemes list of possible rhyme scheme objects
-   * @param rhymes object of rhyme scores from getRhymeScheme
-   * @param recurring flag for calls of winnower made by winnower itself
+   * @param rhymes object of rhyme scores for each relevant pair of lines in the stanza from `getRhymeScheme`
+   * @param recurring flag for calls of `winnower` made by `winnower` itself
    * @returns 
    */
-  private winnower(rhymeSchemes: RhymeSchemeData[], rhymes: { [key: string]: number }, recurring : boolean = false): RhymeScheme[] {
+  public winnower(rhymeSchemes: RhymeSchemeData[], rhymes: ScoreForLinePair, recurring: boolean = false): RhymeScheme[] {
     let bestGuess = RhymeScheme.irreg;
     // Weed out line pairs that don't rhyme in any discernible way, leaving a list of rhyming pairs where each element is a list [key, rhymes[key]]
     const nonzeroes = Object.entries(rhymes).filter(rhyme => rhyme[1] > 0);
     if (nonzeroes.length === 0) return [bestGuess];
-    
+
     // sort rhyme scores in ascending order
-    nonzeroes.sort((a,b) => a[1] - b[1]);
+    nonzeroes.sort((a, b) => a[1] - b[1]);
 
     // a list of all the line pairs with full rhyme
     const ones = nonzeroes.filter(rhyme => rhyme[1] === 1);
@@ -782,13 +783,13 @@ export default class Stanza {
         if (zeroes < 2) return [secondPossibles[0].rs];
         return [bestGuess];
       }
-      
+
       // Check if the rhymes in each rhyme scheme in secondPossibles are also in nonzeroes. Only stanzas that don't result in any non-rhymes will be allowed into thirdPossibles
       const thirdPossibles = secondPossibles.filter(scheme => scheme.pairs.every(pair => nonzeroes.map(rs => rs[0]).includes(pair)));
 
       if (!thirdPossibles.length && !recurring) {
         // Run again with nonzeroes instead of rhymes
-        const newScores : { [key: string]: number } = {};
+        const newScores: { [key: string]: number } = {};
         nonzeroes.forEach(i => newScores[i[0]] = i[1]);
         return this.winnower(rhymeSchemes, newScores, true);
       }
@@ -797,33 +798,53 @@ export default class Stanza {
         return [thirdPossibles[0].rs];
       }
 
-      // Average the scores of the rhymes of each remaining rhyme scheme, returning the one with the highest average
-      // In other words, only the rhyme scheme that best accounts for the stanza's rhymes will be allowed through
-      const fourthPossibles : {rs: RhymeScheme; score: number}[] = thirdPossibles.map(rsData => ({
+      // The final ordering of remaining possible rhyme schemes involves two ideas: number of rhymes and average rhyme fullness.
+      // First, we sort the rhyme schemes to favor those with the greatest rhyme density (this will act as a tie-breaker)
+      // Then, we sort the rhyme schemes to favor those with the highest average fullness of all rhymes.
+      // This way, we favor those rhyme schemes that best account for the stanza's rhymes, while rewarding those with more rhymes.
+      const fourthPossibles: { rs: RhymeScheme; score: number }[] = thirdPossibles.map(rsData => ({
         rs: rsData.rs,
-        score: (rsData.pairs.reduce((a,b) => a + rhymes[b], 0)) / rsData.pairs.length,
+        score: (rsData.pairs.reduce((a, b) => a + rhymes[b], 0)) / rsData.pairs.length,
       }));
 
-      return fourthPossibles.sort((a,b) => b.score - a.score).map(obj => obj.rs);
+      // Sort the possible rhyme schemes by the number of rhymes in the stanza
+      // This is the ordering that will serve as a tie-breaker in the final sorting
+      const rhymeSchemesByPairLength = rhymeSchemes.sort((a,b) => b.pairs.length - a.pairs.length).map(rs => rs.rs);
+
+      return fourthPossibles
+        .sort((a,b) => rhymeSchemesByPairLength.indexOf(a.rs) - rhymeSchemesByPairLength.indexOf(b.rs))
+        .sort((a, b) => b.score - a.score)
+        .map(obj => obj.rs);
     }
 
     throw Error("Couldn't find a good rhyme scheme for this stanza");
   }
 
-  private makeRhymes(firstLineIndex: number, secondLineIndex: number): RhymeInfo[] {
-    const lines : Line[] = this.getLines();
-    return new Rhyme(lines[firstLineIndex], lines[secondLineIndex]).getRhymeInfoList();
+  /**
+   * 
+   * @param firstLineIndex the index of the line in the stanza to use as line 1
+   * @param secondLineIndex the index of the line in the stanza to use as line 2
+   * @returns rhyme data about the rhyme between these two lines
+   */
+  private makeRhymes(firstLineIndex: number, secondLineIndex: number): RhymeInfo {
+    const lines: Line[] = this.getLines();
+    const rhymes = new Rhyme(lines[firstLineIndex], lines[secondLineIndex]).getRhymeInfo();
+    return rhymes;
   }
 
   /**
    * Returns a list of Rhymes in the stanza
    */
-  public getRhymes(): RhymeInfo[][] {
+  public getRhymes(): RhymeInfo[] {
+    if (this.rhymes && this.rhymes.length) return this.rhymes;
+
     const rhymeScheme = this.getRhymeScheme();
     const lines: Line[] = this.getLines();
 
-    return this.getLineNumbersForRhymeScheme(rhymeScheme)
+    this.rhymes = this.getLineNumbersForRhymeScheme(rhymeScheme)
       .map(lineNumbers => this.makeRhymes(lineNumbers[0], lineNumbers[1]));
+
+    return this.rhymes;
   }
 
   private getLineNumbersForRhymeScheme(rs: RhymeScheme): number[][] {
@@ -998,3 +1019,5 @@ interface RhymeSchemeData {
   rs: RhymeScheme;
   pairs: string[]
 }
+
+type ScoreForLinePair = {[key: string]: number};

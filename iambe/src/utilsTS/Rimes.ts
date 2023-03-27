@@ -1,15 +1,15 @@
 import Pronunciation from "./Pronunciation";
 
 export default class Rimes {
-  rime: Pronunciation = null!; // the vowel of the last stressed syllable and everything after it
-  nucl: Pronunciation = null!; // the vowel of the last stressed syllable
-  coda: Pronunciation = null!; // everything following the last stressed syllable
-  lastRime: Pronunciation = null!; // rime of the last syllable with at least secondary stress (can be same as rime)
-  lastNucl: Pronunciation = null!; // vowel of the last syllable with at least secondary stress (can be same as nucleus)
-  lastCoda: Pronunciation = null!; // everything following the last syllable with at least secondary stress
-  unstRime: Pronunciation = null!; // the rime of the last vowel in the word, if it's unstressed
-  unstNucl: Pronunciation = null!; // the last vowel of the word, if it's unstressed
-  unstCoda: Pronunciation = null!; // everything that comes after the last vowel in the word, if it's unstressed
+  rime: Pronunciation = new Pronunciation(""); // the vowel of the last stressed syllable and everything after it
+  nucl: Pronunciation = new Pronunciation(""); // the vowel of the last stressed syllable
+  coda: Pronunciation = new Pronunciation(""); // everything following the last stressed syllable
+  lastRime: Pronunciation = new Pronunciation(""); // rime of the last syllable with at least secondary stress (can be same as rime)
+  lastNucl: Pronunciation = new Pronunciation(""); // vowel of the last syllable with at least secondary stress (can be same as nucleus)
+  lastCoda: Pronunciation = new Pronunciation(""); // everything following the last syllable with at least secondary stress
+  unstRime: Pronunciation = new Pronunciation(""); // the rime of the last vowel in the word, if it's unstressed
+  unstNucl: Pronunciation = new Pronunciation(""); // the last vowel of the word, if it's unstressed
+  unstCoda: Pronunciation = new Pronunciation(""); // everything that comes after the last vowel in the word, if it's unstressed
   lastPrime: number = -1000; // the index of the last vowel in the word with primary stress
 
   /**
@@ -26,7 +26,7 @@ export default class Rimes {
     if (this.rime.length > 3) this.coda = new Pronunciation(this.rime.slice(4));
 
     // Assign lastRime, lastNucl, and lastCoda
-    if (this.coda.toString() !== '') {
+    if (this.coda && this.coda.toString() !== '') {
       const codaPhoneList = this.coda.split(' ');
       let codaVowel = -1;
       for (let phone in codaPhoneList) {
@@ -47,14 +47,14 @@ export default class Rimes {
       }
     }
 
-    if (this.lastRime.toString() === '') {
+    if (!this.lastRime || this.lastRime.toString() === '') {
       this.lastRime = new Pronunciation(this.rime);
       this.lastNucl = new Pronunciation(this.nucl);
       this.lastCoda = new Pronunciation(this.coda);
     }
 
     // Assign unstRime, unstNucl, and unstCoda
-    if (this.lastCoda.toString() !== '') {
+    if (this.lastCoda && this.lastCoda.toString() !== '') {
       const lastCodaPhoneList = this.lastCoda.split(' ');
       let lastCodaVowel = -1;
       for (let phone in lastCodaPhoneList) {

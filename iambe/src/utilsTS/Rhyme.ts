@@ -10,7 +10,7 @@ import * as phonstants from './phonstants';
 export default class Rhyme {
   private line1: Line = null!;
   private line2: Line = null!;
-  private rhymeInfoList: RhymeInfo[] = [];
+  private rhymeInfo: RhymeInfo = null!;
   private score: number = null!;
 
   constructor(line1: Line, line2: Line);
@@ -55,16 +55,16 @@ export default class Rhyme {
    */
   private checkFullness(candidates: Pronunciation[], which: number): Pronunciation {
     // Make a list of objects with each pronunciation and the relative fullness of the rhyme it makes
-    const scores: { pronunciation: Pronunciation; score: number; }[] = candidates
+    const scores: PronunciationFullness[] = candidates
       .map(pron => {
-        let rhymeType: phonstants.RhymeType = which === 0 ? this.getRhymeType(pron) : this.getRhymeType(null, pron);
-        let score: number = this.getScoreForRhymeType(rhymeType);
+        let rhymeType: phonstants.RhymeType = which === 1 ? this.getRhymeType(pron) : this.getRhymeType(null, pron);
+        let score: number = this.getFullnessForRhymeType(rhymeType);
         return {
           pronunciation: pron,
           score: score
         }
       });
-
+    
     // Return the pronunciation that makes the fullest rhyme
     return scores.sort((a, b) => b.score - a.score)[0].pronunciation;
   }
@@ -77,14 +77,16 @@ export default class Rhyme {
   private resolvePron(prons: Pronunciation[]): Pronunciation {
     const term1 = new Word(this.line1.getTerm()[0].toLowerCase());
     const term2 = new Word(this.line2.getTerm()[0].toLowerCase());
+    const pron1 = term1.getPronunciation(true);
+    const pron2 = term2.getPronunciation(true);
 
     // Decide which line we're dealing with
     let which: 0 | 1 | 2 = 0;
-    if (term1.getPronunciation(true)[0].equals(prons[0])) {
+    if (pron1[0].equals(prons[0])) {
       // we're pronouncing line1's term
       which = 1;
-    } 
-    else if (term2.getPronunciation(true)[0].equals(prons[0])) {
+    }
+    else if (pron2[0].equals(prons[0])) {
       // we're pronouncing line2's term
       which = 2;
     }
@@ -124,7 +126,8 @@ export default class Rhyme {
     // makes for the best rhyme with the other term
     if (candidates.length === 1) {
       return candidates[0];
-    } else {
+    }
+    else {
       return this.checkFullness(candidates, which);
     }
   }
@@ -138,10 +141,8 @@ export default class Rhyme {
     pron1: PronunciationType = null,
     pron2: PronunciationType = null
   ): phonstants.RhymeType {
-    // Check to see if this rhyme type has been computed before
-    if (this.rhymeInfoList.some(ri => ri.pron1.equals(pron1) && ri.pron2.equals(pron2))) {
-      return this.rhymeInfoList.find(ri => ri!.pron1.equals(pron1) && ri!.pron2.equals(pron2))!.rhymeType;
-    }
+    // Check to see if the rhyme type has been computed before
+    if (this.rhymeInfo != null && this.rhymeInfo.pron1.equals(pron1) && this.rhymeInfo.pron2.equals(pron2)) return this.rhymeInfo.rhymeType;
 
     // To determine whether and how two lines rhyme,
     // we need to compare the final sounds (rimes)
@@ -153,8 +154,12 @@ export default class Rhyme {
       pron1 = new Word(term1).getPronunciation(true);
     }
     if (Array.isArray(pron1)) {
-      if (pron1.length === 1) pron1 = pron1[0];
-      else pron1 = this.resolvePron(pron1);
+      if (pron1.length === 1) {
+        pron1 = pron1[0];
+      }
+      else {
+        pron1 = this.resolvePron(pron1);
+      }
     }
     const rimes1: Rimes = pron1.getRimes();
     const numlessRime1: string = this.numless(rimes1.rime);
@@ -173,18 +178,16 @@ export default class Rhyme {
     const numlessRime2 = this.numless(rimes2.rime);
     const numlessLastRime2 = this.numless(rimes2.lastRime);
 
-    // Now that we have pronunciations, check again to see if this rhyme type has been computed before
-    if (this.rhymeInfoList.some(ri => ri.pron1.equals(pron1) && ri.pron2.equals(pron2))) {
-      return this.rhymeInfoList.find(ri => ri!.pron1.equals(pron1) && ri!.pron2.equals(pron2))!.rhymeType;
-    }
+    // Now that we have pronunciations, check again to see if the rhyme type has been computed before
+    if (this.rhymeInfo != null && this.rhymeInfo.pron1.equals(pron1) && this.rhymeInfo.pron2.equals(pron2)) return this.rhymeInfo.rhymeType;
 
     // Start checking for rhyme types
     let rhymeType = phonstants.RhymeType.none;
     let maybeAssonance = false;
 
     // Check for full, identical, and homophone rhymes
-    if (rimes1.rime === rimes2.rime) {
-      if (pron1 !== pron2) rhymeType = phonstants.RhymeType.fullRhyme;
+    if (rimes1.rime.equals(rimes2.rime)) {
+      if (!pron1.equals(pron2)) rhymeType = phonstants.RhymeType.fullRhyme;
       else if (term1 === term2 || term1 + "'" === term2 || term1 === term2 + "'") {
         rhymeType = phonstants.RhymeType.identicalRhyme;
       } else {
@@ -232,18 +235,18 @@ export default class Rhyme {
       if (rimes2.nucl.slice(0, 2) in phonstants.DIPHTHONGS
         && rimes1.nucl.slice(-2) === rimes2.nucl.slice(-2)) {
         if (rimes1.coda.equals(rimes2.coda)) {
-          rhymeType = phonstants.RhymeType.diphthongRhyme; // 'diph-diph rhyme';
+          rhymeType = phonstants.RhymeType.diphthongRhyme; // diph-diph rhyme
         }
-        else if (rimes1.nucl !== rimes2.nucl) {
-          rhymeType = phonstants.RhymeType.diphthongAssonance; // 'diph-diph assonance';
+        else if (!rimes1.nucl.equals(rimes2.nucl)) {
+          rhymeType = phonstants.RhymeType.diphthongAssonance; // diph-diph assonance
         }
       } else if ((rimes1.nucl.slice(-2, -1) === 'Y' && rimes2.nucl.slice(0, 2) === 'IY')
         || (rimes1.nucl.slice(-2, -1) === 'W' && rimes2.nucl.slice(0, 2) === 'UW')) {
         if (rimes1.coda.equals(rimes2.coda)) {
-          rhymeType = phonstants.RhymeType.diphthongRhyme; //'diph-vow rhyme';
+          rhymeType = phonstants.RhymeType.diphthongRhyme; // diph-vow rhyme
         }
         else {
-          rhymeType = phonstants.RhymeType.diphthongAssonance; // 'diph-vow assonance';
+          rhymeType = phonstants.RhymeType.diphthongAssonance; // diph-vow assonance
         }
       }
     }
@@ -253,8 +256,8 @@ export default class Rhyme {
       && rimes2.nucl.slice(0, 2) in phonstants.DIPHTHONGS) {
       // diphthong-second rhymes
       if ((rimes2.nucl.slice(-2, -1) === 'Y' && rimes1.nucl.slice(0, 2) === 'IY') || (rimes2.nucl.slice(-2, -1) === 'W' && rimes1.nucl.slice(0, 2) === 'UW')) {
-        if (rimes1.coda.equals(rimes2.coda)) rhymeType = phonstants.RhymeType.diphthongRhyme; // 'vow-diph rhyme';
-        else rhymeType = phonstants.RhymeType.diphthongAssonance; // 'vow-diph assonance';
+        if (rimes1.coda.equals(rimes2.coda)) rhymeType = phonstants.RhymeType.diphthongRhyme; // vow-diph rhyme
+        else rhymeType = phonstants.RhymeType.diphthongAssonance; // vow-diph assonance
       }
     }
 
@@ -361,21 +364,38 @@ export default class Rhyme {
     // console.log("leaving getRhymeType for",term1,"and",term2,"with",rhymeType);
 
     // Store the rhymeType for these pronunciations in case we need it again later
-    this.rhymeInfoList.push({ line1: this.line1, line2: this.line2, pron1, pron2, term1, term2, rhymeType });
+    this.rhymeInfo = {
+      line1: this.line1,
+      line2: this.line2,
+      pron1: pron1,
+      pron2: pron2,
+      term1: term1,
+      term2: term2,
+      rhymeType: rhymeType,
+    };
 
     return rhymeType;
   }
 
+  /**
+   * Get a score representing how full the rhyme type of this rhyme is
+   * @returns a number representing the fullness of the rhyme type
+   */
   public getScore(): number {
     if (this.score != null) return this.score;
-    if (this.rhymeInfoList && this.rhymeInfoList.rhymeType) {
-      this.score = this.getScoreForRhymeType(this.rhymeInfoList.rhymeType);
+    if (this.rhymeInfo && this.rhymeInfo.rhymeType) {
+      this.score = this.getScoreForRhymeType(this.rhymeInfo.rhymeType);
       return this.score;
     }
     return this.getScoreForRhymeType(this.getRhymeType());
   }
 
-  private getScoreForRhymeType(rhymeType: phonstants.RhymeType): number {
+  /**
+   * Get a score representing the fullness of this rhyme type
+   * @param rhymeType the RhymeType to score
+   * @returns A number representing the score corresponding to the fullness of this rhyme
+   */
+  private getFullnessForRhymeType(rhymeType: phonstants.RhymeType): number {
     switch (rhymeType) {
       case 'full rhyme':
         return 100;
@@ -422,13 +442,19 @@ export default class Rhyme {
     };
   }
 
-  public getRhymeInfoList(): RhymeInfo[] {
-    if (this.rhymeInfoList.length) {
-      return this.rhymeInfoList;
-    }
+  private getScoreForRhymeType(rhymeType: phonstants.RhymeType): number {
+    return phonstants.RHYME_SCORE[rhymeType];
+  }
+
+  /**
+   * Get a list of info about this rhyme
+   * @returns list of rhyme info
+   */
+  public getRhymeInfo(): RhymeInfo {
+    if (this.rhymeInfo != null) return this.rhymeInfo;
 
     this.getRhymeType();
-    return this.rhymeInfoList;
+    return this.rhymeInfo;
   }
 }
 
@@ -440,4 +466,9 @@ export interface RhymeInfo {
   term1: string;
   term2: string;
   rhymeType: phonstants.RhymeType;
+}
+
+interface PronunciationFullness {
+  pronunciation: Pronunciation;
+  score: number;
 }
