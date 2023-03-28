@@ -3,12 +3,6 @@ import * as phonstants from './phonstants';
 
 export default class Pronunciation extends String {
   private rimes: Rimes | null = null;
-  // private text: string;
- 
-  // constructor(text: string) {
-  //   super();
-  //   this.text = text;
-  // }
 
   /**
    * A string of Arab numerals representing the relative stress of the pronunciation's syllables:
@@ -77,10 +71,4 @@ export default class Pronunciation extends String {
     }
     return this.toString() === pronunciation.toString();
   }
-
-  // THIS NEEDS TO BE FIXED!
-  // HOW TO GET THE STRING FROM THIS PRONUNCIATION?
-  // public toString(): string {
-  //   return this.text;
-  // }
 }

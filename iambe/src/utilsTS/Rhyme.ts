@@ -296,7 +296,7 @@ export default class Rhyme {
     if ((maybeAssonance || rhymeType === phonstants.RhymeType.none) && rimes1.coda.equals(rimes2.coda)) {
       if (rimes1.coda.toString() === '' && !((rimes1.nucl.toString() + rimes2.nucl.toString()).includes('ER'))) {
         rhymeType = phonstants.RhymeType.zeroConsonance;
-      } else if (rimes1.coda.toString() !== '') rhymeType = phonstants.RhymeType.fullConsonance;
+      } else if (rimes1.coda.toString() !== '' && !rimes1.coda.includes('0')) rhymeType = phonstants.RhymeType.fullConsonance;
     }
 
     if ((maybeAssonance || rhymeType === phonstants.RhymeType.none)) {

@@ -35,7 +35,7 @@ test('getPron pronounces "object" two ways', () => {
 })
 
 test('getPron pronounces "live" two ways', () => {
-  expect(new Word("live").getPron()).toStrictEqual(['L IH1 V', 'L AY1 V']);
+  expect(new Word("live").getPron(true)).toStrictEqual(['L IH1 V', 'L AY1 V']);
   expect(new Word("sourest").getPron()).toBe("S AW1 R IH0 S T");
 })
 

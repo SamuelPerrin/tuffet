@@ -177,16 +177,14 @@ export default class Word {
       adjust: number = 0,
       addin: string = ''
     ): Pronunciation | null {
-      const root = word.slice(0, lastLet.length + adjust) + addin;
+      const root = word.slice(0, -lastLet.length + adjust) + addin;
       if (word.slice(-lastLet.length) === lastLet && root in lexicon) {
         const rootPronunciation = lexicon[root][0];
         const rootPronunciationList = rootPronunciation.split(' ');
         const lastPhone = rootPronunciationList[rootPronunciationList.length - 1];
 
         for (let each of phonstArr) {
-          if (lastPhone in each.obj) {
-            return new Pronunciation(rootPronunciation + each.phone);
-          }
+          if (lastPhone in each.obj) return new Pronunciation(rootPronunciation + each.phone);
         }
         return new Pronunciation(rootPronunciation + elsePhon);
       }
@@ -269,7 +267,15 @@ export default class Word {
     const checkEnding = function (word: string, lastLet: string, substring: string, adjust: number = 0): Pronunciation | null {
       const root = word.slice(0, -lastLet.length + adjust);
       if (word.slice(-lastLet.length) === lastLet && root in lexicon) {
+        if (word === "maketh") {
+          console.log({word, lastLet, substring, adjust});
+          console.log(lexicon[root][0] + substring);
+        }
         return new Pronunciation(lexicon[root][0] + substring);
+      }
+      if (word === "maketh") {
+        console.log({word, lastLet, substring, adjust});
+        console.log(null);
       }
 
       return null;
