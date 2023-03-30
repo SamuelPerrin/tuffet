@@ -7,7 +7,7 @@ import * as phonstants from './phonstants';
  * A string that represents a word
  */
 export default class Word {
-  text: string = "";
+  public text: string = "";
   static last: string[] = [];
 
   constructor(text: string) {
@@ -37,9 +37,9 @@ export default class Word {
    * 
    * @param returnArray optional flag to force the return value to be an array of strings
    */
-  getPronunciation(returnArray: false): Pronunciation | Pronunciation[];
-  getPronunciation(returnArray: true): Pronunciation[];
-  getPronunciation(returnArray: boolean = false): Pronunciation | Pronunciation[] {
+  public getPronunciation(returnArray: false): Pronunciation | Pronunciation[];
+  public getPronunciation(returnArray: true): Pronunciation[];
+  public getPronunciation(returnArray: boolean = false): Pronunciation | Pronunciation[] {
     let pronunciation: Pronunciation | Pronunciation[];
 
     // Check the lexicon for the pronunciation
@@ -570,18 +570,18 @@ export default class Word {
    * Returns an order-preserving array of integers representing the relative stress of each syllable in the word.
    * @param crux Optional flag to return a list that preserves the ambiguity in the line's pronunciation
    */
-  getStressList(crux: boolean = false): number[] | number[][] | 'crux' {
+  public getStressList(crux: boolean = false): number[] | number[][] | 'crux' {
     const ALWAYS_STRESSED = { 'ah': true, 'o': true };
 
-    let pronunciation = this.getPronunciation(false);
+    let pronunciation: PronunciationType = this.getPronunciation(false);
 
     // For words with multiple possible pronunciations
     if (Array.isArray(pronunciation)) {
       if (!crux) return 'crux';
       else {
-        const possibles = [];
+        const possibles: number[][] = [];
         for (let each of pronunciation) {
-          let stress = [];
+          let stress: number[] = [];
           for (let phone of each) {
             switch (phone) {
               case '0':

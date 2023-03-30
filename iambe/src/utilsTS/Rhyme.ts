@@ -103,7 +103,7 @@ export default class Rhyme {
     } else {
       // Since not all pronunciations are metrically equivalent, we want
       // to pick only the ones that work with the line's meter
-      const lineStresses: string[] = (which === 1 ? this.line1 : this.line2).getStresses();
+      const lineStresses: number[] = (which === 1 ? this.line1 : this.line2).getStresses();
       prons.forEach(pron => {
         // Make an array of the pronunciation's stresses as numerals
         let pronStress: string[] | number[] = pron.getStresses().split('');
