@@ -568,52 +568,17 @@ export default class Word {
 
   /**
    * Returns an order-preserving array of integers representing the relative stress of each syllable in the word.
-   * @param crux Optional flag to return a list that preserves the ambiguity in the line's pronunciation
+   * 
+   * For words with multiple pronunciations, use getCruxStressList
    */
-  public getStressList(crux: boolean = false): number[] | number[][] | 'crux' {
+  public getStressList(): number[] | 'crux' {
     const ALWAYS_STRESSED = { 'ah': true, 'o': true };
 
     let pronunciation: PronunciationType = this.getPronunciation(false);
 
     // For words with multiple possible pronunciations
     if (Array.isArray(pronunciation)) {
-      if (!crux) return 'crux';
-      else {
-        const possibles: number[][] = [];
-        for (let each of pronunciation) {
-          let stress: number[] = [];
-          for (let phone of each) {
-            switch (phone) {
-              case '0':
-                stress.push(4);
-                break;
-              case '1':
-                stress.push(1);
-                break;
-              case '2':
-                stress.push(2);
-                break;
-              case '3':
-                stress.push(3);
-                break;
-              case '4':
-                stress.push(4);
-                break;
-              default:
-                break;
-            }
-          }
-
-          // stressed monosyllables get secondary stress
-          if (stress.length === 1 && stress[0] === 1 && !(this.text in ALWAYS_STRESSED)) {
-            stress = [2];
-          }
-
-          possibles.push(stress);
-        }
-
-        return possibles;
-      }
+      return 'crux';
     }
 
     // For words with only one possible pronunciation
@@ -669,6 +634,50 @@ export default class Word {
     Word.last.push(this.text);
 
     return stress;
+  }
+
+  /**
+   * Like getStressList, but returning an array of arrays of integers, representing the relative stress of each syllable in each of multiple possible pronunciations of the word
+   */
+  public getCruxStressList(): number[][] {
+    const ALWAYS_STRESSED = { 'ah': true, 'o': true };
+
+    let pronunciation: PronunciationType = this.getPronunciation(false);
+    // For words with multiple possible pronunciations
+    const possibles: number[][] = [];
+    for (let each of pronunciation) {
+      let stress: number[] = [];
+      for (let phone of each) {
+        switch (phone) {
+          case '0':
+            stress.push(4);
+            break;
+          case '1':
+            stress.push(1);
+            break;
+          case '2':
+            stress.push(2);
+            break;
+          case '3':
+            stress.push(3);
+            break;
+          case '4':
+            stress.push(4);
+            break;
+          default:
+            break;
+        }
+      }
+
+      // stressed monosyllables get secondary stress
+      if (stress.length === 1 && stress[0] === 1 && !(this.text in ALWAYS_STRESSED)) {
+        stress = [2];
+      }
+
+      possibles.push(stress);
+    }
+
+    return possibles;
   }
 }
 

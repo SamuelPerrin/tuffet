@@ -1,5 +1,7 @@
 import * as phonstants from './phonstants';
 import Word from './Word';
+import Foot, { IFoot, FootType } from './Foot';
+import LineMeter, { LineRhythmType } from './LineMeter';
 
 /**
  * A line of verse
@@ -47,16 +49,17 @@ export default class Line {
     return terms;
   }
 
+  // Helper function checking for equivalence between two arrays
+  private equiv(arr1: number[], arr2: number[]): boolean {
+    return arr1.length === arr2.length && arr1.every((v,i) => v === arr2[i]);
+  }
+
   /**
    * Makes corrections to improbable metric patterns, returning a corrected list of feet
-   * @param feet list of feet to be corrected
+   * @param footTypes list of FootTypes for feet in the line
+   * @param feet list of 
    */
-  private correctWeirdFeet(footTypes: FootType[], feet: number[]): IFoot[] {
-    // Helper function checking for equivalence between two arrays
-    function equiv(arr1: [], arr2: []): boolean {
-      return arr1.length === arr2.length && arr1.every((v,i) => v === arr2[i]);
-    }
-    
+  private correctWeirdFeet(footTypes: FootType[], feet: number[][]): IFoot[] {
     // Helper function to change feet from unlikely patterns to more likely ones
     function changeFeet(from: FootType[], to: FootType[]): void {
       // update footTypes
@@ -73,9 +76,10 @@ export default class Line {
     }
 
     let output: IFoot[] = [];
-    for (let i=0, j=0; i < footTypes.length, j < feet.length; i++) {
+    const flatFeet = feet.flat();
+    for (let i=0, j=0; i < footTypes.length, j < flatFeet.length; i++) {
       output.push({
-        stresses: feet.slice(j, j + footTypeToSyllables(footTypes[i])),
+        stresses: flatFeet.slice(j, j + footTypeToSyllables(footTypes[i])),
         type: footTypes[i]
       });
       j += footTypeToSyllables(footTypes[i]);
@@ -158,7 +162,7 @@ export default class Line {
    */
   private resolveCrux(): ILineMeter {
     const words = this.getTokens();
-    const stresses: (number[] | number[][] | "crux")[] = words.map(word => new Word(word).getStressList(true));
+    const stresses: (number[][])[] = words.map(word => new Word(word).getCruxStressList());
 
     // Get an array of all possible stressLists for the line, where each stressList is an array of one possible pronunciation of the line
 
@@ -186,19 +190,17 @@ export default class Line {
       '322':[[0,0,0],[0,0,1],[0,1,0],[0,1,1],[1,0,0],[1,0,1],[1,1,0],[1,1,1],[2,0,0],[2,0,1],[2,1,0],[2,1,1]],
       '4':[[0],[1],[2],[3]],
       '24':[[0,0],[0,1],[0,2],[0,3],[1,0],[1,1],[1,2],[1,3]],
-      '42':[[0,0],[0,1],[1,0],[1,1],[2,0],[2,1],[3,0],[3,1]]};
+      '42':[[0,0],[0,1],[1,0],[1,1],[2,0],[2,1],[3,0],[3,1]]
+    };
 
     let j: number = 0;
     const stressList: (number | number[])[][] = [];
     let hold: (number | number[])[] = [];
     while (stressList.length < CRUXES[cruxType].length) {
       stresses.forEach(word => {
-        if (Number.isInteger(word[0]) && word != "crux") hold.push(word as number[]);
-        else if (Array.isArray(word[0]) && word != "crux") {
-          const iteration = CRUXES[cruxType][Math.floor(j/cruxLengths.length)][j % cruxLengths.length];
-          hold.push(word[iteration]);
-          j++;
-        }
+        const iteration = CRUXES[cruxType][Math.floor(j/cruxLengths.length)][j % cruxLengths.length];
+        hold.push(word[iteration]);
+        j++;
       });
 
       stressList.push(hold);
@@ -206,11 +208,11 @@ export default class Line {
     }
 
     // Get the meter of each array in stressList
-    const lines: Number[][] = [];
+    const lines: number[][] = [];
     if (Number.isInteger(stressList[0][0])) throw new Error("Not what I was expecting.");
 
-    (stressList as Number[][][]).forEach(pronunciation => {
-      const line: Number[] = [];
+    (stressList as number[][][]).forEach(pronunciation => {
+      const line: number[] = [];
       pronunciation.forEach(word => {
         word.forEach(syllable => {
           line.push(syllable);
@@ -226,9 +228,128 @@ export default class Line {
     return best;
   }
   
-  public getMeter(crux: boolean | Number[] = false): ILineMeter {
+  /**
+   * Get the line's meter
+   * @param crux a flag identifying a crux or a stressList from getStresses
+   * @returns a LineMeter
+   */
+  public getMeter(crux: boolean | number[] = false): ILineMeter {
+    // Helper function for adding a foot (used only in this method)
+    const addFoot = (type: FootType) => {
+      switch(type) {
+        case FootType.anapest:
+          let anapest = new Foot(raw.slice(0, 3), FootType.anapest);
+          feet.push(anapest);
+          raw = raw.slice(3);
+          break;
+        case FootType.dactyl:
+          let dactyl = new Foot(raw.slice(0, 3), FootType.dactyl);
+          feet.push(dactyl);
+          raw = raw.slice(3);
+          break;
+        case FootType.iamb:
+          let iamb = new Foot(raw.slice(0, 2), FootType.iamb);
+          feet.push(iamb);
+          raw = raw.slice(2);
+          break;
+        case FootType.trochee:
+          let trochee = new Foot(raw.slice(0, 2), FootType.trochee);
+          feet.push(trochee);
+          raw = raw.slice(2);
+          break;
+        case FootType.unknown:
+          let unknownFoot = new Foot(raw.slice(0, 2), FootType.unknown);
+          feet.push(unknownFoot);
+          raw = raw.slice(2);
+          break;
+        case FootType.unstressed:
+          if (raw.length > 1) {
+            throw new Error("Tried adding unstressed foot with multiple syllables remaining");
+          }
+          let unstressedSyl = new Foot(raw, FootType.unstressed);
+          feet.push(unstressedSyl);
+          raw = [];
+          break;
+        case FootType.stressed:
+          if (raw.length > 1) {
+            throw new Error("Tried adding stressed foot with multiple syllables remaining");
+          }
+          let stressedSyl = new Foot(raw, FootType.stressed);
+          feet.push(stressedSyl);
+          raw = [];
+          break;
+        default:
+          throw new Error("addFoot doesn't recognize this foot type: " + type);
+      }
+    }
+
+    let raw: number[] = [];
+    if (!crux) {
+      raw = this.getStresses();
+    } else if (Array.isArray(crux)) {
+      raw = crux;
+    }
+    
+
+    // From the last version; still needed?
+    // if ('label' in raw && 'foots' in raw && 'feet' in raw && typeof raw.label.catalexis === 'boolean') return raw;
+
+    // Divide the line into metrical feet based on syllables' relative stress and position
+    let feet: Foot[] = [];
+    while (raw.length > 2) {
+      if (raw[0] > raw[1]) { // rising (iamb or anapest)
+        if (raw[1] > raw[2]) { // anapest
+          addFoot(FootType.anapest);
+        } else { // raw[1] <= raw[2] (iamb)
+          addFoot(FootType.iamb);
+        }
+      } else if (raw[0] < raw[1]) { // falling (trochee or dactyl)
+        if (raw[1] < raw[2]) { // dactyl
+          addFoot(FootType.dactyl);
+        } else if (raw[1] > raw[2]) {
+          if (raw[2] < 3) { // trochee
+            addFoot(FootType.trochee);
+          } else {
+            addFoot(FootType.dactyl);
+          }
+        } else { // raw[1] === raw[2] (dactyl)
+          addFoot(FootType.dactyl);
+        }
+      } else { // raw[0] === raw[1] (anapest or unknown)
+        if (raw[1] <= raw[2]) { // unknown
+          addFoot(FootType.unknown);
+        } else { // raw[1] > raw[2] (anapest)
+          addFoot(FootType.anapest);
+        }
+      }
+    }
+
+    // Handle the last foot/syllable
+    if (raw.length > 1) {
+      if (raw[0] > raw[1]) { // final iamb
+        addFoot(FootType.iamb);
+      } else if (raw[0] < raw[1]) { // final trochee
+        addFoot(FootType.trochee);
+      } else { // raw[0] === raw[1] (unknown)
+        addFoot(FootType.unknown);
+      }
+    } else if (raw.length === 1) {
+      addFoot(raw[0] < 3 ? FootType.stressed : FootType.unstressed);
+    }
+
+    // Make some corrections
+    const corrected = this.correctWeirdFeet(feet.map(foot => foot.type), feet.map(foot => foot.stresses));
+
+    // Correct for pyrrhic substitution
+    const output = corrected.map(foot => {
+      if (this.equiv(foot.stresses, [3,3]) && [FootType.unknown, FootType.iamb].includes(foot.type)) {
+        foot.type = FootType.pyrrhic;
+      }
+      return foot;
+    })
+    
     return {
-      feet: [],
+      feet: output,
       rhythm: LineRhythmType.unknown,
       isCatalectic: false,
       measures: 5,
@@ -239,9 +360,9 @@ export default class Line {
    * Get an array representing the relative stress of each syllable in the line,
    * where each syllable is represented by a string numeral between 1 and 4.
    */
-  public getStresses(): (number | number[])[] {
+  public getStresses(): number[] {
     const words = this.getTokens();
-    let stresses: (number | number[])[] = [];
+    let stresses: number[] = [];
     words.forEach(word => {
       const stress = new Word(word).getStressList();
       if (stress === 'crux') return this.resolveCrux().feet.flat();
@@ -261,41 +382,18 @@ interface ILineMeter {
   measures: number
 }
 
-interface IFoot {
-  stresses: number[],
-  type: FootType,
-}
-
-enum FootType {
-  iamb,
-  trochee,
-  anapest,
-  dactyl,
-  unstressed,
-  stressed,
-  unknown
-}
-
 function footTypeToSyllables(type: FootType): number {
   switch(type) {
-    case FootType.iamb:
-    case FootType.trochee:
+    case FootType.iamb: // wS
+    case FootType.trochee: // Sw
+    case FootType.pyrrhic: // ww
+    case FootType.unknown: // SS
       return 2;
-    case FootType.anapest:
-    case FootType.dactyl:
+    case FootType.anapest: // wwS
+    case FootType.dactyl: // Sww
       return 3;
-    case FootType.unstressed:
-    case FootType.stressed:
+    case FootType.unstressed: // w
+    case FootType.stressed: // S
       return 1;
-    case FootType.unknown:
-      return 2;
   }
-}
-
-enum LineRhythmType {
-  iambic,
-  trochaic,
-  anapestic,
-  dactylic,
-  unknown
 }
