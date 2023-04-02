@@ -427,14 +427,14 @@ export enum RhymeScheme {
   cpls8 = '8 couplets (AABB\u200bCCDD\u200bEEFF\u200bGGHH)',
   irreg = 'N/A',
 };
-export const METER_NAMES = {
-  2: 'dimeter',
-  3: 'trimeter',
-  4: 'tetrameter',
-  5: 'pentameter',
-  6: 'hexameter',
-  7: 'heptameter',
-  8: 'octameter',
+export const NameForMeasure: Record<number, string> = {
+  2: "dimeter",
+  3: "trimeter",
+  4: "tetrameter",
+  5: "pentameter",
+  6: "hexameter",
+  7: "heptameter",
+  8: "octameter",
 };
 export const NONICTUS = '×';
 export const ICTUS = '/';

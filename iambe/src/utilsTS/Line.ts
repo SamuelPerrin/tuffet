@@ -1,12 +1,14 @@
 import * as phonstants from './phonstants';
 import Word from './Word';
-import Foot, { IFoot, FootType } from './Foot';
+import Foot, { FootType } from './Foot';
 import LineMeter, { LineRhythmType } from './LineMeter';
+import Pronunciation from './Pronunciation';
 
 /**
  * A line of verse
  */
 export default class Line {
+  // the text of the line of verse
   text: string = "";
 
   constructor(text: string) {
@@ -59,7 +61,7 @@ export default class Line {
    * @param footTypes list of FootTypes for feet in the line
    * @param feet list of 
    */
-  private correctWeirdFeet(footTypes: FootType[], feet: number[][]): IFoot[] {
+  private correctWeirdFeet(footTypes: FootType[], feet: number[][]): Foot[] {
     // Helper function to change feet from unlikely patterns to more likely ones
     function changeFeet(from: FootType[], to: FootType[]): void {
       // update footTypes
@@ -75,13 +77,110 @@ export default class Line {
       // FINISH TRANSLATING THIS HELPER METHOD
     }
 
-    let output: IFoot[] = [];
+    const I = FootType.iamb;
+    const T = FootType.trochee;
+    const A = FootType.anapest;
+    const D = FootType.dactyl;
+    const S = FootType.stressed;
+    const Uns = FootType.unstressed;
+    const Unk = FootType.unknown;
+
+    // Helper function to convert DTTS to TIII, etc.
+    const iambicize = () => {
+      if (this.equiv(footTypes.slice(-4), [D, T, T, S])) changeFeet([D, T, T, S], [T, I, I, I]);
+      else if (this.equiv(footTypes.slice(-5), [D, T, T, T, S])) changeFeet([D, T, T, T, S], [T, I, I, I, I]);
+      else if (this.equiv(footTypes.slice(-6), [D, T, T, T, T, S])) changeFeet([D, T, T, T, T, S], [T, I, I, I, I, I]);
+      else if (this.equiv(footTypes.slice(-4), [A, T, T, S])) changeFeet([A, T, T, S], [Unk, I, I, I]);
+      else if (this.equiv(footTypes.slice(-6), [A, T, T, T, T, S])) changeFeet([A, T, T, T, T, S], new Array(6).fill(I));
+      else if (this.equiv(footTypes.slice(-5), [D, Unk, T , T, S])) changeFeet([D, Unk, T, T, S], [T, I, I, I, I]);
+    }
+
+    if (footTypes.slice(-1)[0] === I) { // fix weird lines ending in iamb
+      if (this.equiv(footTypes.slice(-2), [A, I]) && feet.slice(-2, -1)[0][0] < feet.slice(-2,-1)[0][1]) { // change [[2,3,1], [4, 1]] to [[2,3],[1,4],[1]]
+        changeFeet([A, I], [T, T, S]);
+        iambicize();
+      } else if (this.equiv(footTypes.slice(-4), [I, A, D, I]) && feet.slice(-3,-2)[0][0] > feet.slice(-3,-2)[0][1] && feet.slice(-3,-2)[0][2] > feet.slice(-2,-1)[0][0]) changeFeet([I, A, D, I], [I, I, I, T, I]); // change [[4,1], [4,3,2], [1,3,4], [4,1]] to [[4,1],[4,3],[2,1],[3,4],[4,1]]
+      else if (this.equiv(footTypes.slice(-2), [D, I]) && feet.slice(-2, -1)[0][2] <= feet.slice(-2, -1)[0][1]) {
+        changeFeet([D, I], [T, T, S]);
+        iambicize();
+      } else if (this.equiv(footTypes.slice(-3), [D, I, I])) {
+        changeFeet([D, I, I], [T, T, T, S]);
+        iambicize();
+      } else if (this.equiv(footTypes.slice(-4), [D, D, Unk, I])) changeFeet([D, D, Unk, I], [T, I, I, Unk, I]);
+      else if (this.equiv(footTypes.slice(-4), [D, T, I, I])) changeFeet([D, T, I, I], [T, I, A, I]);
+      else if (this.equiv(footTypes.slice(-4), [D, A, I, I])) changeFeet([D, A, I, I], [T, I, I, I, I]);
+      else if (this.equiv(footTypes.slice(-4), [D, T, D, I])) changeFeet([D, T, D, I], [T, I, I, T, I]);
+      else if (this.equiv(footTypes.slice(-4), [T, A, A, I])) changeFeet([T, A, A, I], [T, I, T, I, I]);
+    } else if (footTypes.slice(-1)[0] === T) { // fix weird lines ending in trochee
+      if (this.equiv(footTypes.slice(-5), [D, T, T, T, T])) changeFeet([D, T, T, T, T], [T, I, I, I, I, Uns]);
+      else if (this.equiv(footTypes.slice(-3), [D, T, T])) changeFeet([D, T, T], [T, I, I, Uns]);
+      else if (this.equiv(footTypes.slice(-3), [I, D, T])) changeFeet([I, D, T], [I, T, I, Uns]); // this might be wrong
+    } else if (footTypes.slice(-1)[0] === Uns) { // fix weird lines ending in Uns
+      if (this.equiv(footTypes.slice(-3), [T, A, Uns])) changeFeet([T, A, Uns], [T, Unk, T]);
+      else if (this.equiv(footTypes.slice(-3), [A, I, Uns])) changeFeet([A, I, Uns], [T, T, T]);
+      else if (this.equiv(footTypes.slice(-4), [T, D, I, Uns])) changeFeet([T, D, I, Uns], [T, T, T, T]);
+      else if (this.equiv(footTypes.slice(-4), [A, I, I, Uns])) changeFeet([A, I, I, Uns], [T, T, T, T]);
+      else if (this.equiv(footTypes.slice(-4), [D, I, I, Uns])) changeFeet([D, I, I, Uns], [T, T, T, T]);
+      else if (this.equiv(footTypes.slice(-4), [D, D, I, Uns])) changeFeet([D, D, I, Uns], [T, I, T, I, Uns]);
+      else if (this.equiv(footTypes.slice(-4), [A, Unk, I, Uns])) changeFeet([A, Unk, I, Uns], [T, T, T, T]);
+      else if (this.equiv(footTypes.slice(-2), [T, Uns])) changeFeet([T, Uns], [D]);
+    } else if (footTypes.slice(-1)[0] === S) { // fix weird lines ending in S
+      if (this.equiv(footTypes.slice(-3), [I, A, S])) changeFeet([I, A, S], [I, I, I]);
+      else if (this.equiv(footTypes.slice(-5), [I, A, I, Unk, S])) changeFeet([I, A, I, Unk, S], [I, I, T, Unk, Unk]);
+      else if (this.equiv(footTypes.slice(-3), [Unk, A, S])) changeFeet([Unk, A, S], [Unk, I, I]);
+      else if (this.equiv(footTypes.slice(-3), [D, I, S]) && feet.slice(-3,-2)[0][2] < feet.slice(-2,-1)[0][0] && feet.slice(-2,-1)[0][1] < feet.slice(-1)[0][0]) changeFeet([D, I, S], [T, T, T]);
+      else if (this.equiv(footTypes.slice(-4), [T, D, I, S])) changeFeet([T, D, I, S], [T, T, T, T]);
+      else if (this.equiv(footTypes.slice(-4), [T, D, D, S])) changeFeet([T, D, D, S], [A, A, A]);
+      else if (this.equiv(footTypes.slice(-3), [I, D, S])) changeFeet([I, D, S], [I, T, I]);
+      else if (this.equiv(footTypes.slice(-3), [T, D, S])) {
+        if (feet.slice(-3, -2)[0][0] > feet.slice(-2, -1)[0][0]) changeFeet([T, D, S], [A, A]);
+        else changeFeet([T, D, S], [T, I, I]);
+      } else if (this.equiv(footTypes.slice(-3), [Unk, D, S])) changeFeet([Unk, D, S], [I, T, I]);
+      else if (this.equiv(footTypes.slice(-2), [D, S])) changeFeet([D, S], [T, I]);
+      else if (this.equiv(footTypes.slice(-4), [I, A, T, S])) changeFeet([I, A, T, S], [I, I, I, I]);
+      else if (this.equiv(footTypes.slice(-3), [D, T, S])) {
+        changeFeet([D, T, S], [T, I, I]);
+        if (this.equiv(footTypes.slice(-4), [D, T, I, I])) changeFeet([D, T, I, I], [T, I, A, I]);
+      } else if (this.equiv(footTypes.slice(-4), [A, T, T, S])) changeFeet([A, T, T, S], [I, I, I, I]);
+      else if (this.equiv(footTypes.slice(-5), [T, Unk, A, T, S])) changeFeet([T,Unk, A, T, S], [T, Unk, Unk, Unk, I]);
+      else if (this.equiv(footTypes.slice(-4), [D, T, T, S])) changeFeet([D, T, T, S], [T, I, I, I]);
+      else if (this.equiv(footTypes.slice(-5), [D, Unk, T , T, S])) changeFeet([D, Unk, T, T, S], [T, I, I, I, I]);
+      else if (this.equiv(footTypes.slice(-5), [A, T, T, T, S])) changeFeet([A, T, T, S], [I, I, I, I, I]);
+      else if (this.equiv(footTypes.slice(-6), [A, T, T, T, T, S])) changeFeet([A, T, T, T, T, S], new Array(6).fill(I));
+      else if (this.equiv(footTypes.slice(-5), [D, T, T, T, S])) changeFeet([D, T, T, T, S], [T, I, I, I, I]);
+      else if (this.equiv(footTypes.slice(-6), [D, T, T, T, T, S])) changeFeet([D, T, T, T, T, S], [T, I, I, I, I, I]);
+      else if (this.equiv(footTypes.slice(-4), [D, Unk, T, S])) changeFeet([D, Unk, T, S], [T, I, I, I]);
+      else if (this.equiv(footTypes.slice(-5), [D, T, Unk, T, S])) changeFeet([D, T, Unk, T, S], [T, I, I, I, I]);
+      else if (this.equiv(footTypes.slice(-5), [D, Unk, T, T, S])) changeFeet([D, Unk, T, T, S], [T, I, I, I, I]);
+      else if (this.equiv(footTypes.slice(-5), [D, I, T, T, S])) changeFeet([D, I, T, T, S], [T, Unk, Unk, I, I]);
+      else if (this.equiv(footTypes.slice(-5), [D, Unk, Unk, T, S])) changeFeet([D, Unk, Unk, T, S], [T, I, I, I, I]);
+      else if (this.equiv(footTypes.slice(-4), [I, A, Unk, S])) changeFeet([I, A, Unk, S], [I, I, T, I]);
+      else if (this.equiv(footTypes.slice(-5), [I, A, Unk, Unk, S])) changeFeet([I, A, Unk, Unk, S], [I, I, Unk, Unk, I]);
+      else if (this.equiv(footTypes.slice(-4), [D, T, Unk, S])) changeFeet([D, T, Unk, S], [T, I, I, I]);
+      else if (this.equiv(footTypes.slice(-5), [D, T, T, Unk, S])) changeFeet([D, T, T, Unk, S], [T, I, I, I, I]);
+      else if (this.equiv(footTypes.slice(-5), [D, Unk, T, Unk, S])) changeFeet([D, Unk, T, Unk, S], [T, I, I, I, I]);
+      else if (this.equiv(footTypes.slice(-5), [D, T, Unk, Unk, S])) changeFeet([D, T, Unk, Unk, S], [T, I, I, I, I]);
+      else if (this.equiv(footTypes.slice(-5), [D, Unk, Unk, Unk, S])) changeFeet([D, Unk, Unk, Unk, S], [T, Unk, Unk, Unk, I]);
+      else if (this.equiv(footTypes.slice(-4), [D, A, A, S])) changeFeet([D, A, A, S], [T, I, I, I, I]);
+    } else { // fix weird lines ending in A, D, Unk
+      if (this.equiv(footTypes.slice(-4), [I, I, A, A])) changeFeet([I, I, A, A], [I, I, I, T, I]);
+      else if (this.equiv(footTypes.slice(-4), [D, T, Unk, A])) changeFeet([D, T, Unk, A], [T, I, I, Unk, I]);
+      else if (this.equiv(footTypes.slice(-2), [T, D]) && feet.slice(-1)[0][2] < feet.slice(-1)[0][1]) {
+        changeFeet([T, D], [T, T, S]);
+        iambicize();
+      } else if (this.equiv(footTypes.slice(-3), [I, D, D])) changeFeet([I, D, D], [I, T, I, Unk]);
+      else if (this.equiv(footTypes.slice(-4), [T, Unk, D, D])) changeFeet([T, Unk, D, D], [T, Unk, T, I, I]);
+      else if (this.equiv(footTypes.slice(-4), [Unk, D, T, Unk])) changeFeet([Unk, D, T, Unk], [A, A, A]);
+      else if (this.equiv(footTypes.slice(-4), [Unk, D, D, Unk])) changeFeet([Unk, D, D, Unk], [Unk, T, I, I, Unk]);
+      else if (this.equiv(footTypes.slice(-4), [I, A, D, Unk])) changeFeet([I, A, D, Unk], [I, I, I, I, Unk]);
+      else if (this.equiv(footTypes.slice(-4), [D, T, A, Unk])) changeFeet([D, T, A, Unk], [T, I, I, I, Unk]);
+    }
+
+    let output: Foot[] = [];
     const flatFeet = feet.flat();
     for (let i=0, j=0; i < footTypes.length, j < flatFeet.length; i++) {
-      output.push({
-        stresses: flatFeet.slice(j, j + footTypeToSyllables(footTypes[i])),
-        type: footTypes[i]
-      });
+      let stressList = flatFeet.slice(j, j + footTypeToSyllables(footTypes[i]));
+      output.push(new Foot(stressList, footTypes[i]));
       j += footTypeToSyllables(footTypes[i]);
     }
 
@@ -93,10 +192,10 @@ export default class Line {
    * @param meters List of LineMeters for all possible pronunciations of the line
    * @returns The meter of the most regular pronunciation of the line
    */
-  howRegular(meters: ILineMeter[]): ILineMeter {
+  private howRegular(meters: LineMeter[]): LineMeter {
 
     // assign each possible pronunciation demerits for metrical irregulatrities, returning any possibility without any demerits
-    const demeritList: {meter: ILineMeter, demerits: number}[] = [];
+    const demeritList: {meter: LineMeter, demerits: number}[] = [];
 
     meters.forEach(meter => {
       let demerits: number = 0;
@@ -117,33 +216,33 @@ export default class Line {
         }
       });
 
-      if (meter.rhythm === LineRhythmType.iambic) {
+      if (meter.getRhythm() === LineRhythmType.iambic) {
         if (footTypes.includes(FootType.anapest)) demerits += 2;
         if (footTypes.includes(FootType.dactyl)) demerits += 3;
         if (footTypes.includes(FootType.unstressed)) demerits += 1;
         if (footTypes.includes(FootType.stressed)) demerits += 2;
         if (footTypes.length > 1 && footTypes[1] === FootType.trochee) demerits++; // second-foot trochee
         if (footTypes.slice(-1)[0] === FootType.trochee) demerits++; // last foot trochee
-        if (meter.measures === 6) demerits++; // long line
-        if (meter.measures === 5 && footTypes[4] === FootType.trochee) demerits += 2; // fifth foot trochee in pentameter
-      } else if (meter.rhythm === LineRhythmType.trochaic) {
+        if (meter.getMeasures() === 6) demerits++; // long line
+        if (meter.getMeasures() === 5 && footTypes[4] === FootType.trochee) demerits += 2; // fifth foot trochee in pentameter
+      } else if (meter.getRhythm() === LineRhythmType.trochaic) {
         if (footTypes.includes(FootType.dactyl)) demerits++;
         if (footTypes.includes(FootType.anapest)) demerits += 2;
         if (footTypes.includes(FootType.iamb)) demerits += 2;
         if (footTypes.includes(FootType.stressed)) demerits++;
         if (footTypes.includes(FootType.unstressed)) demerits += 2;
         if (footTypes.filter(foot => foot === FootType.trochee).length === footTypes.length) demerits -= 1; // every foot is a trochee
-      } else if (meter.rhythm === LineRhythmType.anapestic) {
+      } else if (meter.getRhythm() === LineRhythmType.anapestic) {
         if (footTypes.includes(FootType.dactyl)) demerits++;
         if (footTypes.includes(FootType.trochee)) demerits++;
         if (footTypes.includes(FootType.dactyl) && footTypes.includes(FootType.trochee)) demerits++;
         if (footTypes.slice(-1)[0] === FootType.unstressed) demerits++; // last foot unstressed
-      } else if (meter.rhythm === LineRhythmType.dactylic) {
+      } else if (meter.getRhythm() === LineRhythmType.dactylic) {
         demerits++; // dactylic verse is uncommon and we should be biased against it
         if (footTypes.includes(FootType.anapest)) demerits++;
         if (footTypes.includes(FootType.iamb)) demerits++;
         if (footTypes.includes(FootType.anapest) && footTypes.includes(FootType.iamb)) demerits++;
-      } else if (meter.rhythm === LineRhythmType.unknown) demerits += 2;
+      } else if (meter.getRhythm() === LineRhythmType.unknown) demerits += 2;
 
       if (demerits === 0) return meter;
       demeritList.push({meter, demerits});
@@ -160,7 +259,7 @@ export default class Line {
    * Resolve the meter of a line with multiple possible pronunciations
    * @returns the best meter for the line
    */
-  private resolveCrux(): ILineMeter {
+  private resolveCrux(): LineMeter {
     const words = this.getTokens();
     const stresses: (number[][])[] = words.map(word => new Word(word).getCruxStressList());
 
@@ -233,7 +332,7 @@ export default class Line {
    * @param crux a flag identifying a crux or a stressList from getStresses
    * @returns a LineMeter
    */
-  public getMeter(crux: boolean | number[] = false): ILineMeter {
+  public getMeter(crux: boolean | number[] = false): LineMeter {
     // Helper function for adding a foot (used only in this method)
     const addFoot = (type: FootType) => {
       switch(type) {
@@ -289,7 +388,6 @@ export default class Line {
     } else if (Array.isArray(crux)) {
       raw = crux;
     }
-    
 
     // From the last version; still needed?
     // if ('label' in raw && 'foots' in raw && 'feet' in raw && typeof raw.label.catalexis === 'boolean') return raw;
@@ -341,19 +439,14 @@ export default class Line {
     const corrected = this.correctWeirdFeet(feet.map(foot => foot.type), feet.map(foot => foot.stresses));
 
     // Correct for pyrrhic substitution
-    const output = corrected.map(foot => {
+    const finalFeet = corrected.map(foot => {
       if (this.equiv(foot.stresses, [3,3]) && [FootType.unknown, FootType.iamb].includes(foot.type)) {
         foot.type = FootType.pyrrhic;
       }
       return foot;
     })
     
-    return {
-      feet: output,
-      rhythm: LineRhythmType.unknown,
-      isCatalectic: false,
-      measures: 5,
-    }
+    return new LineMeter(finalFeet);
   }
 
   /**
@@ -373,13 +466,107 @@ export default class Line {
 
     return stresses;
   }
-}
 
-interface ILineMeter {
-  feet: IFoot[],
-  rhythm: LineRhythmType,
-  isCatalectic: boolean,
-  measures: number
+  private equalizeVowels(word: string, syllableCount: number, vowelCount: number, stressList: number[]): IWordVowelData {
+    return {
+      syllableCount: syllableCount,
+      vowelCount: vowelCount,
+      diphthongCount: 0,
+      toRemove: [],
+      text: word,
+      stressList: stressList,
+      silentEs: 0
+    };
+  }
+
+  /**
+   * Get data about where the pronounced vowels in the line are
+   * @returns a list of objects with data about the position in each word of pronounced vowels
+   */
+  public getVowelPositions(): IVowelPositions[] {
+    // Helper function used only in this method
+    const getVowelCount = (word: string): number => {
+      let count = word.toLowerCase()[0] === 'y' ? -1 : 0;
+
+      word.toLowerCase().split('').forEach(char => {
+        if (char in phonstants.LONG_VOWELS || char === 'è') count++;
+      })
+
+      return count;
+    }
+
+    const words: string[] = this.getTokens();
+    let flatFeet: number[] = this.getMeter().feet.map(foot => foot.stresses).flat();
+
+    const lineList: IWordVowelData[] = words.map(word => {
+      const stressList: number[][] = new Word(word).getCruxStressList();
+      let syllableCount: number = 0;
+      let bestPronunciation: number[] = [];
+
+      // get syllableCount by checking which pronunciation of the word is being used in this line
+      if (stressList.length > 1) { // word has multiple possible pronunciations (a "crux")
+        stressList.forEach(pronunciation => {
+          if (flatFeet.slice(0, pronunciation.length).every((v,i) => v === pronunciation[i])) {
+            // only overwrite if this pronunciation has more syllables than the one already found
+            // this is necessary for a case like "traveller" [1,4,3] vs. trav'ler [1,4], where [1,4] was overwriting b/c it also matches
+            if ((bestPronunciation.length && pronunciation.length >= bestPronunciation.length) || !bestPronunciation.length) {
+              syllableCount = pronunciation.length;
+              bestPronunciation = pronunciation;
+            }
+          }
+        });
+      } else { // word has one pronunciation; use it
+        syllableCount = stressList[0].length;
+        bestPronunciation = stressList[0];
+      }
+      flatFeet = flatFeet.slice(bestPronunciation.length);
+      const vowelCount = getVowelCount(word);
+      const match = this.equalizeVowels(word, syllableCount, vowelCount, bestPronunciation);
+      return match;
+    });
+
+    const output: IVowelPositions[] = lineList.map(word => {
+      // make vowelPositions, an array of the position of every vowel in the word except those in toRemove
+      let vowelPositions: number[] = word.text.split('').map((char, idx) => {
+        if (char.toLowerCase() in phonstants.LONG_VOWELS && !(word.toRemove.includes(idx))) {
+          if (!(idx === 0 && char.toLowerCase() === 'y')) { // XOR
+            return idx;
+          }
+        }
+      }).filter(word => word !== undefined) as number[];
+
+      // remove silent Es from vowelPositions
+      if (word.silentEs > 0 && word.text[vowelPositions.slice(-1)[0]] === 'e') {
+        // if the word has an E as its last vowel, remove it from vowelPositions
+        vowelPositions = vowelPositions.slice(0, -1);
+        word.silentEs--;
+      }
+
+      // remove the second vowel of co-syllabic digraphs from vowelPositions
+      let safetyCount = 0;
+      while (word.diphthongCount > 0 && safetyCount < 12) {
+        let i = 0;
+        while (i + 1 < vowelPositions.length) {
+          if (vowelPositions[i] + 1 === vowelPositions[i+1]) { // adjacent vowels
+            // shift which vowel gets marked if diphthong follows a Q
+            if (word.text[vowelPositions[i]] === 'u' && word.text[vowelPositions[i] - 1].toLowerCase() === 'q') {
+              vowelPositions.splice(i, 1);
+              word.diphthongCount--;
+            } else {
+              vowelPositions.splice(i + 1, 1);
+              word.diphthongCount--;
+            }
+          }
+          i++;
+        }
+        safetyCount++;
+      }
+
+      return {word: word.text, vowelPositions: vowelPositions};
+    })
+
+    return output;
+  }
 }
 
 function footTypeToSyllables(type: FootType): number {
@@ -396,4 +583,35 @@ function footTypeToSyllables(type: FootType): number {
     case FootType.stressed: // S
       return 1;
   }
+}
+
+export interface IVowelPositions {
+  // the word in question
+  word: string,
+
+  // list of positions in the word's spelling that are pronounced vowels
+  vowelPositions: number[]
+}
+
+export interface IWordVowelData {
+  // number of syllables in the word's pronunciation
+  syllableCount: number,
+
+  // number of pronounced vowels in the word's spelling (should equal syllableCount)
+  vowelCount: number,
+
+  // number of digrams in the word's spelling that are pronounced as a single vowel
+  diphthongCount: number,
+
+  // list of positions in the word's spelling that have vowels that seem like they're elided
+  toRemove: number[],
+
+  // text of the word this data is for
+  text: string,
+
+  // stress list of the word's pronunciation in this line
+  stressList: number[],
+
+  // number of silent Es in the word
+  silentEs: number,
 }

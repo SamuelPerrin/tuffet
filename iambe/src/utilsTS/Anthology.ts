@@ -8,10 +8,19 @@ import { RhymeType, RhymeScheme } from "./phonstants";
  * A group of poems, with poems divided by \n\n\n\n, stanzas divided by \n\n, and lines divided by \n
  */
 class Anthology {
+  // text of this anthology
   public text: string = "";
+
+  // list of poems in this collection
   private poems: Poem[] = [];
+
+  // list of rhymes for each of the stanzas in each of the poems in the anthology
   private rhymes: RhymeInfo[][][] = [];
+
+  // data about the number of rhymes of various kinds present in the anthology
   private rhymeTypeCounts: RhymeTypeCounts | null = null;
+
+  // data about the number of rhyme schemes present in the anthology
   private rhymeSchemeCounts: RhymeSchemeCounts | null = null;
 
   constructor(text: string) {

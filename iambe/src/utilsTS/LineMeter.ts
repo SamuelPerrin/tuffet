@@ -1,4 +1,5 @@
 import Foot, { FootType } from "./Foot";
+import { NameForMeasure } from "./phonstants";
 
 export enum LineRhythmType {
   iambic,
@@ -9,8 +10,13 @@ export enum LineRhythmType {
 }
 
 export default class LineMeter {
+  // list of feet in this line's scansion
   public feet: Foot[] = [];
+
+  // type of metrical rhythm in use in this line (iambic, trochaic, etc.)
   private rhythm: LineRhythmType = null!;
+
+  // number of feet in this line (includes catalectic last foot, if relevant)
   private measures: number = null!;
 
   constructor(feet: Foot[]) {
@@ -22,7 +28,9 @@ export default class LineMeter {
    */
   public getMeasures(): number {
     if (this.measures != null) return this.measures;
-    return 0;
+
+    this.measures = this.feet.length;
+    return this.measures;
   }
 
   /**
@@ -80,7 +88,18 @@ export default class LineMeter {
    * @returns Flag representing whether the line features catalexis (missing last syllable)
    */
   public isCatalectic(): boolean {
-    return false;
+    switch (this.getRhythm()) {
+      case LineRhythmType.iambic:
+        return this.feet.slice(-1)[0].type === FootType.unstressed;
+      case LineRhythmType.trochaic:
+        return this.feet.slice(-1)[0].type === FootType.stressed;
+      case LineRhythmType.anapestic:
+        return this.feet.slice(-1)[0].type === FootType.pyrrhic;
+      case LineRhythmType.dactylic:
+        return this.feet.slice(-1)[0].type === FootType.trochee;
+      case LineRhythmType.unknown:
+        return false;
+    }
   };
 
   /**
@@ -88,6 +107,15 @@ export default class LineMeter {
    * @returns a string labeling the type of meter in the line (e.g., iambic pentameter acatalectic)
    */
   public getLabel(): string {
-    return "";
+    const rhythm: string = this.getRhythm().toString();
+    const measure: number = this.getMeasures();
+    let measureString: string;
+    if (measure in NameForMeasure) {
+      measureString = NameForMeasure[measure];
+    } else {
+      throw new Error(`Couldn't find name for line with ${measure} ${measure === 1 ? "foot" : "feet"}`);
+    }
+    const catalexis: string = this.isCatalectic() ? "catalectic" : "";
+    return `${rhythm} ${measure} ${catalexis}`;
   }
 }

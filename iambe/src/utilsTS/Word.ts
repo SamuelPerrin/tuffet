@@ -7,7 +7,10 @@ import * as phonstants from './phonstants';
  * A string that represents a word
  */
 export default class Word {
+  // the text of this word
   public text: string = "";
+
+  // chronological list of words looked at recently (used in pronouncing a series of words)
   static last: string[] = [];
 
   constructor(text: string) {
@@ -642,7 +645,7 @@ export default class Word {
   public getCruxStressList(): number[][] {
     const ALWAYS_STRESSED = { 'ah': true, 'o': true };
 
-    let pronunciation: PronunciationType = this.getPronunciation(false);
+    let pronunciation: Pronunciation[] = this.getPronunciation(true);
     // For words with multiple possible pronunciations
     const possibles: number[][] = [];
     for (let each of pronunciation) {

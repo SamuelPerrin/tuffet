@@ -11,6 +11,8 @@ export default class Pronunciation extends String {
    * 0 is minimal stress
    */
   private stresses: string = "";
+
+  // list of Arab numerals representing the relative stress of the pronunciation's syllables
   private stressesList: string[] = [];
 
   /* Getters */

@@ -6,9 +6,16 @@ import { RhymeScheme } from './phonstants';
  * A stanza of verse
  */
 export default class Stanza {
+  // arbitrary line above which rhymes "count"
   private THRESHOLD: number = 0.3;
+
+  // text of the stanza, with lines separated with \n
   public text: string = "";
+
+  // list of the lines of this stanza
   private lines: Line[] = [];
+
+  // list of the rhymes in this stanza
   private rhymes: RhymeInfo[] = [];
 
   constructor(text: string) {

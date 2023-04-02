@@ -8,15 +8,21 @@ import * as phonstants from './phonstants';
  * Two lines of verse that may or may not rhyme
  */
 export default class Rhyme {
+  // text of the first line of verse in this rhyme
   private line1: Line = null!;
+
+  // text of the second line of verse in this rhyme
   private line2: Line = null!;
+
+  // data about the rhyme between these two lines of verse
   private rhymeInfo: RhymeInfo = null!;
+
+  // number representing how good a rhyme these lines make
   private score: number = null!;
 
   constructor(line1: Line, line2: Line);
   constructor(line1: string, line2: string);
   constructor(line1: Line | string, line2: Line | string) {
-
     this.line1 = typeof line1 === 'string' ? new Line(line1) : line1;
     this.line2 = typeof line2 === 'string' ? new Line(line2) : line2;
   }

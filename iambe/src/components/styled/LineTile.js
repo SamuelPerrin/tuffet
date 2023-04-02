@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import HoverCard from './HoverCard';
 
 import Line from '../../utils/Line';
-import {METER_NAMES} from '../../utilsTS/phonstants';
+import {NameForMeasure} from '../../utilsTS/phonstants';
 
 const LineTileWrapper = styled.div`
   display: flex;
@@ -26,7 +26,7 @@ const LineTile = props => {
   
   const line = new Line(children);
   const meterData = line.getMeter();
-  const label = meterData.label.rhythm + " " +  METER_NAMES[meterData.label.meter] + (meterData.label.catalexis ? " catalectic" : "");
+  const label = meterData.label.rhythm + " " +  NameForMeasure[meterData.label.meter] + (meterData.label.catalexis ? " catalectic" : "");
 
   return (
     <LineTileWrapper>

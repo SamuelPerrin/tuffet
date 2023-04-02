@@ -1,16 +1,35 @@
 import Pronunciation from "./Pronunciation";
 
 export default class Rimes {
-  rime: Pronunciation = new Pronunciation(""); // the vowel of the last stressed syllable and everything after it
-  nucl: Pronunciation = new Pronunciation(""); // the vowel of the last stressed syllable
-  coda: Pronunciation = new Pronunciation(""); // everything following the last stressed syllable
-  lastRime: Pronunciation = new Pronunciation(""); // rime of the last syllable with at least secondary stress (can be same as rime)
-  lastNucl: Pronunciation = new Pronunciation(""); // vowel of the last syllable with at least secondary stress (can be same as nucleus)
-  lastCoda: Pronunciation = new Pronunciation(""); // everything following the last syllable with at least secondary stress
-  unstRime: Pronunciation = new Pronunciation(""); // the rime of the last vowel in the word, if it's unstressed
-  unstNucl: Pronunciation = new Pronunciation(""); // the last vowel of the word, if it's unstressed
-  unstCoda: Pronunciation = new Pronunciation(""); // everything that comes after the last vowel in the word, if it's unstressed
-  lastPrime: number = -1000; // the index of the last vowel in the word with primary stress
+  // the vowel of the last stressed syllable and everything after it
+  rime: Pronunciation = new Pronunciation("");
+
+  // the vowel of the last stressed syllable
+  nucl: Pronunciation = new Pronunciation("");
+
+  // everything following the last stressed syllable
+  coda: Pronunciation = new Pronunciation("");
+
+  // rime of the last syllable that has at least secondary stress (can be same as rime)
+  lastRime: Pronunciation = new Pronunciation("");
+
+  // vowel of the last syllable that has at least secondary stress (can be same as nucleus)
+  lastNucl: Pronunciation = new Pronunciation("");
+
+  // everything following the last syllable that has at least secondary stress
+  lastCoda: Pronunciation = new Pronunciation("");
+
+  // the rime of the last vowel in the word, if it's unstressed
+  unstRime: Pronunciation = new Pronunciation("");
+
+  // the last vowel of the word, if it's unstressed
+  unstNucl: Pronunciation = new Pronunciation("");
+
+  // everything that comes after the last vowel in the word, if it's unstressed
+  unstCoda: Pronunciation = new Pronunciation("");
+
+  // the index of the last vowel in the word with primary stress
+  lastPrime: number = null!;
 
   /**
    * Creates an object with properties representing parts of the pronunciation that are relevant for determining whether and how it rhymes
