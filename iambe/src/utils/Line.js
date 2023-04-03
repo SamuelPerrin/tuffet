@@ -765,22 +765,22 @@ class Line {
       } else if (stressList.every((v,i) => v === [4,1,4][i]) && stressList.length === 3) { // stressList is [4,1,4]
         elided = 3;
       } else if (stressList.every((v,i) => v === [2,1,4][i]) && stressList.length === 3) elided = 3;
-        else if (stressList.every((v,i) => v === [1,4,2][i]) && stressList.length === 3) elided = 2;
-        else if (stressList.length === 1 && stressList[0] === 2 && word[word.length - 1] === 'y') { // for monosyllabic many
-          toRemove.push(word.length - 1);
-          word = word.slice(0,-1);
-          vowCount--;
-        } else if (stressList.length === 1 && stressList[0] === 2 && word.slice(-2,-1)[0] === 'e') {
-          console.log("I'm doing something risky and cutting an e out of",word)
-          toRemove.push(word.length - 2);
-          word = word.slice(0,-2) + word.slice(-1);
-          vowCount--;
-        } else if (stressList.length === 1 && stressList[0] === 2 && word.slice(-2,-1)[0] in phonstants.SHORT_VOWELS) {
-          console.log("I'm doing something risky and cutting an",word.slice(-2,-1)[0],"out of",word)
-          toRemove.push(word.length - 2);
-          word = word.slice(0,-2) + word.slice(-1);
-          vowCount--;
-        }
+      else if (stressList.every((v,i) => v === [1,4,2][i]) && stressList.length === 3) elided = 2;
+      else if (stressList.length === 1 && stressList[0] === 2 && word[word.length - 1] === 'y') { // for monosyllabic many
+        toRemove.push(word.length - 1);
+        word = word.slice(0,-1);
+        vowCount--;
+      } else if (stressList.length === 1 && stressList[0] === 2 && word.slice(-2,-1)[0] === 'e') {
+        console.log("I'm doing something risky and cutting an e out of",word)
+        toRemove.push(word.length - 2);
+        word = word.slice(0,-2) + word.slice(-1);
+        vowCount--;
+      } else if (stressList.length === 1 && stressList[0] === 2 && word.slice(-2,-1)[0] in phonstants.SHORT_VOWELS) {
+        console.log("I'm doing something risky and cutting an",word.slice(-2,-1)[0],"out of",word)
+        toRemove.push(word.length - 2);
+        word = word.slice(0,-2) + word.slice(-1);
+        vowCount--;
+      }
       
       if (elided) { // remove the nth vowel, which we think is elided
         let vows = 0;

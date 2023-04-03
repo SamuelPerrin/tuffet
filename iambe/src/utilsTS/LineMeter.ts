@@ -106,7 +106,7 @@ export default class LineMeter {
    * 
    * @returns a string labeling the type of meter in the line (e.g., iambic pentameter acatalectic)
    */
-  public getLabel(): string {
+  public getSummary(): LineMeterSummary {
     const rhythm: string = this.getRhythm().toString();
     const measure: number = this.getMeasures();
     let measureString: string;
@@ -116,6 +116,50 @@ export default class LineMeter {
       throw new Error(`Couldn't find name for line with ${measure} ${measure === 1 ? "foot" : "feet"}`);
     }
     const catalexis: string = this.isCatalectic() ? "catalectic" : "";
-    return `${rhythm} ${measure} ${catalexis}`;
+    return `${rhythm} ${measure} ${catalexis}` as LineMeterSummary;
   }
+}
+
+export enum LineMeterSummary {
+  iambicDimeter = 'iambic dimeter',
+  iambicDimeterCatalectic = 'iambic dimeter catalectic',
+  iambicTrimeter = 'iambic trimeter',
+  iambicTrimeterCatalectic = 'iambic trimeter catalectic',
+  iambicTetrameter = 'iambic tetrameter',
+  iambicTetrameterCatalectic = 'iambic tetrameter catalectic',
+  iambicPentameter = 'iambic pentameter',
+  iambicPentameterCatalectic = 'iambic pentameter catalectic',
+  iambicHexameter = 'iambic hexameter',
+  iambicHexameterCatalectic = 'iambic hexameter catalectic',
+  iambicHeptameter = 'iambic heptameter',
+  iambicHeptameterCatalectic = 'iambic heptameter catalectic',
+  iambicOctameter = 'iambic octameter',
+  unknownDimeter = 'unknown dimeter',
+  unknownDimeterCatalectic = 'unknown dimeter catalectic',
+  unknownTrimeter = 'unknown trimeter',
+  unknownTrimeterCatalectic = 'unknown trimeter catalectic',
+  unknownTetrameter = 'unknown tetrameter',
+  unknownTetrameterCatalectic = 'unknown tetrameter catalectic',
+  unknownPentameter = 'unknown pentameter',
+  unknownPentameterCatalectic = 'unknown pentameter catalectic',
+  trochaicDimeter = 'trochaic dimeter',
+  trochaicDimeterCatalectic = 'trochaic dimeter catalectic',
+  trochaicTrimeter = 'trochaic trimeter',
+  trochaicTrimeterCatalectic = 'trochaic trimeter catalectic',
+  trochaicTetrameter = 'trochaic tetrameter',
+  trochaicTetrameterCatalectic = 'trochaic tetrameter catalectic',
+  trochaicPentameter = 'trochaic pentameter',
+  trochaicPentameterCatalectic = 'trochaic pentameter catalectic',
+  trochaicHexameter = 'trochaic hexameter',
+  trochaicHexameterCatalectic = 'trochaic hexameter catalectic',
+  trochaicHeptameter = 'trochaic heptameter',
+  trochaicHeptameterCatalectic = 'trochaic heptameter catalectic',
+  trochaicOctameter = 'trochaic octameter',
+  trochaicOctameterCatalectic = 'trochaic octameter catalectic',
+  anapesticDimeter = 'anapestic dimeter',
+  anapesticDimeterCatalectic = 'anapestic dimeter catalectic',
+  anapesticTrimeter = 'anapestic trimeter',
+  anapesticTrimeterCatalectic = 'anapestic trimeter catalectic',
+  anapesticTetrameter = 'anapestic tetrameter',
+  anapesticTetrameterCatalectic = 'anapestic tetrameter catalectic',
 }

@@ -1,4 +1,5 @@
 import Line from './Line';
+import { LineMeterSummary } from './LineMeter';
 import Rhyme, { RhymeInfo } from './Rhyme';
 import { RhymeScheme } from './phonstants';
 
@@ -77,7 +78,7 @@ export default class Stanza {
       const twofour = new Rhyme(lines[1], lines[3]).getScore();
       const threefour = new Rhyme(lines[2], lines[3]).getScore();
 
-      const possibles: RhymeSchemeData[] = [
+      const possibles: IRhymeSchemeData[] = [
         { rs: RhymeScheme.quatr, pairs: ['twofour'] },
         { rs: RhymeScheme.ababx, pairs: ['onethree', 'twofour'] },
         { rs: RhymeScheme.abbax, pairs: ['onefour', 'twothree'] },
@@ -755,7 +756,7 @@ export default class Stanza {
    * @param recurring flag for calls of `winnower` made by `winnower` itself
    * @returns 
    */
-  public winnower(rhymeSchemes: RhymeSchemeData[], rhymes: ScoreForLinePair, recurring: boolean = false): RhymeScheme[] {
+  public winnower(rhymeSchemes: IRhymeSchemeData[], rhymes: ScoreForLinePair, recurring: boolean = false): RhymeScheme[] {
     let bestGuess = RhymeScheme.irreg;
     // Weed out line pairs that don't rhyme in any discernible way, leaving a list of rhyming pairs where each element is a list [key, rhymes[key]]
     const nonzeroes = Object.entries(rhymes).filter(rhyme => rhyme[1] > 0);
@@ -854,6 +855,11 @@ export default class Stanza {
     return this.rhymes;
   }
 
+  /**
+   * Get the pairs of lines that rhyme in a given rhyme scheme
+   * @param rs the rhyme scheme
+   * @returns array of line pairs that rhyme in that rhyme scheme
+   */
   private getLineNumbersForRhymeScheme(rs: RhymeScheme): number[][] {
     switch (rs) {
       case RhymeScheme.cplt1: // AA
@@ -1020,11 +1026,142 @@ export default class Stanza {
         throw new Error(`getLineNumbersForRhymeScheme doesn't recognize the rhyme type ${rs}`);
     }
   }
+
+  /**
+   * Returns a guess about the stanza's verse form based on the number of different line meters
+   * @param meterCounts an object with the number of occurrences of each line meter type present in the stanza
+   */
+  private metersForCounts(counts: Record<LineMeterSummary, number>): VerseForm {
+    const totalLines: number = Object.values(counts).reduce((a,b) => a + b, 0);
+    let guess: VerseForm = VerseForm.unknown;
+
+    if ((counts["iambic pentameter"] + counts["iambic pentameter catalectic"]) / totalLines >= 0.75) guess = VerseForm.iambicPentameter;
+    if (counts["iambic tetrameter"] === totalLines && totalLines !== 4) guess = VerseForm.iambicTetrameter;
+    else if (totalLines === 2) {
+      if (counts["iambic hexameter"] + counts["iambic heptameter catalectic"] === 2) guess = VerseForm.alexandrines;
+      else if (counts["iambic heptameter"] === 2) guess = VerseForm.fourteeners;
+    } else if (totalLines === 4) {
+      if (counts["iambic tetrameter"] + counts["iambic tetrameter catalectic"] + counts["unknown tetrameter"] === 2) {
+        if (counts["iambic trimeter"] + counts["unknown trimeter"] === 2) guess = VerseForm.commonMeter;
+      } else if (counts["iambic tetrameter"] + counts["iambic pentameter catalectic"] + counts["iambic tetrameter catalectic"] === 4) guess = VerseForm.longMeter;
+      else if (counts["iambic tetrameter"] + counts["iambic tetrameter catalectic"] === 1) {
+        if (counts["iambic trimeter"] === 3 || counts["iambic trimeter"] + counts["unknown trimeter"] === 3) guess = VerseForm.shortMeter;
+      } else if (counts["trochaic tetrameter"] === 2) {
+        if (counts["trochaic trimeter catalectic"] === 2) guess = VerseForm.eightsAndFives;
+        else if (counts["trochaic tetrameter catalectic"] === 2) guess = VerseForm.eightsAndSevens;
+      } else if (counts["trochaic trimeter"] === 2 && counts["trochaic trimeter catalectic"] === 2) guess = VerseForm.sixesAndFives;
+      if (counts["iambic tetrameter"] + counts["trochaic tetrameter"] + counts["trochaic tetrameter catalectic"] + counts["unknown tetrameter"] === 2) {
+        if (counts["iambic trimeter"] + counts["trochaic trimeter"] + counts["trochaic trimeter catalectic"] + counts["unknown trimeter"] === 2) {
+          if (guess !== VerseForm.commonMeter) guess = VerseForm.ballad;
+        }
+      }
+    } else if (totalLines === 5) {
+      if (counts["iambic tetrameter"] + counts["iambic tetrameter"] === 1) {
+        if (counts["unknown dimeter"] + counts["iambic dimeter"] === 2 && counts["iambic trimeter"] === 2) guess = VerseForm.commonMeterSplit;
+      } else if (counts["iambic tetrameter"] + counts["iambic tetrameter catalectic"] === 0) {
+        if (counts["iambic dimeter"] === 2 && counts["iambic trimeter"] === 3) guess = VerseForm.shortMeterSplit;
+      } else if (counts["anapestic trimeter"] + counts["anapestic tetrameter catalectic"] === 2) {
+        if (counts["anapestic dimeter"] + counts["anapestic trimeter catalectic"] === 2) guess = VerseForm.limerick;
+      }
+    } else if (totalLines === 6) {
+      if (counts["iambic tetrameter"] === 4 && counts["iambic trimeter"] === 2) guess = VerseForm.commonParticular;
+    } else if (totalLines === 8) {
+      if (counts["iambic tetrameter"] + counts["iambic tetrameter catalectic"] === 4 && counts["iambic trimeter"] === 4) guess = VerseForm.commonMeterDoubled;
+    } else if (totalLines === 9) {
+      if (counts["iambic tetrameter"] === 8 && counts["iambic trimeter"] === 1) guess = VerseForm.ladyOfShalott;
+    }
+
+    return guess;
+  }
+
+  /**
+   * Identifies the stanza's verse form based on the number of lines with various meters
+   * @returns the verse form of the stanza
+   */
+  public getMeter(): VerseForm {
+    const lines = this.getLines();
+    const lineMeters = lines.map(line => {
+      // condense each line's metrical type to a string label like "iambic pentameter catalectic" or "trochaic tetrameter"
+      return line.getMeter().getSummary();
+    });
+
+    const metersPresent: Record<LineMeterSummary, number> = {
+      'iambic dimeter':0,
+      'iambic dimeter catalectic':0,
+      'iambic trimeter':0,
+      'iambic trimeter catalectic':0,
+      'iambic tetrameter':0,
+      'iambic tetrameter catalectic':0,
+      'iambic pentameter':0,
+      'iambic pentameter catalectic':0,
+      'iambic hexameter':0,
+      'iambic hexameter catalectic':0,
+      'iambic heptameter':0,
+      'iambic heptameter catalectic':0,
+      'iambic octameter':0,
+      'unknown dimeter':0,
+      'unknown dimeter catalectic':0,
+      'unknown trimeter':0,
+      'unknown trimeter catalectic':0,
+      'unknown tetrameter':0,
+      'unknown tetrameter catalectic':0,
+      'unknown pentameter':0,
+      'unknown pentameter catalectic':0,
+      'trochaic dimeter':0,
+      'trochaic dimeter catalectic':0,
+      'trochaic trimeter':0,
+      'trochaic trimeter catalectic':0,
+      'trochaic tetrameter':0,
+      'trochaic tetrameter catalectic':0,
+      'trochaic pentameter':0,
+      'trochaic pentameter catalectic':0,
+      'trochaic hexameter':0,
+      'trochaic hexameter catalectic':0,
+      'trochaic heptameter':0,
+      'trochaic heptameter catalectic':0,
+      'trochaic octameter':0,
+      'trochaic octameter catalectic':0,
+      'anapestic dimeter':0,
+      'anapestic dimeter catalectic':0,
+      'anapestic trimeter':0,
+      'anapestic trimeter catalectic':0,
+      'anapestic tetrameter':0,
+      'anapestic tetrameter catalectic':0,
+    }
+
+    lineMeters.forEach(lineMeter => {
+      metersPresent[lineMeter] = lineMeter in metersPresent ? metersPresent[lineMeter] + 1 : 1;
+    });
+
+    return this.metersForCounts(metersPresent);
+  }
 }
 
-interface RhymeSchemeData {
+interface IRhymeSchemeData {
   rs: RhymeScheme;
   pairs: string[]
 }
 
 type ScoreForLinePair = {[key: string]: number};
+
+export enum VerseForm {
+  iambicPentameter,
+  iambicTetrameter,
+  alexandrines,
+  fourteeners,
+  commonMeter,
+  longMeter,
+  shortMeter,
+  eightsAndFives,
+  eightsAndSevens,
+  sixesAndFives,
+  ballad,
+  commonMeterSplit,
+  shortMeterSplit,
+  limerick,
+  commonParticular,
+  commonMeterDoubled,
+  ladyOfShalott,
+  unknown
+}
+

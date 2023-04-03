@@ -2,7 +2,6 @@ import * as phonstants from './phonstants';
 import Word from './Word';
 import Foot, { FootType } from './Foot';
 import LineMeter, { LineRhythmType } from './LineMeter';
-import Pronunciation from './Pronunciation';
 
 /**
  * A line of verse
@@ -444,8 +443,8 @@ export default class Line {
         foot.type = FootType.pyrrhic;
       }
       return foot;
-    })
-    
+    });
+
     return new LineMeter(finalFeet);
   }
 
@@ -467,15 +466,399 @@ export default class Line {
     return stresses;
   }
 
-  private equalizeVowels(word: string, syllableCount: number, vowelCount: number, stressList: number[]): IWordVowelData {
+  /**
+   * Identify which vowels in a word's spelling are being pronounced, especially for words with a different number of vowels in the spelling and the pronunciation
+   * @param originalWord The word in question
+   * @param syllableCount The number of syllables in the word's pronunciation in this line
+   * @param vowelCount The number of vowels in the word's spelling
+   * @param stressList List of relative stress of syllables in the word's pronunciation
+   * @returns Data to help identify which vowels in the word's spelling are being pronounced
+   */
+  private equalizeVowels(originalWord: string, syllableCount: number, vowelCount: number, stressList: number[]): IWordVowelData {
+    const TRIPHS = ['eau', 'owe', 'iew'];
+    let word = originalWord.replace("'", "").toLowerCase();
+    word = word.replace("’", "");
+    let diphthongCount = 0;
+    let silentEs = 0;
+    let toRemove = [];
+
+    // Check for a few problematic words with hard-coded solutions
+    if (word === 'bounteous' && stressList.length === 2) {
+        return {
+        syllableCount: 2,
+        vowelCount: 2,
+        diphthongCount: 0,
+        toRemove: [2, 5, 7],
+        text: originalWord,
+        stressList,
+        silentEs
+      };
+    } else if (word === 'beauteous' && stressList.length === 2) {
+      return {
+        syllableCount: 2,
+        vowelCount: 2,
+        diphthongCount: 0,
+        toRemove: [2, 3, 5, 7],
+        text: originalWord,
+        stressList,
+        silentEs
+      };
+    } else if (word === 'aisle' && stressList.length === 1) {
+      return {
+        syllableCount: 1,
+        vowelCount: 1,
+        diphthongCount: 0,
+        toRemove: [1, 4],
+        text: originalWord,
+        stressList,
+        silentEs
+      };
+    } else if (word === 'difference' && stressList.length === 2) {
+      return {
+        syllableCount: 2,
+        vowelCount: 2,
+        diphthongCount: 0,
+        toRemove: [4, 9],
+        text: originalWord,
+        stressList,
+        silentEs
+      };
+    } else if (word === 'antique') {
+      return {
+        syllableCount: 2,
+        vowelCount: 2,
+        diphthongCount: 0,
+        toRemove: [5, 6],
+        text: originalWord,
+        stressList,
+        silentEs
+      };
+    } else if (word === 'away') {
+      return {
+        syllableCount: 2,
+        vowelCount: 2,
+        diphthongCount: 1,
+        toRemove: [],
+        text: originalWord,
+        stressList,
+        silentEs
+      };
+    } else if (word === 'tongue') {
+      return {
+        syllableCount: 1,
+        vowelCount: 1,
+        diphthongCount: 0,
+        toRemove: [4, 5],
+        text: originalWord,
+        stressList,
+        silentEs
+      };
+    } else if (word.slice(0,3) === 'eye') {
+      return {
+        syllableCount: 1,
+        vowelCount: 1,
+        diphthongCount: 0,
+        toRemove: [1, 2],
+        text: originalWord,
+        stressList,
+        silentEs
+      };
+    } else if (word.includes('prayer') && stressList.length === 1) {
+      return {
+        syllableCount: 1,
+        vowelCount: 1,
+        diphthongCount: 0,
+        toRemove: [3, 4],
+        text: originalWord,
+        stressList,
+        silentEs
+      };
+    } else if (originalWord.includes('ower') && stressList.length === 1) {
+      return {
+        syllableCount: 1,
+        vowelCount: 1,
+        diphthongCount: 0,
+        toRemove: [originalWord.indexOf('er')],
+        text: originalWord,
+        stressList,
+        silentEs
+      };
+    } else if (originalWord.includes("e'e")) {
+      return {
+        syllableCount: stressList.length,
+        vowelCount: stressList.length,
+        diphthongCount: 0,
+        toRemove: [originalWord.indexOf("e'e") + 2],
+        text: originalWord,
+        stressList,
+        silentEs
+      };
+    } else if (originalWord.includes("o'e")) {
+      return {
+        syllableCount: stressList.length,
+        vowelCount: stressList.length,
+        diphthongCount: 0,
+        toRemove: [originalWord.indexOf("o'e" + 2)],
+        text: originalWord,
+        stressList,
+        silentEs
+      };
+    } else if (word.includes("itious")) {
+      return {
+        syllableCount: stressList.length,
+        vowelCount: stressList.length,
+        diphthongCount: 0,
+        toRemove: [originalWord.indexOf("itious") + 2, originalWord.indexOf("itious") + 4],
+        text: originalWord,
+        stressList,
+        silentEs
+      };
+    } else if (word.slice(0, 6) === 'toward' && stressList.length === 1) {
+      return {
+        syllableCount: 1,
+        vowelCount: 1,
+        diphthongCount: 0,
+        toRemove: [3],
+        text: originalWord,
+        stressList,
+        silentEs
+      };
+    } else if (word.slice(0, 6) === 'heaven' && stressList.length === 1) {
+      return {
+        syllableCount: 1,
+        vowelCount: 1,
+        diphthongCount: 0,
+        toRemove: [2, 4],
+        text: originalWord,
+        stressList,
+        silentEs
+      };
+    } else if (word.slice(-5) === 'esque') {
+      return {
+        syllableCount: stressList.length,
+        vowelCount: stressList.length,
+        diphthongCount: 0,
+        toRemove: [originalWord.indexOf("esque") + 3, originalWord.indexOf("esque") + 4],
+        text: originalWord,
+        stressList,
+        silentEs
+      };
+    } else if (originalWord.slice(-3) === "'re") {
+      return {
+        syllableCount: stressList.length,
+        vowelCount: stressList.length,
+        diphthongCount: 1,
+        toRemove: [originalWord.length - 1],
+        text: originalWord,
+        stressList,
+        silentEs
+      };
+    }
+
+    // Initial Y is not a syllabic vowel
+    if (word[0] === 'y' && !['yves', 'ypres'].includes(word)) toRemove.push(0);
+
+    // Handle QU
+    if (word.includes('qu')) {
+      diphthongCount++;
+      vowelCount--;
+      word = word.slice(0, word.indexOf('qu') + 1) + word.slice(word.indexOf('qu') + 2);
+    }
+
+    
+    if (syllableCount != vowelCount) {
+
+      // Look for silent Es
+      if (word.slice(-1) === 'e') { // word ends with E
+        if (word.slice(-2,-1) !== 'r' && word.slice(-2, -1) !== 'l') {
+          // word ends with E but not RE or LE
+          silentEs++; vowelCount--;
+          word = word.slice(0, -1);
+          const eq = this.equalizeVowels(word, syllableCount, vowelCount, stressList);
+          syllableCount = eq.syllableCount;
+          vowelCount = eq.vowelCount;
+          diphthongCount += eq.diphthongCount;
+          silentEs += eq.silentEs;
+          toRemove = eq.toRemove;
+        } else { // word ends in RE or LE
+          if (!(word.slice(-3, -2) in phonstants.SHORT_VOWELS)) {
+            // exception for TROUBLE, MEAGRE, and the like
+            Object.keys(phonstants.DIGRAPHS).forEach(digraph => {
+              if (word.includes(digraph)) {
+                diphthongCount++; vowelCount--;
+                word = word.slice(0, word.indexOf(digraph) + 1) + word.slice(word.indexOf(digraph) + 2);
+                const eq = this.equalizeVowels(word, syllableCount, vowelCount, stressList);
+                syllableCount = eq.syllableCount;
+                vowelCount = eq.vowelCount;
+                diphthongCount += eq.diphthongCount;
+                silentEs += eq.silentEs;
+                toRemove = eq.toRemove;
+              }
+            })
+          } else { // vRE (terminal E is silent)
+            silentEs++; vowelCount--;
+            word = word.slice(0, -1);
+            const eq = this.equalizeVowels(word, syllableCount, vowelCount, stressList);
+            syllableCount = eq.syllableCount;
+            vowelCount = eq.vowelCount;
+            diphthongCount += eq.diphthongCount;
+            silentEs += eq.silentEs;
+            toRemove = eq.toRemove;
+          }
+        }
+        if (word.slice(-3) === 'yre') {
+          silentEs++; vowelCount--;
+        }
+      } else if (word.slice(-3) === 'ies' || word.slice(-3) === 'ied') {
+        silentEs++; vowelCount--;
+        word = word.slice(0, -2) + word.slice(-1);
+        const eq = this.equalizeVowels(word, syllableCount, vowelCount, stressList);
+        syllableCount = eq.syllableCount;
+        vowelCount = eq.vowelCount;
+        diphthongCount += eq.diphthongCount;
+        silentEs += eq.silentEs;
+        toRemove = eq.toRemove;
+      } else if (syllableCount != vowelCount) {
+        // check for trigraphs and digraphs
+        TRIPHS.forEach(triph => {
+          if (word.includes(triph)) {
+            vowelCount -= 2;
+            const triphStarts = word.indexOf(triph);
+            word = word.slice(0, triphStarts + 1) + word.slice(triphStarts + 3);
+            const eq = this.equalizeVowels(word, syllableCount, vowelCount, stressList);
+            syllableCount = eq.syllableCount;
+            vowelCount = eq.vowelCount;
+            diphthongCount += eq.diphthongCount;
+            silentEs += eq.silentEs;
+            toRemove = eq.toRemove;
+            toRemove.push(triphStarts + 1);
+            toRemove.push(triphStarts + 2);
+          }
+        });
+        Object.keys(phonstants.DIGRAPHS).forEach(digraph => {
+          if (word.includes(digraph) && digraph[1] != 'w') {
+            // don't count AW or EW as diphthongs for this purpose
+            diphthongCount++; vowelCount--;
+            word = word.slice(0, word.indexOf(digraph) + 1) + word.slice(word.indexOf(digraph) + 2);
+            const eq = this.equalizeVowels(word, syllableCount, vowelCount, stressList);
+            syllableCount = eq.syllableCount;
+            vowelCount = eq.vowelCount;
+            diphthongCount += eq.diphthongCount;
+            silentEs += eq.silentEs;
+            toRemove = eq.toRemove;
+            
+            // It was overcounting diphthongs in MOUNTAINS
+            if (diphthongCount === 3) diphthongCount = 2;
+          }
+        });
+      }
+      if (syllableCount != vowelCount && word.slice(-2) === 'ed') {
+        if (!(word.slice(-3, -2) in phonstants.SHORT_VOWELS)) {
+          silentEs++; vowelCount--;
+          word = word.slice(0, -2) + word.slice(-1);
+          const eq = this.equalizeVowels(word, syllableCount, vowelCount, stressList);
+          syllableCount = eq.syllableCount;
+          vowelCount = eq.vowelCount;
+          diphthongCount += eq.diphthongCount;
+          silentEs += eq.silentEs;
+          toRemove = eq.toRemove;
+        } else if (word.slice(-3, -2) === 'i') {
+          silentEs++; vowelCount--;
+          word = word.slice(0, -3) + word.slice(-2);
+          const eq = this.equalizeVowels(word, syllableCount, vowelCount, stressList);
+          syllableCount = eq.syllableCount;
+          vowelCount = eq.vowelCount;
+          diphthongCount += eq.diphthongCount;
+          silentEs += eq.silentEs;
+          toRemove = eq.toRemove;
+        }
+      } else if (syllableCount != vowelCount && word.slice(-2) == 'es') {
+        if (!(word.slice(-3, -2) in phonstants.SHORT_VOWELS)) {
+          silentEs++; vowelCount--;
+          word = word.slice(0, -2) + word.slice(-1);
+          const eq = this.equalizeVowels(word, syllableCount, vowelCount, stressList);
+          syllableCount = eq.syllableCount;
+          vowelCount = eq.vowelCount;
+          diphthongCount += eq.diphthongCount;
+          silentEs += eq.silentEs;
+          toRemove = eq.toRemove;
+        } else if (word.slice(-3, -2) === 'i') {
+          silentEs++; vowelCount--;
+          word = word.slice(0, -3) + word.slice(-2);
+          const eq = this.equalizeVowels(word, syllableCount, vowelCount, stressList);
+          syllableCount = eq.syllableCount;
+          vowelCount = eq.vowelCount;
+          diphthongCount += eq.diphthongCount;
+          silentEs += eq.silentEs;
+          toRemove = eq.toRemove;
+        }
+      }
+    }
+
+    // Check for vowels that might be elided
+    if (stressList && vowelCount > syllableCount) {
+      let elided = 0;
+      if (this.equiv(stressList, [1,4])) {
+        // stressList is [1,4] like POWER => POW'R, so elide the second vowel
+        elided = 2;
+      } else if (this.equiv(stressList, [4,1,4])) {
+        // like EMPOWER => EMPOW'R, so elide the third vowel
+        elided = 3;
+      } else if (this.equiv(stressList, [2,1,4])) elided = 3; 
+      else if (this.equiv(stressList, [1,4,2])) elided = 2; // POWERFUL
+      else if (this.equiv(stressList, [2]) && word.slice(-1)[0] === 'y') { // for monosyllabic MANY (in the phrase MANY A)
+        toRemove.push(word.length - 1);
+        word = word.slice(0, 1);
+        vowelCount--;
+      } else if (this.equiv(stressList, [2]) && word.slice(-2, -1)[0] === 'e') {
+        // antepenultimate E
+        console.log("I'm doing something risky and cutting an E out of", word);
+        toRemove.push(word.length - 2);
+        word = word.slice(0, -2) + word.slice(-1);
+        vowelCount--;
+      } else if (this.equiv(stressList, [2]) && word.slice(-2, -1)[0] in phonstants.SHORT_VOWELS) {
+        console.log("I'm doing something risky and cutting a", word.slice(-2,-1)[0], "out of", word);
+        toRemove.push(word.length - 2);
+        word = word.slice(0, -2) + word.slice(-1);
+        vowelCount--;
+      }
+
+      if (elided) {
+        // remove the nth vowel, which we think is elided
+        let vowels = 0;
+        let position = 0;
+        while (vowels < elided && position < word.length) {
+          if (word[position] in phonstants.SHORT_VOWELS) {
+            vowels++;
+          }
+          position++;
+        }
+
+        toRemove.push(position - 1);
+        vowelCount--;
+      }
+    }
+
+    // Check for interior silent E
+    if (vowelCount > syllableCount) {
+      const vcE = /[aeiou][bcdfghjklmnprstvwxyz]e/;
+      const spot = originalWord.search(vcE);
+
+      const eToRemove = spot + 2;
+      if (spot > -1 && !(toRemove.includes(eToRemove))) {
+        vowelCount--;
+        toRemove.push(eToRemove);
+      }
+    }
+
     return {
-      syllableCount: syllableCount,
-      vowelCount: vowelCount,
-      diphthongCount: 0,
-      toRemove: [],
-      text: word,
-      stressList: stressList,
-      silentEs: 0
+      syllableCount,
+      vowelCount,
+      diphthongCount,
+      toRemove,
+      text: originalWord,
+      stressList,
+      silentEs
     };
   }
 
@@ -483,7 +866,7 @@ export default class Line {
    * Get data about where the pronounced vowels in the line are
    * @returns a list of objects with data about the position in each word of pronounced vowels
    */
-  public getVowelPositions(): IVowelPositions[] {
+  private getVowelPositions(): IVowelPositions[] {
     // Helper function used only in this method
     const getVowelCount = (word: string): number => {
       let count = word.toLowerCase()[0] === 'y' ? -1 : 0;
@@ -567,6 +950,156 @@ export default class Line {
 
     return output;
   }
+
+  /**
+   * Get a string with symbols representing the stress of each syllable in the line
+   */
+  public getMarkString() {
+    const meter: LineMeter = this.getMeter();
+    const footTypes: FootType[] = meter.feet.map(foot => foot.type);
+    const wordList: IVowelPositions[] = this.getVowelPositions();
+    const markList: string[] = [];
+    const nbsp = ' ';
+
+    // An array of the position of each punctuation mark in the line
+    const punctPositions: number[] = this.text.split('').map((v,i) => phonstants.ALPHAPLUS.includes(v.toLowerCase()) ? null : i).filter(x=> x !== null) as number[];
+    let syllable = 0;
+    let foot = 0;
+    wordList.forEach(word => {
+      let lastPosition = 0;
+      word.vowelPositions.forEach(position => {
+        let pos1 = position - lastPosition;
+        markList.push(nbsp.repeat(pos1));
+
+        switch(footTypes[foot]) {
+          case FootType.iamb:
+            if (syllable === 0) {
+              markList.push(phonstants.NONICTUS);
+              syllable++;
+            } else if (syllable === 1) {
+              markList.push(phonstants.ICTUS);
+              syllable = 0; foot++;
+            }
+            break;
+          case FootType.trochee:
+            if (syllable === 0) {
+              markList.push(phonstants.ICTUS);
+              syllable++;
+            } else if (syllable === 1) {
+              markList.push(phonstants.NONICTUS);
+              syllable = 0; foot++;
+            }
+            break;
+          case FootType.anapest:
+            if (syllable === 0 || syllable === 1) {
+              markList.push(phonstants.NONICTUS);
+              syllable++;
+            } else if (syllable === 2) {
+              markList.push(phonstants.ICTUS);
+              syllable = 0; foot++;
+            }
+            break;
+          case FootType.dactyl:
+            if (syllable === 0) {
+              markList.push(phonstants.ICTUS);
+              syllable++;
+            } else if (syllable === 1) {
+              markList.push(phonstants.NONICTUS);
+              syllable++;
+            } else if (syllable === 2) {
+              markList.push(phonstants.NONICTUS);
+              syllable = 0; foot++;
+            }
+            break;
+          case FootType.pyrrhic:
+            if (syllable === 0) {
+              markList.push(phonstants.NONICTUS);
+              syllable++;
+            } else if (syllable === 1) {
+              markList.push(phonstants.NONICTUS);
+              syllable = 0; foot++;
+            }
+            break;
+          case FootType.unstressed:
+            markList.push(phonstants.NONICTUS);
+            break;
+          case FootType.stressed:
+            markList.push(phonstants.ICTUS);
+            break;
+          case FootType.unknown:
+            if (syllable === 0) {
+              markList.push(phonstants.UNCERTAIN_ICTUS);
+              syllable++;
+            } else if (syllable === 1) {
+              if (meter.getRhythm() === LineRhythmType.iambic) {
+                // show unknown feet as iambs in an iambic line
+                markList.push(phonstants.ICTUS);
+              } else markList.push(phonstants.UNCERTAIN_ICTUS);
+              syllable = 0;
+              foot++;
+            }
+            break;
+          default:
+            break;
+        }
+        lastPosition = position + 1;
+      });
+      if (word.vowelPositions.length === 1) markList.push(nbsp.repeat(word.word.length + 1));
+      else markList.push(nbsp.repeat(word.word.length - word.vowelPositions.slice(-1)[0]));
+    });
+
+    // Not sure what this does (carried over from previous version)
+    let finalMarkList = markList.join('').split('');
+
+    punctPositions.forEach(punct => finalMarkList.splice(punct, 0, nbsp));
+
+    const marks = finalMarkList.join('');
+
+    return marks;
+  }
+
+  /**
+   * Get a list of metrical variations present in the line (if any)
+   */
+  public getVariations(): IVariation[] {
+    const variations: IVariation[] = [];
+    const meter = this.getMeter();
+
+    if (meter.getRhythm() === LineRhythmType.iambic) {
+      // Check for variations in an iambic line
+      meter.feet.map(foot => foot.type).forEach((foot, idx) => {
+        if (foot === FootType.trochee) {
+          variations.push({
+            type: MetricalVariationType.trochaicInversion,
+            footNumber: idx + 1
+          });
+        } else if (foot === FootType.pyrrhic) {
+          variations.push({
+            type: MetricalVariationType.pyrrhicSubstitution,
+            footNumber: idx + 1
+          });
+        } else if (foot === FootType.unstressed) {
+          if (new Word(this.getTokens().slice(-1)[0]).getStressList().slice(-1)[0] === 4) {
+            // the line's last syllable has no stress at all: feminine ending
+            variations.push({
+              type: MetricalVariationType.feminineEnding,
+              footNumber: idx + 1
+            });
+          } else variations.push({
+            type: MetricalVariationType.catalexis,
+            footNumber: idx + 1
+          });
+        } else if (foot === FootType.anapest) {
+          variations.push({
+            type: MetricalVariationType.anapesticSubstitution,
+            footNumber: idx + 1
+          });
+        }
+      });
+    }
+
+    return variations;
+  }
 }
 
 function footTypeToSyllables(type: FootType): number {
@@ -614,4 +1147,20 @@ export interface IWordVowelData {
 
   // number of silent Es in the word
   silentEs: number,
+}
+
+export interface IVariation {
+  // Type of the current variation (trochaic inversion, etc.)
+  type: MetricalVariationType,
+
+  // Index of the foot in the line containing this variation
+  footNumber: number,
+}
+
+export enum MetricalVariationType {
+  trochaicInversion = "trochaic inversion",
+  pyrrhicSubstitution = "pyrrhic substitution",
+  feminineEnding = "feminine ending",
+  catalexis = "catalexis",
+  anapesticSubstitution = "anapestic substitution"
 }

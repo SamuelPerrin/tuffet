@@ -1,6 +1,6 @@
-import Line from "./Line";
+import LineMeter from "./LineMeter";
 import Poem from "./Poem";
-import Stanza from "./Stanza";
+import Stanza, { VerseForm } from "./Stanza";
 import { RhymeInfo } from "./Rhyme";
 import { RhymeType, RhymeScheme } from "./phonstants";
 
@@ -188,7 +188,68 @@ class Anthology {
 
     return this.rhymeSchemeCounts;
   }
+
+  /**
+   * @returns array of line meters from every stanza of every poem in the anthology
+   */
+  public getLineMeters(): LineMeter[][][] {
+    const meters: LineMeter[][][] = [];
+    const poems = this.getPoems();
+
+    poems.forEach(poem => {
+      const poemMeters: LineMeter[][] = [];
+      poem.getStanzas().forEach(stanza => {
+        const stanzaMeters: LineMeter[] = [];
+        stanza.getLines().forEach(line => {
+          stanzaMeters.push(line.getMeter());
+        });
+        poemMeters.push(stanzaMeters);
+      });
+      meters.push(poemMeters);
+    });
+
+    return meters;
+  }
+
+  /**
+   * @returns array of verse forms from every stanza of every poem in the anthology
+   */
+  public getStanzaMeters(): VerseForm[][] {
+    return this.getPoems().map(poem => poem.getStanzas().map(stanza => stanza.getMeter()));
+  }
+
+  /**
+   * @returns histogram of occurrences of each verse form in the anthology
+   */
+  public getMeterStatsByStanza(): VerseFormCounts {
+    const stanzaMeters = this.getStanzaMeters().flat();
+    const counts: Record<VerseForm, number> = {
+      [VerseForm.iambicPentameter]: 0,
+      [VerseForm.iambicTetrameter]: 0,
+      [VerseForm.alexandrines]: 0,
+      [VerseForm.fourteeners]: 0,
+      [VerseForm.commonMeter]: 0,
+      [VerseForm.longMeter]: 0,
+      [VerseForm.shortMeter]: 0,
+      [VerseForm.eightsAndFives]: 0,
+      [VerseForm.eightsAndSevens]: 0,
+      [VerseForm.sixesAndFives]: 0,
+      [VerseForm.ballad]: 0,
+      [VerseForm.commonMeterSplit]: 0,
+      [VerseForm.shortMeterSplit]: 0,
+      [VerseForm.limerick]: 0,
+      [VerseForm.commonParticular]: 0,
+      [VerseForm.commonMeterDoubled]: 0,
+      [VerseForm.ladyOfShalott]: 0,
+      [VerseForm.unknown]: 0
+    };
+
+    stanzaMeters.forEach(meter => counts[meter] = meter in counts ? counts[meter] + 1 : 1);
+
+    return counts;
+  }
 }
 
-type RhymeTypeCounts = {[key in RhymeType]: number};
-type RhymeSchemeCounts = {[key in RhymeScheme]: number};
+export type RhymeTypeCounts = Record<RhymeType, number>;
+export type RhymeSchemeCounts = Record<RhymeScheme, number>;
+export type VerseFormCounts = Record<VerseForm, number>;
