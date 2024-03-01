@@ -60,6 +60,7 @@ export default class Rhyme {
    * @param which a number representing which of the terms is at issue
    */
   private checkFullness(candidates: Pronunciation[], which: number): Pronunciation {
+    if (!candidates.length) throw("ArgumentException: candidates cannot be empty");
     // Make a list of objects with each pronunciation and the relative fullness of the rhyme it makes
     const scores: PronunciationFullness[] = candidates
       .map(pron => {
@@ -81,6 +82,7 @@ export default class Rhyme {
    * @returns Pronunciation
    */
   private resolvePron(prons: Pronunciation[]): Pronunciation {
+    if (!prons.length) throw("ArgumentException: No prons provided");
     const term1 = new Word(this.line1.getTerm()[0].toLowerCase());
     const term2 = new Word(this.line2.getTerm()[0].toLowerCase());
     const pron1 = term1.getPronunciation(true);
@@ -130,7 +132,10 @@ export default class Rhyme {
     // All remaining candidates are metrically equivalent,
     // so all that's left is to decide which pronunciation
     // makes for the best rhyme with the other term
-    if (candidates.length === 1) {
+    if (candidates.length === 0) {
+      throw("No candidates generated.");
+    }
+    else if (candidates.length === 1) {
       return candidates[0];
     }
     else {

@@ -55,7 +55,7 @@ export default class LineMeter {
     // Helper method checks if `greatest` is more prevalent in the line than all the FootTypes in `lessers`
     const greaterThan = (greatest: FootType, lessers: FootType[]): boolean => {
       let isGreater = true;
-      lessers.forEach(lesser => isGreater &&= greatest > lesser);
+      lessers.forEach(lesser => isGreater &&= counts[greatest] > counts[lesser]);
 
       return isGreater;
     }
@@ -107,7 +107,7 @@ export default class LineMeter {
    * @returns a string labeling the type of meter in the line (e.g., iambic pentameter acatalectic)
    */
   public getSummary(): LineMeterSummary {
-    const rhythm: string = this.getRhythm().toString();
+    const rhythm: string = LineRhythmType[this.getRhythm()];
     const measure: number = this.getMeasures();
     let measureString: string;
     if (measure in NameForMeasure) {
@@ -115,8 +115,12 @@ export default class LineMeter {
     } else {
       throw new Error(`Couldn't find name for line with ${measure} ${measure === 1 ? "foot" : "feet"}`);
     }
-    const catalexis: string = this.isCatalectic() ? "catalectic" : "";
-    return `${rhythm} ${measure} ${catalexis}` as LineMeterSummary;
+    
+    let output = `${rhythm} ${measureString}`;
+    if (this.isCatalectic()) {
+      output += " catalectic";
+    }
+    return output as LineMeterSummary;
   }
 }
 

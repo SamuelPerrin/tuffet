@@ -7,7 +7,7 @@ import { RhymeType, RhymeScheme } from "./phonstants";
 /**
  * A group of poems, with poems divided by \n\n\n\n, stanzas divided by \n\n, and lines divided by \n
  */
-class Anthology {
+export default class Anthology {
   // text of this anthology
   public text: string = "";
 
@@ -42,7 +42,7 @@ class Anthology {
   /**
    * Get nested array of rhyme info from every stanza in every poem in the anthology
    */
-  private getRhymes(): RhymeInfo[][][] {
+  public getRhymes(): RhymeInfo[][][] {
     if (this.rhymes && this.rhymes.length) return this.rhymes;
 
     if (!this.text.includes("\n")) throw new Error("Tuffet cannot find rhymes in one line!");

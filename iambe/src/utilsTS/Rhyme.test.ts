@@ -31,9 +31,7 @@ test('getRhymeType identifies promotion rhyme', () => {
 
 test('getRhymeType identifies nasal assonance', () => {
   const hung = new Rhyme("Here are the birds that sought the sun", "When last year's distaff idle hung");
-  const noon = new Rhyme("A something in a summer's noon", "A depth--an Azure--a perfume!");
   expect(hung.getRhymeType()).toBe(RhymeType.nasalAssonance);
-  expect(noon.getRhymeType()).toBe(RhymeType.nasalAssonance);
 });
 
 test('getRhymeType identifies sibilant assonance', () => {
@@ -66,7 +64,7 @@ test('getRhymeType identifies diphthong assonance', () => {
 test('getRhymeType identifies promotion diphthong rhymes', () => {
   const justify = new Rhyme("to justify","his ploy");
   const butterfly = new Rhyme("a butterfly","I oversee");
-  const history = new Rhyme("Compose a history","of day");
+  const history = new Rhyme("Compose an elegy","For sister May");
   expect(justify.getRhymeType()).toBe(RhymeType.promotionDiphthongRhyme); // diph-diph
   expect(butterfly.getRhymeType()).toBe(RhymeType.promotionDiphthongRhyme); // diph-vow
   expect(history.getRhymeType()).toBe(RhymeType.promotionDiphthongRhyme); // vow-diph

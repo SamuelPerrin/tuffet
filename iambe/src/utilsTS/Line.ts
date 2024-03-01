@@ -196,7 +196,7 @@ export default class Line {
     // assign each possible pronunciation demerits for metrical irregulatrities, returning any possibility without any demerits
     const demeritList: {meter: LineMeter, demerits: number}[] = [];
 
-    meters.forEach(meter => {
+    for (let meter of meters) {
       let demerits: number = 0;
       const footTypes: FootType[] = meter.feet.map(foot => foot.type);
       const feet: number[][] = meter.feet.map(foot => foot.stresses);
@@ -245,10 +245,12 @@ export default class Line {
 
       if (demerits === 0) return meter;
       demeritList.push({meter, demerits});
-    });
+    };
 
     // sort meters by demerits, ascending
     demeritList.sort((a, b) => a.demerits - b.demerits);
+
+    if (!demeritList.length) throw("IndexException: no demerits");
 
     // return the pronunciation with the fewest demerits
     return demeritList[0].meter;
@@ -260,11 +262,16 @@ export default class Line {
    */
   private resolveCrux(): LineMeter {
     const words = this.getTokens();
-    const stresses: (number[][])[] = words.map(word => new Word(word).getCruxStressList());
+    const stresses: (number | number[])[][] = words.map(word => {
+      let wordStressList = new Word(word).getStressList();
+      if (wordStressList === 'crux') {
+        return new Word(word).getCruxStressList();
+      } return wordStressList as number[];
+    });
 
     // Get an array of all possible stressLists for the line, where each stressList is an array of one possible pronunciation of the line
 
-    // To start, get an array of the lenghts of all the cruxes in the line
+    // To start, get an array of the lengths of all the cruxes in the line
     const cruxLengths: number[] = [];
     let cruxType: string = '';
     stresses.filter(word => Array.isArray(word[0]))
@@ -295,10 +302,12 @@ export default class Line {
     const stressList: (number | number[])[][] = [];
     let hold: (number | number[])[] = [];
     while (stressList.length < CRUXES[cruxType].length) {
-      stresses.forEach(word => {
-        const iteration = CRUXES[cruxType][Math.floor(j/cruxLengths.length)][j % cruxLengths.length];
-        hold.push(word[iteration]);
-        j++;
+      stresses.forEach((word) => {
+        if (Number.isInteger(word[0])) hold.push(word as number[]);
+        else if (Array.isArray(word[0])) {
+          hold.push(word[CRUXES[cruxType][Math.floor(j/cruxLengths.length)][j % cruxLengths.length]]);
+          j++;
+        }
       });
 
       stressList.push(hold);
@@ -455,11 +464,11 @@ export default class Line {
   public getStresses(): number[] {
     const words = this.getTokens();
     let stresses: number[] = [];
-    words.forEach(word => {
+    for (let word of words) {
       const stress = new Word(word).getStressList();
-      if (stress === 'crux') return this.resolveCrux().feet.flat();
+      if (stress === 'crux') return this.resolveCrux().feet.map(foot => foot.stresses).flat();
       stresses = stresses.concat(stress);
-    });
+    }
 
     Word.last.push('newline');
 
