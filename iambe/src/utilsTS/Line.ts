@@ -483,7 +483,7 @@ export default class Line {
    * @param stressList List of relative stress of syllables in the word's pronunciation
    * @returns Data to help identify which vowels in the word's spelling are being pronounced
    */
-  private equalizeVowels(originalWord: string, syllableCount: number, vowelCount: number, stressList: number[]): IWordVowelData {
+  public equalizeVowels(originalWord: string, syllableCount: number, vowelCount: number, stressList: number[]): IWordVowelData {
     const TRIPHS = ['eau', 'owe', 'iew'];
     let word = originalWord.replace("'", "").toLowerCase();
     word = word.replace("’", "");
@@ -607,7 +607,7 @@ export default class Line {
         syllableCount: stressList.length,
         vowelCount: stressList.length,
         diphthongCount: 0,
-        toRemove: [originalWord.indexOf("o'e" + 2)],
+        toRemove: [originalWord.indexOf("o'e") + 2],
         text: originalWord,
         stressList,
         silentEs
@@ -875,7 +875,7 @@ export default class Line {
    * Get data about where the pronounced vowels in the line are
    * @returns a list of objects with data about the position in each word of pronounced vowels
    */
-  private getVowelPositions(): IVowelPositions[] {
+  public getVowelPositions(): IVowelPositions[] {
     // Helper function used only in this method
     const getVowelCount = (word: string): number => {
       let count = word.toLowerCase()[0] === 'y' ? -1 : 0;
@@ -901,7 +901,7 @@ export default class Line {
           if (flatFeet.slice(0, pronunciation.length).every((v,i) => v === pronunciation[i])) {
             // only overwrite if this pronunciation has more syllables than the one already found
             // this is necessary for a case like "traveller" [1,4,3] vs. trav'ler [1,4], where [1,4] was overwriting b/c it also matches
-            if ((bestPronunciation.length && pronunciation.length >= bestPronunciation.length) || !bestPronunciation.length) {
+            if (!bestPronunciation.length || pronunciation.length >= bestPronunciation.length) {
               syllableCount = pronunciation.length;
               bestPronunciation = pronunciation;
             }
@@ -971,7 +971,7 @@ export default class Line {
     const nbsp = ' ';
 
     // An array of the position of each punctuation mark in the line
-    const punctPositions: number[] = this.text.split('').map((v,i) => phonstants.ALPHAPLUS.includes(v.toLowerCase()) ? null : i).filter(x=> x !== null) as number[];
+    const punctPositions: number[] = this.text.split('').map((v,i) => phonstants.ALPHAPLUS.includes(v.toLowerCase()) ? null : i).filter(x => x !== null) as number[];
     let syllable = 0;
     let foot = 0;
     wordList.forEach(word => {
@@ -1053,7 +1053,7 @@ export default class Line {
         }
         lastPosition = position + 1;
       });
-      if (word.vowelPositions.length === 1) markList.push(nbsp.repeat(word.word.length + 1));
+      if (word.vowelPositions.length === 0) markList.push(nbsp.repeat(word.word.length + 1));
       else markList.push(nbsp.repeat(word.word.length - word.vowelPositions.slice(-1)[0]));
     });
 

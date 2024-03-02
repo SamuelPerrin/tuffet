@@ -567,7 +567,7 @@ class Line {
 
     // Correct for pyrrhic substitution
     for (let f in foots) {
-      if (feet[f] === [3,3] && (foots[f] === 'U' || foots[f] === 'I')) {
+      if (feet[f] == [3,3] && (foots[f] === 'U' || foots[f] === 'I')) {
         foots[f] = 'P';
       }
     }
