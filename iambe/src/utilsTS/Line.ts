@@ -1,4 +1,5 @@
 import * as phonstants from './phonstants';
+import { SyllablesPerFootType } from './phonstants';
 import Word from './Word';
 import Foot, { FootType } from './Foot';
 import LineMeter, { LineRhythmType } from './LineMeter';
@@ -73,7 +74,23 @@ export default class Line {
 
       let targetLength = to.length;
       const flatFeet = feet.slice(-from.length).flat();
-      // FINISH TRANSLATING THIS HELPER METHOD
+      while (targetLength > 0) {
+        let thisLength = targetLength === 1 ? SyllablesPerFootType[to.slice(-1)[0]] : SyllablesPerFootType[to.slice(-targetLength, 1 - targetLength)[0]];
+        let nextFoot: number[] = [];
+        let secondLength = 0;
+        while (secondLength < thisLength) {
+          if (thisLength > 1) {
+            nextFoot.push(flatFeet.shift() as number);
+          } else {
+            nextFoot = [flatFeet.shift() as number];
+          }
+          secondLength++;
+        }
+        newFeet.push(nextFoot);
+        nextFoot = [];
+        targetLength--;
+      }
+      feet = newFeet;
     }
 
     const I = FootType.iamb;
@@ -250,7 +267,7 @@ export default class Line {
     // sort meters by demerits, ascending
     demeritList.sort((a, b) => a.demerits - b.demerits);
 
-    if (!demeritList.length) throw("IndexException: no demerits");
+    if (!demeritList.length) throw(new Error("IndexException: no demerits"));
 
     // return the pronunciation with the fewest demerits
     return demeritList[0].meter;

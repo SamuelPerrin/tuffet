@@ -1,4 +1,4 @@
-
+import { FootType } from "./Foot";
 // this file contains constants to be used in other utils
 export const MAKES_PLURAL_WITH_S : {[key: string]: boolean} = {
   'F':true,
@@ -440,3 +440,13 @@ export const NONICTUS = '×';
 export const ICTUS = '/';
 export const UNCERTAIN_ICTUS = '×';
 export const ALPHAPLUS = ['a','b','c','d','e','è','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z','-',' ',"'","’",'“','”','(',')'];
+export const SyllablesPerFootType: Record<FootType, number> = {
+  0: 2, //iamb
+  1: 2, //trochee
+  2: 3, //anapest
+  3: 3, //dactyl
+  4: 2, //pyrrhic
+  5: 1, //unstressed
+  6: 1, //stressed
+  7: 2, //unknown
+};

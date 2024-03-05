@@ -9,7 +9,7 @@ const ScannedStanza = props => {
 
   return (
     <PoemBox>
-      {lines.map((line, i) => <LineTile key={line} rt={i} onClick={submitLineNum}>{line}</LineTile>)}
+      {lines.map((line, i) => <LineTile key={line.text} rt={i} onClick={submitLineNum}>{line.text}</LineTile>)}
     </PoemBox>
   )
 }

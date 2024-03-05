@@ -14,21 +14,21 @@ import Button from './styled/Button';
 import { BLACK } from '../constants/colors';
 import { getMeterTypeDetails, getStanzaMeterDetails, setLineNum, crement } from '../actions';
 
-import Poem from '../utils/Poem';
-import Stanza from '../utils/Stanza';
-import Line from '../utils/Line';
+import Poem from '../utilsTS/Poem';
 
 const Scansion = props => {
   const {poems, stanzaNum, getMeterTypeDetails, getStanzaMeterDetails, setLineNum, crement} = props;
   const history = useHistory();
 
   if (!!poems) {
-    var stanzaList = [];
-    poems.forEach(poem => new Poem(poem).getStanzas().forEach(stanza => stanzaList.push(stanza)));
-    var stanza = new Stanza(stanzaList[stanzaNum]);
+    var stanzaList = poems
+      .map(poem => new Poem(poem))
+      .map(poem => poem.getStanzas())
+      .flat();
+    var stanza = stanzaList[stanzaNum];
     var lineCounts = {};
     stanza.getLines().forEach(line => {
-      const lineMeter = new Line(line).getMeterLabelPhrase();
+      const lineMeter = line.getMeter();
       lineCounts[lineMeter] = lineMeter in lineCounts ? lineCounts[lineMeter] + 1 : 1;
     })
   }
