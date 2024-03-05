@@ -117,7 +117,6 @@ class Rhyme {
      * Determines how and whether the two lines rhyme and returns a string labelling the rhyme type.
      * Pronunciation can be specified for either of the two terms
      */
-    console.log("in getRhymeType with pron1", pron1, "\npron2", pron2);
     // establish necessary parts of term1
     const term1 = new Line(this.line1).getTerm()[0].toLowerCase();
     if (pron1 === null) {

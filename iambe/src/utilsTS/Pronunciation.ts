@@ -50,7 +50,7 @@ export default class Pronunciation extends String {
   /**
    * 
    * @param phone The phoneme to test as a vowel
-   * @returns true is the phoneme is a CMUPD vowel, else false 
+   * @returns true if the phoneme is a CMUPD vowel, else false 
    */
   static isAVowel(phone: string): boolean {
     return phone.length === 3

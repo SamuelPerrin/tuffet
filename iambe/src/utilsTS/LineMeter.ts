@@ -19,6 +19,9 @@ export default class LineMeter {
   // number of feet in this line (includes catalectic last foot, if relevant)
   private measures: number = null!;
 
+  // enum summarizing the line's meter
+  private summary: LineMeterSummary = null!;
+
   constructor(feet: Foot[]) {
     this.feet = feet;
   }
@@ -80,6 +83,7 @@ export default class LineMeter {
       else if (this.feet.slice(-1)[0].type === FootType.trochee || this.feet.slice(-1)[0].type === FootType.stressed) rhythm = LineRhythmType.trochaic;
     } 
     
+    this.rhythm = rhythm;
     return rhythm;
   }
 
