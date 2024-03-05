@@ -9,9 +9,7 @@ import {YellowSpan, RedSpan} from './styled/Spans';
 import Table from './styled/Table';
 import Button from './styled/Button';
 
-import Poem from '../utils/Poem';
-import Stanza from '../utils/Stanza';
-import Line from '../utils/Line';
+import Poem from '../utilsTS/Poem';
 import { LINE_METER_DESCRIPTIONS } from '../utils/descriptions';
 
 const MeterType = props => {
@@ -27,13 +25,12 @@ const MeterType = props => {
   }
 
   if (!!poems) {
-    var stanzaList = [];
-    poems.forEach(poem => new Poem(poem).getStanzas().forEach(stanza => stanzaList.push(stanza)));
+    var stanzaList = poems.map(poem => new Poem(poem).getStanzas()).flat();
   
-    var lines = new Stanza(stanzaList[stanzaNum]).getLines();
+    var lines = stanzaList[stanzaNum].getLines();
     var lineMeterCounts = {}
     lines.forEach(line => {
-      const meterLabel = new Line(line).getMeterLabelPhrase();
+      const meterLabel = line.getMeter().getSummary();
       lineMeterCounts[meterLabel] = meterLabel in lineMeterCounts ? lineMeterCounts[meterLabel] + 1 : 1;
     })
   }
@@ -61,7 +58,7 @@ const MeterType = props => {
               </tr>
             </thead>
             <tbody>
-              {lines.map(line => [line, new Line(line).getMeterLabelPhrase()]).filter(x => x[1] === mt).map(line => (
+              {lines.map(line => [line.text, line.getMeter().getSummary()]).filter(x => x[1] === mt).map(line => (
                 <tr key={line[0]}>
                   <td>{line[0]}</td>
                   <td>{line[1]}</td>

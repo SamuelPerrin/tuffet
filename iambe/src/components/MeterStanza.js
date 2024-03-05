@@ -9,8 +9,7 @@ import { YellowSpan, RedSpan } from './styled/Spans';
 import Table from './styled/Table';
 import Button from './styled/Button';
 
-import Poem from '../utils/Poem';
-import Stanza from '../utils/Stanza';
+import Poem from '../utilsTS/Poem';
 import { STANZA_METER_DESCRIPTIONS } from '../utils/descriptions';
 
 const MeterStanza = props => {
@@ -26,8 +25,7 @@ const MeterStanza = props => {
   }
 
   if (!!poems) {
-    var stanzaList = [];
-    poems.forEach(poem => new Poem(poem).getStanzas().forEach(stanza => stanzaList.push(new Stanza(stanza))))
+    var stanzaList = poems.map(poem => new Poem(poem).getStanzas()).flat();
     
     stanzaList = stanzaList.filter(stanza => stanza.getMeter() === stanzaType);
   }
@@ -55,8 +53,8 @@ const MeterStanza = props => {
             </thead>
             <tbody>
               {stanzaList.map(stanza => (
-                <tr key={stanza.getLines()[0]}>
-                  <td>{stanza.getLines()[0]}</td>
+                <tr key={stanza.getLines()[0].text}>
+                  <td>{stanza.getLines()[0].text}</td>
                   <td>{stanzaType}</td>
                 </tr>
               ))}

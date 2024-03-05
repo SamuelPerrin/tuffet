@@ -1145,23 +1145,23 @@ interface IRhymeSchemeData {
 type ScoreForLinePair = {[key: string]: number};
 
 export enum VerseForm {
-  iambicPentameter,
-  iambicTetrameter,
-  alexandrines,
-  fourteeners,
-  commonMeter,
-  longMeter,
-  shortMeter,
-  eightsAndFives,
-  eightsAndSevens,
-  sixesAndFives,
-  ballad,
-  commonMeterSplit,
-  shortMeterSplit,
-  limerick,
-  commonParticular,
-  commonMeterDoubled,
-  ladyOfShalott,
-  unknown
+  iambicPentameter = "iambic pentameter",
+  iambicTetrameter = "iambic tetrameter",
+  alexandrines = "alexandrines",
+  fourteeners = "fourteeners",
+  commonMeter = "common meter",
+  longMeter = "long meter",
+  shortMeter = "short meter",
+  eightsAndFives = "eights & fives",
+  eightsAndSevens = "eights & sevens",
+  sixesAndFives = "sixes & fives",
+  ballad = "ballad",
+  commonMeterSplit = "common meter, split",
+  shortMeterSplit = "short meter, split",
+  limerick = "limerick",
+  commonParticular = "common particular meter",
+  commonMeterDoubled = "common meter, doubled",
+  ladyOfShalott = "Lady of Shalott",
+  unknown = "unknown"
 }
 

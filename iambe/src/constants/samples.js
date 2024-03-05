@@ -1,6 +1,5 @@
 import React from 'react';
-import Stanza from '../utils/Stanza';
-import Poem from '../utils/Poem';
+import Poem from '../utilsTS/Poem';
 
 export const STITCH = `A stitch in time\nSaves nine.`;
 export const MARY = `Mary had a little lamb\nWhose fleece was white as snow\nAnd everywhere that Mary went\nThe lamb was sure to go.`;
@@ -39,28 +38,36 @@ export const all_samples = {
   // },
   'Pope': {
     title:'from "Essay on Criticism"',
-    sample: new Stanza(POPE).getLines().map(line => <p key={line.slice(0,8)}>{line}</p>),
+    sample: new Poem(POPE).getStanzas().map(stanza => (
+      <div style={{marginBottom:'1rem'}} key={stanza.text.slice(-6)}>
+        {stanza.getLines().map(line => <p key={line.text.slice(0,8)}>{line.text}</p>)}
+      </div>)
+    ),
     toRun: POPE,
   },
   'Byron': {
     title:'from "Don Juan", canto 1',
     sample: new Poem(BYRON).getStanzas().map(stanza => (
-      <div style={{marginBottom:'1rem'}} key={stanza.slice(-6)}>
-        {new Stanza(stanza).getLines().map(line => <p key={line.slice(0,8)}>{line}</p>)}
+      <div style={{marginBottom:'1rem'}} key={stanza.text.slice(-6)}>
+        {stanza.getLines().map(line => <p key={line.text.slice(0,8)}>{line.text}</p>)}
       </div>)
     ),
     toRun: BYRON,
   },
   'Keats': {
     title:'"If by dull rhymes..."',
-    sample: new Stanza(KEATS).getLines().map(line => <p key={line.slice(0,8)}>{line}</p>),
+    sample: new Poem(KEATS).getStanzas().map(stanza => (
+      <div style={{marginBottom:'1rem'}} key={stanza.text.slice(-6)}>
+        {stanza.getLines().map(line => <p key={line.text.slice(0,8)}>{line.text}</p>)}
+      </div>)
+    ),
     toRun: KEATS,
   },
   'Dickinson': {
     title:'"The Martyr Poets – did not tell –" (Fr665)',
     sample: new Poem(DICKINSON).getStanzas().map(stanza => (
-      <div style={{marginBottom:'1rem'}} key={stanza.slice(-6)}>
-        {new Stanza(stanza).getLines().map(line => <p key={line.slice(0,8)}>{line}</p>)}
+      <div style={{marginBottom:'1rem'}} key={stanza.text.slice(-6)}>
+        {stanza.getLines().map(line => <p key={line.text.slice(0,8)}>{line.text}</p>)}
       </div>)
     ),
     toRun: DICKINSON,

@@ -18,8 +18,7 @@ import ButtonRow from './styled/ButtonRow';
 import { getLineMeterDetails, getRhymes, getStanzaMeterDetails } from '../actions';
 
 import { COLOR_SEQUENCE } from '../constants/colors';
-import Poem from '../utils/Poem';
-import Stanza from '../utils/Stanza';
+import Poem from '../utilsTS/Poem';
 
 const Meter = props => {
   const { poetry, poems, stanzaMeterCounts, getLineMeterDetails, currentUser, getRhymes, getStanzaMeterDetails} = props;
@@ -137,12 +136,11 @@ const Meter = props => {
             <p>Select a stanza to learn more about its meter.</p>
             <PoemBox>
               {poems.map(poem => new Poem(poem).getStanzas().map(stanza => {
-                    stanzaNum++
-                    const thisStanza = new Stanza(stanza)
+                    stanzaNum++;
                     return <StanzaTile 
                       onClick={submitLineMeterDetail}
-                      children={thisStanza.getLines()} 
-                      hoverText={"Meter: " + thisStanza.getMeter()}
+                      children={stanza.getLines().map(l => l.text)} 
+                      hoverText={"Meter: " + stanza.getMeter()}
                       key={stanzaNum}
                       stanzaNum={stanzaNum}
                     />

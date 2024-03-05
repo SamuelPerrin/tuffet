@@ -13,9 +13,7 @@ import HoverCard from './styled/HoverCard';
 
 import {crement, getMeterTypeDetails} from '../actions';
 
-import Poem from '../utils/Poem';
-import Stanza from '../utils/Stanza';
-import Line from '../utils/Line';
+import Poem from '../utilsTS/Poem';
 import { VARIATION_DESCRIPTIONS } from '../utils/descriptions';
 
 const MeterLine = props => {
@@ -23,12 +21,11 @@ const MeterLine = props => {
   const history = useHistory();
 
   if (!!poems) {
-    var stanzaList = [];
-    poems.forEach(poem => new Poem(poem).getStanzas().forEach(stanza => stanzaList.push(stanza)));
-    var stanza = new Stanza(stanzaList[stanzaNum]);
-    var line = new Line(stanza.getLines()[lineNum]);
+    var stanzaList = poems.map(poem => new Poem(poem).getStanzas()).flat();
+    var stanza = stanzaList[stanzaNum];
+    var line = stanza.getLines()[lineNum];
     var marks = line.getMarkString();
-    var varList = line.getVariationList();
+    var varList = line.getVariations();
   }
 
   const goBack = () => {
@@ -71,7 +68,7 @@ const MeterLine = props => {
               onClick={submitMeterTypeDetail}
               style={{cursor:'pointer'}}
             >
-              {line.getMeterLabelPhrase()}
+              {line.getMeter().getSummary()}
             </BlueSpan>.
           </p>
         </Section>
@@ -82,7 +79,7 @@ const MeterLine = props => {
             <ul>
               {varList.map(vari => (
                 <li key={vari.foot}>
-                  There's <HoverCard hoverText={VARIATION_DESCRIPTIONS[vari.varType]}><YellowSpan>{vari.varType}</YellowSpan></HoverCard> in foot {vari.foot}.
+                  There's <HoverCard hoverText={VARIATION_DESCRIPTIONS[vari.type]}><YellowSpan>{vari.type}</YellowSpan></HoverCard> in foot {vari.footNumber}.
                 </li>
                 ))}
             </ul>

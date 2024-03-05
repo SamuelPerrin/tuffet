@@ -28,7 +28,7 @@ const Scansion = props => {
     var stanza = stanzaList[stanzaNum];
     var lineCounts = {};
     stanza.getLines().forEach(line => {
-      const lineMeter = line.getMeter();
+      const lineMeter = line.getMeter().getSummary();
       lineCounts[lineMeter] = lineMeter in lineCounts ? lineCounts[lineMeter] + 1 : 1;
     })
   }

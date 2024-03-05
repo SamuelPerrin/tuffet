@@ -16,8 +16,7 @@ import { Pie } from 'react-chartjs-2';
 
 import { getRhymeSchemeDetails, getRhymeTypeDetails, getMeter } from '../actions';
 
-import Poem from '../utils/Poem';
-import Stanza from '../utils/Stanza';
+import Poem from '../utilsTS/Poem';
 import { RHYME_SCHEMES, RHYME_TYPES } from '../utilsTS/phonstants';
 import { COLOR_SEQUENCE } from '../constants/colors';
 
@@ -78,7 +77,6 @@ const Rhymes = props => {
     }
   };
 
-  let stanzaNum = -1;
   if (!poetry) return <Redirect to="/"/>
   else if (totalRhymes === 0) {
     // console.log('poems',poems);
@@ -153,16 +151,14 @@ const Rhymes = props => {
             <h2><BlueSpan>Rhyme Scheme by Stanza</BlueSpan></h2>
             <p>Select a stanza to learn more about its rhymes.</p>
             <PoemBox>
-              {poems.map(poem => new Poem(poem).getStanzas().map(stanza => {
-                  stanzaNum++;
-                  return <StanzaTile 
-                    onClick={submitRhymeDetail}
-                    children={new Stanza(stanza).getLines()} 
-                    hoverText={"Rhyme scheme: " + RHYME_SCHEMES[new Stanza(stanza).getRhymeScheme()]}
-                    key={stanzaNum}
-                    stanzaNum={stanzaNum}
-                  />
-                }
+              {poems.map(poem => new Poem(poem).getStanzas().map((stanza, idx) =>
+                <StanzaTile 
+                  onClick={submitRhymeDetail}
+                  children={stanza.getLines().map(l => l.text)} 
+                  hoverText={"Rhyme scheme: " + stanza.getRhymeScheme()}
+                  key={idx}
+                  stanzaNum={idx}
+                />
               ))}
             </PoemBox>
           </Section>

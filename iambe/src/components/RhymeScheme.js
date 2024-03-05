@@ -2,8 +2,7 @@ import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { Link, useHistory, Redirect } from 'react-router-dom';
 
-import Poem from '../utils/Poem';
-import Stanza from '../utils/Stanza';
+import Poem from '../utilsTS/Poem';
 
 import Breadcrumbs from './styled/Breadcrumbs';
 import Container from './styled/Container';
@@ -25,9 +24,9 @@ const RhymeScheme = props => {
   if (!!poems) {
     var stanzaRhymeList = [];
     rhymes.forEach(poem => poem.forEach(stanza => stanzaRhymeList.push(stanza)));
-    var stanzaList = [];
+    var stanzaList = poems.map(poem => (new Poem(poem)).getStanzas()).flat();
     poems.forEach(poem => new Poem(poem).getStanzas().forEach(stanza => stanzaList.push(stanza)));
-    var stanza = new Stanza(stanzaList[stanzaNum]);
+    var stanza = stanzaList[stanzaNum];
     var stanzaRhymes = stanza.getRhymes();
   }
 
@@ -52,10 +51,10 @@ const RhymeScheme = props => {
       <Container>
         <Section>
           <h2><RedSpan>Rhyme Scheme</RedSpan></h2>
-          <RhymedStanza stanza={stanza.getLines()}/>
+          <RhymedStanza stanza={stanza.getLines().map(l => l.text)}/>
           <br/>
           <div className='paragraph'>
-            <p>This stanza's rhyme scheme is: <BlueSpan>{RHYME_SCHEMES[stanza.getRhymeScheme()]}</BlueSpan>.</p>
+            <p>This stanza's rhyme scheme is: <BlueSpan>{stanza.getRhymeScheme()}</BlueSpan>.</p>
           </div>
         </Section>
         <Section>
@@ -71,10 +70,10 @@ const RhymeScheme = props => {
             </thead>
             <tbody>
               {stanzaRhymes.map(rhyme => (
-                <tr key={rhyme.lines[0]}>
-                  <td>{rhyme.words[0]}</td>
-                  <td>{rhyme.words[1]}</td>
-                  <td>{RHYME_TYPES[rhyme.rt]}</td>
+                <tr key={rhyme.line1.text}>
+                  <td>{rhyme.term1}</td>
+                  <td>{rhyme.term2}</td>
+                  <td>{RHYME_TYPES[rhyme.rhymeType]}</td>
                 </tr>
               ))}
             </tbody>
