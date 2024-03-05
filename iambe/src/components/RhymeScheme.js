@@ -15,7 +15,7 @@ import Button from './styled/Button';
 
 import { crement } from '../actions';
 
-import { RHYME_TYPES, RHYME_SCHEMES } from '../utilsTS/phonstants';
+import { RHYME_TYPES } from '../utilsTS/phonstants';
 
 const RhymeScheme = props => {
   const {poems, rhymes, stanzaNum, crement} = props;
@@ -25,7 +25,6 @@ const RhymeScheme = props => {
     var stanzaRhymeList = [];
     rhymes.forEach(poem => poem.forEach(stanza => stanzaRhymeList.push(stanza)));
     var stanzaList = poems.map(poem => (new Poem(poem)).getStanzas()).flat();
-    poems.forEach(poem => new Poem(poem).getStanzas().forEach(stanza => stanzaList.push(stanza)));
     var stanza = stanzaList[stanzaNum];
     var stanzaRhymes = stanza.getRhymes();
   }

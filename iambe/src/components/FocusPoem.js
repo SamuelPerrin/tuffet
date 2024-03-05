@@ -18,8 +18,7 @@ import Toast from './styled/Toast';
 
 import { getRhymes, getMeter, setError, getCurrentUser } from '../actions';
 
-import Poem from '../utils/Poem';
-import Stanza from '../utils/Stanza';
+import Poem from '../utilsTS/Poem';
 import { GRAY } from '../constants/colors';
 
 const FocusPoem = props => {
@@ -87,7 +86,7 @@ const FocusPoem = props => {
             <PoemBox>
               {new Poem(poem.current.text)
                 .getStanzas()
-                .map(stanza => <StanzaTile children={new Stanza(stanza).getLines()} key={stanza} style={{cursor:"auto"}}/>)
+                .map(stanza => <StanzaTile children={stanza.getLines().map(l => l.text)} key={stanza.text} style={{cursor:"auto"}}/>)
               }
             </PoemBox>
             <ButtonRow>

@@ -1,4 +1,4 @@
-import Anthology from '../utils/Anthology';
+import Anthology from '../utilsTS/Anthology';
 
 export const GET_RHYMES = 'GET_RHYMES';
 export const GET_RHYME_SCHEME_DETAILS = 'GET_RHYME_SCHEME_DETAILS';
@@ -27,10 +27,10 @@ export const getRhymes = poetry => {
   const anth = new Anthology(poetry);
   return {type:GET_RHYMES, payload:{
     poetry: poetry,
-    poems: anth.getPoems(),
+    poems: anth.getPoems().map(p => p.text),
     rhymes: anth.getRhymes(),
-    rhymeTypeCounts: anth.getRhymeStats(),
-    rhymeSchemeCounts: anth.getRhymeSchemeStats(),
+    rhymeTypeCounts: anth.getRhymeTypeCounts(),
+    rhymeSchemeCounts: anth.getRhymeSchemeCounts(),
   }}};
 
 export const getRhymeSchemeDetails = num => ({type:GET_RHYME_SCHEME_DETAILS, payload:{stanzaNum: num}});
@@ -41,7 +41,7 @@ export const getMeter = poetry => {
   const anth = new Anthology(poetry);
   return {type:GET_METER, payload:{
     poetry: poetry,
-    poems: anth.getPoems(),
+    poems: anth.getPoems().map(p => p.text),
     stanzaMeters: anth.getStanzaMeters(),
     stanzaMeterCounts: anth.getMeterStatsByStanza(),
   }}};

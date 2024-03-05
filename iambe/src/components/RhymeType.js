@@ -51,12 +51,12 @@ const RhymeType = props => {
               </tr>
             </thead>
             <tbody>
-              {rhymeList.filter(rhyme => rhyme.rt === rt).map(rhyme => (
-                <tr key={rhyme.lines[0]}>
-                  <td>{rhyme.words[0]}</td>
-                  <td>{rhyme.words[1]}</td>
-                  <td>{rhyme.lines[0]}</td>
-                  <td>{rhyme.lines[1]}</td>
+              {rhymeList.filter(rhyme => rhyme.rhymeType === rt).map(rhyme => (
+                <tr key={rhyme.line1.text}>
+                  <td>{rhyme.term1}</td>
+                  <td>{rhyme.term2}</td>
+                  <td>{rhyme.line1.text}</td>
+                  <td>{rhyme.line2.text}</td>
                 </tr>
               ))}
             </tbody>

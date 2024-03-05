@@ -135,7 +135,7 @@ const Rhymes = props => {
             <h2><RedSpan>Rhyme Schemes</RedSpan></h2>
             {Object.entries(rhymeSchemeCounts).reduce((a,b) => a+b[1], 0) > 1 ? <p>The most common rhyme schemes in this sample are:</p> : <p>This stanza's rhyme scheme is:</p>}
             <ol>
-              {rhymeSchemeCounts && Object.entries(rhymeSchemeCounts).filter(entry => entry[1] > 0).sort((a,b) => b[1] - a[1]).map(entry => <li key={entry[0]}>{RHYME_SCHEMES[entry[0]]} ({entry[1]} stanza{entry[1] > 1 ? 's' : ''})</li>)}
+              {rhymeSchemeCounts && Object.entries(rhymeSchemeCounts).filter(entry => entry[1] > 0).sort((a,b) => b[1] - a[1]).map(entry => <li key={entry[0]}>{entry[0]} ({entry[1]} stanza{entry[1] > 1 ? 's' : ''})</li>)}
             </ol>
             <Link to="/about/rhyme-schemes"><RedSpan>Read more »</RedSpan></Link>
           </Section>
