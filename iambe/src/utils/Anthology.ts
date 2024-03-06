@@ -1,6 +1,6 @@
 import LineMeter from "./LineMeter";
 import Poem from "./Poem";
-import Stanza, { VerseForm } from "./Stanza";
+import { VerseForm } from "./Stanza";
 import { RhymeInfo } from "./Rhyme";
 import { RhymeType, RhymeScheme } from "./phonstants";
 

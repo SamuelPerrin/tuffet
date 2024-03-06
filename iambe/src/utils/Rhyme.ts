@@ -38,7 +38,8 @@ export default class Rhyme {
   }
 
   /**
-   * Removes doubled consonants and HH and returns the rest as a Pronunciation
+   * Removes doubled consonants and HH and returns the rest as a Pronunciation.
+   * For use in identifying mosaic rhymes like *soccer-rock her*
    * @param pronunciation a list representing the phonemes of a CMUPD pronunciation
    */
   private mosaicize(pronunciation: string[]): Pronunciation {
@@ -393,12 +394,16 @@ export default class Rhyme {
    * @returns a number representing the fullness of the rhyme type
    */
   public getScore(): number {
-    if (this.score != null) return this.score;
+    if (this.score) return this.score;
+    
     if (this.rhymeInfo && this.rhymeInfo.rhymeType) {
       this.score = this.getScoreForRhymeType(this.rhymeInfo.rhymeType);
       return this.score;
     }
-    return this.getScoreForRhymeType(this.getRhymeType());
+    
+    this.score = this.getScoreForRhymeType(this.getRhymeType());
+    
+    return this.score;
   }
 
   /**
@@ -462,7 +467,7 @@ export default class Rhyme {
    * @returns list of rhyme info
    */
   public getRhymeInfo(): RhymeInfo {
-    if (this.rhymeInfo != null) return this.rhymeInfo;
+    if (this.rhymeInfo) return this.rhymeInfo;
 
     this.getRhymeType();
     return this.rhymeInfo;

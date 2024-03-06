@@ -2,7 +2,7 @@ import Rimes from "./Rimes";
 import * as phonstants from './phonstants';
 
 export default class Pronunciation extends String {
-  private rimes: Rimes | null = null;
+  private rimes: Rimes = null!;
 
   /**
    * A string of Arab numerals representing the relative stress of the pronunciation's syllables:
@@ -11,9 +11,6 @@ export default class Pronunciation extends String {
    * 0 is minimal stress
    */
   private stresses: string = "";
-
-  // list of Arab numerals representing the relative stress of the pronunciation's syllables
-  private stressesList: string[] = [];
 
   /* Getters */
   getStresses(): string {
@@ -30,16 +27,8 @@ export default class Pronunciation extends String {
     return this.stresses;
   }
 
-  getStressesList(): string[] {
-    if (this.stressesList.length) return this.stressesList;
-    if (this.stresses.length) return this.stresses.split("");
-    return this.getStresses().split("");
-  }
-
   getRimes(): Rimes {
-    if (this.rimes !== null) {
-      return this.rimes;
-    }
+    if (this.rimes) return this.rimes;
 
     this.rimes = new Rimes(this);
     return this.rimes;

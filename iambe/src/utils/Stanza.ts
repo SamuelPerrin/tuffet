@@ -7,17 +7,23 @@ import { RhymeScheme } from './phonstants';
  * A stanza of verse
  */
 export default class Stanza {
-  // arbitrary line above which rhymes "count"
+  /** arbitrary line between 0 and 1 above which rhymes "count" */
   private THRESHOLD: number = 0.3;
 
-  // text of the stanza, with lines separated with \n
+  /** text of the stanza, with lines separated with \n */
   public text: string = "";
 
-  // list of the lines of this stanza
-  private lines: Line[] = [];
+  /** cached list of the lines of this stanza */
+  private lines: Line[] = null!;
 
-  // list of the rhymes in this stanza
-  private rhymes: RhymeInfo[] = [];
+  /** cached list of the rhymes in this stanza */
+  private rhymes: RhymeInfo[] = null!;
+
+  /** cached rhyme scheme of this stanza */
+  private rhymeScheme: RhymeScheme = null!;
+
+  /** cached verse form of this stanza */
+  private meter: VerseForm = null!;
 
   constructor(text: string) {
     this.text = text;
@@ -28,7 +34,9 @@ export default class Stanza {
    * @returns List of the stanza's lines
    */
   public getLines(): Line[] {
-    if (this.lines && this.lines.length) return this.lines;
+    if (this.lines) {
+      console.log("Hitting cache on Stanza.getLines");
+      return this.lines;}
     this.lines = this.text.split('\n').filter(l => !!l).map(l => new Line(l));
 
     return this.lines;
@@ -46,7 +54,9 @@ export default class Stanza {
   /**
    * Returns a guess about the stanza's rhyme scheme
    */
-  public getRhymeScheme(): RhymeScheme {
+  private guessRhymeScheme(): RhymeScheme {
+    if (this.rhymeScheme) return this.rhymeScheme;
+
     let bestGuess: RhymeScheme = RhymeScheme.irreg;
     const lines: string[] = this.getLines().map(l => l.text);
 
@@ -746,7 +756,22 @@ export default class Stanza {
       if (allIn.length >= 5) bestGuess = RhymeScheme.cpls8;
     }
 
+    this.rhymeScheme = bestGuess;
+
     return bestGuess;
+  }
+
+  /**
+   * A wrapper around guessRhymeScheme to return the cached rhyme scheme
+   * if already calculated for this stanza.
+   * @returns RhymeScheme for this stanza
+   */
+  public getRhymeScheme(): RhymeScheme {
+    if (this.rhymeScheme) return this.rhymeScheme;
+
+    this.rhymeScheme = this.guessRhymeScheme();
+
+    return this.rhymeScheme;
   }
 
   /**
@@ -844,7 +869,7 @@ export default class Stanza {
    * Returns a list of Rhymes in the stanza
    */
   public getRhymes(): RhymeInfo[] {
-    if (this.rhymes && this.rhymes.length) return this.rhymes;
+    if (this.rhymes) return this.rhymes;
 
     const rhymeScheme = this.getRhymeScheme();
     const lines: Line[] = this.getLines();
@@ -1079,6 +1104,8 @@ export default class Stanza {
    * @returns the verse form of the stanza
    */
   public getMeter(): VerseForm {
+    if (this.meter) return this.meter;
+
     const lines = this.getLines();
     const lineMeters = lines.map(line => {
       // condense each line's metrical type to a string label like "iambic pentameter catalectic" or "trochaic tetrameter"
@@ -1133,7 +1160,9 @@ export default class Stanza {
       metersPresent[lineMeter] = lineMeter in metersPresent ? metersPresent[lineMeter] + 1 : 1;
     });
 
-    return this.metersForCounts(metersPresent);
+    this.meter = this.metersForCounts(metersPresent);
+
+    return this.meter;
   }
 }
 

@@ -9,7 +9,15 @@ import LineMeter, { LineRhythmType } from './LineMeter';
  */
 export default class Line {
   // the text of the line of verse
-  text: string = "";
+  public text: string = "";
+
+  // private fields
+  private tokens: string[] = null!;
+  private cruxResolution: LineMeter = null!;
+  private stresses: number[] = null!;
+  private vowelPositions: IVowelPositions[] = null!;
+  private markString: string = null!;
+  private variations: IVariation[] = null!;
 
   constructor(text: string) {
     this.text = text.trim();
@@ -19,6 +27,10 @@ export default class Line {
    * Returns an order-preserving list of strings representing the words in the line, with punctuation removed
    */
   public getTokens(): string[] {
+    if (this.tokens) {
+      return this.tokens;
+    }
+
     let line = this.text;
 
     // remove some punctuation marks, and replace others with a space
@@ -27,7 +39,8 @@ export default class Line {
       line = line.replace(new RegExp('\\' + p, 'g'), ' ');
     });
 
-    return line.split(' ').filter(token => token.length > 0);
+    this.tokens = line.split(' ').filter(token => token.length > 0);
+    return this.tokens;
   }
 
   /**
@@ -278,6 +291,10 @@ export default class Line {
    * @returns the best meter for the line
    */
   private resolveCrux(): LineMeter {
+    if (this.cruxResolution) {
+      return this.cruxResolution;
+    }
+
     const words = this.getTokens();
     const stresses: (number | number[])[][] = words.map(word => {
       let wordStressList = new Word(word).getStressList();
@@ -348,6 +365,8 @@ export default class Line {
     const meters = lines.map(line => this.getMeter(line));
 
     const best = this.howRegular(meters);
+
+    this.cruxResolution = best;
 
     return best;
   }
@@ -476,6 +495,10 @@ export default class Line {
    * where each syllable is represented by a string numeral between 1 and 4.
    */
   public getStresses(): number[] {
+    if (this.stresses) {
+      return this.stresses;
+    }
+
     const words = this.getTokens();
     let stresses: number[] = [];
     for (let word of words) {
@@ -485,6 +508,8 @@ export default class Line {
     }
 
     Word.last.push('newline');
+
+    this.stresses = stresses;
 
     return stresses;
   }
@@ -901,6 +926,10 @@ export default class Line {
       return count;
     }
 
+    if (this.vowelPositions) {
+      return this.vowelPositions;
+    }
+
     const words: string[] = this.getTokens();
     let flatFeet: number[] = this.getMeter().feet.map(foot => foot.stresses).flat();
 
@@ -928,6 +957,7 @@ export default class Line {
       flatFeet = flatFeet.slice(bestPronunciation.length);
       const vowelCount = getVowelCount(word);
       const match = this.equalizeVowels(word, syllableCount, vowelCount, bestPronunciation);
+      
       return match;
     });
 
@@ -969,7 +999,9 @@ export default class Line {
       }
 
       return {word: word.text, vowelPositions: vowelPositions};
-    })
+    });
+
+    this.vowelPositions = output;
 
     return output;
   }
@@ -977,7 +1009,11 @@ export default class Line {
   /**
    * Get a string with symbols representing the stress of each syllable in the line
    */
-  public getMarkString() {
+  public getMarkString(): string {
+    if (this.markString) {
+      return this.markString;
+    }
+
     const meter: LineMeter = this.getMeter();
     const footTypes: FootType[] = meter.feet.map(foot => foot.type);
     const wordList: IVowelPositions[] = this.getVowelPositions();
@@ -1078,6 +1114,8 @@ export default class Line {
 
     const marks = finalMarkList.join('');
 
+    this.markString = marks;
+
     return marks;
   }
 
@@ -1085,6 +1123,10 @@ export default class Line {
    * Get a list of metrical variations present in the line (if any)
    */
   public getVariations(): IVariation[] {
+    if (this.variations) {
+      return this.variations;
+    }
+
     const variations: IVariation[] = [];
     const meter = this.getMeter();
 
@@ -1120,6 +1162,8 @@ export default class Line {
         }
       });
     }
+
+    this.variations = variations;
 
     return variations;
   }

@@ -111,6 +111,7 @@ export default class LineMeter {
    * @returns a string labeling the type of meter in the line (e.g., iambic pentameter acatalectic)
    */
   public getSummary(): LineMeterSummary {
+    if (this.summary) return this.summary;
     const rhythm: string = LineRhythmType[this.getRhythm()];
     const measure: number = this.getMeasures();
     let measureString: string;
@@ -124,6 +125,9 @@ export default class LineMeter {
     if (this.isCatalectic()) {
       output += " catalectic";
     }
+
+    this.summary = output as LineMeterSummary;
+
     return output as LineMeterSummary;
   }
 }

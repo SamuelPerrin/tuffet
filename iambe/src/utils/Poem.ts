@@ -1,13 +1,15 @@
 import Stanza, { VerseForm } from "./Stanza";
-import Rhyme, { RhymeInfo } from "./Rhyme";
+import { RhymeInfo } from "./Rhyme";
 
 /**
  * A poem with stanzas divided by \n\n and lines divided by \n
  */
 export default class Poem {
   text: string = "";
-  private stanzas: Stanza[] = [];
-  private rhymes: RhymeInfo[][] = [];
+  private stanzas: Stanza[] = null!;
+  private rhymes: RhymeInfo[][] = null!;
+  private poemMeter: VerseForm = null!;
+  private meters: VerseForm[] = null!;
 
   constructor(text: string) {
     this.text = text;
@@ -17,7 +19,9 @@ export default class Poem {
    * Returns an array of Stanzas
    */
   public getStanzas(): Stanza[] {
-    if (this.stanzas && this.stanzas.length) return this.stanzas;
+    if (this.stanzas) {
+      return this.stanzas;
+    }
 
 
     this.stanzas = this.text.split('\n\n').filter(s => !!s).map(s => new Stanza(s));
@@ -29,7 +33,9 @@ export default class Poem {
    * @returns array of RhymeInfo from every stanza in the poem
    */
   public getRhymes(): RhymeInfo[][] {
-    if (this.rhymes && this.rhymes.length) return this.rhymes;
+    if (this.rhymes) {
+      return this.rhymes;
+    }
 
     const rhymes: RhymeInfo[][] = this.getStanzas().map(s => s.getRhymes());
     this.rhymes = rhymes;
@@ -40,17 +46,28 @@ export default class Poem {
    * @returns the verse form of each of the poem's stanzas, if they're all the same, else unknown
    */
   public getPoemMeter(): VerseForm {
+    if (this.poemMeter) {
+      return this.poemMeter;
+    }
+
     const meters = this.getMeters();
 
-    return meters.every(meter => meter === meters[0]) ? meters[0] : VerseForm.unknown;
+    this.poemMeter = meters.every(meter => meter === meters[0]) ? meters[0] : VerseForm.unknown;
+
+    return this.poemMeter;
   }
 
   /**
    * @returns verse forms for each of the poem's stanzas
    */
   private getMeters(): VerseForm[] {
+    if (this.meters) {
+      return this.meters;
+    }
     const stanzas = this.getStanzas();
     
-    return stanzas.map(stanza => stanza.getMeter());
+    this.meters = stanzas.map(stanza => stanza.getMeter());
+
+    return this.meters;
   }
 }

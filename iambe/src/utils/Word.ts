@@ -7,16 +7,29 @@ import * as phonstants from './phonstants';
  * A string that represents a word
  */
 export default class Word {
-  // the text of this word
+  /** the text of this word */
   public text: string = "";
 
-  // chronological list of words looked at recently (used in pronouncing a series of words)
+  /** chronological list of words looked at recently (used in pronouncing a series of words) */
   static last: string[] = [];
+
+  /** cached pronunciation of this word, if it's not in the lexicon */
+  private hardPronunciation: PronunciationType = null!;
+
+  /** cached list of consonant/vowel clusters in this word's spelling */
+  private atoms: string[] = null!;
+
+  /** cached list of stresses in this word's pronunciation */
+  private stressList: number[] | "crux" = null!;
+
+  /** cached list of possible lists of stresses in this word's pronunciation,
+   * depending on how it's pronounced in this line */
+  private cruxStressList: number[][] = null!;
 
   constructor(text: string) {
     this.text = text.toLowerCase();
 
-    if (text.length === 0) throw new Error(`Word cannot be empty.`);
+    if (text.length === 0) throw new Error("Word cannot be empty.");
 
     // remove initial apostrophes except from words like 'tis and 'twas
     if (this.text.charAt(0) === "'" && this.text.slice(1, 4) !== 'tis' && this.text.slice(1, 3) !== 'tw') {
@@ -134,20 +147,28 @@ export default class Word {
    * @returns 
    */
   private getHardPronunciation(returnArray: boolean): PronunciationType {
+    if (this.hardPronunciation) return this.hardPronunciation;
+
     // first check for a familiar root
     const check = this.checkHardPronunciation();
-    if (check && check.length > 0) return check;
+    if (check && check.length > 0) {
+      this.hardPronunciation = check;
+      return check;
+    }
 
     // If that doesn't work, but the CMUPD has pronunciation(s) for the word, use that
     let pronunciation: Pronunciation | Pronunciation[] | null = null;
 
     if (this.text in cmupd) {
       if (cmupd[this.text].length === 1) {
-        return returnArray
+        this.hardPronunciation = returnArray
           ? cmupd[this.text].map(p => new Pronunciation(p))
           : new Pronunciation(cmupd[this.text][0]);
+        
+          return this.hardPronunciation;
       } else if (returnArray) {
-        return cmupd[this.text].map(p => new Pronunciation(p));
+        this.hardPronunciation = cmupd[this.text].map(p => new Pronunciation(p));
+        return this.hardPronunciation;
       } else {
         pronunciation = cmupd[this.text].map(p => new Pronunciation(p));
         if (pronunciation
@@ -160,8 +181,12 @@ export default class Word {
 
     // Otherwise, guess the pronunciation
     const guess = this.guessHardPronunciation();
-    if (guess.length > 0) return guess;
+    if (guess.length > 0) {
+      this.hardPronunciation = guess;
+      return guess;
+    }
 
+    this.hardPronunciation = null;
     return null;
   }
 
@@ -468,6 +493,8 @@ export default class Word {
    * Returns a sequential list of the vowel- and consonant-clusters that make up the word's spelling, so that its pronunciation can be guessed at
    */
   private atomize(): string[] {
+    if (this.atoms) return this.atoms;
+
     let atom = '';
     const atoms: string[] = [];
     for (let char of this.text) {
@@ -565,6 +592,8 @@ export default class Word {
       }
     } if (atom !== '') atoms.push(atom);
 
+    this.atoms = atoms;
+    
     return atoms;
   }
 
@@ -574,12 +603,15 @@ export default class Word {
    * For words with multiple pronunciations, use getCruxStressList
    */
   public getStressList(): number[] | 'crux' {
+    if (this.stressList) return this.stressList;
+
     const ALWAYS_STRESSED = { 'ah': true, 'o': true };
 
     let pronunciation: PronunciationType = this.getPronunciation(false);
 
     // For words with multiple possible pronunciations
     if (Array.isArray(pronunciation)) {
+      this.stressList = 'crux';
       return 'crux';
     }
 
@@ -635,6 +667,8 @@ export default class Word {
 
     Word.last.push(this.text);
 
+    this.stressList = stress;
+
     return stress;
   }
 
@@ -642,6 +676,8 @@ export default class Word {
    * Like getStressList, but returning an array of arrays of integers, representing the relative stress of each syllable in each of multiple possible pronunciations of the word
    */
   public getCruxStressList(): number[][] {
+    if (this.cruxStressList) return this.cruxStressList;
+
     const ALWAYS_STRESSED = { 'ah': true, 'o': true };
 
     let pronunciation: Pronunciation[] = this.getPronunciation(true);
@@ -678,6 +714,8 @@ export default class Word {
 
       possibles.push(stress);
     }
+
+    this.cruxStressList = possibles;
 
     return possibles;
   }
