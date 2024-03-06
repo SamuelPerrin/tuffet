@@ -501,8 +501,7 @@ export default class Word {
             atom = '';
             break;
           default:
-            console.log(`in Word.atomize with ${this.text} and got this letter I don't know what to do with: ${char}.
-            `);
+            console.log(`in Word.atomize with ${this.text} and got this letter I don't know what to do with: ${char}.`);
             break;
         }
       } else if (char in phonstants.CONSONANTS) {

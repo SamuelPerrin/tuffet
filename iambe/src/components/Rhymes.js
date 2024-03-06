@@ -16,8 +16,8 @@ import { Pie } from 'react-chartjs-2';
 
 import { getRhymeSchemeDetails, getRhymeTypeDetails, getMeter } from '../actions';
 
-import Poem from '../utilsTS/Poem';
-import { RHYME_SCHEMES, RHYME_TYPES } from '../utilsTS/phonstants';
+import Poem from '../utils/Poem';
+import { RHYME_TYPES } from '../utils/phonstants';
 import { COLOR_SEQUENCE } from '../constants/colors';
 
 const Rhymes = props => {

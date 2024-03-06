@@ -59,7 +59,7 @@ const Footer = props => {
           <a href='https://www.github.com/SamuelPerrin/tuffet/' target='_blank' rel='noreferrer'>GitHub</a>
         </FooterColumn>
         <FooterColumn className='wrappable'>
-          &copy; Sam Perrin 2021
+          &copy; Sam Perrin 2024
         </FooterColumn>
       </div>
     </StyledFooter>

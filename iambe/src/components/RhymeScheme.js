@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { Link, useHistory, Redirect } from 'react-router-dom';
 
-import Poem from '../utilsTS/Poem';
+import Poem from '../utils/Poem';
 
 import Breadcrumbs from './styled/Breadcrumbs';
 import Container from './styled/Container';
@@ -15,7 +15,7 @@ import Button from './styled/Button';
 
 import { crement } from '../actions';
 
-import { RHYME_TYPES } from '../utilsTS/phonstants';
+import { RHYME_TYPES } from '../utils/phonstants';
 
 const RhymeScheme = props => {
   const {poems, rhymes, stanzaNum, crement} = props;

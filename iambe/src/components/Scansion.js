@@ -14,7 +14,7 @@ import Button from './styled/Button';
 import { BLACK } from '../constants/colors';
 import { getMeterTypeDetails, getStanzaMeterDetails, setLineNum, crement } from '../actions';
 
-import Poem from '../utilsTS/Poem';
+import Poem from '../utils/Poem';
 
 const Scansion = props => {
   const {poems, stanzaNum, getMeterTypeDetails, getStanzaMeterDetails, setLineNum, crement} = props;

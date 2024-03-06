@@ -13,7 +13,7 @@ import HoverCard from './styled/HoverCard';
 
 import {crement, getMeterTypeDetails} from '../actions';
 
-import Poem from '../utilsTS/Poem';
+import Poem from '../utils/Poem';
 import { VARIATION_DESCRIPTIONS } from '../utils/descriptions';
 
 const MeterLine = props => {

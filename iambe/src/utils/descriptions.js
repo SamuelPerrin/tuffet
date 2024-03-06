@@ -1,5 +1,3 @@
-import React from 'react';
-
 export const STANZA_METER_DESCRIPTIONS = {
   'iambic pentameter': <div className='paragraph'>
     <p><strong>Iambic pentameter</strong> consists of five metrical feet with ten syllables with rising rhythm. In its most standard form, it consists of five iambs (da Dum da Dum da Dum da Dum da Dum), but several variations are also common, including an eleventh unstressed syllable. Iambic pentameter is probably the most important poetic meter in the history of English poetry. Everyone from Chaucer to Shakespeare and from Milton to Wordsworth wrote much of their verse in this meter. It is highly flexible, supporting lyrical and narrative verse, sonnet and epic.</p>

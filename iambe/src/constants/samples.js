@@ -1,5 +1,5 @@
 import React from 'react';
-import Poem from '../utilsTS/Poem';
+import Poem from '../utils/Poem';
 
 export const STITCH = `A stitch in time\nSaves nine.`;
 export const MARY = `Mary had a little lamb\nWhose fleece was white as snow\nAnd everywhere that Mary went\nThe lamb was sure to go.`;

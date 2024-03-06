@@ -9,7 +9,7 @@ import { YellowSpan, RedSpan } from './styled/Spans';
 import Table from './styled/Table';
 import Button from './styled/Button';
 
-import Poem from '../utilsTS/Poem';
+import Poem from '../utils/Poem';
 import { STANZA_METER_DESCRIPTIONS } from '../utils/descriptions';
 
 const MeterStanza = props => {

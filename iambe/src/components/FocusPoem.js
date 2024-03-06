@@ -18,7 +18,7 @@ import Toast from './styled/Toast';
 
 import { getRhymes, getMeter, setError, getCurrentUser } from '../actions';
 
-import Poem from '../utilsTS/Poem';
+import Poem from '../utils/Poem';
 import { GRAY } from '../constants/colors';
 
 const FocusPoem = props => {

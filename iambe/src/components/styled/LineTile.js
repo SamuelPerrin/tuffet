@@ -3,7 +3,7 @@ import styled from 'styled-components';
 
 import HoverCard from './HoverCard';
 
-import Line from '../../utilsTS/Line';
+import Line from '../../utils/Line';
 
 const LineTileWrapper = styled.div`
   display: flex;

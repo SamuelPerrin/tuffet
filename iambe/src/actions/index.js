@@ -1,4 +1,4 @@
-import Anthology from '../utilsTS/Anthology';
+import Anthology from '../utils/Anthology';
 
 export const GET_RHYMES = 'GET_RHYMES';
 export const GET_RHYME_SCHEME_DETAILS = 'GET_RHYME_SCHEME_DETAILS';

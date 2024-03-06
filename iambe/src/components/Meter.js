@@ -18,7 +18,7 @@ import ButtonRow from './styled/ButtonRow';
 import { getLineMeterDetails, getRhymes, getStanzaMeterDetails } from '../actions';
 
 import { COLOR_SEQUENCE } from '../constants/colors';
-import Poem from '../utilsTS/Poem';
+import Poem from '../utils/Poem';
 
 const Meter = props => {
   const { poetry, poems, stanzaMeterCounts, getLineMeterDetails, currentUser, getRhymes, getStanzaMeterDetails} = props;

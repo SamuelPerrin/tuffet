@@ -413,10 +413,7 @@ export default class Line {
     } else if (Array.isArray(crux)) {
       raw = crux;
     }
-
-    // From the last version; still needed?
-    // if ('label' in raw && 'foots' in raw && 'feet' in raw && typeof raw.label.catalexis === 'boolean') return raw;
-
+    
     // Divide the line into metrical feet based on syllables' relative stress and position
     let feet: Foot[] = [];
     while (raw.length > 2) {

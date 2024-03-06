@@ -2,8 +2,7 @@ import React, {useEffect, useState, useRef} from 'react';
 import {connect} from 'react-redux';
 import styled from 'styled-components';
 
-import Poem from '../../utilsTS/Poem';
-import Stanza from '../../utilsTS/Stanza';
+import Poem from '../../utils/Poem';
 import {COLOR_SEQUENCE} from '../../constants/colors';
 
 const StyledLine = styled.span`
@@ -106,7 +105,7 @@ const RhymedStanza = props => {
                       C ${breadthScalar * (pair[2] - pair[1])},${pair[1] - rhymePairs[0][1] * heightScalar}
                       ${breadthScalar * (pair[2] - pair[1])},${pair[2] - rhymePairs[0][1] * heightScalar}
                       ${0},${pair[2] - rhymePairs[0][1] * heightScalar}`}
-                stroke={stanzaRhymes[i].line1 in seenLines ? seenLines[stanzaRhymes[i].line1.text] : COLOR_SEQUENCE[colorsUsed % COLOR_SEQUENCE.length]}
+                stroke={stanzaRhymes[i].line1.text in seenLines ? seenLines[stanzaRhymes[i].line1.text] : COLOR_SEQUENCE[colorsUsed % COLOR_SEQUENCE.length]}
                 key={stanzaRhymes[i].line1.text}
               />)
             }
